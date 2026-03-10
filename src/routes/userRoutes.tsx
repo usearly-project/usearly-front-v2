@@ -9,7 +9,7 @@ const UserProfilePage = lazy(
 );
 const UserAccount = lazy(() => import("@src/pages/UserAccount/UserAccount"));
 const NavigateToHome = lazy(() => import("@src/pages/NavigateToHome"));
-const NewHome = lazy(() => import("@src/pages/newHome/NewHome"));
+//const NewHome = lazy(() => import("@src/pages/newHome/NewHome"));
 
 export const userRoutes: RouteObject[] = [
   {
@@ -36,10 +36,10 @@ export const userRoutes: RouteObject[] = [
       </ProtectedRoute>
     ),
   },
-  {
+  /*   {
     path: "/home",
     element: <NewHome />,
-  },
+  }, */
   {
     path: "/feedback",
     element: (

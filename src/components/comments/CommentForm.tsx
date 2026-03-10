@@ -1,8 +1,6 @@
 import React, { useState, useRef } from "react";
 import Avatar from "../shared/Avatar";
 import { useAuth } from "@src/services/AuthContext";
-//import { searchUsersByPseudo } from "@src/services/userService";
-//import { debounce } from "lodash";
 import "./CommentForm.scss";
 import { searchUsersByPseudo } from "@src/services/commentService";
 import { debounce } from "@src/utils/debounce";
@@ -88,6 +86,19 @@ const CommentForm: React.FC<Props> = ({ avatarUrl, value, onSubmit }) => {
     setShowSuggestions(false);
   };
 
+  const highlightMentions = (text: string) => {
+    const parts = text.split(/(@[a-zA-Z0-9._-]+)/g);
+
+    return parts.map((part, index) =>
+      part.startsWith("@") ? (
+        <span key={index} className="mention-highlight">
+          {part}
+        </span>
+      ) : (
+        part
+      ),
+    );
+  };
   return (
     <div className="comment-form-wrapper">
       <form onSubmit={handleSubmit} className="comment-form">
@@ -100,15 +111,20 @@ const CommentForm: React.FC<Props> = ({ avatarUrl, value, onSubmit }) => {
         />
 
         <div className="comment-input-container">
-          <input
-            ref={inputRef}
-            type="text"
-            placeholder="Commenter…"
-            value={text}
-            onChange={handleChange}
-            className="comment-input"
-            autoComplete="off"
-          />
+          <div className="comment-input-wrapper">
+            <div className="comment-highlight">{highlightMentions(text)}</div>
+
+            <input
+              ref={inputRef}
+              type="text"
+              placeholder="Commenter…"
+              value={text}
+              onChange={handleChange}
+              className="comment-input"
+              autoComplete="off"
+            />
+          </div>
+
           {showSuggestions && suggestions.length > 0 && (
             <MentionList users={suggestions} onSelect={handleSelectUser} />
           )}
