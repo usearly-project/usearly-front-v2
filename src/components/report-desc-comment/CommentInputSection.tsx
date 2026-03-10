@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+/* import React, { useEffect, useState } from "react";
 import { apiService } from "@src/services/apiService";
 import { useAuth } from "@src/services/AuthContext";
 import { formatDistanceToNow } from "date-fns";
@@ -9,7 +9,6 @@ import Swal from "sweetalert2";
 import CommentActionsMenu from "../commons/CommentActionsMenu";
 import { getFullAvatarUrl } from "@src/utils/avatarUtils";
 import Avatar from "../shared/Avatar";
-//import CommentActionsMenu from "./CommentActionsMenu";
 
 interface Comment {
   id: string;
@@ -219,3 +218,4 @@ const CommentInputSection: React.FC<Props> = ({
 };
 
 export default CommentInputSection;
+ */

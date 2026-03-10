@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 
-/* const HERO_VIDEO_SRC =
-  "https://lbcefcnvssyhlpsr.public.blob.vercel-storage.com/video-karine.mp4"; */
 const SCROLL_HINT_TEXT = "Faites défiler pour découvrir la suite";
 
 type Props = {
@@ -74,17 +72,6 @@ const Hero = ({ page }: Props) => {
 
   return (
     <div className="about-classic__hero">
-      {/*       <video
-        className="about-classic__hero-video"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        aria-hidden="true"
-      >
-        <source src={HERO_VIDEO_SRC} type="video/mp4" />
-      </video> */}
       {page === "landing" && (
         <iframe
           className="about-classic__hero-video"
@@ -105,15 +92,6 @@ const Hero = ({ page }: Props) => {
           allowFullScreen
         />
       )}
-      {/* https://www.youtube.com/embed/FkAnIL1l4wo?autoplay=1&mute=1&loop=1&playlist=FkAnIL1l4wo&controls=0&modestbranding=1 */}
-      {/* https://youtu.be/QmFQRhUOns4?si=5pp_-APa5idTS_Is */}
-      {/* <div className="about-classic__hero-content">
-        <h1 className="about-classic__hero-title Raleway reveal-wall">
-          Notre super-pouvoir :
-          <br />
-          les utilisateurs
-        </h1>
-      </div> */}
       <div
         className={`about-classic__scroll-indicator${
           showScrollHint ? "" : " is-hidden"
