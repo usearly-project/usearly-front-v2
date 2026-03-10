@@ -100,10 +100,17 @@
   background-color: #0c0c0f;
   overflow: hidden;
   @media screen and (max-width: 900px) {
-    height: 300px;
+    height: 100%;
+    min-height: 520px;
   }
 }
 
+@media (max-width: 900px) {
+  .about-classic__hero-video {
+    width: 160vw;
+    height: 90vw;
+  }
+}
 .about-classic__hero-video {
   position: absolute;
   top: 50%;
@@ -865,5 +872,30 @@
   .about-classic__scroll-wheel {
     opacity: 1 !important;
     transform: translateY(0) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-classic__hero-video {
+    width: 177.77vh; /* ratio 16:9 */
+    height: 100vh;
+    min-width: 100%;
+    min-height: 100%;
+  }
+}
+@media (max-width: 768px) {
+  .about-classic__hero {
+    height: 100%;
+  }
+  .page-about-classic {
+    #root {
+      main {
+        .about-classic {
+          .about-classic__hero {
+            height: 100%;
+          }
+        }
+      }
+    }
   }
 }

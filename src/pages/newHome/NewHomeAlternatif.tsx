@@ -1,20 +1,17 @@
 import React, { useCallback, useRef } from "react";
 import "./NewHomeAlternatif.scss";
-/* import SuggestCard from "./card/SuggestCard"; */
 import BrandCard from "./card/BrandCard";
 import Footer from "@src/components/layout/Footer";
-// import VideoContainerLanding from "./components/videoContainer/videoContainerLanding";
 import TitleSection from "@src/pages/aboutClassic/components/TitleSection";
 import ExtensionExample from "./components/extensionExample/ExtensionExample";
 import UsearlyDrawing from "@src/components/background/Usearly";
 import Hero from "@src/pages/aboutClassic/components/Hero";
 import ScrollInlineImages from "./components/scroll-text/ScrollInlineImages";
-import FavoriteSection from "./components/slide-stack/FavoriteSection";
 import InfiniteCarouselBanner from "./components/infiniteCarouselBanner/InfiniteCarouselBanner";
-// import useScrollPhrase from "./hooks/useScrollPhrase";
 import useScrollPhrase from "@src/pages/aboutClassic/hooks/useScrollPhrase";
 import ExtensionRedirect from "@src/components/extension-redirect/ExtensionRedirect";
 import { useIsAtBottom } from "@src/hooks/detect-bottom";
+import FavoriteCarouselSection from "./components/slide-stack/FavoriteCarouselSection";
 
 const PHRASES = ["des sondages", "des chatbots", "le silence"];
 const SCROLL_STEP = 0.05;
@@ -64,13 +61,10 @@ const NewHome: React.FC = () => {
           />
         </div>
       </div>
-      <div className="favorite-isolated">
-        <FavoriteSection />
-      </div>
 
       {/* --- SUITE DU CONTENU (NON AFFECTÉ) --- */}
       <div className="new-home-main">
-        {/* <SuggestCard /> */}
+        <FavoriteCarouselSection />
         <BrandCard />
         <div className="usearly-drawing-container">
           <UsearlyDrawing animationDuration="25" />

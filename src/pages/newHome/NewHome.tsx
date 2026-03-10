@@ -1,6 +1,5 @@
-import React, { useCallback } from "react";
+/* import React, { useCallback } from "react";
 import "./NewHome.scss";
-/* import SuggestCard from "./card/SuggestCard"; */
 import BrandCard from "./card/BrandCard";
 import Footer from "@src/components/layout/Footer";
 import VideoContainerLanding from "./components/videoContainer/videoContainerLanding";
@@ -25,13 +24,10 @@ const NewHome: React.FC = () => {
   return (
     <div className="new-home-page">
       <HeroSection />
-
-      {/* 🔮 SECTION VIDÉO FULL WIDTH */}
       <section className="new-home-video-section">
         <VideoContainerLanding />
       </section>
 
-      {/* --- SECTION NORMALE --- */}
       <div className="new-home-main">
         <ExtensionExample />
 
@@ -62,14 +58,11 @@ const NewHome: React.FC = () => {
         <FavoriteSection />
       </div>
 
-      {/* --- SUITE DU CONTENU (NON AFFECTÉ) --- */}
       <div className="new-home-main">
-        {/* <SuggestCard /> */}
         <BrandCard />
         <div className="usearly-drawing-container">
           <UsearlyDrawing animationDuration="25" />
         </div>
-
         <Footer />
       </div>
 
@@ -89,3 +82,4 @@ const NewHome: React.FC = () => {
 };
 
 export default NewHome;
+ */

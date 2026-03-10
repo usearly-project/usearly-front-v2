@@ -53,11 +53,6 @@ const CommentSection: React.FC<Props> = ({
   const effectiveReportIds =
     type === "report" && reportIds?.length ? reportIds : [];
 
-  /*   const { brandMessage } =
-    type === "report" && reportIds?.length
-      ? useBrandResponse(reportIds)
-      : { brandMessage: null }; */
-
   const { brandMessage } = useBrandResponse(effectiveReportIds);
 
   const buildCommentEndpoint = () => {
@@ -72,12 +67,11 @@ const CommentSection: React.FC<Props> = ({
       const res = await apiService.get(buildCommentEndpoint());
       const normalized = (res.data.comments || []).map((c: any) => ({
         ...c,
-        user: c.user ??
-          c.author ?? {
-            id: c.userId,
-            pseudo: "Utilisateur",
-            avatar: null,
-          },
+        user: {
+          id: c.author?.id ?? c.userId,
+          pseudo: c.author?.pseudo ?? "Utilisateur",
+          avatar: c.author?.avatar ?? null,
+        },
       }));
 
       setComments(normalized);
@@ -93,12 +87,14 @@ const CommentSection: React.FC<Props> = ({
   const handleAdd = async (content: string) => {
     try {
       const res = await apiService.post(buildCommentEndpoint(), { content });
+
+      const comment = res.data.comment;
       const added = {
-        ...res.data.comment,
+        ...comment,
         user: {
-          id: userProfile?.id ?? res.data.comment.user.id,
-          pseudo: userProfile?.pseudo ?? res.data.comment.user.pseudo,
-          avatar: userProfile?.avatar ?? res.data.comment.user.avatar,
+          id: comment.author?.id ?? comment.userId,
+          pseudo: comment.author?.pseudo ?? "Utilisateur",
+          avatar: comment.author?.avatar ?? null,
         },
       };
       setComments((prev) => [added, ...prev]);
