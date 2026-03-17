@@ -4,12 +4,16 @@
   width: 100%;
   margin: 0 auto;
   background: #a8b9cc;
-  padding: 80px 60px;
+  padding: 65px 60px 80px 60px;
   padding-bottom: 100px;
   padding-right: 0px;
   border-radius: 36px;
   margin-bottom: 50px;
   transition: background-color 0.35s ease;
+  @media screen and (max-width: 1050px) {
+    padding-top: 10px;
+    padding-bottom: 75px;
+  }
 }
 
 .favorite-section--reports {

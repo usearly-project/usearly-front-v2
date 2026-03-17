@@ -4,7 +4,8 @@ import Footer from "@src/components/layout/Footer";
 import TitleSection from "@src/pages/aboutClassic/components/TitleSection";
 import ExtensionExample from "./components/extensionExample/ExtensionExample";
 import UsearlyDrawing from "@src/components/background/Usearly";
-import Hero from "@src/pages/aboutClassic/components/Hero";
+// import Hero from "@src/pages/aboutClassic/components/Hero";
+import SectionHookUsers from "./components/sectionHookUsers/SectionHookUsers";
 import ScrollInlineImages from "./components/scroll-text/ScrollInlineImages";
 import InfiniteCarouselBanner from "./components/infiniteCarouselBanner/InfiniteCarouselBanner";
 import useScrollPhrase from "@src/pages/aboutClassic/hooks/useScrollPhrase";
@@ -28,7 +29,9 @@ const NewHome: React.FC = () => {
 
   return (
     <div className="new-home-page">
-      <Hero page={"landing"} />
+      {/* <Hero page={"landing"} />
+       */}
+      <SectionHookUsers />
       <TitleSection phrase={PHRASES[phraseIndex]} />
 
       {/* --- SECTION NORMALE --- */}
@@ -49,7 +52,7 @@ const NewHome: React.FC = () => {
             ]}
             images={[
               { line: 1, wordIndex: 1, src: "/assets/images/txt1.png" },
-              { line: 3, wordIndex: 2, src: "/assets/images/txt2.png" },
+              { line: 3, wordIndex: 2, src: "/assets/images/txt2.svg" },
               {
                 line: 2,
                 wordIndex: 2,
