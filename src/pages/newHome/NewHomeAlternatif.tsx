@@ -1,25 +1,26 @@
 import React, { useCallback, useRef } from "react";
 import "./NewHomeAlternatif.scss";
 import Footer from "@src/components/layout/Footer";
-import TitleSection from "@src/pages/aboutClassic/components/TitleSection";
+// import TitleSection from "@src/pages/aboutClassic/components/TitleSection";
 import ExtensionExample from "./components/extensionExample/ExtensionExample";
 import UsearlyDrawing from "@src/components/background/Usearly";
 // import Hero from "@src/pages/aboutClassic/components/Hero";
 import SectionHookUsers from "./components/sectionHookUsers/SectionHookUsers";
 import ScrollInlineImages from "./components/scroll-text/ScrollInlineImages";
 import InfiniteCarouselBanner from "./components/infiniteCarouselBanner/InfiniteCarouselBanner";
-import useScrollPhrase from "@src/pages/aboutClassic/hooks/useScrollPhrase";
+// import useScrollPhrase from "@src/pages/aboutClassic/hooks/useScrollPhrase";
 import ExtensionRedirect from "@src/components/extension-redirect/ExtensionRedirect";
 import { useIsAtBottom } from "@src/hooks/detect-bottom";
 import FavoriteCarouselSection from "./components/slide-stack/FavoriteCarouselSection";
+import SectionJoinUsearly from "@src/pages/newHome/components/sectionJoinUsearly/SectionJoinUsearly";
 
-const PHRASES = ["des sondages", "des chatbots", "le silence"];
-const SCROLL_STEP = 0.05;
+// const PHRASES = ["des sondages", "des chatbots", "le silence"];
+// const SCROLL_STEP = 0.05;
 const BOTTOM_THRESHOLD_PX = 12;
 
 const NewHome: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null!);
-  const phraseIndex = useScrollPhrase(sectionRef, PHRASES.length, SCROLL_STEP);
+  // const phraseIndex = useScrollPhrase(sectionRef, PHRASES.length, SCROLL_STEP);
   const isAtBottom = useIsAtBottom(BOTTOM_THRESHOLD_PX);
   const scrollToTop = useCallback(() => {
     if (typeof window === "undefined") return;
@@ -32,7 +33,8 @@ const NewHome: React.FC = () => {
       {/* <Hero page={"landing"} />
        */}
       <SectionHookUsers />
-      <TitleSection phrase={PHRASES[phraseIndex]} />
+      <SectionJoinUsearly />
+      {/* <TitleSection phrase={PHRASES[phraseIndex]} /> */}
 
       {/* --- SECTION NORMALE --- */}
       <div className="new-home-main" ref={sectionRef}>

@@ -57,7 +57,7 @@ const SectionHookUsers = () => {
           />
         </div>
       </div>
-      <PlanetCanvas width={1500} height={975} popFeed />
+      <PlanetCanvas width={1500} height={910} popFeed />
     </section>
   );
 };
