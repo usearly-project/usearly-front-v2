@@ -1,5 +1,5 @@
 import { type ReactNode, type RefObject } from "react";
-import PlanetCanvas from "@src/components/canvas/PlanetCanvas";
+// import PlanetCanvas from "@src/components/canvas/PlanetCanvas";
 
 type SplitSectionProps = {
   sectionRef: RefObject<HTMLDivElement | null>;
@@ -54,9 +54,9 @@ const SplitSection = ({ sectionRef }: SplitSectionProps) => (
     ref={sectionRef}
   >
     <Cards />
-    <div className="about-classic__statement">
+    {/* <div className="about-classic__statement">
       <PlanetCanvas />
-    </div>
+    </div> */}
   </div>
 );
 
