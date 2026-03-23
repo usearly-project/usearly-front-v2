@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./RightSidebar.scss";
 import { getRightSidebarStats } from "@src/services/feedbackService";
 import { pluralize } from "@src/utils/plurilize";
+import flammes from "/assets/icons/flammes.svg";
 
 type Stats = {
   totalReports: number;
@@ -33,7 +34,10 @@ const RightSidebar = () => {
 
   return (
     <div className="right-sidebar">
-      <h3>Ça chauffe par ici ! 🔥</h3>
+      <h3>
+        Ça chauffe par ici !
+        <img className="side-flamme" src={flammes} alt="flamme" />
+      </h3>
 
       <p className="subtitle">
         Les sujets qui font réagir la communauté en ce moment.
@@ -48,7 +52,6 @@ const RightSidebar = () => {
             <span className="value">{stats.totalReports}</span>
             <span className="label">
               {pluralize(stats.totalReports, "signalement", "signalements")}{" "}
-              <br />
               dans les dernières 48h
             </span>
           </div>
@@ -57,8 +60,8 @@ const RightSidebar = () => {
             <span className="arrow">→</span>
             <span className="value">{stats.totalTickets}</span>
             <span className="label">
-              {pluralize(stats.totalTickets, "problème", "problèmes")} <br />
-              très signalés en ce moment
+              {pluralize(stats.totalTickets, "problème", "problèmes")} très
+              signalés en ce moment
             </span>
           </div>
         </div>

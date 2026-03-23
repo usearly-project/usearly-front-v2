@@ -1,32 +1,61 @@
+@use "@src/styles/base/variables" as *;
+
 .right-sidebar {
-  background: #cfd8ec;
+  background: #d3e1ff;
   padding: 22px;
   border-radius: 18px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
 
   h3 {
-    font-size: 26px;
-    font-weight: 800;
+    display: ruby;
+    color: #000;
+    font-family: $font-family-4;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 100%;
+    margin-bottom: 5px;
+    .side-flamme {
+      margin-top: 10px;
+      margin-left: 10px;
+    }
   }
 
   .subtitle {
-    font-size: 14px;
-    color: #333;
+    color: #000;
+    font-family: $font-family-3;
+    font-size: 16px;
   }
 
   .stats {
-    margin-top: 10px;
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 5px;
   }
 
   .stat-item {
-    display: flex;
+    display: flow;
     align-items: baseline;
-    gap: 8px;
+    line-height: 1.2;
+    .value {
+      color: #000;
+      font-family: $font-family-3;
+      font-size: 40px;
+      font-style: normal;
+      font-weight: 700;
+      margin-right: 5px;
+    }
+    .label {
+      color: #000;
+      font-family: $font-family-3;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+    }
+    .arrow {
+      margin-right: 5px;
+    }
   }
 
   .arrow {
