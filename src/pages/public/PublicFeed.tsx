@@ -1,8 +1,8 @@
 import MixedFeed from "@src/components/feed/MixedFeed";
 import "./PublicFeed.scss";
-import HeroBanner from "./HeroBanner";
-import LeftSidebar from "./sidebars/LeftSidebar";
-import RightSidebar from "./sidebars/RightSidebar";
+import HeroBanner from "./components/HeroBanner/HeroBanner";
+import LeftSidebar from "./components/sidebars/LeftSidebar";
+import RightSidebar from "./components/sidebars/RightSidebar";
 
 function PublicFeed() {
   return (
