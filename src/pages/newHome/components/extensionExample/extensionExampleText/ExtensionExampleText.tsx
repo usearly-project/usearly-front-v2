@@ -87,9 +87,9 @@ const ExtensionExampleText = ({
     setDisplayedText("sur tous les sites/apps que vous utilisez");
   }, []);
 
-  // 🎨 Couleurs actives / inactives
   const ACTIVE = { color: "#ffffff", bg: "#4549EF" };
   const INACTIVE = { color: "#4549EF", bg: "#4549EF" }; // même teinte mais fond léger
+  const pillResetKey = selected;
 
   return (
     <div className="extension-example-text-container">
@@ -104,6 +104,7 @@ const ExtensionExampleText = ({
       <p className="extension-example-description">
         Exprimez-vous en temps réel :{" "}
         <TextPill
+          key={`signalez-${pillResetKey}`}
           title="signalez"
           isActive={selected === "signalez"}
           color={selected === "signalez" ? ACTIVE.color : INACTIVE.color}
@@ -115,6 +116,7 @@ const ExtensionExampleText = ({
         />{" "}
         un problème,{" "}
         <TextPill
+          key={`félicitez-${pillResetKey}`}
           title="félicitez"
           isActive={selected === "félicitez"}
           color={selected === "félicitez" ? ACTIVE.color : INACTIVE.color}
@@ -126,6 +128,7 @@ const ExtensionExampleText = ({
         />{" "}
         pour une fonctionnalité qui vous facilite la vie, ou{" "}
         <TextPill
+          key={`suggérez-${pillResetKey}`}
           title="suggérez"
           isActive={selected === "suggérez"}
           color={selected === "suggérez" ? ACTIVE.color : INACTIVE.color}

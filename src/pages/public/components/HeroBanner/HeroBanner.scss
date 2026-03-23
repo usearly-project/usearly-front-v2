@@ -54,6 +54,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    @media screen and (max-width: 901px) {
+      flex-direction: column;
+      gap: 40px;
+    }
   }
 
   .hero-left h1 {
