@@ -129,8 +129,8 @@ const LeftSidebar = () => {
         </button>
       </div>
       <p className="sidebar-text">
-        Ces marques crispent beaucoup d’utilisateurs en ce moment.Ajoute ton
-        signalement et faisons bouger les choses ensemble.
+        Ces marques crispent beaucoup d’utilisateurs en ce moment. <br />
+        Ajoute ton signalement et faisons bouger les choses ensemble.
       </p>
       {tooltip.visible && (
         <div

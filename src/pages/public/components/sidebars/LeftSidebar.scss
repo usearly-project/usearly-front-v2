@@ -1,22 +1,24 @@
+@use "@src/styles/base/variables" as *;
+
 .left-sidebar {
   position: relative;
-  background: #f7f7f7;
+  background: #ffffff;
   padding: 22px;
-  border-radius: 16px;
-  border: 1px solid #e6e6e6;
+  border-radius: 8px;
+  border: 0.5px solid #d3d3d3;
   width: 100%;
-  max-width: 340px;
+  max-width: 310px;
   display: flex;
   flex-direction: column;
   z-index: 21;
-}
-
-/* 🔥 TITLE */
-.left-sidebar h3 {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 18px;
-  line-height: 1.4;
+  h3 {
+    color: #000;
+    font-family: $font-family-3;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1.4;
+    margin-bottom: 32px;
+  }
 }
 
 /* 🔥 ROW */
@@ -29,28 +31,47 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  &:last-child {
+    align-items: flex-end;
+  }
 }
 
 .brand-info {
   flex: 1;
+  .brand-label {
+    color: #000;
+    font-family: $font-family;
+    font-size: 12px;
+    font-style: italic;
+    font-weight: 300;
+    line-height: normal;
+  }
 }
 
 /* 🔥 LABEL */
 .brand-label {
-  font-size: 13px;
-  color: #6b6b6b;
+  color: #000;
+  font-family: $font-family;
+  font-size: 12px;
+  font-style: italic;
+  font-weight: 300;
 }
 
 /* 🔥 SCORE */
 .progress-score {
-  font-size: 13px;
-  font-weight: 500;
   color: #000;
+  font-family: $font-family-4;
+  font-size: 14px;
+  font-weight: 300;
+  margin-bottom: -6px;
+  .progress-score-count {
+    font-weight: 800;
+  }
 }
 
 /* 🔥 BAR */
 .brand-progress {
-  margin-top: 6px;
+  margin-top: 4px;
 }
 
 .progress-bar {
@@ -70,7 +91,7 @@
 }
 .progress-bar-fill {
   height: 100%;
-  background: #7da6ff;
+  background: #8db3ff;
   border-radius: 6px;
   transition: width 0.5s ease;
 }
@@ -85,23 +106,27 @@
 /* 🔥 TOP BRAND */
 .brand-row.top {
   .brand-label {
-    font-weight: 600;
+    // font-weight: 600;
     color: #000;
   }
 
   .progress-bar-fill {
-    background: #5c8cff;
+    // background: #5c8cff;
+    background: #8db3ff;
   }
 }
 
 /* 🔥 BUTTON */
 .see-all {
+  display: flex;
+  max-width: 215px;
+  justify-content: center;
+  align-items: center;
   margin: 18px auto;
   padding: 10px 18px;
-  border-radius: 999px;
+  border-radius: 32px;
   border: 1px solid #000;
-  background: white;
-  font-size: 14px;
+  gap: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
 
@@ -114,9 +139,10 @@
 /* 🔥 TEXT */
 .sidebar-text {
   margin-top: 10px;
-  font-size: 14px;
-  color: #555;
-  line-height: 1.5;
+  color: #000;
+  font-family: $font-family;
+  font-size: 15px;
+  font-weight: 400;
 }
 
 /* 🔥 EMPTY */
