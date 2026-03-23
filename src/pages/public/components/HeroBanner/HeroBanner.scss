@@ -1,0 +1,128 @@
+@use "@src/styles/base/variables" as *;
+
+.hero-banner {
+  position: relative;
+  isolation: isolate;
+  background-color: #10163a;
+  background-image: url("/assets/svg/3logo-cascade.svg");
+  background-repeat: no-repeat;
+  background-position: right 30px top -30px;
+  background-size: 220px auto;
+  padding: 40px 0; // ❗ enlever le padding horizontal ici
+  color: white;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("/assets/images/bulle-deco-banner.svg");
+    background-repeat: no-repeat;
+    background-position: left -30px top -115px;
+    background-size: 240px auto;
+    opacity: 0.15;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @media (max-width: 1024px) {
+    background-position: right -52px center;
+    background-size: 180px auto;
+
+    &::before {
+      background-position: left -104px center;
+      background-size: 210px auto;
+    }
+  }
+
+  @media (max-width: 768px) {
+    background-position: right -68px bottom 12px;
+    background-size: 145px auto;
+
+    &::before {
+      background-position: left -96px top 24px;
+      background-size: 180px auto;
+    }
+  }
+
+  .hero-content {
+    max-width: 1200px; // 🔥 clé
+    margin: 0 auto; // 🔥 centre le contenu
+    padding: 0 40px; // espace interne propre
+    position: relative;
+    z-index: 1;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .hero-left h1 {
+    font-size: 34px;
+    font-weight: 300;
+    font-family: $font-family-4;
+  }
+  .highlight-container {
+    display: inline-block;
+    transform: rotate(-4deg);
+    margin-right: 5px;
+    .highlight {
+      position: relative;
+      background: #5c8cff;
+      border: 3px solid #ffffff;
+      padding: 1px 18px;
+      border-radius: 999px;
+      font-weight: 500;
+      font-family: "Otomanopee One";
+
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: -11px;
+        right: 40px;
+        width: 18px;
+        height: 18px;
+        background: #5c8cff;
+        border-right: 3px solid #ffffff;
+        border-bottom: 3px solid #ffffff;
+        transform: rotate(45deg);
+        border-bottom-right-radius: 4px;
+      }
+    }
+  }
+
+  .hero-right {
+    text-align: right;
+  }
+
+  .hero-stats {
+    display: flex;
+    align-items: center;
+    margin-top: 16px;
+    gap: 30px;
+  }
+
+  .hero-impact {
+    font-size: 16px;
+    margin-bottom: 6px;
+    font-family: $font-family-3;
+  }
+
+  .stat {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 1;
+
+    .stat-value {
+      font-size: 48px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    img {
+      width: 2.8em; // 🔥 proportionnel au texte
+      height: 2.8em;
+      transform: translateY(0.08em);
+    }
+  }
+}
