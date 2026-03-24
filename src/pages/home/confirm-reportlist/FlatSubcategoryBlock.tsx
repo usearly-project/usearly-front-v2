@@ -21,6 +21,7 @@ import { useIsMobile } from "@src/hooks/use-mobile";
 import FlatSubcategoryBlockMobile from "./FlatSubcategoryBlockMobile";
 import SolutionModal from "@src/components/ui/SolutionModal";
 import SolutionsModal from "@src/components/ui/SolutionsModal";
+import validate from "/assets/icons/validate.svg";
 
 interface Props {
   brand: string;
@@ -209,6 +210,11 @@ const FlatSubcategoryBlock: React.FC<Props> = ({
                   .replace("environ ", "")
                   .replace("il y a ", "")}
               </span>
+              {hasBrandResponse && (
+                <span className="brand-response-date-badge">
+                  <img src={validate} alt="" />
+                </span>
+              )}
             </div>
           </div>
         </div>

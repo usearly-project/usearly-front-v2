@@ -5,12 +5,13 @@ import { getEmojisForType } from "@src/components/constants/emojiMapByType";
 import "./ReportActionsBar.scss";
 import EmojiUrlyReactionPicker from "@src/utils/EmojiUrlyReactionPicker";
 import { TICKET_STATUSES, type TicketStatusKey } from "@src/types/ticketStatus";
-import Avatar from "@src/components/shared/Avatar";
 import type { HasBrandResponse } from "@src/types/brandResponse";
 import { getBrandAvatarFromResponse } from "@src/utils/brandResponse";
 import ReportAvatars from "@src/pages/public/components/ReportAvatar/ReportsAvatar";
 import type { User } from "@src/types/Reports";
 import { useAuth } from "@src/services/AuthContext";
+import BrandResponseBanner from "@src/components/brand-response-banner/BrandResponseBanner";
+import lightBulbLight from "/assets/icons/lightBulbLight.svg";
 
 interface Props {
   type: "report" | "suggestion" | "coupDeCoeur";
@@ -81,6 +82,11 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
   const topThree = allReactions.slice(0, 3);
   const totalCount = allReactions.reduce((acc, r) => acc + r.count, 0);
   const brandAvatar = getBrandAvatarFromResponse(hasBrandResponse);
+  const brandResponse =
+    hasBrandResponse && typeof hasBrandResponse === "object"
+      ? hasBrandResponse
+      : null;
+  const brandResponseMessage = brandResponse?.message?.trim();
 
   const handleAddReaction = async (emoji: string) => {
     if (!isAuthenticated) {
@@ -105,10 +111,29 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
 
   return (
     <div className="report-actions-bar">
+      {brandResponse && brandResponseMessage && (
+        <div className="report-brand-response-banner">
+          <BrandResponseBanner
+            message={brandResponseMessage}
+            createdAt={brandResponse.createdAt ?? undefined}
+            brand={
+              brandResponse.brand ??
+              brandAvatar?.pseudo ??
+              brandAvatar?.displayName ??
+              "Marque"
+            }
+            brandSiteUrl={
+              brandResponse.siteUrl ?? brandAvatar?.siteUrl ?? undefined
+            }
+            brandResponse={brandResponse}
+          />
+        </div>
+      )}
+
       <div className="counts-row">
         <div className="count-left">
           {topThree.length > 0 && (
-            <>
+            <div>
               {topThree.map((r) => (
                 <span
                   key={r.emoji}
@@ -120,56 +145,19 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
                 </span>
               ))}
               <span className="reaction-count">{totalCount}</span>
-            </>
+            </div>
           )}
-        </div>
-
-        <div className="count-right">
-          {commentsCount > 0 ? (
+          {commentsCount > 0 && (
             <>
-              {hasBrandResponse && brandAvatar && (
-                <span
-                  onClick={onCommentClick}
-                  role="button"
-                  tabIndex={0}
-                  className="brand-avatar-clickable"
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      onCommentClick();
-                    }
-                  }}
-                >
-                  <Avatar
-                    avatar={brandAvatar.avatar}
-                    pseudo={brandAvatar.pseudo}
-                    type={brandAvatar.type}
-                    siteUrl={brandAvatar.siteUrl ?? undefined}
-                    sizeHW={20}
-                  />
-                </span>
-              )}
-
               <span className="comments-link" onClick={onCommentClick}>
                 {commentsCount}{" "}
                 {commentsCount === 1 ? "commentaire" : "commentaires"}
               </span>
             </>
-          ) : (
-            <>
-              {hasBrandResponse && brandAvatar && (
-                <div onClick={onCommentClick}>
-                  <Avatar
-                    avatar={brandAvatar.avatar}
-                    pseudo={brandAvatar.pseudo}
-                    type={brandAvatar.type}
-                    siteUrl={brandAvatar.siteUrl ?? undefined}
-                    sizeHW={20}
-                  />
-                </div>
-              )}
-            </>
           )}
+        </div>
 
+        <div className="count-right">
           <div className="signalements-avatars">
             {reporters.length > 0 && <ReportAvatars users={reporters} />}
 
@@ -264,7 +252,11 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
               onOpenSolutionModal?.();
             }}
           >
-            <Lightbulb size={18} />
+            {solutionsCount > 0 ? (
+              <img src={lightBulbLight} height={"18px"} width={"18px"} alt="" />
+            ) : (
+              <Lightbulb size={18} />
+            )}
 
             <span>
               {solutionsCount > 0

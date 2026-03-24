@@ -19,6 +19,13 @@
   font-weight: 500;
 }
 
+.brand-response-date-badge {
+  display: inline-flex;
+  align-items: center;
+  background-color: #487cff;
+  border-radius: 999px;
+}
+
 .auth-tooltip {
   position: fixed;
   bottom: 70px; // ajuste selon ton UI

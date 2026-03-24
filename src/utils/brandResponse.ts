@@ -15,6 +15,8 @@ type BrandResponseSeed = {
   brandColor?: string | null;
   primaryColor?: string | null;
   color?: string | null;
+  message?: string | null;
+  createdAt?: string | null;
 };
 
 const isBrandResponseObject = (
@@ -24,11 +26,14 @@ const isBrandResponseObject = (
     value &&
     typeof value === "object" &&
     ("avatar" in value ||
+      "brand" in value ||
       "pseudo" in value ||
       "displayName" in value ||
       "logoUrl" in value ||
       "imageUrl" in value ||
       "siteUrl" in value ||
+      "message" in value ||
+      "createdAt" in value ||
       "type" in value ||
       "brandColor" in value ||
       "primaryColor" in value ||
@@ -43,12 +48,9 @@ export const normalizeBrandResponse = (
 
   const fromValue = isBrandResponseObject(value) ? value : undefined;
   const displayName = fromValue?.displayName ?? seed.displayName ?? undefined;
+  const brand = fromValue?.brand ?? seed.brand ?? displayName ?? undefined;
   const pseudo =
-    fromValue?.pseudo ??
-    displayName ??
-    seed.brand ??
-    seed.displayName ??
-    undefined;
+    fromValue?.pseudo ?? displayName ?? brand ?? seed.displayName ?? undefined;
   const siteUrl = fromValue?.siteUrl ?? seed.siteUrl ?? undefined;
   const explicitAvatar =
     fromValue?.avatar ??
@@ -77,6 +79,7 @@ export const normalizeBrandResponse = (
     avatar: avatar ?? null,
     pseudo,
     displayName,
+    brand,
     type: "brand",
     siteUrl,
     logoUrl: fromValue?.logoUrl ?? seed.logoUrl ?? undefined,
@@ -84,6 +87,8 @@ export const normalizeBrandResponse = (
     brandColor: resolvedBrandColor ?? undefined,
     primaryColor: fromValue?.primaryColor ?? seed.primaryColor ?? undefined,
     color: fromValue?.color ?? seed.color ?? undefined,
+    message: fromValue?.message ?? seed.message ?? undefined,
+    createdAt: fromValue?.createdAt ?? seed.createdAt ?? undefined,
   };
 };
 

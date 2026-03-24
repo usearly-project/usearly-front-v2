@@ -5,9 +5,9 @@
   margin-bottom: 20px;
   .brand-response-banner-content {
     position: relative;
-    margin-right: 24px;
+    margin-bottom: 32px;
     .icon-brand-answer {
-      position: absolute;
+      // position: absolute;
       right: -12px;
       top: 7.5px;
       z-index: 1;
@@ -38,6 +38,13 @@
       inset 0 1px 0 rgba(255, 255, 255, 0.6);
 
     font-family: Inter, system-ui, sans-serif;
+
+    .brand-response-banner-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
   }
   .brand-response-avatar-wrapper {
     margin-top: 25px;

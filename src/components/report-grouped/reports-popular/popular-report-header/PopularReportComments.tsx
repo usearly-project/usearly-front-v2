@@ -1,4 +1,3 @@
-import BrandResponseBanner from "@src/components/brand-response-banner/BrandResponseBanner";
 import DescriptionCommentSection from "@src/components/report-desc-comment/DescriptionCommentSection";
 
 interface Props {
@@ -18,22 +17,11 @@ const PopularReportComments: React.FC<Props> = ({
   showComments,
   setLocalCommentsCounts,
   setRefreshKey,
-  brandResponse,
 }) => {
   if (!showComments || !userProfile?.id) return null;
 
   return (
     <>
-      {brandResponse?.message && (
-        <BrandResponseBanner
-          message={brandResponse.message}
-          createdAt={brandResponse.createdAt}
-          brand={brandResponse.brand}
-          brandSiteUrl={brandResponse.siteUrl}
-          brandResponse={brandResponse}
-        />
-      )}
-
       <DescriptionCommentSection
         userId={userProfile.id}
         descriptionId={descriptionId}

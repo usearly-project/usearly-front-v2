@@ -25,8 +25,8 @@
 /* avatar */
 
 .mini-avatar-wrapper .avatar {
-  width: 22px;
-  height: 22px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
 }
 
@@ -79,8 +79,8 @@
 }
 .signalement-avatars {
   .avatar-wrapper-custom {
-    width: 22px;
-    height: 22px;
+    width: 42px;
+    height: 42px;
     border: 2px solid #fff;
   }
 
@@ -95,7 +95,7 @@
   align-items: center;
 
   .mini-avatar-wrapper {
-    margin-left: -6px;
+    margin-left: -28px;
   }
 
   .mini-avatar-wrapper:first-child {

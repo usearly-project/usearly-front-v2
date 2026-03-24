@@ -5,8 +5,6 @@ import CommentForm from "./CommentForm";
 import CommentList from "./CommentList";
 import Swal from "sweetalert2";
 import { getFullAvatarUrl } from "@src/utils/avatarUtils";
-import { useBrandResponse } from "@src/hooks/useBrandResponse";
-import BrandResponseBanner from "../brand-response-banner/BrandResponseBanner";
 import type { HasBrandResponse } from "@src/types/brandResponse";
 
 interface Comment {
@@ -36,11 +34,7 @@ interface Props {
 
 const CommentSection: React.FC<Props> = ({
   descriptionId,
-  reportIds,
   type,
-  brand,
-  brandSiteUrl,
-  brandResponse,
   onCommentAdded,
   onCommentDeleted,
   readOnly,
@@ -50,10 +44,6 @@ const CommentSection: React.FC<Props> = ({
     "pertinent",
   );
   const { userProfile } = useAuth();
-  const effectiveReportIds =
-    type === "report" && reportIds?.length ? reportIds : [];
-
-  const { brandMessage } = useBrandResponse(effectiveReportIds);
 
   const buildCommentEndpoint = () => {
     if (type === "report") return `/descriptions/${descriptionId}/comments`;
@@ -131,16 +121,6 @@ const CommentSection: React.FC<Props> = ({
 
   return (
     <div className="comment-input-section">
-      {brandMessage && (
-        <BrandResponseBanner
-          message={brandMessage.message}
-          createdAt={brandMessage.createdAt}
-          brand={brand ?? ""}
-          brandSiteUrl={brandSiteUrl}
-          brandResponse={brandResponse}
-        />
-      )}
-
       {!readOnly && userProfile && (
         <CommentForm
           avatarUrl={getFullAvatarUrl(userProfile.avatar)}

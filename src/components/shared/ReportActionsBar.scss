@@ -48,13 +48,30 @@
   width: 100%;
   padding: 16px 8px 0px 8px;
 
+  .report-brand-response-banner {
+    .brand-response-banner-wrapper {
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .brand-response-banner {
+      margin-top: 0;
+      padding: 20px 22px;
+    }
+
+    .brand-response-avatar-wrapper {
+      margin-top: 4px;
+    }
+  }
+
   .counts-row {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
     padding: 0rem 0 0.2rem 0;
     font-size: 0.85rem;
     color: #374151;
+    font-family: variables.$font-family;
 
     .count-left,
     .count-right {
@@ -92,6 +109,10 @@
         color: #6b7280;
       }
     }
+
+    .count-left {
+      gap: 60px;
+    }
   }
 
   .separator {
@@ -106,7 +127,7 @@
     justify-content: space-between;
     align-items: center;
     gap: 5px;
-    padding: 0.8rem 0 0.4rem 0;
+    padding: 0.4rem 0 0.4rem 0;
     font-family: "Arial";
 
     .actions-left {

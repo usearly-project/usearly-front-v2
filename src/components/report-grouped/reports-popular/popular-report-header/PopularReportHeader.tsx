@@ -3,6 +3,7 @@ import { fr } from "date-fns/locale";
 import Avatar from "@src/components/shared/Avatar";
 import UserBrandLine from "@src/components/shared/UserBrandLine";
 import { getCategoryIconPathFromSubcategory } from "@src/utils/IconsUtils";
+import validate from "/assets/icons/validate.svg";
 
 interface Props {
   item: any;
@@ -34,6 +35,11 @@ const PopularReportHeader: React.FC<Props> = ({
             <h4>{item.subCategory || "Signalement"}</h4>
             {formattedShortDate && (
               <span className="date-badge">• {formattedShortDate}</span>
+            )}
+            {item.hasBrandResponse && (
+              <span className="brand-response-date-badge">
+                <img src={validate} alt="" />
+              </span>
             )}
           </div>
         </div>
