@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import {
   PLANET_CANVAS_TRAIL_IMAGES,
-  POP_FEED_BRANDS,
+  POP_FEED_BRANDS_BY_THEME,
   POP_FEED_LIFETIME_MS,
   POP_FEED_MAX_ATTEMPTS,
   buildPopFeedBrandMessage,
@@ -41,7 +41,8 @@ type BuildFeedItemArgs = {
 const createFeedItemId = () =>
   `planet-feed-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 
-const pickRandomBrand = () => pickRandomValue(POP_FEED_BRANDS);
+const pickRandomBrand = (theme: PopFeedTheme) =>
+  pickRandomValue(POP_FEED_BRANDS_BY_THEME[theme]);
 
 const buildBubble = (
   id: string,
@@ -277,7 +278,7 @@ const usePlanetPopFeed = (enabled: boolean) => {
       const itemBaseId = createFeedItemId();
 
       if (theme === "report" && allowReportPairs) {
-        const brand = pickRandomBrand();
+        const brand = pickRandomBrand("report");
         const primaryImage = pickImage();
         const secondaryImage = pickDifferentImage(primaryImage);
         const primaryPosition = pickPosition("report");
@@ -328,7 +329,7 @@ const usePlanetPopFeed = (enabled: boolean) => {
         return;
       }
 
-      const brand = pickRandomBrand();
+      const brand = pickRandomBrand(theme);
       const nextItem = buildFeedItem({
         itemId: itemBaseId,
         bubbleId: `${itemBaseId}-primary`,

@@ -1,18 +1,36 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import type { FeedItem } from "@src/types/feedItem";
 import FeedItemRenderer from "./FeedItemRenderer";
-import { usePublicFeed } from "@src/hooks/usePublicFeed";
+import FeedFilter, { type FeedFilterType } from "./FeedFilter";
+import ExpandableSearchBar from "../shared/search/ExpandableSearchBar";
 import "./MixedFeed.scss";
 import { useAuth } from "@src/services/AuthContext";
 
 interface Props {
+  feed: FeedItem[];
+  totalFeedCount: number;
+  loading: boolean;
+  hasMore: boolean;
+  loadMore: () => void | Promise<void>;
+  searchValue: string;
+  onSearchChange: (value: string) => void;
+  onSearchClear: () => void;
   isPublic?: boolean;
 }
 
-const MixedFeed: React.FC<Props> = ({ isPublic = false }) => {
+const MixedFeed: React.FC<Props> = ({
+  feed,
+  totalFeedCount,
+  loading,
+  hasMore,
+  loadMore,
+  searchValue,
+  onSearchChange,
+  onSearchClear,
+  isPublic = false,
+}) => {
   const { isAuthenticated } = useAuth();
-  const { feed, loadMore, loading, hasMore } = usePublicFeed();
-  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const [showAuthTooltip, setShowAuthTooltip] = useState(false);
   const [tooltipText, setTooltipText] = useState("");
@@ -25,11 +43,7 @@ const MixedFeed: React.FC<Props> = ({ isPublic = false }) => {
     }, 2000);
   };
 
-  const handleFilter = (type: string) => {
-    setIsOpen(false);
-
-    if (type === "trending") return;
-
+  const handleFilter = (type: FeedFilterType) => {
     if (!isAuthenticated) {
       if (type === "report") {
         triggerTooltip("Connecte-toi pour voir les signalements");
@@ -50,26 +64,27 @@ const MixedFeed: React.FC<Props> = ({ isPublic = false }) => {
     <div className="mixed-feed">
       {/* ✅ FILTER BAR */}
       <div className="feed-header">
-        <div className="feed-filter">
-          <button onClick={() => setIsOpen(!isOpen)}>L’actu du moment</button>
-
-          {isOpen && (
-            <div className="filter-dropdown">
-              <div onClick={() => handleFilter("report")}>Les signalements</div>
-
-              <div onClick={() => handleFilter("coupdecoeur")}>
-                Les coups de cœur
-              </div>
-
-              <div onClick={() => handleFilter("suggestion")}>
-                Les suggestions
-              </div>
-            </div>
-          )}
-        </div>
+        <FeedFilter onSelect={handleFilter} />
+        <ExpandableSearchBar
+          value={searchValue}
+          onChange={onSearchChange}
+          onClear={onSearchClear}
+          className="feed-header__search"
+          placeholder="Rechercher une publication"
+          ariaLabel="Rechercher dans les publications affichées"
+        />
       </div>
 
       {/* FEED */}
+      {!loading &&
+        totalFeedCount > 0 &&
+        feed.length === 0 &&
+        searchValue.trim() && (
+          <div className="feed-empty-state">
+            Aucune publication ne correspond à "{searchValue.trim()}".
+          </div>
+        )}
+
       {feed.map((item) => {
         const id =
           item.type === "report"
@@ -101,7 +116,6 @@ const MixedFeed: React.FC<Props> = ({ isPublic = false }) => {
         <p className="end-feed">Tu as tout vu 👀</p>
       )}
 
-      {loading && <p>Loading...</p>}
       {showAuthTooltip && <div className="auth-tooltip">{tooltipText}</div>}
     </div>
   );
