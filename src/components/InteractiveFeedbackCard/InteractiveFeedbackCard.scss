@@ -404,8 +404,35 @@
     .feedback-header {
       display: flex;
       justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
       width: 100%;
       padding-top: 8px;
+
+      .feedback-header-main {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex: 1 1 auto;
+        min-width: 0;
+      }
+
+      .feedback-header-type-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 30px;
+        width: 30px;
+        height: 30px;
+        border-radius: 999px;
+        margin-top: 1px;
+
+        img {
+          width: 42px;
+          height: 42px;
+          display: block;
+        }
+      }
 
       .avatar-with-brand {
         position: relative;
@@ -443,8 +470,11 @@
       .feedback-meta {
         display: flex;
         flex-direction: row;
+        flex-wrap: wrap;
+        flex: 1 1 auto;
         align-items: flex-start;
         gap: 5px;
+        min-width: 0;
         font-size: 11px;
         color: #777;
 
