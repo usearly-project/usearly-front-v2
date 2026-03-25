@@ -2,8 +2,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FeedItemRenderer from "./FeedItemRenderer";
 import { usePublicFeed } from "@src/hooks/usePublicFeed";
+import ExpandableSearchBar from "@src/components/shared/search/ExpandableSearchBar";
+import { filterFeedItems } from "@src/utils/feedSearch";
 import "./MixedFeed.scss";
 import { useAuth } from "@src/services/AuthContext";
+import chevronDown from "/assets/dashboardUser/chevron-down-svgrepo-com.svg";
 
 interface Props {
   isPublic?: boolean;
@@ -13,9 +16,11 @@ const MixedFeed: React.FC<Props> = ({ isPublic = false }) => {
   const { isAuthenticated } = useAuth();
   const { feed, loadMore, loading, hasMore } = usePublicFeed();
   const [isOpen, setIsOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
   const navigate = useNavigate();
   const [showAuthTooltip, setShowAuthTooltip] = useState(false);
   const [tooltipText, setTooltipText] = useState("");
+  const filteredFeed = filterFeedItems(feed, searchValue);
   const triggerTooltip = (text: string) => {
     setTooltipText(text);
     setShowAuthTooltip(true);
@@ -51,7 +56,10 @@ const MixedFeed: React.FC<Props> = ({ isPublic = false }) => {
       {/* ✅ FILTER BAR */}
       <div className="feed-header">
         <div className="feed-filter">
-          <button onClick={() => setIsOpen(!isOpen)}>L’actu du moment</button>
+          <button onClick={() => setIsOpen(!isOpen)}>
+            L’actu du moment{" "}
+            <img src={chevronDown} width={16} height={16} alt="chevron" />
+          </button>
 
           {isOpen && (
             <div className="filter-dropdown">
@@ -67,10 +75,28 @@ const MixedFeed: React.FC<Props> = ({ isPublic = false }) => {
             </div>
           )}
         </div>
+
+        <ExpandableSearchBar
+          value={searchValue}
+          onChange={setSearchValue}
+          onClear={() => setSearchValue("")}
+          className="feed-header__search"
+          placeholder="Rechercher une publication"
+          ariaLabel="Rechercher dans les publications affichées"
+        />
       </div>
 
       {/* FEED */}
-      {feed.map((item) => {
+      {!loading &&
+        feed.length > 0 &&
+        filteredFeed.length === 0 &&
+        searchValue.trim() && (
+          <div className="feed-empty-state">
+            Aucune publication ne correspond à "{searchValue.trim()}".
+          </div>
+        )}
+
+      {filteredFeed.map((item) => {
         const id =
           item.type === "report"
             ? item.data.reportingId
@@ -101,7 +127,6 @@ const MixedFeed: React.FC<Props> = ({ isPublic = false }) => {
         <p className="end-feed">Tu as tout vu 👀</p>
       )}
 
-      {loading && <p>Loading...</p>}
       {showAuthTooltip && <div className="auth-tooltip">{tooltipText}</div>}
     </div>
   );

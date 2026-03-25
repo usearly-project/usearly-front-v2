@@ -11,6 +11,7 @@ import { getBrandAvatarFromResponse } from "@src/utils/brandResponse";
 import ReportAvatars from "@src/pages/public/components/ReportAvatar/ReportsAvatar";
 import type { User } from "@src/types/Reports";
 import { useAuth } from "@src/services/AuthContext";
+import lightBulbLight from "/assets/icons/lightBulbLight.svg";
 
 interface Props {
   type: "report" | "suggestion" | "coupDeCoeur";
@@ -108,7 +109,7 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
       <div className="counts-row">
         <div className="count-left">
           {topThree.length > 0 && (
-            <>
+            <div className="reactions-summary">
               {topThree.map((r) => (
                 <span
                   key={r.emoji}
@@ -120,7 +121,16 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
                 </span>
               ))}
               <span className="reaction-count">{totalCount}</span>
-            </>
+            </div>
+          )}
+          {commentsCount > 0 && (
+            <span
+              className={`comments-link${topThree.length > 0 ? "" : " no-reaction"}`}
+              onClick={onCommentClick}
+            >
+              {commentsCount}{" "}
+              {commentsCount === 1 ? "commentaire" : "commentaires"}
+            </span>
           )}
         </div>
 
@@ -148,11 +158,6 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
                   />
                 </span>
               )}
-
-              <span className="comments-link" onClick={onCommentClick}>
-                {commentsCount}{" "}
-                {commentsCount === 1 ? "commentaire" : "commentaires"}
-              </span>
             </>
           ) : (
             <>
@@ -264,7 +269,16 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
               onOpenSolutionModal?.();
             }}
           >
-            <Lightbulb size={18} />
+            {solutionsCount > 0 ? (
+              <img
+                src={lightBulbLight}
+                width={18}
+                height={18}
+                alt="Ampoule indiquant qu'une solution a été proposée"
+              />
+            ) : (
+              <Lightbulb size={18} />
+            )}
 
             <span>
               {solutionsCount > 0
