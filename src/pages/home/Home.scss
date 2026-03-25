@@ -253,6 +253,22 @@ body.feedback-route .home-grouped-reports-list {
   }
 }
 
+.home-grouped-reports-list {
+  .subcategory-block {
+    .subcategory-header {
+      .subcategory-right {
+        .expanded-header {
+          .avatar-logo-group {
+            .brand-logo-wrapper {
+              margin-left: -10px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 .brandCategorySelected {
   margin-top: 4rem;
   .feedback-list-wrapper {

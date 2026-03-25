@@ -287,6 +287,12 @@
   }
 }
 
+.feed-header__top {
+  .select-filter-icon {
+    border-radius: 0px;
+  }
+}
+
 .select-filter-wrapper {
   position: relative;
   display: flex;

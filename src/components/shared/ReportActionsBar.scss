@@ -308,18 +308,19 @@
 .solution-btn {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   padding: 6px 12px;
   background: #f6f2d7;
   border-radius: 6px;
+  font-size: 15px;
 }
 
 .solution-btn {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   border-radius: 8px;
-  padding: 8px 14px;
+  padding: 6px 12px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.15s ease;
@@ -330,19 +331,20 @@
 .solution-btn-empty {
   background: transparent;
   border: 1px solid #dcdcdc;
-  color: #444;
+  color: #000;
+  font-weight: 400;
 }
 
 .solution-btn-empty:hover {
-  background: #f8f8f8;
+  background: #f6d86a75;
 }
 
 /* solutions existantes */
 
 .solution-btn-active {
-  background: #f6d86a;
+  background: #ffe37d;
   border: none;
-  color: #111;
+  color: #000;
 }
 
 .resignalements-link {
@@ -354,7 +356,7 @@
 
 .resignalements-count {
   font-size: 20px; // 🔥 augmente si besoin (22–26)
-  font-weight: 700;
+  font-weight: 900;
   color: #111;
   line-height: 1;
 }
@@ -362,7 +364,7 @@
 .resignalements-label {
   font-size: 13px;
   color: #666;
-  font-weight: 500;
+  font-weight: 400;
 }
 .resignalements-link {
   display: flex;
@@ -373,18 +375,19 @@
 
 .resignalements-count {
   font-size: 20px; // 🔥 augmente si besoin (22–26)
-  font-weight: 700;
+  font-weight: 900;
   color: #111;
   line-height: 1;
 }
 
 .resignalements-label {
   font-size: 13px;
-  color: #666;
-  font-weight: 500;
+  color: #000;
+  font-weight: 400;
 }
 .resignalements-count {
-  font-size: 24px;
+  font-size: 28px;
+  font-weight: 900;
 }
 
 .report-actions-bar {

@@ -6,6 +6,12 @@
 
 .public-feed-left {
   z-index: auto;
+  .public-feed-left-tablet {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 310px;
+  }
 }
 
 .public-feed-center {
@@ -22,10 +28,45 @@
 }
 .public-feed-layout {
   display: grid;
-  grid-template-columns: minmax(300px, 360px) 1fr minmax(280px, 320px);
+  grid-template-columns: minmax(300px, 310px) 1fr minmax(280px, 320px);
   gap: 24px;
 
   max-width: 1400px;
   margin: auto;
   padding: 24px;
+  .public-feed-center {
+    .mixed-feed {
+      .feedback-card {
+        margin-bottom: 10px;
+      }
+    }
+  }
+  @media screen and (max-width: 1400px) {
+    grid-template-columns: minmax(300px, 310px) 1fr;
+    max-width: none;
+    width: 90%;
+    margin: auto;
+    .public-feed-center {
+      .mixed-feed {
+        .subcategory-block {
+          width: 100%;
+        }
+        .feedback-card {
+          max-width: none;
+          .feedback-main {
+            .feedback-right {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 1090px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.public-feed-layout--mobile {
+  grid-template-columns: 1fr;
 }
