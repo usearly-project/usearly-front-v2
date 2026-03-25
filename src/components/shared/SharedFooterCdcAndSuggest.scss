@@ -9,7 +9,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px 16px 8px 16px;
+    padding: 16px 0px 8px 0px;
     font-size: 14px;
     font-family: "arial";
     line-height: 1;
@@ -63,7 +63,7 @@
     display: flex;
     flex-direction: column;
     background-color: #ffffff;
-    padding: 12px 0px 16px;
+    padding: 8px 0px 16px;
     padding-bottom: 0px;
     gap: 12px;
 
@@ -132,10 +132,11 @@
       }
 
       .vote-button {
-        background-color: #000;
-        color: #fff;
-        padding: 0.4rem 1rem;
+        background-color: #fff;
+        color: #000;
+        padding: 0.35rem 1rem;
         border-radius: 999px;
+        border: 1px solid #000;
         font-weight: 500;
         font-size: 15px;
 

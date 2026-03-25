@@ -1,6 +1,10 @@
 import type { UserReaction } from "./reaction";
 import type { TicketStatusKey } from "./ticketStatus";
-import type { HasBrandResponse } from "./brandResponse";
+import type {
+  BrandResponse,
+  BrandResponseData,
+  HasBrandResponse,
+} from "./brandResponse";
 
 export type FeedbackType = "report" | "coupdecoeur" | "suggestion";
 
@@ -272,7 +276,8 @@ export interface PopularGroupedReport {
   status: TicketStatusKey;
   category: string;
   solutionsCount?: number;
-  hasBrandResponse?: boolean;
+  brandResponse?: BrandResponse | null;
+  hasBrandResponse?: BrandResponseData | null;
   subCategory: string;
   count: number;
   createdAt: string;
@@ -329,6 +334,7 @@ export interface PopularReport {
   category: string;
   capture: string | null;
   createdAt: string;
+  hasBrandResponse?: BrandResponseData | null;
   author: {
     id: string;
     pseudo: string;

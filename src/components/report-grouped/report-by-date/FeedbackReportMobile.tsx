@@ -164,7 +164,6 @@ const FeedbackReportMobile: React.FC<Props> = ({
               type="report"
               brand={item.marque}
               brandSiteUrl={item.siteUrl ?? undefined}
-              brandResponse={item.hasBrandResponse}
               hideFooter={true}
               forceOpen={showComments}
               reportIds={item.hasBrandResponse ? [item.reportingId] : []}

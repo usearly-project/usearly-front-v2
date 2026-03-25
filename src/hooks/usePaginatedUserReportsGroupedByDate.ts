@@ -59,6 +59,7 @@ export const usePaginatedUserReportsGroupedByDate = (enabled: boolean) => {
                 capture: report.capture ?? null,
                 category: report.category,
                 totalCount: report.count,
+                solutionsCount: report.solutionsCount ?? 0,
 
                 // ✅ AJOUT IMPORTANT
                 hasBrandResponse: normalizeBrandResponse(

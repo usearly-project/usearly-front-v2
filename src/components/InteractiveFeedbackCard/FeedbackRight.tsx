@@ -5,6 +5,8 @@ import Avatar from "../shared/Avatar";
 import FeedbackProgressBar from "./FeedbackProgressBar";
 import SharedFooterCdcAndSuggest from "../shared/SharedFooterCdcAndSuggest";
 import UserBrandLine from "../shared/UserBrandLine";
+import cdcIcon from "/assets/icons/cdc-icon.svg";
+import suggestIcon from "/assets/icons/suggest-icon.svg";
 
 interface Props {
   item: any;
@@ -25,6 +27,7 @@ interface Props {
   commentCount: number;
   isGuest: boolean;
   onExpandedChange?: (expanded: boolean) => void;
+  showHeaderTypeIcon?: boolean;
 }
 
 const isValidDate = (value: any) => {
@@ -51,6 +54,7 @@ const FeedbackRight: React.FC<Props> = ({
   commentCount,
   isGuest,
   onExpandedChange,
+  showHeaderTypeIcon = false,
 }) => {
   const [showFullText, setShowFullText] = useState(false);
   const cardRef = useRef<HTMLDivElement | null>(null);
@@ -63,6 +67,12 @@ const FeedbackRight: React.FC<Props> = ({
   const shouldShowToggle =
     description.length > DESCRIPTION_LIMIT || item.capture;
   const brandName = item.marque?.trim() ?? "";
+  const headerTypeIcon =
+    item.type === "coupdecoeur"
+      ? cdcIcon
+      : item.type === "suggestion"
+        ? suggestIcon
+        : null;
 
   // ✅ Sécurisation du siteUrl et normalisation
   const siteUrl = item?.siteUrl ?? undefined;
@@ -164,22 +174,33 @@ const FeedbackRight: React.FC<Props> = ({
     >
       <div className="feedback-content">
         <div className="feedback-header">
-          <div className="feedback-meta">
-            <UserBrandLine
-              userId={item.author?.id}
-              pseudo={item.author?.pseudo}
-              email={item.author?.email}
-              brand={item.marque}
-              type={item.type}
-            />
-            ⸱
-            {isValidDate(item.createdAt) && (
-              <span className="feedback-date">
-                {formatDistanceToNowStrict(new Date(item.createdAt), {
-                  locale: fr,
-                })}
+          <div className="feedback-header-main">
+            {showHeaderTypeIcon && headerTypeIcon && (
+              <span
+                className={`feedback-header-type-icon feedback-header-type-icon--${item.type}`}
+                aria-hidden="true"
+              >
+                <img src={headerTypeIcon} alt="" />
               </span>
             )}
+
+            <div className="feedback-meta">
+              <UserBrandLine
+                userId={item.author?.id}
+                pseudo={item.author?.pseudo}
+                email={item.author?.email}
+                brand={item.marque}
+                type={item.type}
+              />
+              ⸱
+              {isValidDate(item.createdAt) && (
+                <span className="feedback-date">
+                  {formatDistanceToNowStrict(new Date(item.createdAt), {
+                    locale: fr,
+                  })}
+                </span>
+              )}
+            </div>
           </div>
 
           <div className="avatar-with-brand">
@@ -233,7 +254,6 @@ const FeedbackRight: React.FC<Props> = ({
 
             {shouldShowToggle && (
               <>
-                <br />
                 <button
                   className="see-more"
                   onClick={(e) => {

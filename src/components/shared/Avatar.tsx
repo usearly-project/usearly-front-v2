@@ -187,7 +187,10 @@ const Avatar: React.FC<AvatarProps> = ({
       : `avatar-user-color-${colorIndex}`;
 
   return (
-    <div className={`avatar-wrapper-custom ${wrapperClassName}`}>
+    <div
+      className={`avatar-wrapper-custom ${wrapperClassName}`}
+      style={{ minWidth: sizeHW, minHeight: sizeHW }}
+    >
       {shouldShowImage ? (
         <img
           style={{

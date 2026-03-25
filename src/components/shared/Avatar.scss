@@ -27,6 +27,15 @@
 // ✅ Fond blanc pour logos PNG chargés
 .avatar-img-custom.brand-logo-img-loaded {
   background-color: #fff;
+  margin-right: 25px;
+  position: absolute;
+}
+
+.brand-row-top {
+  .avatar-img-custom.brand-logo-img-loaded {
+    margin-right: 0px;
+    position: relative;
+  }
 }
 
 // ✅ Fallback avec initiale
@@ -41,7 +50,7 @@
   width: 100%;
   height: 100%;
   color: #fff;
-  border: 1px solid #f0f0f0;
+  // border: 1px solid #f0f0f0;
 }
 
 .notif-item {

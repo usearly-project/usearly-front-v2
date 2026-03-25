@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import { ThumbsUp, MessageCircle, Lightbulb } from "lucide-react";
+import { ThumbsUp, MessageCircle } from "lucide-react";
 import { useReactionsForDescription } from "@src/hooks/useReactionsForDescription";
 import { getEmojisForType } from "@src/components/constants/emojiMapByType";
 import "./ReportActionsBar.scss";
 import EmojiUrlyReactionPicker from "@src/utils/EmojiUrlyReactionPicker";
 import { TICKET_STATUSES, type TicketStatusKey } from "@src/types/ticketStatus";
-import Avatar from "@src/components/shared/Avatar";
 import type { HasBrandResponse } from "@src/types/brandResponse";
-import { getBrandAvatarFromResponse } from "@src/utils/brandResponse";
 import ReportAvatars from "@src/pages/public/components/ReportAvatar/ReportsAvatar";
 import type { User } from "@src/types/Reports";
 import { useAuth } from "@src/services/AuthContext";
+import lightBulbLight from "/assets/icons/lightBulbLight.svg";
+import lightBulbNoLight from "/assets/icons/lightBulbNoLight.svg";
 
 interface Props {
   type: "report" | "suggestion" | "coupDeCoeur";
@@ -19,6 +19,8 @@ interface Props {
   descriptionId: string;
   reportsCount: number;
   reportId?: string;
+  brandResponse?: any;
+  showBrandResponseInline?: boolean;
   hasBrandResponse?: HasBrandResponse;
   commentsCount: number;
   status: TicketStatusKey;
@@ -42,7 +44,6 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
   descriptionId,
   reportsCount,
   commentsCount,
-  hasBrandResponse,
   status,
   solutionsCount = 0,
   onCommentClick,
@@ -80,7 +81,6 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
 
   const topThree = allReactions.slice(0, 3);
   const totalCount = allReactions.reduce((acc, r) => acc + r.count, 0);
-  const brandAvatar = getBrandAvatarFromResponse(hasBrandResponse);
 
   const handleAddReaction = async (emoji: string) => {
     if (!isAuthenticated) {
@@ -108,7 +108,7 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
       <div className="counts-row">
         <div className="count-left">
           {topThree.length > 0 && (
-            <>
+            <div className="reactions-summary">
               {topThree.map((r) => (
                 <span
                   key={r.emoji}
@@ -120,54 +120,15 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
                 </span>
               ))}
               <span className="reaction-count">{totalCount}</span>
-            </>
+            </div>
           )}
         </div>
-
         <div className="count-right">
-          {commentsCount > 0 ? (
-            <>
-              {hasBrandResponse && brandAvatar && (
-                <span
-                  onClick={onCommentClick}
-                  role="button"
-                  tabIndex={0}
-                  className="brand-avatar-clickable"
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      onCommentClick();
-                    }
-                  }}
-                >
-                  <Avatar
-                    avatar={brandAvatar.avatar}
-                    pseudo={brandAvatar.pseudo}
-                    type={brandAvatar.type}
-                    siteUrl={brandAvatar.siteUrl ?? undefined}
-                    sizeHW={20}
-                  />
-                </span>
-              )}
-
-              <span className="comments-link" onClick={onCommentClick}>
-                {commentsCount}{" "}
-                {commentsCount === 1 ? "commentaire" : "commentaires"}
-              </span>
-            </>
-          ) : (
-            <>
-              {hasBrandResponse && brandAvatar && (
-                <div onClick={onCommentClick}>
-                  <Avatar
-                    avatar={brandAvatar.avatar}
-                    pseudo={brandAvatar.pseudo}
-                    type={brandAvatar.type}
-                    siteUrl={brandAvatar.siteUrl ?? undefined}
-                    sizeHW={20}
-                  />
-                </div>
-              )}
-            </>
+          {commentsCount > 0 && (
+            <span className="comments-link" onClick={onCommentClick}>
+              {commentsCount}{" "}
+              {commentsCount === 1 ? "commentaire" : "commentaires"}
+            </span>
           )}
 
           <div className="signalements-avatars">
@@ -264,7 +225,21 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
               onOpenSolutionModal?.();
             }}
           >
-            <Lightbulb size={18} />
+            {solutionsCount > 0 ? (
+              <img
+                src={lightBulbLight}
+                width={26}
+                height={26}
+                alt="Ampoule indiquant qu'une solution a été proposée"
+              />
+            ) : (
+              <img
+                src={lightBulbNoLight}
+                width={26}
+                height={26}
+                alt="Ampoule indiquant qu'une solution a été proposée"
+              />
+            )}
 
             <span>
               {solutionsCount > 0

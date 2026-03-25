@@ -79,9 +79,7 @@
 }
 .signalement-avatars {
   .avatar-wrapper-custom {
-    width: 22px;
-    height: 22px;
-    border: 2px solid #fff;
+    border: 1px solid #fff;
   }
 
   .avatar-fallback-custom {
@@ -95,7 +93,7 @@
   align-items: center;
 
   .mini-avatar-wrapper {
-    margin-left: -6px;
+    margin-left: -20px;
   }
 
   .mini-avatar-wrapper:first-child {

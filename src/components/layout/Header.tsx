@@ -258,15 +258,6 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
             </NavLink>
           )} */}
 
-          {isAuthenticated && (
-            <NavLink
-              to="/profile"
-              className="link"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Mes feedbacks
-            </NavLink>
-          )}
           <NavLink
             to="/"
             className="link"
@@ -274,6 +265,15 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
           >
             Feel d'actu
           </NavLink>
+          {isAuthenticated && (
+            <NavLink
+              to="/profile"
+              className="link"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Mes contributions
+            </NavLink>
+          )}
           <NavLink
             to="/about"
             className="link"

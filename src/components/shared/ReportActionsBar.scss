@@ -20,19 +20,10 @@
   font-size: 13px;
   color: #666;
 
-  .comments-link {
-    cursor: pointer;
-    color: #444;
-    text-decoration: underline;
-
-    &:hover {
-      color: #000;
-    }
-  }
-
   .resignalements-link {
     cursor: pointer;
     color: #444;
+    font-family: variables.$font-family;
 
     &:hover {
       color: #000;
@@ -44,6 +35,23 @@
   }
 }
 
+.count-left {
+  font-family: variables.$font-family;
+  color: #898989;
+  .comments-link {
+    margin-left: 50px;
+    cursor: pointer;
+
+    &.no-reaction {
+      margin-left: 0px;
+    }
+
+    &:hover {
+      color: #000;
+    }
+  }
+}
+
 .report-actions-bar {
   width: 100%;
   padding: 16px 8px 0px 8px;
@@ -51,7 +59,7 @@
   .counts-row {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
     padding: 0rem 0 0.2rem 0;
     font-size: 0.85rem;
     color: #374151;
@@ -80,9 +88,9 @@
       }
 
       .reaction-count {
-        font-weight: bold;
         line-height: 1; // force l'alignement vertical
         margin: 0; // supprime tout margin résiduel
+        margin-left: 5px;
         vertical-align: middle;
         display: inline-flex; // garantit l'alignement
         align-items: center;
@@ -106,8 +114,8 @@
     justify-content: space-between;
     align-items: center;
     gap: 5px;
-    padding: 0.8rem 0 0.4rem 0;
-    font-family: "Arial";
+    padding: 0.5rem 0 0.2rem 0;
+    font-family: variables.$font-family;
 
     .actions-left {
       display: flex;
@@ -115,7 +123,7 @@
 
       button {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         gap: 0.3rem;
         background: none;
         border: none;
@@ -300,18 +308,19 @@
 .solution-btn {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   padding: 6px 12px;
   background: #f6f2d7;
   border-radius: 6px;
+  font-size: 15px;
 }
 
 .solution-btn {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   border-radius: 8px;
-  padding: 8px 14px;
+  padding: 6px 12px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.15s ease;
@@ -322,19 +331,20 @@
 .solution-btn-empty {
   background: transparent;
   border: 1px solid #dcdcdc;
-  color: #444;
+  color: #000;
+  font-weight: 400;
 }
 
 .solution-btn-empty:hover {
-  background: #f8f8f8;
+  background: #f6d86a75;
 }
 
 /* solutions existantes */
 
 .solution-btn-active {
-  background: #f6d86a;
+  background: #ffe37d;
   border: none;
-  color: #111;
+  color: #000;
 }
 
 .resignalements-link {
@@ -346,7 +356,7 @@
 
 .resignalements-count {
   font-size: 20px; // 🔥 augmente si besoin (22–26)
-  font-weight: 700;
+  font-weight: 900;
   color: #111;
   line-height: 1;
 }
@@ -354,7 +364,7 @@
 .resignalements-label {
   font-size: 13px;
   color: #666;
-  font-weight: 500;
+  font-weight: 400;
 }
 .resignalements-link {
   display: flex;
@@ -365,18 +375,19 @@
 
 .resignalements-count {
   font-size: 20px; // 🔥 augmente si besoin (22–26)
-  font-weight: 700;
+  font-weight: 900;
   color: #111;
   line-height: 1;
 }
 
 .resignalements-label {
   font-size: 13px;
-  color: #666;
-  font-weight: 500;
+  color: #000;
+  font-weight: 400;
 }
 .resignalements-count {
-  font-size: 24px;
+  font-size: 28px;
+  font-weight: 900;
 }
 
 .report-actions-bar {

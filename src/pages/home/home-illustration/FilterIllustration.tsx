@@ -27,6 +27,7 @@ import Avatar from "@src/components/shared/Avatar";
 const illustrationMap = {
   // === Signalements ===
   default: { label: "Filtrez les résultats", emoji: "✨", img: recentImg },
+  hot: { label: "Ça chauffe par ici", emoji: "🔥", img: hotImg },
   chrono: { label: "Les plus récents", emoji: "📅", img: recentReportImg },
   confirmed: { label: "Ça chauffe par ici", emoji: "🔥", img: hotImg },
   rage: { label: "Les plus rageants", emoji: "😡", img: rageImg },
@@ -35,7 +36,9 @@ const illustrationMap = {
 
   // === Coups de cœur ===
   liked: { label: "Les plus aimés", emoji: "🥰", img: likedImg },
+  popularCdc: { label: "Les plus aimés", emoji: "🥰", img: likedImg },
   recent: { label: "Les plus récents", emoji: "🕒", img: recentCdcImg },
+  chronoCdc: { label: "Les plus récents", emoji: "🕒", img: likedImg },
   all: { label: "Simple mais génial...", emoji: "🥰", img: likedImg },
   enflammes: { label: "Les plus enflammés", emoji: "❤️‍🔥", img: commentedImg },
   recentcdc: { label: "Les plus commentés", emoji: "💬", img: commentedImg },
@@ -70,8 +73,24 @@ type Props = {
 };
 
 const filterKeysByTab: Record<TabKey, Array<keyof typeof illustrationMap>> = {
-  report: ["default", "chrono", "confirmed", "rage", "popular", "urgent"],
-  coupdecoeur: ["liked", "recent", "all", "enflammes", "recentcdc"],
+  report: [
+    "default",
+    "hot",
+    "chrono",
+    "confirmed",
+    "rage",
+    "popular",
+    "urgent",
+  ],
+  coupdecoeur: [
+    "liked",
+    "popularCdc",
+    "recent",
+    "chronoCdc",
+    "all",
+    "enflammes",
+    "recentcdc",
+  ],
   suggestion: [
     "discussed",
     "recentSuggestion",
@@ -155,7 +174,14 @@ const FilterIllustration = ({
 
   const listKey: keyof typeof illustrationMap = useMemo(() => {
     const availableKeys = filterKeysByTab[onglet] || [];
-    const normalizedKey = filter as keyof typeof illustrationMap;
+    const normalizedKey =
+      onglet === "coupdecoeur"
+        ? filter === "popular"
+          ? "popularCdc"
+          : filter === "chrono"
+            ? "chronoCdc"
+            : (filter as keyof typeof illustrationMap)
+        : (filter as keyof typeof illustrationMap);
     if (availableKeys.includes(normalizedKey)) return normalizedKey;
     return fallbackKey;
   }, [filter, fallbackKey, onglet]);

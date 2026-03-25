@@ -33,7 +33,7 @@ const PopularReportHeader: React.FC<Props> = ({
           <div className="subcategory-title-row">
             <h4>{item.subCategory || "Signalement"}</h4>
             {formattedShortDate && (
-              <span className="date-badge">• {formattedShortDate}</span>
+              <span className="date-badge">⸱ {formattedShortDate}</span>
             )}
           </div>
         </div>

@@ -4,8 +4,8 @@ import { capitalizeFirstLetter } from "@src/utils/stringUtils";
 import FlatSubcategoryBlock from "../../confirm-reportlist/FlatSubcategoryBlock";
 import { getMostAdvancedStatus } from "@src/utils/ticketStatus";
 import type { TicketStatusKey } from "@src/types/ticketStatus";
-import { useBrandResponsesMap } from "@src/hooks/useBrandResponsesMap";
-import { normalizeBrandResponse } from "@src/utils/brandResponse";
+/* import { useBrandResponsesMap } from "@src/hooks/useBrandResponsesMap";
+import { normalizeBrandResponse } from "@src/utils/brandResponse"; */
 
 interface BrandFilteredSectionProps {
   selectedBrand?: string;
@@ -95,8 +95,8 @@ const BrandFilteredSection: React.FC<BrandFilteredSectionProps> = ({
   reportsToDisplay,
   loaderRef,
 }) => {
-  const allReportIds = reportsToDisplay.map((r) => r.reportingId);
-  const { brandResponsesMap } = useBrandResponsesMap(allReportIds);
+  /*   const allReportIds = reportsToDisplay.map((r) => r.reportingId);
+  const { brandResponsesMap } = useBrandResponsesMap(allReportIds); */
 
   // 🕓 Chargement
   if (loadingFiltered) {
@@ -165,14 +165,19 @@ const BrandFilteredSection: React.FC<BrandFilteredSectionProps> = ({
 
       {/* ✅ 1 CARTE = 1 TICKET LOGIQUE */}
       {ticketGroups.map((ticket) => {
-        const rawBrandResponse = ticket.reportIds
-          .map((id: string) => brandResponsesMap[id])
-          .find(Boolean);
-        const hasBrandResponse = normalizeBrandResponse(rawBrandResponse, {
-          brand: ticket.brand,
-          siteUrl: ticket.siteUrl ?? null,
-        });
+        const rawBrandResponse = reportsToDisplay.find((r) =>
+          ticket.reportIds.includes(r.reportingId),
+        )?.hasBrandResponse;
 
+        const hasBrandResponse =
+          rawBrandResponse &&
+          typeof rawBrandResponse === "object" &&
+          ("message" in rawBrandResponse ||
+            "content" in rawBrandResponse ||
+            "response" in rawBrandResponse)
+            ? rawBrandResponse
+            : undefined;
+        console.log("BRAND FILTERED 👉", hasBrandResponse);
         return (
           <FlatSubcategoryBlock
             key={ticket.pivotReportId}
@@ -184,7 +189,7 @@ const BrandFilteredSection: React.FC<BrandFilteredSectionProps> = ({
             capture={ticket.capture}
             status={ticket.status}
             hideFooter={true}
-            hasBrandResponse={hasBrandResponse}
+            hasBrandResponse={hasBrandResponse} // ✅ clean
             solutionsCount={ticket.solutionsCount}
           />
         );

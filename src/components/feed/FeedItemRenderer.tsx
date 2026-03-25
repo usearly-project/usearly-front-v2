@@ -94,6 +94,7 @@ function FeedItemRenderer({ item, isOpen, isPublic = false }: Props) {
           type: "suggestion",
         }}
         isOpen={isOpen}
+        showHeaderTypeIcon
       />
     );
   }
@@ -106,6 +107,7 @@ function FeedItemRenderer({ item, isOpen, isPublic = false }: Props) {
           type: "coupdecoeur",
         }}
         isOpen={isOpen}
+        showHeaderTypeIcon
       />
     );
   }

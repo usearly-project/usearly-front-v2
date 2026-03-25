@@ -84,7 +84,7 @@
 
 .feedback-shared-footer {
   background: #fff;
-  padding: 8px;
+  padding: 8px 0 0 0;
 }
 
 .feedback-comments {
@@ -98,7 +98,6 @@
 }
 
 .pg-expire {
-  margin-left: 6px;
   font-size: 13px;
   color: #666;
   font-weight: 500;
@@ -367,7 +366,6 @@
 }
 
 .feedback-type.is-expanded {
-  padding-bottom: 16px;
   .feedback-left {
     width: 250px;
     min-width: 250px;
@@ -404,8 +402,35 @@
     .feedback-header {
       display: flex;
       justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
       width: 100%;
       padding-top: 8px;
+
+      .feedback-header-main {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        flex: 1 1 auto;
+        min-width: 0;
+      }
+
+      .feedback-header-type-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 30px;
+        width: 30px;
+        height: 30px;
+        border-radius: 999px;
+        margin-top: 1px;
+
+        img {
+          width: 42px;
+          height: 42px;
+          display: block;
+        }
+      }
 
       .avatar-with-brand {
         position: relative;
@@ -435,6 +460,9 @@
               height: 48px;
               border-radius: 50%;
               object-fit: cover;
+              .brand-logo-img-loaded {
+                margin-right: 0px;
+              }
             }
           }
         }
@@ -443,8 +471,11 @@
       .feedback-meta {
         display: flex;
         flex-direction: row;
+        flex-wrap: wrap;
+        flex: 1 1 auto;
         align-items: flex-start;
         gap: 5px;
+        min-width: 0;
         font-size: 11px;
         color: #777;
 
@@ -488,7 +519,8 @@
         color: black;
         font-weight: 600;
         cursor: pointer;
-        margin-top: 10px;
+        font-size: 13px;
+        // margin-top: 10px;
 
         &:hover {
           text-decoration: underline;
@@ -544,7 +576,6 @@
 .feedback-right.is-expanded {
   transform: translateY(-1px);
   height: auto;
-  padding-bottom: 16px;
   .feedback-content {
     .feedback-body {
       margin-bottom: 16px;

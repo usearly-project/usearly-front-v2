@@ -129,8 +129,23 @@
     padding-top: 2px;
   }
 
+  .feedback-card-mobile-shell .feedback-header-main {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .feedback-card-mobile-shell .feedback-header-type-icon {
+    width: 26px;
+    height: 26px;
+    flex-basis: 26px;
+  }
+
   .feedback-card-mobile-shell .feedback-meta {
     display: flex;
+    width: auto;
+    flex: 1 1 auto;
     flex-wrap: wrap;
     line-height: 1.35;
     gap: 4px;

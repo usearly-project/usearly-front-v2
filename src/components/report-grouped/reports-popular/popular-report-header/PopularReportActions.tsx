@@ -4,6 +4,7 @@ interface Props {
   userProfile: any;
   descriptionId: string;
   item: any;
+  brandResponse?: any;
   hasBrandResponse: any;
   currentCount: number;
   handleCommentClick: () => void;
@@ -16,6 +17,7 @@ interface Props {
 const PopularReportActions: React.FC<Props> = ({
   userProfile,
   descriptionId,
+  brandResponse,
   item,
   hasBrandResponse,
   currentCount,
@@ -30,6 +32,7 @@ const PopularReportActions: React.FC<Props> = ({
       userId={userProfile?.id}
       descriptionId={descriptionId}
       reportsCount={item.count}
+      showBrandResponseInline={true}
       status={item.status}
       type="report"
       descriptions={item.descriptions.map((d: any) => ({
@@ -37,6 +40,7 @@ const PopularReportActions: React.FC<Props> = ({
       }))}
       solutionsCount={solutionsCount}
       hasBrandResponse={hasBrandResponse}
+      brandResponse={brandResponse}
       commentsCount={currentCount}
       onReactClick={() => {
         if (isPublic) return;
