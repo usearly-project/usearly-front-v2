@@ -46,18 +46,6 @@ const RageSection: React.FC<RageSectionProps> = ({
   reportData,
   loaderRef,
 }) => {
-  // 🕓 Chargement
-  /*   if (reportData.loading) {
-    return (
-      <SqueletonAnime
-        loaderRef={loaderRef}
-        loading={true}
-        hasMore={false}
-        error={null}
-      />
-    );
-  } */
-
   // ⚠️ Aucun signalement rageux
   if (!reportData.data || reportData.data.length === 0) {
     return (

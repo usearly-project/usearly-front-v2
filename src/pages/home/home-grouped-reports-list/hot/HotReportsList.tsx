@@ -30,6 +30,7 @@ const HotReportsList = ({
       Object.entries(data).forEach(([date, items]) => {
         result[date] = items.map((item) => ({
           ...item,
+          hasBrandResponse: item.hasBrandResponse ?? null,
           descriptions: Array.isArray(item.descriptions)
             ? item.descriptions
             : [],
@@ -52,6 +53,7 @@ const HotReportsList = ({
 
         result[date].push({
           ...item,
+          hasBrandResponse: item.hasBrandResponse ?? null,
           descriptions: Array.isArray(item.descriptions)
             ? item.descriptions
             : [],

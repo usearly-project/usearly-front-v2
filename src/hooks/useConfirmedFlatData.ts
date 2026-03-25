@@ -15,50 +15,57 @@ export const useConfirmedFlatData = () => {
     const fetch = async () => {
       setLoading(true);
       try {
-        const res = await getConfirmedSubcategoryReports(1, 100); // page 1, 100 éléments
+        const res = await getConfirmedSubcategoryReports(1, 100);
 
         const formatted: ExplodedGroupedReport[] = res.data.map(
           (item: ConfirmedSubcategoryReport) => {
             const descriptions: FeedbackDescription[] = item.descriptions.map(
-              (desc: any, i) => {
-                const normalized: FeedbackDescription = {
-                  id: String(desc.id),
-                  reportingId: String(item.reportingId),
-                  description: desc.description,
-                  emoji: desc.emoji ?? "",
-                  createdAt: desc.createdAt,
-
-                  // ✅ NORMALISATION UNIQUE
-                  author: {
-                    id: String(desc.user.id),
-                    pseudo: desc.user.pseudo,
-                    avatar: desc.user.avatar ?? null,
-                    email: desc.user.email,
-                  },
-
-                  capture: i === 0 ? item.capture : null,
-                  marque: item.marque,
-                  reactions: [],
-                };
-
-                return normalized;
-              },
+              (desc: any, i) => ({
+                id: String(desc.id),
+                reportingId: String(item.reportingId),
+                description: desc.description,
+                emoji: desc.emoji ?? "",
+                createdAt: desc.createdAt,
+                author: {
+                  id: String(desc.user.id),
+                  pseudo: desc.user.pseudo,
+                  avatar: desc.user.avatar ?? null,
+                  email: desc.user.email,
+                },
+                capture: i === 0 ? item.capture : null,
+                marque: item.marque,
+                reactions: [],
+              }),
             );
 
-            const explodedItem: ExplodedGroupedReport = {
-              id: String(item.reportingId), // 🔁 requis par GroupedReport
+            const rawBrandResponse = item.hasBrandResponse;
+
+            const normalizedBrandResponse =
+              rawBrandResponse &&
+              typeof rawBrandResponse === "object" &&
+              ("message" in rawBrandResponse ||
+                "content" in rawBrandResponse ||
+                "response" in rawBrandResponse)
+                ? normalizeBrandResponse(rawBrandResponse, {
+                    brand: item.marque,
+                    siteUrl: item.siteUrl ?? null,
+                  })
+                : undefined;
+            console.log(
+              "STEP 2 NORMALIZED useConfirmedFlatData 👉",
+              normalizedBrandResponse,
+            );
+
+            console.log("STEP 1 BACK RAW 👉", item.hasBrandResponse);
+            return {
+              id: String(item.reportingId),
               reportingId: String(item.reportingId),
               category: item.category,
               marque: item.marque,
               siteUrl: item.siteUrl ?? undefined,
               totalCount: item.count,
-              hasBrandResponse: normalizeBrandResponse(item.hasBrandResponse, {
-                brand: item.marque,
-                siteUrl: item.siteUrl ?? null,
-              }),
+              hasBrandResponse: rawBrandResponse,
               reactions: [],
-
-              // ✅ pour compatibilité avec GroupedReport
               subCategories: [
                 {
                   subCategory: item.subCategory,
@@ -67,8 +74,6 @@ export const useConfirmedFlatData = () => {
                   descriptions,
                 },
               ],
-
-              // ✅ pour la vue flat (ajouté par ExplodedGroupedReport)
               subCategory: {
                 subCategory: item.subCategory,
                 count: item.count,
@@ -76,8 +81,6 @@ export const useConfirmedFlatData = () => {
                 descriptions,
               },
             };
-
-            return explodedItem;
           },
         );
 

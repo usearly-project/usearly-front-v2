@@ -7,17 +7,44 @@ import Avatar from "@src/components/shared/Avatar";
 import UserBrandLine from "@src/components/shared/UserBrandLine";
 import { useCommentsForDescription } from "@src/hooks/useCommentsForDescription";
 import { useIsMobile } from "@src/hooks/use-mobile";
-import type { ExplodedGroupedReport } from "@src/types/Reports";
+import type {
+  ExplodedGroupedReport,
+  FeedbackDescription,
+} from "@src/types/Reports";
 import FeedbackReportMobile from "./FeedbackReportMobile";
 import "./ChronoReportCard.scss";
 import SolutionModal from "@src/components/ui/SolutionModal";
 import SolutionsModal from "@src/components/ui/SolutionsModal";
+import BrandResponseBanner from "@src/components/brand-response-banner/BrandResponseBanner";
+import type { HasBrandResponse } from "@src/types/brandResponse";
+import type { TicketStatusKey } from "@src/types/ticketStatus";
+
+export interface ChronoReport {
+  reportingId: string;
+  marque: string;
+  siteUrl: string | null;
+  category: string;
+  subCategory: string; // ✅ STRING ici
+  status: TicketStatusKey;
+  count: number;
+  solutionsCount?: number;
+  hasBrandResponse: HasBrandResponse;
+  descriptions: FeedbackDescription[];
+}
 
 interface Props {
-  item: ExplodedGroupedReport & { brandLogoUrl?: string };
+  item: ExplodedGroupedReport & {
+    brandLogoUrl?: string;
+    solutionsCount?: number; // ✅ AJOUT ICI
+  };
   isOpen: boolean;
   onToggle: () => void;
 }
+/* interface Props {
+  item: ExplodedGroupedReport & { brandLogoUrl?: string };
+  isOpen: boolean;
+  onToggle: () => void;
+} */
 
 const DESCRIPTION_PREVIEW_LENGTH = 140;
 
@@ -58,6 +85,9 @@ const ChronoReportCard: React.FC<Props> = ({ item, isOpen, onToggle }) => {
     );
   }, [firstDescription?.description, previewLength, showFullText]);
 
+  useEffect(() => {
+    setSolutionsCount(item.solutionsCount ?? 0);
+  }, [item.solutionsCount]);
   /** CLICK COMMENT */
   const handleCommentClick = () => {
     if (!isOpen) {
@@ -95,7 +125,7 @@ const ChronoReportCard: React.FC<Props> = ({ item, isOpen, onToggle }) => {
   }, [isOpen]);
 
   if (!firstDescription) return null;
-
+  console.log("solutionsCount dans chronocard: ", item.solutionsCount);
   const currentCount = localCommentsCounts[descriptionId] ?? 0;
   const formattedDate = new Date(firstDescription.createdAt).toLocaleDateString(
     "fr-FR",
@@ -250,7 +280,21 @@ const ChronoReportCard: React.FC<Props> = ({ item, isOpen, onToggle }) => {
               </div>
             </div>
           </div>
-
+          {item.hasBrandResponse &&
+            typeof item.hasBrandResponse === "object" && (
+              <BrandResponseBanner
+                message={
+                  item.hasBrandResponse.message ||
+                  item.hasBrandResponse.content ||
+                  item.hasBrandResponse.response ||
+                  ""
+                }
+                createdAt={item.hasBrandResponse.createdAt}
+                brand={item.marque}
+                brandSiteUrl={item.siteUrl ?? undefined}
+                brandResponse={item.hasBrandResponse}
+              />
+            )}
           {/* ACTIONS */}
           <div onClick={(e) => e.stopPropagation()}>
             <ReportActionsBarWithReactions
@@ -283,7 +327,6 @@ const ChronoReportCard: React.FC<Props> = ({ item, isOpen, onToggle }) => {
               type="report"
               brand={item.marque}
               brandSiteUrl={item.siteUrl ?? undefined}
-              brandResponse={item.hasBrandResponse}
               hideFooter={true}
               forceOpen={showComments}
               reportIds={item.hasBrandResponse ? [item.reportingId] : []}

@@ -28,14 +28,23 @@ export const usePaginatedGroupedReportsByRage = (
         { reportIds },
       );
 
-      const enriched = newData.map((item) => ({
-        ...item,
-        solutionsCount: item.solutionsCount ?? 0,
-        hasBrandResponse: normalizeBrandResponse(map[item.reportingId], {
-          brand: item.marque,
-          siteUrl: item.siteUrl ?? null,
-        }),
-      }));
+      const enriched: ConfirmedSubcategoryReport[] = newData.map((item) => {
+        const backendResponse = item.hasBrandResponse;
+        const mapResponse = map[item.reportingId];
+
+        return {
+          ...item,
+          solutionsCount: item.solutionsCount ?? 0,
+          hasBrandResponse: backendResponse
+            ? backendResponse
+            : mapResponse
+              ? normalizeBrandResponse(mapResponse, {
+                  brand: item.marque,
+                  siteUrl: item.siteUrl ?? null,
+                })
+              : null, // ✅ FIX ICI
+        };
+      });
 
       setData((prev) => (page === 1 ? enriched : [...prev, ...enriched]));
 

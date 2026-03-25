@@ -18,8 +18,8 @@ type BrandResponseSeed = {
 };
 
 const isBrandResponseObject = (
-  value: HasBrandResponse | undefined,
-): value is BrandAvatarData =>
+  value: unknown,
+): value is Partial<HasBrandResponse> =>
   Boolean(
     value &&
     typeof value === "object" &&
@@ -36,54 +36,50 @@ const isBrandResponseObject = (
   );
 
 export const normalizeBrandResponse = (
-  value: HasBrandResponse | undefined,
+  value: unknown,
   seed: BrandResponseSeed,
 ): HasBrandResponse => {
-  if (!value) return false;
+  if (!value || typeof value !== "object") return null;
 
-  const fromValue = isBrandResponseObject(value) ? value : undefined;
-  const displayName = fromValue?.displayName ?? seed.displayName ?? undefined;
-  const pseudo =
-    fromValue?.pseudo ??
-    displayName ??
-    seed.brand ??
-    seed.displayName ??
-    undefined;
-  const siteUrl = fromValue?.siteUrl ?? seed.siteUrl ?? undefined;
-  const explicitAvatar =
-    fromValue?.avatar ??
-    fromValue?.logoUrl ??
-    fromValue?.imageUrl ??
-    seed.avatar ??
-    seed.logoUrl ??
-    seed.imageUrl ??
-    null;
+  const data = value as Record<string, any>;
+
+  const message = data.message ?? data.content ?? data.response ?? null;
+
+  if (!message) return null;
+
+  const pseudo = data.pseudo ?? data.displayName ?? seed.brand ?? undefined;
+
+  const siteUrl = data.siteUrl ?? seed.siteUrl ?? null;
+
   const avatar =
-    explicitAvatar ??
+    data.avatar ??
+    data.logoUrl ??
+    data.imageUrl ??
     (pseudo ? getBrandLogo(pseudo, siteUrl ?? undefined) : null);
-  const explicitBrandColor =
-    fromValue?.brandColor ??
-    fromValue?.primaryColor ??
-    fromValue?.color ??
-    seed.brandColor ??
-    seed.primaryColor ??
-    seed.color ??
-    undefined;
-  const resolvedBrandColor =
-    explicitBrandColor ??
-    (pseudo ? getBrandThemeColor(pseudo).base : undefined);
+
+  const brandColor =
+    data.brandColor ??
+    data.primaryColor ??
+    data.color ??
+    (pseudo ? getBrandThemeColor(pseudo).base : null);
 
   return {
-    avatar: avatar ?? null,
-    pseudo,
-    displayName,
     type: "brand",
+    brand: data.brand ?? seed.brand ?? "",
     siteUrl,
-    logoUrl: fromValue?.logoUrl ?? seed.logoUrl ?? undefined,
-    imageUrl: fromValue?.imageUrl ?? seed.imageUrl ?? undefined,
-    brandColor: resolvedBrandColor ?? undefined,
-    primaryColor: fromValue?.primaryColor ?? seed.primaryColor ?? undefined,
-    color: fromValue?.color ?? seed.color ?? undefined,
+    message,
+    createdAt: data.createdAt,
+
+    avatar,
+    pseudo,
+    displayName: data.displayName,
+
+    logoUrl: data.logoUrl,
+    imageUrl: data.imageUrl,
+
+    brandColor,
+    primaryColor: data.primaryColor,
+    color: data.color,
   };
 };
 
