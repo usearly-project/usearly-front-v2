@@ -74,6 +74,34 @@
   }
 }
 
+.right-sidebar--illustration {
+  background-color: transparent;
+  padding: 20px;
+  padding-bottom: 40px;
+
+  .filter-illustration-sidebar {
+    width: 100%;
+    padding: 0;
+  }
+
+  .right-sidebar-illustration-text {
+    margin-top: 20px;
+    margin-bottom: 32.5px;
+  }
+}
+
+.right-sidebar--theme-report {
+  background-color: #d3e1ff;
+}
+
+.right-sidebar--theme-cdc {
+  background-color: #ffe9e9;
+}
+
+.right-sidebar--theme-suggest {
+  background-color: #d5f4d8;
+}
+
 /* .right-sidebar {
   background: #dfe7f8;
   border-radius: 16px;

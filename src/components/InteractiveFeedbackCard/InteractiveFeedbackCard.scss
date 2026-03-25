@@ -84,7 +84,7 @@
 
 .feedback-shared-footer {
   background: #fff;
-  padding: 8px;
+  padding: 8px 0 0 0;
 }
 
 .feedback-comments {
@@ -98,7 +98,6 @@
 }
 
 .pg-expire {
-  margin-left: 6px;
   font-size: 13px;
   color: #666;
   font-weight: 500;
@@ -367,7 +366,6 @@
 }
 
 .feedback-type.is-expanded {
-  padding-bottom: 16px;
   .feedback-left {
     width: 250px;
     min-width: 250px;
@@ -412,7 +410,7 @@
       .feedback-header-main {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 4px;
         flex: 1 1 auto;
         min-width: 0;
       }
@@ -462,6 +460,9 @@
               height: 48px;
               border-radius: 50%;
               object-fit: cover;
+              .brand-logo-img-loaded {
+                margin-right: 0px;
+              }
             }
           }
         }
@@ -518,7 +519,8 @@
         color: black;
         font-weight: 600;
         cursor: pointer;
-        margin-top: 10px;
+        font-size: 13px;
+        // margin-top: 10px;
 
         &:hover {
           text-decoration: underline;
@@ -574,7 +576,6 @@
 .feedback-right.is-expanded {
   transform: translateY(-1px);
   height: auto;
-  padding-bottom: 16px;
   .feedback-content {
     .feedback-body {
       margin-bottom: 16px;

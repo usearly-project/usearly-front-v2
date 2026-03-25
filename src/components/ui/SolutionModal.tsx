@@ -53,16 +53,21 @@ const SolutionModal: React.FC<Props> = ({ reportId, onClose, onSuccess }) => {
   };
 
   return (
-    <Modal onClose={onClose}>
+    <Modal onClose={onClose} contentClassName="solution-modal-content">
       <div className="solution-modal">
+        <span className="icon">💡</span>
         <div className="header-modal">
-          <span className="icon">💡</span>
           <h2>Partager une solution</h2>
         </div>
 
         <p>
           Vous avez trouvé une <strong>solution de contournement</strong> ou une
           <strong> astuce</strong> pour ce problème ?
+          <br />
+          Partagez-la avec la communauté pour aider les autres utilisateurs.
+          <br />
+          Si votre solution est jugée utile par la communauté, elle sera mise en
+          avant.
         </p>
 
         <textarea

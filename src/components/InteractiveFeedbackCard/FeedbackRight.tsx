@@ -254,7 +254,6 @@ const FeedbackRight: React.FC<Props> = ({
 
             {shouldShowToggle && (
               <>
-                <br />
                 <button
                   className="see-more"
                   onClick={(e) => {

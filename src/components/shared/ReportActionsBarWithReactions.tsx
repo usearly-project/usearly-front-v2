@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ThumbsUp, MessageCircle, Lightbulb } from "lucide-react";
+import { ThumbsUp, MessageCircle } from "lucide-react";
 import { useReactionsForDescription } from "@src/hooks/useReactionsForDescription";
 import { getEmojisForType } from "@src/components/constants/emojiMapByType";
 import "./ReportActionsBar.scss";
@@ -12,6 +12,7 @@ import ReportAvatars from "@src/pages/public/components/ReportAvatar/ReportsAvat
 import type { User } from "@src/types/Reports";
 import { useAuth } from "@src/services/AuthContext";
 import lightBulbLight from "/assets/icons/lightBulbLight.svg";
+import lightBulbNoLight from "/assets/icons/lightBulbNoLight.svg";
 
 interface Props {
   type: "report" | "suggestion" | "coupDeCoeur";
@@ -272,12 +273,17 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
             {solutionsCount > 0 ? (
               <img
                 src={lightBulbLight}
-                width={18}
-                height={18}
+                width={26}
+                height={26}
                 alt="Ampoule indiquant qu'une solution a été proposée"
               />
             ) : (
-              <Lightbulb size={18} />
+              <img
+                src={lightBulbNoLight}
+                width={26}
+                height={26}
+                alt="Ampoule indiquant qu'une solution a été proposée"
+              />
             )}
 
             <span>
