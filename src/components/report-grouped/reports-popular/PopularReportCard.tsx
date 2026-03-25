@@ -15,6 +15,8 @@ import PopularReportComments from "./popular-report-header/PopularReportComments
 import PopularReportSimilar from "./popular-report-header/PopularReportSimilar";
 import SolutionModal from "@src/components/ui/SolutionModal";
 import SolutionsModal from "@src/components/ui/SolutionsModal";
+import BrandResponseBanner from "@src/components/brand-response-banner/BrandResponseBanner";
+import type { BrandResponseData } from "@src/types/brandResponse";
 
 interface Props {
   item: PopularGroupedReport;
@@ -44,6 +46,9 @@ const PopularReportCard: React.FC<Props> = ({
   const [showCapturePreview, setShowCapturePreview] = useState(false);
   const firstDescription = item.descriptions?.[0];
   const descriptionId = firstDescription?.id ?? "";
+  const brandResponse =
+    item.hasBrandResponse as unknown as BrandResponseData | null;
+
   const [showSolutionModal, setShowSolutionModal] = useState(false);
   const [showSolutionsList, setShowSolutionsList] = useState(false);
   const [showAuthTooltip, setShowAuthTooltip] = useState(false);
@@ -107,7 +112,8 @@ const PopularReportCard: React.FC<Props> = ({
     return `${truncated}${suffix} ${firstDescription.emoji || ""}`.trim();
   }, [firstDescription?.description, firstDescription?.emoji, showFullText]);
 
-  const hasBrandResponse = item.hasBrandResponse || null;
+  //const hasBrandResponse = item.hasBrandResponse || null;
+  const hasBrandResponse = !!item.hasBrandResponse;
 
   const author: {
     id: string;
@@ -203,9 +209,29 @@ const PopularReportCard: React.FC<Props> = ({
             previewLength={DESCRIPTION_PREVIEW_LENGTH}
             setShowCapturePreview={setShowCapturePreview}
           />
-
+          {brandResponse && (
+            <BrandResponseBanner
+              message={
+                brandResponse.message ||
+                brandResponse.content ||
+                brandResponse.response ||
+                ""
+              }
+              createdAt={brandResponse.createdAt}
+              brand={brandResponse.brandName || item.marque}
+              brandSiteUrl={brandResponse.siteUrl}
+              // 🔥 ON GARDE LES INFOS UI (COULEUR + AVATAR)
+              brandResponse={{
+                ...(brandResponse as any), // data backend
+                type: "brand",
+                brand: brandResponse.brandName || item.marque,
+                siteUrl: brandResponse.siteUrl,
+              }}
+            />
+          )}
           <PopularReportActions
             userProfile={userProfile}
+            brandResponse={brandResponse}
             descriptionId={descriptionId}
             item={item}
             solutionsCount={solutionsCount}

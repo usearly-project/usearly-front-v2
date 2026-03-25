@@ -367,7 +367,6 @@ const HomeBrandBlock: React.FC<Props> = ({ brand, siteUrl, reports }) => {
                           type="report"
                           brand={brand}
                           brandSiteUrl={siteUrl}
-                          brandResponse={hasBrandResponse}
                           reportIds={sub.reportIds}
                           onCommentAdded={() => {
                             setLocalCommentsCounts((prev) => ({

@@ -53,7 +53,6 @@ const UserGroupedReportsList: React.FC = () => {
     hasMore: hasMoreChrono,
     loadMore: loadMoreChrono,
   } = usePaginatedUserReportsGroupedByDate(viewMode === "date");
-
   /* ────────────────────────────────────────────────────────────
    Enrichir les données chrono avec brandLogoUrl (version hook)
    ──────────────────────────────────────────────────────────── */
@@ -88,10 +87,15 @@ const UserGroupedReportsList: React.FC = () => {
     > = {};
 
     for (const [day, items] of Object.entries(chronoData)) {
-      result[day] = items.map((item) => ({
-        ...item,
-        brandLogoUrl: logos[item.marque] ?? undefined,
-      }));
+      result[day] = items.map((item) => {
+        console.log("🧠 ITEM BEFORE MAP 👉", item);
+
+        return {
+          ...item,
+          solutionsCount: item.solutionsCount ?? 0,
+          brandLogoUrl: logos[item.marque] ?? undefined,
+        };
+      });
     }
 
     return result;
@@ -130,7 +134,7 @@ const UserGroupedReportsList: React.FC = () => {
   const handleDisplayChange = (mode: ViewMode) => {
     setViewMode(mode);
   };
-
+  console.log("🧠 RAW chronoData 👉", chronoData);
   return (
     <div className="user-grouped-reports-list">
       <div className="controls">

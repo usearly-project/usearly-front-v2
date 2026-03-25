@@ -5,9 +5,7 @@ import { getEmojisForType } from "@src/components/constants/emojiMapByType";
 import "./ReportActionsBar.scss";
 import EmojiUrlyReactionPicker from "@src/utils/EmojiUrlyReactionPicker";
 import { TICKET_STATUSES, type TicketStatusKey } from "@src/types/ticketStatus";
-import Avatar from "@src/components/shared/Avatar";
 import type { HasBrandResponse } from "@src/types/brandResponse";
-import { getBrandAvatarFromResponse } from "@src/utils/brandResponse";
 import ReportAvatars from "@src/pages/public/components/ReportAvatar/ReportsAvatar";
 import type { User } from "@src/types/Reports";
 import { useAuth } from "@src/services/AuthContext";
@@ -21,6 +19,8 @@ interface Props {
   descriptionId: string;
   reportsCount: number;
   reportId?: string;
+  brandResponse?: any;
+  showBrandResponseInline?: boolean;
   hasBrandResponse?: HasBrandResponse;
   commentsCount: number;
   status: TicketStatusKey;
@@ -44,7 +44,6 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
   descriptionId,
   reportsCount,
   commentsCount,
-  hasBrandResponse,
   status,
   solutionsCount = 0,
   onCommentClick,
@@ -82,7 +81,6 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
 
   const topThree = allReactions.slice(0, 3);
   const totalCount = allReactions.reduce((acc, r) => acc + r.count, 0);
-  const brandAvatar = getBrandAvatarFromResponse(hasBrandResponse);
 
   const handleAddReaction = async (emoji: string) => {
     if (!isAuthenticated) {
@@ -124,56 +122,13 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
               <span className="reaction-count">{totalCount}</span>
             </div>
           )}
+        </div>
+        <div className="count-right">
           {commentsCount > 0 && (
-            <span
-              className={`comments-link${topThree.length > 0 ? "" : " no-reaction"}`}
-              onClick={onCommentClick}
-            >
+            <span className="comments-link" onClick={onCommentClick}>
               {commentsCount}{" "}
               {commentsCount === 1 ? "commentaire" : "commentaires"}
             </span>
-          )}
-        </div>
-
-        <div className="count-right">
-          {commentsCount > 0 ? (
-            <>
-              {hasBrandResponse && brandAvatar && (
-                <span
-                  onClick={onCommentClick}
-                  role="button"
-                  tabIndex={0}
-                  className="brand-avatar-clickable"
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      onCommentClick();
-                    }
-                  }}
-                >
-                  <Avatar
-                    avatar={brandAvatar.avatar}
-                    pseudo={brandAvatar.pseudo}
-                    type={brandAvatar.type}
-                    siteUrl={brandAvatar.siteUrl ?? undefined}
-                    sizeHW={20}
-                  />
-                </span>
-              )}
-            </>
-          ) : (
-            <>
-              {hasBrandResponse && brandAvatar && (
-                <div onClick={onCommentClick}>
-                  <Avatar
-                    avatar={brandAvatar.avatar}
-                    pseudo={brandAvatar.pseudo}
-                    type={brandAvatar.type}
-                    siteUrl={brandAvatar.siteUrl ?? undefined}
-                    sizeHW={20}
-                  />
-                </div>
-              )}
-            </>
           )}
 
           <div className="signalements-avatars">

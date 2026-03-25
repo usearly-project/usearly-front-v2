@@ -1,6 +1,5 @@
 import { getUserProfileGroupedReports } from "@src/services/feedbackService";
 import type { UserGroupedReport } from "@src/types/Reports";
-import { normalizeBrandResponse } from "@src/utils/brandResponse";
 import { useState, useEffect, useCallback, useRef } from "react";
 
 /**
@@ -16,7 +15,6 @@ export const useInfiniteGroupedReports = (limit = 10, resetKey = "") => {
 
   const pageRef = useRef(1);
   const hasMoreRef = useRef(true);
-  const isMounted = useRef(false);
   const loadingRef = useRef(false); // empêche double loadMore
 
   const loadMore = useCallback(async () => {
@@ -28,18 +26,25 @@ export const useInfiniteGroupedReports = (limit = 10, resetKey = "") => {
     setLoading(true);
     setError(null);
 
-    console.log("[loadMore] page:", pageRef.current);
-
     try {
       const data = await getUserProfileGroupedReports(pageRef.current, limit);
+
+      // 🔥 ICI
+      console.log("API CALL 👉", pageRef, limit);
+      console.log("RAW API RESULTS 👉", data.results);
+
       const normalizedResults: UserGroupedReport[] = data.results.map(
-        (item: UserGroupedReport) => ({
-          ...item,
-          hasBrandResponse: normalizeBrandResponse(item.hasBrandResponse, {
-            brand: item.marque,
-            siteUrl: item.siteUrl ?? null,
-          }),
-        }),
+        (item: UserGroupedReport) => {
+          // 🔥 ET ICI
+          console.log("USER REPORT 👉", item.hasBrandResponse);
+
+          return {
+            ...item,
+            hasBrandResponse: item.hasBrandResponse
+              ? item.hasBrandResponse
+              : null,
+          };
+        },
       );
 
       setReports((prev) => {
@@ -66,7 +71,9 @@ export const useInfiniteGroupedReports = (limit = 10, resetKey = "") => {
             uniqueMap.set(key, {
               ...existing,
 
-              // ✅ fusion des reportIds SANS doublons
+              hasBrandResponse:
+                item.hasBrandResponse ?? existing.hasBrandResponse ?? null,
+
               reportIds: Array.from(
                 new Set([
                   ...(existing.reportIds ?? []),
@@ -74,7 +81,6 @@ export const useInfiniteGroupedReports = (limit = 10, resetKey = "") => {
                 ]),
               ),
 
-              // (optionnel mais propre)
               descriptions: Array.from(
                 new Map(
                   [...existing.descriptions, ...item.descriptions].map((d) => [
@@ -112,10 +118,7 @@ export const useInfiniteGroupedReports = (limit = 10, resetKey = "") => {
 
   // Reset automatique lorsque resetKey change
   useEffect(() => {
-    console.log(
-      "[useInfiniteGroupedReports] Reset triggered, resetKey:",
-      resetKey,
-    );
+    console.log("🔥 RESET + FIRST LOAD");
 
     setReports([]);
     setLoading(false);
@@ -126,12 +129,9 @@ export const useInfiniteGroupedReports = (limit = 10, resetKey = "") => {
     hasMoreRef.current = true;
     loadingRef.current = false;
 
-    if (isMounted.current) {
-      loadMore(); // recharge immédiatement après reset
-    } else {
-      isMounted.current = true;
-    }
-  }, [resetKey, loadMore]);
+    // ✅ TOUJOURS charger au reset
+    loadMore();
+  }, [resetKey]);
 
   return { reports, loading, error, hasMore, loadMore };
 };

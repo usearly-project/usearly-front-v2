@@ -21,6 +21,7 @@ import { useIsMobile } from "@src/hooks/use-mobile";
 import FlatSubcategoryBlockMobile from "./FlatSubcategoryBlockMobile";
 import SolutionModal from "@src/components/ui/SolutionModal";
 import SolutionsModal from "@src/components/ui/SolutionsModal";
+import BrandResponseBanner from "@src/components/brand-response-banner/BrandResponseBanner";
 
 interface Props {
   brand: string;
@@ -180,10 +181,11 @@ const FlatSubcategoryBlock: React.FC<Props> = ({
       />
     );
   }
-
+  console.log("BRAND RESPONSE 👉", hasBrandResponse);
+  const hasBrandResponseFlag = !!hasBrandResponse;
   return (
     <div
-      className={`subcategory-block flat ${expanded ? "open" : ""}`}
+      className={`subcategory-block flat ${expanded ? "open" : ""} ${hasBrandResponseFlag ? "has-brand-response" : ""}`}
       data-description-id={initialDescription.id}
     >
       {/* === HEADER === */}
@@ -328,6 +330,20 @@ const FlatSubcategoryBlock: React.FC<Props> = ({
                 </div>
               )}
             </p>
+            {hasBrandResponse && typeof hasBrandResponse === "object" && (
+              <BrandResponseBanner
+                message={
+                  hasBrandResponse.message ||
+                  hasBrandResponse.content ||
+                  hasBrandResponse.response ||
+                  ""
+                }
+                createdAt={hasBrandResponse.createdAt}
+                brand={hasBrandResponse.brand}
+                brandSiteUrl={hasBrandResponse.siteUrl ?? undefined}
+                brandResponse={hasBrandResponse}
+              />
+            )}
           </div>
 
           <ReportActionsBarWithReactions
@@ -361,7 +377,6 @@ const FlatSubcategoryBlock: React.FC<Props> = ({
                 type="report"
                 brand={brand}
                 brandSiteUrl={siteUrl}
-                brandResponse={hasBrandResponse}
                 reportIds={effectiveReportIds}
                 onCommentAdded={() => setRefreshKey((p) => p + 1)}
                 onCommentDeleted={() => setRefreshKey((p) => p + 1)}

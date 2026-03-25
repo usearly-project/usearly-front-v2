@@ -76,9 +76,6 @@ const ReportListView: React.FC<Props> = ({
             ? { groupedByDay: rageData, isLoading: loadingRage }
             : { groupedByDay: popularData, isLoading: loadingPopular };
 
-    console.log("FILTER", filter);
-    console.log("groupedByDay", groupedByDay);
-
     if (!isLoading && Object.keys(groupedByDay || {}).length === 0) {
       return (
         <div className="no-popular-results">
@@ -183,24 +180,38 @@ const ReportListView: React.FC<Props> = ({
         </div>
       );
     }
-
+    console.log("FLAT DATA 👉", flatData);
+    console.log("EXPLODED 👉", explodedReports);
     return (
       <>
-        {filteredExplodedReports.map((item) => (
-          <FlatSubcategoryBlock
-            key={`${item.reportingId}-${item.subCategory.subCategory}`}
-            brand={item.marque}
-            reportId={item.reportingId}
-            subcategory={item.subCategory.subCategory}
-            status={item.subCategory.status}
-            descriptions={item.subCategory.descriptions}
-            siteUrl={item.siteUrl || undefined}
-            hasBrandResponse={item.hasBrandResponse}
-            solutionsCount={item.solutionsCount}
-            /* capture={item.capture || null} */
-            hideFooter={true}
-          />
-        ))}
+        {filteredExplodedReports.map((item) => {
+          const normalizedBrandResponse =
+            item.hasBrandResponse &&
+            typeof item.hasBrandResponse === "object" &&
+            ("message" in item.hasBrandResponse ||
+              "content" in item.hasBrandResponse ||
+              "response" in item.hasBrandResponse)
+              ? item.hasBrandResponse
+              : undefined;
+          console.log(
+            "STEP 3 NORMALIZED (ReportListView) 👉",
+            normalizedBrandResponse,
+          );
+          return (
+            <FlatSubcategoryBlock
+              key={`${item.reportingId}-${item.subCategory.subCategory}`}
+              brand={item.marque}
+              reportId={item.reportingId}
+              subcategory={item.subCategory.subCategory}
+              status={item.subCategory.status}
+              descriptions={item.subCategory.descriptions}
+              siteUrl={item.siteUrl || undefined}
+              hasBrandResponse={normalizedBrandResponse} // ✅ ici
+              solutionsCount={item.solutionsCount}
+              hideFooter={true}
+            />
+          );
+        })}
       </>
     );
   }

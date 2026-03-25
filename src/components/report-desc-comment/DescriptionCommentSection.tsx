@@ -4,7 +4,6 @@ import { MessageCircleMore, Share2 } from "lucide-react";
 import CommentSection from "@src/components/comments/CommentSection";
 import DescriptionReactionSelector from "@src/utils/DescriptionReactionSelector";
 import { useCommentsForDescription } from "@src/hooks/useCommentsForDescription";
-import type { HasBrandResponse } from "@src/types/brandResponse";
 
 interface Props {
   descriptionId: string;
@@ -20,7 +19,6 @@ interface Props {
   hideFooter?: boolean;
   brand?: string;
   brandSiteUrl?: string;
-  brandResponse?: HasBrandResponse;
   refreshKey?: number;
   forceOpen?: boolean;
   onCommentCountChange?: (count: number) => void;
@@ -40,14 +38,11 @@ const DescriptionCommentSection: React.FC<Props> = ({
   forceClose = false,
   onOpen,
   reportIds,
-  /* autoOpenIfComments = false, */
   hideFooter = false,
   refreshKey,
   forceOpen = false,
   brandSiteUrl,
-  brandResponse,
   onCommentCountChange,
-  /* onCommentAddedOrDeleted, */
   onCommentsUpdate,
   isPublic = false,
 }) => {
@@ -178,7 +173,6 @@ const DescriptionCommentSection: React.FC<Props> = ({
           type={type}
           brand={brand}
           brandSiteUrl={brandSiteUrl}
-          brandResponse={brandResponse}
           reportIds={reportIds}
           readOnly={isPublic}
           onCommentAdded={() => setLocalRefreshKey((k) => k + 1)}

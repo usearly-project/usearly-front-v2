@@ -39,6 +39,10 @@ const PopularReportList = ({
           createdAt: item.createdAt,
           count: 1,
           solutionsCount: item.solutionsCount ?? 0,
+
+          // 🔥 AJOUT CRITIQUE
+          hasBrandResponse: item.hasBrandResponse ?? null,
+
           descriptions: [
             {
               id: item.id,

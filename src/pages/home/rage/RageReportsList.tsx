@@ -4,8 +4,8 @@ import type {
   ExplodedGroupedReport,
 } from "@src/types/Reports";
 import ReportListView from "../ReportListView";
-import { useBrandResponsesMap } from "@src/hooks/useBrandResponsesMap";
-import { normalizeBrandResponse } from "@src/utils/brandResponse";
+/* import { useBrandResponsesMap } from "@src/hooks/useBrandResponsesMap";
+import { normalizeBrandResponse } from "@src/utils/brandResponse"; */
 
 const RageReportsList = ({
   data,
@@ -28,13 +28,6 @@ const RageReportsList = ({
   searchTerm?: string;
   onClearSearchTerm?: () => void;
 }) => {
-  const reportIds = React.useMemo(
-    () => data.map((r) => String(r.reportingId)),
-    [data],
-  );
-  const { brandResponsesMap /* loading: loadingBrandResponses */ } =
-    useBrandResponsesMap(reportIds);
-
   // On transforme les résultats du backend en ExplodedGroupedReport
   const explodedData: ExplodedGroupedReport[] = data.map((r) => ({
     id: String(r.reportingId),
@@ -45,16 +38,10 @@ const RageReportsList = ({
     totalCount: r.count,
     reactions: [],
 
-    // 🔥 AJOUT CRITIQUE
     solutionsCount: r.solutionsCount ?? 0,
 
-    hasBrandResponse: normalizeBrandResponse(
-      brandResponsesMap[String(r.reportingId)],
-      {
-        brand: r.marque,
-        siteUrl: r.siteUrl ?? null,
-      },
-    ),
+    // ✅ FIX ICI
+    hasBrandResponse: r.hasBrandResponse ?? null,
 
     subCategory: {
       subCategory: r.subCategory,
@@ -86,7 +73,7 @@ const RageReportsList = ({
       },
     ],
   }));
-
+  console.log("RAGE RAW 👉", data[0].hasBrandResponse);
   return (
     <ReportListView
       filter="rage"
