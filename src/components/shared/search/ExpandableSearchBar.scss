@@ -1,0 +1,120 @@
+@use "../../../styles/base/variables" as *;
+
+.expandable-search-bar {
+  --expandable-search-collapsed-width: 44px;
+  --expandable-search-expanded-width: 300px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: var(--expandable-search-collapsed-width);
+  max-width: 100%;
+  min-width: var(--expandable-search-collapsed-width);
+  height: 44px;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.6);
+  overflow: hidden;
+  transition:
+    width 0.24s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+
+  &.is-open {
+    width: var(--expandable-search-expanded-width);
+    background: #fff;
+    border-color: $border-color;
+    box-shadow: 0 10px 24px rgba(12, 5, 45, 0.08);
+
+    .expandable-search-bar__toggle {
+      border-left: 1px solid rgba(0, 0, 0, 0.06);
+    }
+  }
+
+  &.is-disabled {
+    opacity: 0.65;
+    pointer-events: none;
+  }
+
+  &:focus-within {
+    border-color: $dark;
+    box-shadow:
+      0 0 0 3px rgba($dark, 0.08),
+      0 10px 24px rgba(12, 5, 45, 0.08);
+    background: #fff;
+  }
+}
+
+.expandable-search-bar__body {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  flex: 1;
+  padding-left: 14px;
+
+  .expandable-search-bar.is-open & {
+    display: flex;
+  }
+}
+
+.expandable-search-bar__input {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  background: transparent;
+  color: $dark;
+  font-size: 14px;
+  padding: 0;
+  padding-left: 5px;
+  outline: none;
+
+  &::placeholder {
+    color: $gray-500;
+  }
+
+  &::-webkit-search-decoration,
+  &::-webkit-search-cancel-button,
+  &::-webkit-search-results-button,
+  &::-webkit-search-results-decoration {
+    appearance: none;
+  }
+}
+
+.expandable-search-bar__toggle,
+.expandable-search-bar__clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  color: $dark;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.expandable-search-bar__toggle {
+  width: 44px;
+  height: 44px;
+  transition: border-color 0.2s ease;
+}
+
+.expandable-search-bar__clear {
+  width: 28px;
+  height: 28px;
+  margin-right: 8px;
+  border-radius: 999px;
+
+  &:hover {
+    background: rgba($dark, 0.06);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .expandable-search-bar,
+  .expandable-search-bar__toggle {
+    transition: none;
+  }
+}
