@@ -223,7 +223,6 @@ const FlatSubcategoryBlockMobile: React.FC<Props> = ({
               type="report"
               brand={brand}
               brandSiteUrl={siteUrl}
-              brandResponse={hasBrandResponse}
               reportIds={effectiveReportIds}
               onCommentAdded={onRefreshComments}
               onCommentDeleted={onRefreshComments}
