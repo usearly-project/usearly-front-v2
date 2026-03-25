@@ -8,7 +8,7 @@ import { TICKET_STATUSES, type TicketStatusKey } from "@src/types/ticketStatus";
 import Avatar from "@src/components/shared/Avatar";
 import type { HasBrandResponse } from "@src/types/brandResponse";
 import { getBrandAvatarFromResponse } from "@src/utils/brandResponse";
-import ReportAvatars from "@src/pages/public/ReportsAvatar";
+import ReportAvatars from "@src/pages/public/components/ReportAvatar/ReportsAvatar";
 import type { User } from "@src/types/Reports";
 import { useAuth } from "@src/services/AuthContext";
 

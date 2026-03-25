@@ -167,6 +167,7 @@ export const POP_FEED_BRANDS = [
         "J'adore quand les recos tombent juste.",
         "J'aime la sensation de découverte.",
         "Trop bien, l'ambiance recherchée est souvent bien comprise.",
+        "J’adore les playlists personnalisées, elles sont vraiment bien faites.",
       ],
     },
   },
@@ -187,6 +188,131 @@ export const POP_FEED_BRANDS = [
         "Trop bien, la home donne vite envie de lancer quelque chose.",
         "J'aime la façon dont les contenus sont mis en scène.",
         "J'adore quand on trouve vite quoi regarder.",
+      ],
+    },
+  },
+  {
+    id: "Sncf",
+    label: "Sncf",
+    image: "/assets/brandLogo/sncf.png",
+    copy: {
+      report: "Je n'arrive pas à mettre mon abonnement dans l'app.",
+      reportLinked: "Même souci ici !",
+      suggestion: [
+        "J’aimerais être informé en temps réel des retards.",
+        "Ce serait bien d’avoir une meilleure estimation du temps réel d’arrivée.",
+        "J’aimerais voir le niveau d’affluence dans les trains avant de monter.",
+      ],
+      coupDeCoeur: [
+        "J’adore la facilité pour réserver un billet en quelques clics.",
+        "L’app est pratique pour centraliser tous mes trajets.",
+        "Trop bien de pouvoir ajouter ses billets directement dans le téléphone.",
+        "J’aime la clarté des informations pour préparer un voyage.",
+      ],
+    },
+  },
+  {
+    id: "Revolut",
+    label: "Revolut",
+    image: "/assets/brandLogo/revolut.png",
+    copy: {
+      report: "Certaines transactions n'apparaîssent pas dans l’historique.",
+      reportLinked:
+        "Même problème ici, les notifications ne sont pas toujours présente.",
+      suggestion: [
+        "J’aimerais avoir plus de contrôle sur les notifications en temps réel.",
+        "Ce serait utile d’avoir une meilleure visibilité sur les frais à l’étranger.",
+        "J’aimerais pouvoir catégoriser automatiquement mes dépenses de façon plus précise.",
+      ],
+      coupDeCoeur: [
+        "J’adore la facilité pour envoyer de l’argent en quelques secondes.",
+        "L’interface est vraiment fluide et agréable à utiliser.",
+        "Trop pratique pour gérer ses dépenses à l’étranger sans prise de tête.",
+        "J’aime bien les statistiques de dépenses, c’est super clair.",
+      ],
+    },
+  },
+  {
+    id: "Amazon",
+    label: "Amazon",
+    image: "/assets/brandLogo/amazon.png",
+    copy: {
+      report: "Les délais de livraison ne sont pas toujours respectés.",
+      reportLinked: "Pareil ! Ce n’est pas toujours clair ou précis.",
+      suggestion: [
+        "J’aimerais une estimation de livraison en temps réel.",
+        "Ce serait utile d’avoir des avis plus filtrés pour éviter les faux commentaires.",
+        "J’aimerais une meilleure organisation des résultats de recherche.",
+      ],
+      coupDeCoeur: [
+        "J’adore la rapidité pour commander en quelques clics.",
+        "Trop pratique de pouvoir tout trouver au même endroit.",
+        "Le système de recommandation est vraiment efficace.",
+        "J’aime la simplicité du suivi de commande.",
+      ],
+    },
+  },
+  {
+    id: "Vinted",
+    label: "Vinted",
+    image: "/assets/brandLogo/vinted.png",
+    copy: {
+      report:
+        "Certains vendeurs ne répondent pas ou mettent beaucoup trop de temps à expédier.",
+      reportLinked: "La même chose.",
+      suggestion: [
+        "J’aimerais avoir des recommandations plus précises selon mes tailles et préférences.",
+        "Ce serait utile d’avoir un système de vérification des articles plus poussé.",
+        "J’aimerais mieux filtrer les résultats (état réel, taille, qualité).",
+      ],
+      coupDeCoeur: [
+        "J’adore pouvoir vendre facilement des vêtements que je ne porte plus.",
+        "Trop pratique pour trouver des pièces à petit prix.",
+        "J’aime le côté éco-responsable de la plateforme.",
+        "La messagerie entre acheteurs et vendeurs est simple et efficace.",
+      ],
+    },
+  },
+  {
+    id: "CanalPlus",
+    label: "Canal+",
+    image: "/assets/brandLogo/canalplus.png",
+    copy: {
+      report: "La lecture plante parfois ou met du temps à se lancer.",
+      reportLinked:
+        "Même souci ici, la qualité vidéo s’adapte mal même avec une bonne connexion.",
+      suggestion: [
+        "J’aimerais avoir une meilleure reprise de lecture quand je change d’appareil.",
+        "Ce serait bien d’avoir des recommandations plus personnalisées.",
+        "J’aimerais une navigation plus fluide entre les catégories et les contenus.",
+      ],
+      coupDeCoeur: [
+        "J’adore la qualité des contenus exclusifs proposés.",
+        "Trop bien d’avoir du sport et des séries au même endroit.",
+        "L’interface est globalement agréable et moderne.",
+        "J’aime pouvoir télécharger les contenus pour les regarder hors ligne.",
+      ],
+    },
+  },
+  {
+    id: "TooGoodToGo",
+    label: "Too Good To Go",
+    image: "/assets/brandLogo/toogoodtogo.png",
+    copy: {
+      report:
+        "Les paniers sont parfois décevants par rapport à ce qui est annoncé.",
+      reportLinked:
+        "Même problème ici, le contenu des paniers est souvent imprévisible.",
+      suggestion: [
+        "J’aimerais avoir plus de détails sur le contenu des paniers avant de réserver.",
+        "Ce serait bien d’avoir un système de notation plus précis des commerçants.",
+        "J’aimerais pouvoir filtrer selon mes préférences alimentaires (végétarien, halal, etc.).",
+      ],
+      coupDeCoeur: [
+        "J’adore le concept anti-gaspillage, c’est vraiment utile.",
+        "Trop bien de pouvoir récupérer de la nourriture à petit prix.",
+        "L’application est simple et rapide à utiliser.",
+        "J’aime découvrir de nouveaux commerces près de chez moi.",
       ],
     },
   },

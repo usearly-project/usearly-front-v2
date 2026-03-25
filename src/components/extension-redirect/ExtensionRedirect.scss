@@ -155,17 +155,15 @@
     }
   }
   .extension-redirect-carousel-controls {
-    position: absolute;
-    right: 3rem;
-    bottom: 2rem;
     z-index: 2;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
     gap: 16px;
-    background-color: rgb(173 173 173 / 10%);
+    margin-top: 20px;
+    background-color: rgba(173, 173, 173, 0.1);
     padding: 8px;
     border-radius: 999px;
+    justify-content: center;
   }
   .extension-redirect-carousel-arrow {
     width: 44px;
@@ -402,9 +400,12 @@
   min-height: 0;
   margin: 0 auto;
   padding-top: 4.5rem;
-  padding-bottom: 5.5rem;
+  padding-bottom: 1rem;
 
-  .extension-redirect-text-container {
+  .extension-redirect-text-description,
+  .extension-redirect-text-description,
+  .extension-redirect-text-button,
+  .extension-redirect-carousel-arrow {
     display: none;
   }
 

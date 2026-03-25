@@ -27,7 +27,7 @@ const TextPill = ({
 
   return (
     <span
-      className={`text-pill${isActive ? " is-active" : ""}${addClass ? ` ${addClass}` : ""}`}
+      className={`text-pill${isActive ? " is-active" : " unactive"}${addClass ? ` ${addClass}` : ""}`}
       onClick={onClick}
       style={style}
     >

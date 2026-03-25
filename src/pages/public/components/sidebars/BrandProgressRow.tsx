@@ -30,10 +30,19 @@ const BrandProgressRow = ({
           avatar={getBrandLogo(name, siteUrl)}
           pseudo={name}
           type="brand"
+          sizeHW={32}
         />
 
         <div className="brand-info">
           <span className="brand-label">{label}</span>
+          <div className="brand-progress">
+            <div className="progress-bar">
+              <div
+                className="progress-bar-fill"
+                style={{ width: `${Math.min(progress, 100)}%` }}
+              />
+            </div>
+          </div>
         </div>
 
         <span
@@ -41,17 +50,8 @@ const BrandProgressRow = ({
           onMouseEnter={(e) => onHover(e, `${name} — ${count} signalements`)}
           onMouseLeave={onLeave}
         >
-          <strong>{count}</strong>/100
+          <span className="progress-score-count">{count}</span>/100
         </span>
-      </div>
-
-      <div className="brand-progress">
-        <div className="progress-bar">
-          <div
-            className="progress-bar-fill"
-            style={{ width: `${Math.min(progress, 100)}%` }}
-          />
-        </div>
       </div>
     </div>
   );

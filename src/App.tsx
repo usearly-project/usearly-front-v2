@@ -240,12 +240,10 @@ function App() {
                 </GuestRoute>
               }
             />
+            <Route path="/home" element={<NewHomeAlternatifPastel />} />
             <Route path="/home" element={<NewHomeAlternate />} />
-            <Route path="/home-pastel" element={<NewHomeAlternatifPastel />} />
-            <Route
-              path="/landing-pastel"
-              element={<NewHomeAlternatifPastel />}
-            />
+            <Route path="/home2" element={<NewHomeAlternate />} />
+            <Route path="/home2" element={<NewHomeAlternate />} />
             <Route
               path="/feedback"
               element={

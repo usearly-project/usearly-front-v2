@@ -33,7 +33,10 @@ const HeroBanner = () => {
       <div className="hero-content">
         <div className="hero-left">
           <h1>
-            <span className="highlight">Ensemble</span> on fait
+            <span className="highlight-container">
+              <span className="highlight">Ensemble</span>
+            </span>
+            on fait
             <br />
             bouger les marques !
           </h1>

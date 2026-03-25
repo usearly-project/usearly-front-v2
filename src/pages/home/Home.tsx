@@ -9,7 +9,7 @@ import { useIsAtBottom } from "@src/hooks/detect-bottom";
 import ReportTab from "./home-tabs/ReportTab";
 import CdcTabEnhanced from "./home-tabs/CdcTabEnhanced";
 import SuggestionTabEnhanced from "./home-tabs/SuggestionTabEnhanced";
-import LeftSidebar from "../public/sidebars/LeftSidebar";
+import LeftSidebar from "../public/components/sidebars/LeftSidebar";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 const FEEDBACK_LIST_WRAPPER_SELECTOR = ".feedback-list-wrapper";
