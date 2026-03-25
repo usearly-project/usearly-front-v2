@@ -15,6 +15,7 @@ interface Props {
   isOpen: boolean;
   //onToggle: (id: string) => void;
   addClassName?: string;
+  showHeaderTypeIcon?: boolean;
 }
 
 const InteractiveFeedbackCard: React.FC<Props> = ({
@@ -22,6 +23,7 @@ const InteractiveFeedbackCard: React.FC<Props> = ({
   isOpen,
   //onToggle,
   addClassName,
+  showHeaderTypeIcon = false,
 }) => {
   const { userProfile, isLoading } = useAuth();
   const userId = userProfile?.id ?? null;
@@ -142,6 +144,7 @@ const InteractiveFeedbackCard: React.FC<Props> = ({
           commentCount={commentCount}
           isGuest={isGuest}
           onExpandedChange={setIsFeedbackExpanded}
+          showHeaderTypeIcon={showHeaderTypeIcon}
         />
       </div>
       {!!userId && (

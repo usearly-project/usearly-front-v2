@@ -14,7 +14,7 @@ export default function VoteButton({ isExpired = false, onClick }: Props) {
       }}
       disabled={isExpired}
     >
-      {isExpired ? "Expiré" : "Voter"}
+      {isExpired ? "Expiré" : "Soutenir"}
     </button>
   );
 }
