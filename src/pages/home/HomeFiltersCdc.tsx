@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import type { FeedbackType } from "@src/types/Reports";
 import FilterBarGeneric from "./genericFilters/FilterBarGeneric";
 import { useBrands } from "@src/hooks/useBrands"; // ✅ on réutilise ton hook existant
 import "./HomeFiltersCdc.scss";
@@ -13,6 +14,7 @@ interface Props {
   availableCategories: string[];
   siteUrl?: string;
   setSelectedSiteUrl?: (val?: string) => void;
+  onThemeChange?: (theme: FeedbackType) => void;
 }
 
 const HomeFiltersCdc = ({
@@ -25,6 +27,7 @@ const HomeFiltersCdc = ({
   /* availableCategories, */
   siteUrl,
   setSelectedSiteUrl,
+  onThemeChange,
 }: Props) => {
   const [viewMode, setViewMode] = useState<"flat" | "chrono" | "confirmed">(
     "flat",
@@ -69,6 +72,8 @@ const HomeFiltersCdc = ({
         brandFocusFilter="brandSolo"
         baseFilterValue="all"
         siteUrl={siteUrl}
+        selectedTheme="coupdecoeur"
+        onThemeChange={onThemeChange}
       />
     </div>
   );

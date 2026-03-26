@@ -1,10 +1,15 @@
 export type RightSidebarStatsMode =
   | "default"
   | "none"
+  | "report-chrono"
   | "report-rage"
   | "report-popular"
   | "cdc-popular"
-  | "suggestion-popular";
+  | "cdc-chrono"
+  | "cdc-enflammes"
+  | "suggestion-popular"
+  | "suggestion-recent"
+  | "suggestion-liked";
 
 export type RightSidebarThemeClass =
   | "right-sidebar--theme-report"

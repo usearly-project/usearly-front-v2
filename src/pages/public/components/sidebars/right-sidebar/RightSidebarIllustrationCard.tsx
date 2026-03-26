@@ -1,4 +1,4 @@
-import FilterIllustration from "@src/pages/home/home-illustration/FilterIllustration";
+import FilterIllustrationNextToText from "@src/pages/home/home-illustration/FilterIllustrationNextToText";
 import type {
   RightSidebarIllustrationConfig,
   RightSidebarStatItem,
@@ -16,7 +16,11 @@ const RightSidebarIllustrationCard = ({ config, loading, stats }: Props) => {
     <div
       className={`right-sidebar right-sidebar--illustration ${config.themeClass}`.trim()}
     >
-      <FilterIllustration filter={config.filter} onglet={config.onglet} />
+      <FilterIllustrationNextToText
+        filter={config.filter}
+        onglet={config.onglet}
+        withText
+      />
 
       {config.text ? (
         <p className="right-sidebar-illustration-text">{config.text}</p>

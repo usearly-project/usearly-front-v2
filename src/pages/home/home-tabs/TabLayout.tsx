@@ -1,5 +1,5 @@
 import React from "react";
-import FilterIllustration from "../home-illustration/FilterIllustration";
+import FeedbackRightSidebar from "./FeedbackRightSidebar";
 
 interface TabLayoutProps {
   /** Classe container : cdc-banner-container | suggestion-banner-container */
@@ -66,12 +66,12 @@ const TabLayout: React.FC<TabLayoutProps> = ({
           Colonne droite — BANDEAU
       --------------------------------*/}
       <aside className="right-panel">
-        <FilterIllustration
-          filter={activeFilter}
+        <FeedbackRightSidebar
+          activeTab={onglet}
+          activeFilter={activeFilter}
           selectedBrand={selectedBrand}
-          siteUrl={selectedSiteUrl}
           selectedCategory={selectedCategory}
-          onglet={onglet}
+          selectedSiteUrl={selectedSiteUrl}
         />
       </aside>
     </div>

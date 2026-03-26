@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import type { FeedbackType } from "@src/types/Reports";
 import FilterBarGeneric from "./genericFilters/FilterBarGeneric";
 import { useBrands } from "@src/hooks/useBrands";
 import "./HomeFiltersSuggestion.scss";
@@ -15,6 +16,7 @@ interface Props {
   searchQuery: string;
   onSearchChange: (val: string) => void;
   siteUrl?: string;
+  onThemeChange?: (theme: FeedbackType) => void;
 }
 
 const HomeFiltersSuggestion = ({
@@ -28,6 +30,7 @@ const HomeFiltersSuggestion = ({
   // searchQuery,
   onSearchChange,
   siteUrl,
+  onThemeChange,
 }: Props) => {
   const [viewMode, setViewMode] = useState<"flat" | "chrono" | "confirmed">(
     "flat",
@@ -71,6 +74,8 @@ const HomeFiltersSuggestion = ({
         brandFocusFilter="brandSolo"
         baseFilterValue="allSuggest"
         siteUrl={siteUrl}
+        selectedTheme="suggestion"
+        onThemeChange={onThemeChange}
       />
 
       {/* {selectedBrand && (

@@ -3,7 +3,6 @@ import { type FeedbackType } from "./FeedbackTabs";
 import "./UserProfilePage.scss";
 import UserGroupedReportsList from "../profile/UserGroupedReportsList";
 import UserFeedbackView from "../profile/UserFeedbackView";
-// import UserVotesCard from "../profile/UserVotesCard";
 import UserEmotionSummaryPanel from "../profile/banner/user-emotion/UserEmotionSummaryPanel";
 import { useUserEmotionSummary } from "../profile/hook/userEmotionService";
 import UserProfileBanner from "./banner/UserProfileBanner";

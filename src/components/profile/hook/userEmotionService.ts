@@ -12,10 +12,13 @@ export function useUserEmotionSummary(type: "report" | "coupdecoeur" | null) {
 
   useEffect(() => {
     if (!type || !isAuthenticated) {
+      setData(null);
       return;
     }
 
     let mounted = true;
+
+    setData(null); // 🔥 FIX
     setLoading(true);
 
     getUserEmotionSummary(type)

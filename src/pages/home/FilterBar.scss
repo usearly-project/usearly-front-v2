@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.5rem;
   width: 100%;
   position: relative;
 
@@ -14,8 +14,12 @@
     display: flex;
     align-items: center;
     gap: 14px;
-    flex: 0 1 auto;
+    flex: 0 0 auto;
     min-width: 0;
+
+    > * {
+      min-width: 0;
+    }
 
     > .brand-select {
       display: inline-flex;
@@ -29,14 +33,16 @@
   .secondary-filters-container {
     display: flex;
     align-items: center;
+    flex-wrap: nowrap;
     gap: 12px;
     flex: 1 1 auto;
-    justify-content: flex-end;
+    justify-content: flex-start;
     margin-left: auto;
     min-width: 0;
 
     > * {
       flex-shrink: 0;
+      min-width: 0;
     }
 
     > .search-bar {
@@ -54,6 +60,35 @@
         margin-left: 0;
         z-index: 2;
       }
+    }
+  }
+
+  @media screen and (max-width: 980px) {
+    flex-wrap: wrap;
+    align-items: flex-start;
+
+    .primary-filters,
+    .secondary-filters-container {
+      width: 100%;
+    }
+
+    .secondary-filters-container {
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      margin-left: 0;
+    }
+  }
+
+  @media screen and (max-width: 680px) {
+    .primary-filters,
+    .secondary-filters-container {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .primary-filters > *,
+    .secondary-filters-container > * {
+      width: 100%;
     }
   }
 

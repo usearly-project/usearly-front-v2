@@ -64,11 +64,6 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
   const [showAuthTooltip, setShowAuthTooltip] = useState(false);
   const [tooltipText, setTooltipText] = useState("");
 
-  console.log("PROPS", {
-    reportsCount,
-    descriptions,
-  });
-
   if (!statusConfig) {
     console.warn("❌ Status inconnu reçu:", status);
     return null; // ou un badge neutre "—"
