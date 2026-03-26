@@ -11,28 +11,14 @@
 
   .love-brands-list {
     display: flex;
+    flex-wrap: wrap;
     width: 100%;
-    align-items: center;
-    gap: 10px;
-    &::-webkit-scrollbar {
-      display: none;
-    }
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-
-  .love-brand-item {
-    display: flex;
-    align-items: center;
+    //align-items: center;
+    gap: 12px;
   }
 }
-.love-brands-list {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
 
-/* Wrapper tooltip */
+/* Tooltip wrapper */
 .love-brand-tooltip {
   position: relative;
   display: inline-flex;
@@ -41,17 +27,16 @@
 
   &:hover .love-brand-tooltip-content {
     opacity: 1;
-    transform: translateY(-6px);
-    pointer-events: auto;
+    transform: translateX(-50%) translateY(-4px);
   }
 }
 
-/* Tooltip box */
+/* Tooltip */
 .love-brand-tooltip-content {
   position: absolute;
-  bottom: 100%;
+  bottom: calc(100% + 8px); // espace propre
   left: 50%;
-  transform: translate(-50%, -2px);
+  transform: translateX(-50%); // 🔥 centrage propre
 
   background: #111;
   color: #fff;
@@ -79,46 +64,15 @@
     opacity: 0.7;
   }
 
-  /* petite flèche */
   &::after {
     content: "";
     position: absolute;
     top: 100%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%); // 🔥 CENTRAGE PARFAIT
+
     border-width: 6px;
     border-style: solid;
     border-color: #111 transparent transparent transparent;
   }
-}
-
-.love-brand-tooltip {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  cursor: pointer;
-
-  &:hover .love-brand-tooltip-content {
-    opacity: 1;
-    transform: translate(-50%, -8px);
-    pointer-events: auto;
-  }
-}
-
-.love-brand-tooltip-content {
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translate(-50%, -2px);
-
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.18s ease;
-
-  background: #111;
-  color: #fff;
-  padding: 8px 12px;
-  border-radius: 10px;
-  white-space: nowrap;
-  z-index: 10;
 }
