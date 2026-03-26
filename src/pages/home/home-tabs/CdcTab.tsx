@@ -1,7 +1,7 @@
 import React, { useMemo, useEffect, useRef } from "react";
 import HomeFiltersCdc from "../HomeFiltersCdc";
 import FeedbackView from "@src/components/feedbacks/FeedbackView";
-import FilterIllustration from "../home-illustration/FilterIllustration";
+import FilterIllustrationNextToText from "@src/pages/home/home-illustration/FilterIllustrationNextToText";
 import SqueletonAnime from "@src/components/loader/SqueletonAnime";
 import { capitalizeFirstLetter } from "@src/utils/stringUtils";
 import Avatar from "@src/components/shared/Avatar";
@@ -160,12 +160,13 @@ const CdcTab: React.FC<Props> = ({
 
         {/* Colonne droite — la bannière DOIT être visible pendant le loading */}
         <aside className="right-panel">
-          <FilterIllustration
+          <FilterIllustrationNextToText
             filter={activeFilter}
             selectedBrand={selectedBrand}
             siteUrl={selectedSiteUrl}
             selectedCategory={selectedCategory}
             onglet="coupdecoeur"
+            withText
           />
         </aside>
       </div>
@@ -269,12 +270,13 @@ const CdcTab: React.FC<Props> = ({
       </div>
 
       <aside className="right-panel">
-        <FilterIllustration
+        <FilterIllustrationNextToText
           filter={activeFilter}
           selectedBrand={selectedBrand}
           siteUrl={selectedSiteUrl}
           selectedCategory={selectedCategory}
           onglet="coupdecoeur"
+          withText
         />
       </aside>
     </div>

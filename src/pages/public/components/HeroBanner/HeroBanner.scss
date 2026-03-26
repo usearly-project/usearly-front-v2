@@ -10,6 +10,7 @@
   background-size: 220px auto;
   padding: 40px 0; // ❗ enlever le padding horizontal ici
   color: white;
+  width: 100vw;
 
   &::before {
     content: "";
@@ -54,6 +55,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 32px;
 
     @media screen and (max-width: 901px) {
       flex-direction: column;
@@ -97,11 +99,16 @@
 
   .hero-right {
     text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
   }
 
   .hero-stats {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
     margin-top: 16px;
     gap: 30px;
   }
@@ -128,6 +135,72 @@
       width: 2.8em; // 🔥 proportionnel au texte
       height: 2.8em;
       transform: translateY(0.08em);
+    }
+  }
+
+  .hero-tabs {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 22px;
+  }
+
+  .hero-tab {
+    appearance: none;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.78);
+    border-radius: 999px;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1;
+    cursor: pointer;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease,
+      transform 0.2s ease;
+
+    &:hover {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.45);
+      background: rgba(255, 255, 255, 0.14);
+      transform: translateY(-1px);
+    }
+
+    &.is-active {
+      background: #fff;
+      color: #10163a;
+      border-color: #fff;
+    }
+  }
+
+  @media screen and (max-width: 901px) {
+    .hero-right {
+      text-align: center;
+      align-items: center;
+    }
+
+    .hero-stats,
+    .hero-tabs {
+      justify-content: center;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .hero-left h1 {
+      font-size: 28px;
+      text-align: center;
+    }
+
+    .hero-stats {
+      gap: 20px;
+    }
+
+    .stat .stat-value {
+      font-size: 40px;
     }
   }
 }

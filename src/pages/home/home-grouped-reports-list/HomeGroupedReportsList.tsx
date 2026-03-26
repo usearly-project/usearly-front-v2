@@ -29,6 +29,7 @@ interface Props {
   activeTab: FeedbackType;
   activeFilter: string;
   setActiveFilter: (val: string) => void;
+  onThemeChange?: (tab: FeedbackType) => void;
   viewMode: "flat" | "chrono" | "confirmed";
   onViewModeChange: (mode: "flat" | "chrono" | "confirmed") => void;
   selectedBrand: string;
@@ -54,6 +55,7 @@ const HomeGroupedReportsList: React.FC<Props> = ({
   activeTab,
   onViewModeChange,
   setActiveFilter,
+  onThemeChange,
   viewMode,
   selectedBrand,
   setSelectedBrand,
@@ -282,6 +284,8 @@ const HomeGroupedReportsList: React.FC<Props> = ({
         selectedMainCategory={selectedMainCategory}
         setSelectedMainCategory={setSelectedMainCategory}
         setActiveFilter={setActiveFilter}
+        selectedTheme={activeTab}
+        onThemeChange={onThemeChange}
         onViewModeChange={onViewModeChange}
         isHotFilterAvailable={true}
         dropdownRef={dropdownRef}

@@ -1,7 +1,7 @@
 import React, { useMemo, useEffect } from "react";
 import HomeFiltersSuggestion from "../HomeFiltersSuggestion";
 import FeedbackView from "@src/components/feedbacks/FeedbackView";
-import FilterIllustration from "../home-illustration/FilterIllustration";
+import FilterIllustrationNextToText from "@src/pages/home/home-illustration/FilterIllustrationNextToText";
 import SqueletonAnime from "@src/components/loader/SqueletonAnime";
 import { capitalizeFirstLetter } from "@src/utils/stringUtils";
 import Avatar from "@src/components/shared/Avatar";
@@ -194,12 +194,13 @@ const SuggestionTab: React.FC<Props> = ({
       </div>
 
       <aside className="right-panel">
-        <FilterIllustration
+        <FilterIllustrationNextToText
           filter={activeFilter}
           selectedBrand={selectedBrand}
           siteUrl={selectedSiteUrl}
           selectedCategory={selectedCategory}
           onglet="suggestion"
+          withText
         />
       </aside>
     </div>

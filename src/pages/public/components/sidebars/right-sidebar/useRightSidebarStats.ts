@@ -6,7 +6,10 @@ import {
   getRageReports,
   getRightSidebarStats,
 } from "@src/services/feedbackService";
-import { getPopularCoupsDeCoeur } from "@src/services/coupDeCoeurService";
+import {
+  getEnflammesCoupsDeCoeur,
+  getPopularCoupsDeCoeur,
+} from "@src/services/coupDeCoeurService";
 import { fetchReactions as fetchReportReactions } from "@src/services/reactionService";
 import type {
   CoupDeCoeur,
@@ -138,6 +141,10 @@ const loadDefaultStats = async (): Promise<RightSidebarStatItem[]> => {
   ];
 };
 
+const loadReportChronoStats = async (): Promise<RightSidebarStatItem[]> => {
+  return loadDefaultStats();
+};
+
 const loadReportRageStats = async (): Promise<RightSidebarStatItem[]> => {
   const reports = await loadPaginatedItems({
     fetchPage: getRageReports,
@@ -261,6 +268,71 @@ const loadCdcPopularStats = async (): Promise<RightSidebarStatItem[]> => {
   ];
 };
 
+const loadCdcChronoStats = async (): Promise<RightSidebarStatItem[]> => {
+  const publicCoupsDeCoeur = await loadPaginatedItems({
+    fetchPage: (page, limit) =>
+      getPublicCoupsDeCoeur(page, limit) as Promise<PaginatedCdcResponse>,
+    getItems: (response) => response.coupdeCoeurs ?? [],
+    getTotalPages: (response) => response.totalPages ?? 1,
+    getKey: (item) => item.id,
+  });
+
+  const recentThreshold = Date.now() - LAST_48_HOURS_IN_MS;
+  const recentItems = publicCoupsDeCoeur.filter((item) => {
+    const createdAt = new Date(item.createdAt).getTime();
+    return !Number.isNaN(createdAt) && createdAt >= recentThreshold;
+  });
+
+  const totalReactions = recentItems.reduce(
+    (sum, item) => sum + getReactionTotal(item.reactions),
+    0,
+  );
+
+  return [
+    {
+      value: recentItems.length,
+      singular: "coup de cœur récent",
+      plural: "coups de cœur récents",
+      suffix: "publiés sur les 48 dernières heures",
+    },
+    {
+      value: totalReactions,
+      singular: "réaction",
+      plural: "réactions",
+      suffix: "sur les coups de cœur les plus récents",
+    },
+  ];
+};
+
+const loadCdcEnflammesStats = async (): Promise<RightSidebarStatItem[]> => {
+  const enflammesCoupsDeCoeur = await loadPaginatedItems({
+    fetchPage: getEnflammesCoupsDeCoeur,
+    getItems: (response) => response.coupdeCoeurs ?? [],
+    getTotalPages: (response) => response.totalPages ?? 1,
+    getKey: (item) => item.id,
+  });
+
+  const totalReactions = enflammesCoupsDeCoeur.reduce(
+    (sum, item) => sum + getReactionTotal(item.reactions),
+    0,
+  );
+
+  return [
+    {
+      value: enflammesCoupsDeCoeur.length,
+      singular: "coup de cœur enflammé",
+      plural: "coups de cœur enflammés",
+      suffix: "dans cette sélection",
+    },
+    {
+      value: totalReactions,
+      singular: "réaction",
+      plural: "réactions",
+      suffix: "au total sur les coups de cœur enflammés",
+    },
+  ];
+};
+
 const loadSuggestionPopularStats = async (): Promise<
   RightSidebarStatItem[]
 > => {
@@ -296,15 +368,89 @@ const loadSuggestionPopularStats = async (): Promise<
   ];
 };
 
+const loadSuggestionRecentStats = async (): Promise<RightSidebarStatItem[]> => {
+  const suggestions = await loadAllPublicFeedSuggestions();
+  const openSuggestions = suggestions.filter((item) => !item.isAdopted);
+
+  const totals = openSuggestions.reduce(
+    (acc, item) => ({
+      totalVotes: acc.totalVotes + (item.votes ?? 0),
+      totalReactions: acc.totalReactions + getReactionTotal(item.reactions),
+    }),
+    { totalVotes: 0, totalReactions: 0 },
+  );
+
+  return [
+    {
+      value: openSuggestions.length,
+      singular: "suggestion ouverte",
+      plural: "suggestions ouvertes",
+      suffix: "aux votes en ce moment",
+    },
+    {
+      value: totals.totalVotes,
+      singular: "vote",
+      plural: "votes",
+      suffix: "au total sur les suggestions ouvertes",
+    },
+    {
+      value: totals.totalReactions,
+      singular: "réaction",
+      plural: "réactions",
+      suffix: "au total sur les suggestions ouvertes",
+    },
+  ];
+};
+
+const loadSuggestionLikedStats = async (): Promise<RightSidebarStatItem[]> => {
+  const suggestions = await loadAllPublicFeedSuggestions();
+  const adoptedSuggestions = suggestions.filter((item) =>
+    Boolean(item.isAdopted),
+  );
+
+  const totals = adoptedSuggestions.reduce(
+    (acc, item) => ({
+      totalVotes: acc.totalVotes + (item.votes ?? 0),
+      totalReactions: acc.totalReactions + getReactionTotal(item.reactions),
+    }),
+    { totalVotes: 0, totalReactions: 0 },
+  );
+
+  return [
+    {
+      value: adoptedSuggestions.length,
+      singular: "suggestion adoptée",
+      plural: "suggestions adoptées",
+    },
+    {
+      value: totals.totalVotes,
+      singular: "vote",
+      plural: "votes",
+      suffix: "sur les suggestions adoptées",
+    },
+    {
+      value: totals.totalReactions,
+      singular: "réaction",
+      plural: "réactions",
+      suffix: "sur les suggestions adoptées",
+    },
+  ];
+};
+
 const RIGHT_SIDEBAR_STATS_LOADERS: Record<
   Exclude<RightSidebarStatsMode, "none">,
   () => Promise<RightSidebarStatItem[]>
 > = {
   default: loadDefaultStats,
+  "report-chrono": loadReportChronoStats,
   "report-rage": loadReportRageStats,
   "report-popular": loadReportPopularStats,
   "cdc-popular": loadCdcPopularStats,
+  "cdc-chrono": loadCdcChronoStats,
+  "cdc-enflammes": loadCdcEnflammesStats,
   "suggestion-popular": loadSuggestionPopularStats,
+  "suggestion-recent": loadSuggestionRecentStats,
+  "suggestion-liked": loadSuggestionLikedStats,
 };
 
 export const useRightSidebarStats = (mode: RightSidebarStatsMode) => {
