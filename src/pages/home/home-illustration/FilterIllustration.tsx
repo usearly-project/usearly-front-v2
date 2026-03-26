@@ -1,3 +1,12 @@
+import reportHotIcon from "/assets/img-banner/withoutText/report-rage.svg";
+import reportHot2Icon from "/assets/img-banner/withoutText/report-hot.svg";
+import reportPopularIcon from "/assets/img-banner/withoutText/report-popular.svg";
+import reportRecentIcon from "/assets/img-banner/withoutText/report-recent.svg";
+import cdcPopularIcon from "/assets/img-banner/withoutText/cdc-popular.svg";
+import cdcEnflamIcon from "/assets/img-banner/withoutText/cdc-enflam.svg";
+import suggestPopularIcon from "/assets/img-banner/withoutText/suggest-popular.svg";
+import suggestOpenIcon from "/assets/img-banner/withoutText/suggest-open.svg";
+
 import hotImg from "/assets/filters-reports/hot1.png";
 import rageImg from "/assets/filters-reports/rage1.png";
 import popularImg from "/assets/filters-reports/popular1.png";
@@ -8,6 +17,7 @@ import recentReportImg from "/assets/img-banner/banner-report-recent.png";
 // 🎨 Coup de cœur & Suggestions
 import likedImg from "/assets/img-banner/banner-cdc-pop.png";
 import recentCdcImg from "/assets/img-banner/banner-cdc-recent.png";
+import recentCdcIcon from "/assets/img-banner/withoutText/cdc-recent.svg";
 import commentedImg from "/assets/img-banner/banner-cdc-liked.png";
 import discussedImg from "/assets/img-banner/banner-suggestion-top-idea.png";
 import recentSuggestionImg from "/assets/img-banner/banner-suggestion-reves.png";
@@ -23,80 +33,72 @@ import { useBrandLogos } from "@src/hooks/useBrandLogos";
 import { getCategoryIconPathFromSubcategory } from "@src/utils/IconsBigUtils";
 import "./FilterIllustration.scss";
 import Avatar from "@src/components/shared/Avatar";
+import {
+  getFilterIllustrationContent,
+  normalizeFilterIllustrationKey,
+  type FilterIllustrationKey,
+  type FilterIllustrationTabKey,
+} from "./filterIllustrationContent";
 
-const illustrationMap = {
+const illustrationMap: Record<FilterIllustrationKey, string> = {
   // === Signalements ===
-  default: { label: "Filtrez les résultats", emoji: "✨", img: recentImg },
-  hot: { label: "Ça chauffe par ici", emoji: "🔥", img: hotImg },
-  chrono: { label: "Les plus récents", emoji: "📅", img: recentReportImg },
-  confirmed: { label: "Ça chauffe par ici", emoji: "🔥", img: hotImg },
-  rage: { label: "Les plus rageants", emoji: "😡", img: rageImg },
-  popular: { label: "Les plus populaires", emoji: "👍", img: popularImg },
-  urgent: { label: "À shaker vite", emoji: "👀", img: urgentImg },
+  default: recentImg,
+  hot: hotImg,
+  chrono: recentReportImg,
+  confirmed: hotImg,
+  rage: rageImg,
+  popular: popularImg,
+  urgent: urgentImg,
 
   // === Coups de cœur ===
-  liked: { label: "Les plus aimés", emoji: "🥰", img: likedImg },
-  popularCdc: { label: "Les plus aimés", emoji: "🥰", img: likedImg },
-  recent: { label: "Les plus récents", emoji: "🕒", img: recentCdcImg },
-  chronoCdc: { label: "Les plus récents", emoji: "🕒", img: likedImg },
-  all: { label: "Simple mais génial...", emoji: "🥰", img: likedImg },
-  enflammes: { label: "Les plus enflammés", emoji: "❤️‍🔥", img: commentedImg },
-  recentcdc: { label: "Les plus commentés", emoji: "💬", img: commentedImg },
+  liked: likedImg,
+  popularCdc: likedImg,
+  recent: recentCdcImg,
+  chronoCdc: recentCdcIcon,
+  all: likedImg,
+  enflammes: commentedImg,
+  recentcdc: commentedImg,
 
   // === Suggestions ===
-  discussed: { label: "Les plus discutées", emoji: "💡", img: discussedImg },
-  recentSuggestion: {
-    label: "Spotify est top mais j’aimerais...",
-    emoji: "😎",
-    img: recentSuggestionImg,
-  },
-  allSuggest: {
-    label: "Spotify est top mais j’aimerais...",
-    emoji: "🥱",
-    img: discussedImg,
-  },
-  likedSuggestion: {
-    label: "Les plus likés",
-    emoji: "🥰",
-    img: likedSuggestionImg,
-  },
+  discussed: discussedImg,
+  recentSuggestion: recentSuggestionImg,
+  allSuggest: discussedImg,
+  likedSuggestion: likedSuggestionImg,
 };
 
-type TabKey = "report" | "coupdecoeur" | "suggestion";
+const illustrationMapWithText: Record<FilterIllustrationKey, string> = {
+  // === Signalements ===
+  default: reportRecentIcon,
+  hot: reportHotIcon,
+  chrono: reportRecentIcon,
+  confirmed: reportHot2Icon,
+  rage: reportHotIcon,
+  popular: reportPopularIcon,
+  urgent: reportHotIcon,
 
-type Props = {
+  // === Coups de cœur ===
+  liked: cdcPopularIcon,
+  popularCdc: cdcPopularIcon,
+  recent: recentCdcImg,
+  chronoCdc: recentCdcIcon,
+  all: cdcPopularIcon,
+  enflammes: cdcEnflamIcon,
+  recentcdc: cdcPopularIcon,
+
+  // === Suggestions ===
+  discussed: suggestOpenIcon,
+  recentSuggestion: suggestOpenIcon,
+  allSuggest: suggestPopularIcon,
+  likedSuggestion: suggestPopularIcon,
+};
+
+export type FilterIllustrationProps = {
   filter: string;
   selectedBrand?: string;
   selectedCategory?: string;
   siteUrl?: string;
-  onglet?: TabKey;
-};
-
-const filterKeysByTab: Record<TabKey, Array<keyof typeof illustrationMap>> = {
-  report: [
-    "default",
-    "hot",
-    "chrono",
-    "confirmed",
-    "rage",
-    "popular",
-    "urgent",
-  ],
-  coupdecoeur: [
-    "liked",
-    "popularCdc",
-    "recent",
-    "chronoCdc",
-    "all",
-    "enflammes",
-    "recentcdc",
-  ],
-  suggestion: [
-    "discussed",
-    "recentSuggestion",
-    "allSuggest",
-    "likedSuggestion",
-  ],
+  onglet?: FilterIllustrationTabKey;
+  withText?: boolean;
 };
 
 const FilterIllustration = ({
@@ -105,7 +107,8 @@ const FilterIllustration = ({
   selectedCategory,
   siteUrl,
   onglet = "report",
-}: Props) => {
+  withText = false,
+}: FilterIllustrationProps) => {
   const brandEntries = useMemo(() => {
     return selectedBrand ? [{ brand: selectedBrand, siteUrl }] : [];
   }, [selectedBrand, siteUrl]);
@@ -141,8 +144,13 @@ const FilterIllustration = ({
       selectedBrand,
       siteUrl,
       onglet,
+      withText,
     });
-  }, [selectedBrand, siteUrl, onglet]);
+  }, [selectedBrand, siteUrl, onglet, withText]);
+
+  const activeIllustrationMap = withText
+    ? illustrationMapWithText
+    : illustrationMap;
 
   const shouldShowCategoryIcon =
     onglet === "report" && !!selectedBrand && !!selectedCategory;
@@ -166,25 +174,10 @@ const FilterIllustration = ({
     return null;
   }, [selectedBrand, onglet]);
 
-  const fallbackKey: keyof typeof illustrationMap = useMemo(() => {
-    if (onglet === "coupdecoeur") return "all";
-    if (onglet === "suggestion") return "allSuggest";
-    return "confirmed";
-  }, [onglet]);
-
-  const listKey: keyof typeof illustrationMap = useMemo(() => {
-    const availableKeys = filterKeysByTab[onglet] || [];
-    const normalizedKey =
-      onglet === "coupdecoeur"
-        ? filter === "popular"
-          ? "popularCdc"
-          : filter === "chrono"
-            ? "chronoCdc"
-            : (filter as keyof typeof illustrationMap)
-        : (filter as keyof typeof illustrationMap);
-    if (availableKeys.includes(normalizedKey)) return normalizedKey;
-    return fallbackKey;
-  }, [filter, fallbackKey, onglet]);
+  const listKey = useMemo(
+    () => normalizeFilterIllustrationKey(filter, onglet),
+    [filter, onglet],
+  );
 
   // === Cas 1 : Marque sélectionnée ===
   if (selectedBrand || selectedCategory) {
@@ -227,13 +220,13 @@ const FilterIllustration = ({
   }
 
   // === Cas 2 : Aucun filtre ===
-  const data = illustrationMap[listKey];
-  if (!data) return null;
+  const img = activeIllustrationMap[listKey];
+  const { content } = getFilterIllustrationContent(filter, onglet);
 
   return (
     <div className="filter-illustration-sidebar">
       <div className="illustration-content">
-        <img src={data.img} alt={data.label} />
+        <img src={img} alt={content.title} />
       </div>
     </div>
   );

@@ -1,5 +1,9 @@
 import { useMemo } from "react";
 import Champs, { type SelectFilterOption } from "@src/components/champs/Champs";
+import type { FeedbackType } from "@src/types/Reports";
+import reportYellowIcon from "/assets/icons/reportYellowIcon.svg";
+import likeRedIcon from "/assets/icons/heart-header.svg";
+import suggestGreenIcon from "/assets/icons/suggest-header.svg";
 import "./FilterBar.scss";
 
 export interface FilterOption {
@@ -25,7 +29,33 @@ interface Props {
   brandFocusFilter?: string;
   baseFilterValue?: string;
   siteUrl?: string;
+  selectedTheme?: FeedbackType;
+  onThemeChange?: (theme: FeedbackType) => void;
 }
+
+const themeOptions: SelectFilterOption<FeedbackType>[] = [
+  {
+    value: "report",
+    iconUrl: reportYellowIcon,
+    iconAlt: "Signalements",
+    iconFallback: "S",
+    label: "Signalements",
+  },
+  {
+    value: "coupdecoeur",
+    iconUrl: likeRedIcon,
+    iconAlt: "Coups de cœur",
+    iconFallback: "C",
+    label: "Coups de cœur",
+  },
+  {
+    value: "suggestion",
+    iconUrl: suggestGreenIcon,
+    iconAlt: "Suggestions",
+    iconFallback: "I",
+    label: "Suggestions",
+  },
+];
 
 const splitLeadingEmoji = (label: string) => {
   const trimmed = label.trim();
@@ -71,6 +101,8 @@ export const FilterBarGeneric: React.FC<Props> = ({
   locationInfo = null,
   brandFocusFilter = "",
   baseFilterValue,
+  selectedTheme = "report",
+  onThemeChange = () => {},
 }) => {
   const selectOptions = useMemo<SelectFilterOption[]>(() => {
     return options.map((opt) => {
@@ -211,20 +243,37 @@ export const FilterBarGeneric: React.FC<Props> = ({
     const siteUrl = brandSiteUrlMap.get(value);
     handleBrandChange(value, siteUrl);
   };
+
+  const handleThemeChange = (theme: FeedbackType) => {
+    if (theme === selectedTheme) return;
+    onThemeChange(theme);
+  };
+
   return (
     <div className="filter-bar-generic-container">
-      <Champs
-        options={selectOptions}
-        value={resolvedFilterValue}
-        onChange={handleFilterChange}
-        activeClassName="hot-active"
-        className={locationInfo === "cdc" ? "cdc-style" : ""}
-        align="left"
-      />
+      <div className="filter-bar-generic-primary">
+        <Champs
+          options={themeOptions}
+          value={selectedTheme}
+          onChange={handleThemeChange}
+          align="left"
+          minWidth={170}
+          minWidthPart="2"
+        />
+      </div>
 
-      {/* 🔹 Sélecteur de marque */}
-      {withBrands && (
-        <div className="filter-bar-generic-actions">
+      <div className="filter-bar-generic-actions">
+        <Champs
+          options={selectOptions}
+          value={resolvedFilterValue}
+          onChange={handleFilterChange}
+          activeClassName="hot-active"
+          className={locationInfo === "cdc" ? "cdc-style" : ""}
+          align="left"
+        />
+
+        {/* 🔹 Sélecteur de marque */}
+        {withBrands && (
           <Champs
             options={brandOptions}
             value={resolvedBrandValue}
@@ -232,12 +281,12 @@ export const FilterBarGeneric: React.FC<Props> = ({
             className="brand-select-inline"
             disabled={!brandEntries.length}
             brandSelect={true}
-            minWidth={225}
+            minWidth={190}
             minWidthPart="2"
             align="left"
           />
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

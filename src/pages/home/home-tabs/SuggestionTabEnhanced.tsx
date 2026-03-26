@@ -8,10 +8,12 @@ import { useBrandLogos } from "@src/hooks/useBrandLogos";
 import { FALLBACK_BRAND_PLACEHOLDER } from "@src/utils/brandLogos";
 import TabLayout from "./TabLayout";
 import EndOfList from "./EndOfList";
+import type { FeedbackType } from "@src/types/Reports";
 
 interface Props {
   activeFilter: string;
   setActiveFilter: (f: string) => void;
+  onThemeChange: (tab: FeedbackType) => void;
   selectedBrand: string;
   handleSuggestionBrandChange: (b: string, siteUrl?: string) => void;
   selectedCategory: string;
@@ -32,6 +34,7 @@ interface Props {
 const SuggestionTabEnhanced: React.FC<Props> = ({
   activeFilter,
   setActiveFilter,
+  onThemeChange,
   selectedBrand,
   handleSuggestionBrandChange,
   selectedCategory,
@@ -121,6 +124,7 @@ const SuggestionTabEnhanced: React.FC<Props> = ({
           searchQuery={suggestionSearch}
           onSearchChange={setSuggestionSearch}
           siteUrl={selectedSiteUrl}
+          onThemeChange={onThemeChange}
         />
       )}
       renderContent={() =>

@@ -157,6 +157,9 @@
   position: relative;
   display: flex;
   justify-content: center;
+  .see-all {
+    font-size: 13px !important;
+  }
 }
 
 .see-all-tooltip {

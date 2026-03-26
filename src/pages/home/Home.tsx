@@ -1,7 +1,6 @@
 import { useState, useCallback, useMemo, useEffect } from "react";
 import "./Home.scss";
-import { type FeedbackType } from "@src/components/user-profile/FeedbackTabs";
-import PurpleBanner from "./components/purpleBanner/PurpleBanner";
+import type { FeedbackType } from "@src/types/Reports";
 import { useFeedbackData } from "./hooks/useFeedbackData";
 import { useBrandColors } from "./hooks/useBrandColors";
 import { useCategories } from "./hooks/useCategories";
@@ -10,15 +9,19 @@ import ReportTab from "./home-tabs/ReportTab";
 import CdcTabEnhanced from "./home-tabs/CdcTabEnhanced";
 import SuggestionTabEnhanced from "./home-tabs/SuggestionTabEnhanced";
 import LeftSidebar from "../public/components/sidebars/LeftSidebar";
+import HeroBanner from "../public/components/HeroBanner/HeroBanner";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 const FEEDBACK_LIST_WRAPPER_SELECTOR = ".feedback-list-wrapper";
 const BOTTOM_THRESHOLD_PX = 12;
-const getDefaultFilters = () => ({
+const getDefaultActiveFilter = (tab: FeedbackType) =>
+  tab === "suggestion" ? "allSuggest" : "chrono";
+
+const getDefaultFilters = (tab: FeedbackType) => ({
   selectedBrand: "",
   selectedCategory: "",
   selectedMainCategory: "",
-  activeFilter: "chrono",
+  activeFilter: getDefaultActiveFilter(tab),
   suggestionSearch: "",
   selectedSiteUrl: undefined as string | undefined,
 });
@@ -97,22 +100,14 @@ function Home() {
 
   useEffect(() => {
     if (safeTab !== activeTab) {
-      const defaults = getDefaultFilters();
+      const defaults = getDefaultFilters(safeTab);
 
       setSelectedBrand(defaults.selectedBrand);
       setSelectedCategory(defaults.selectedCategory);
       setSelectedMainCategory(defaults.selectedMainCategory);
+      setActiveFilter(defaults.activeFilter);
       setSuggestionSearch(defaults.suggestionSearch);
       setSelectedSiteUrl(defaults.selectedSiteUrl);
-
-      // ✅ important
-      if (safeTab === "report") {
-        setActiveFilter("chrono");
-      } else if (safeTab === "coupdecoeur") {
-        setActiveFilter("chrono");
-      } else if (safeTab === "suggestion") {
-        setActiveFilter("allSuggest");
-      }
 
       setActiveTab(safeTab);
     }
@@ -121,7 +116,7 @@ function Home() {
     (nextTab: FeedbackType) => {
       if (nextTab === activeTab) return;
 
-      const defaults = getDefaultFilters();
+      const defaults = getDefaultFilters(nextTab);
       setSelectedBrand(defaults.selectedBrand);
       setSelectedCategory(defaults.selectedCategory);
       setSelectedMainCategory(defaults.selectedMainCategory);
@@ -206,10 +201,10 @@ function Home() {
     coupDeCoeursForDisplay,
     suggestionsForDisplay,
   ]);
-  console.log("ACTIVE TAB:", activeTab);
+
   return (
     <div className="home-page">
-      <PurpleBanner activeTab={activeTab} onTabChange={handleTabChange} />
+      <HeroBanner />
 
       <main className="user-main-content">
         <aside className="left-panel">
@@ -220,6 +215,7 @@ function Home() {
           <ReportTab
             activeFilter={activeFilter}
             setActiveFilter={setActiveFilter}
+            onThemeChange={handleTabChange}
             selectedBrand={selectedBrand}
             setSelectedBrand={handleSetBrand}
             selectedCategory={selectedCategory}
@@ -237,6 +233,7 @@ function Home() {
           <CdcTabEnhanced
             activeFilter={activeFilter}
             setActiveFilter={setActiveFilter}
+            onThemeChange={handleTabChange}
             selectedBrand={selectedBrand}
             setSelectedBrand={handleSetBrand}
             selectedCategory={selectedCategory}
@@ -259,6 +256,7 @@ function Home() {
           <SuggestionTabEnhanced
             activeFilter={activeFilter}
             setActiveFilter={setActiveFilter}
+            onThemeChange={handleTabChange}
             selectedBrand={selectedBrand}
             handleSuggestionBrandChange={handleSuggestionBrandChange}
             selectedCategory={selectedCategory}

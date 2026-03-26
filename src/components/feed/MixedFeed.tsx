@@ -318,7 +318,7 @@ const MixedFeed: React.FC<Props> = ({
   const { isAuthenticated } = useAuth();
   const { feed, loadMore, loading, hasMore } = usePublicFeed();
   const [searchValue, setSearchValue] = useState("");
-  const [selectedFilter, setSelectedFilter] = useState<FeedFilterValue>("all");
+  const [selectedFilter] = useState<FeedFilterValue>("all");
   const [reportFeedFilter, setReportFeedFilter] =
     useState<ReportFeedFilterValue>("chrono");
   const [cdcFeedFilter, setCdcFeedFilter] =
@@ -436,9 +436,14 @@ const MixedFeed: React.FC<Props> = ({
     }, 2000);
   };
 
+  const redirectToFeedbackTab = (type: FeedFilterValue) => {
+    const targetTab = type === "all" ? "report" : type;
+    navigate(`/feedback?tab=${targetTab}`);
+  };
+
   const handleFilter = (type: FeedFilterValue) => {
     if (isPublic) {
-      setSelectedFilter(type);
+      redirectToFeedbackTab(type);
       return;
     }
 
@@ -458,6 +463,33 @@ const MixedFeed: React.FC<Props> = ({
     }
 
     navigate(`/feedback?tab=${type}`);
+  };
+
+  const handleReportFilterChange = (value: ReportFeedFilterValue) => {
+    if (isPublic) {
+      redirectToFeedbackTab(selectedFilter);
+      return;
+    }
+
+    setReportFeedFilter(value);
+  };
+
+  const handleCdcFilterChange = (value: CdcFeedFilterValue) => {
+    if (isPublic) {
+      redirectToFeedbackTab(selectedFilter);
+      return;
+    }
+
+    setCdcFeedFilter(value);
+  };
+
+  const handleSuggestionFilterChange = (value: SuggestionFeedFilterValue) => {
+    if (isPublic) {
+      redirectToFeedbackTab(selectedFilter);
+      return;
+    }
+
+    setSuggestionFeedFilter(value);
   };
 
   return (
@@ -482,7 +514,7 @@ const MixedFeed: React.FC<Props> = ({
                 <Champs
                   options={REPORT_FILTER_OPTIONS}
                   value={reportFeedFilter}
-                  onChange={setReportFeedFilter}
+                  onChange={handleReportFilterChange}
                   activeClassName="hot-active"
                   minWidth={320}
                   minWidthPart="2"
@@ -494,7 +526,7 @@ const MixedFeed: React.FC<Props> = ({
                 <Champs
                   options={CDC_FILTER_OPTIONS}
                   value={cdcFeedFilter}
-                  onChange={setCdcFeedFilter}
+                  onChange={handleCdcFilterChange}
                   activeClassName="hot-active"
                   minWidth={320}
                   minWidthPart="2"
@@ -506,7 +538,7 @@ const MixedFeed: React.FC<Props> = ({
                 <Champs
                   options={SUGGESTION_FILTER_OPTIONS}
                   value={suggestionFeedFilter}
-                  onChange={setSuggestionFeedFilter}
+                  onChange={handleSuggestionFilterChange}
                   activeClassName="hot-active"
                   minWidth={320}
                   minWidthPart="2"

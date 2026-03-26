@@ -29,7 +29,7 @@ export const resolveRightSidebarIllustrationConfig = (
         onglet: "report",
         text: "Les nouveaux tickets à confirmer avec de nouveaux signalements",
         themeClass: "right-sidebar--theme-report",
-        statsMode: "none",
+        statsMode: "report-chrono",
       };
     }
 
@@ -62,11 +62,22 @@ export const resolveRightSidebarIllustrationConfig = (
       };
     }
 
+    if (filters.cdcFeedFilter === "enflammes") {
+      return {
+        filter: filters.cdcFeedFilter,
+        onglet: "coupdecoeur",
+        text: "Les coups de cœur qui embrasent le plus la communauté.",
+        themeClass: "right-sidebar--theme-cdc",
+        statsMode: "cdc-enflammes",
+      };
+    }
+
     return {
       filter: filters.cdcFeedFilter,
       onglet: "coupdecoeur",
+      text: "Les derniers coups de cœur partagés par la communauté.",
       themeClass: "right-sidebar--theme-cdc",
-      statsMode: "none",
+      statsMode: "cdc-chrono",
     };
   }
 
@@ -80,10 +91,21 @@ export const resolveRightSidebarIllustrationConfig = (
     };
   }
 
+  if (filters.suggestionFeedFilter === "recentSuggestion") {
+    return {
+      filter: filters.suggestionFeedFilter,
+      onglet: "suggestion",
+      text: "Les suggestions encore ouvertes aux votes de la communauté.",
+      themeClass: "right-sidebar--theme-suggest",
+      statsMode: "suggestion-recent",
+    };
+  }
+
   return {
     filter: filters.suggestionFeedFilter,
     onglet: "suggestion",
+    text: "Les suggestions déjà adoptées et validées collectivement.",
     themeClass: "right-sidebar--theme-suggest",
-    statsMode: "none",
+    statsMode: "suggestion-liked",
   };
 };

@@ -1,11 +1,17 @@
 import { getWeeklyImpact } from "@src/services/feedbackService";
+import type { FeedbackType } from "@src/types/Reports";
 import { useState, useEffect } from "react";
 import reportYellowIcon from "/assets/icons/reportYellowIcon.svg";
 import likeRedIcon from "/assets/icons/heart-header.svg";
 import suggestGreenIcon from "/assets/icons/suggest-header.svg";
 import "./HeroBanner.scss";
 
-const HeroBanner = () => {
+type HeroBannerProps = {
+  activeTab?: FeedbackType;
+  onTabChange?: (tab: FeedbackType) => void;
+};
+
+const HeroBanner = ({ activeTab, onTabChange }: HeroBannerProps) => {
   const [stats, setStats] = useState({
     reports: 0,
     coupsDeCoeur: 0,
@@ -28,8 +34,40 @@ const HeroBanner = () => {
 
     fetchStats();
   }, []);
+
+  const hasTabs = activeTab !== undefined && onTabChange !== undefined;
+  const statItems: {
+    key: FeedbackType;
+    label: string;
+    value: number;
+    icon: string;
+    alt: string;
+  }[] = [
+    {
+      key: "report",
+      label: "Signalements",
+      value: stats.reports,
+      icon: reportYellowIcon,
+      alt: "Signalements",
+    },
+    {
+      key: "coupdecoeur",
+      label: "Coups de cœur",
+      value: stats.coupsDeCoeur,
+      icon: likeRedIcon,
+      alt: "Coups de cœur",
+    },
+    {
+      key: "suggestion",
+      label: "Suggestions",
+      value: stats.suggestions,
+      icon: suggestGreenIcon,
+      alt: "Suggestions",
+    },
+  ];
+
   return (
-    <div className="hero-banner">
+    <div className={`hero-banner${hasTabs ? " hero-banner--with-tabs" : ""}`}>
       <div className="hero-content">
         <div className="hero-left">
           <h1>
@@ -48,27 +86,31 @@ const HeroBanner = () => {
           </p>
 
           <div className="hero-stats">
-            <div className="stat">
-              <span className="stat-value">
-                {loading ? "..." : stats.reports}
-              </span>
-              <img src={reportYellowIcon} alt="reports" />
-            </div>
-
-            <div className="stat">
-              <span className="stat-value">
-                {loading ? "..." : stats.coupsDeCoeur}
-              </span>
-              <img src={likeRedIcon} alt="likes" />
-            </div>
-
-            <div className="stat">
-              <span className="stat-value">
-                {loading ? "..." : stats.suggestions}
-              </span>
-              <img src={suggestGreenIcon} alt="suggestions" />
-            </div>
+            {statItems.map((item) => (
+              <div className="stat" key={item.key}>
+                <span className="stat-value">
+                  {loading ? "..." : item.value}
+                </span>
+                <img src={item.icon} alt={item.alt} />
+              </div>
+            ))}
           </div>
+
+          {hasTabs && (
+            <div className="hero-tabs">
+              {statItems.map((item) => (
+                <button
+                  key={item.key}
+                  type="button"
+                  aria-pressed={activeTab === item.key}
+                  className={`hero-tab${activeTab === item.key ? " is-active" : ""}`}
+                  onClick={() => onTabChange(item.key)}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
   border-radius: 50%;
   overflow: hidden;
   // background: #f3f4f6; // gris clair neutre
@@ -27,8 +28,8 @@
 // ✅ Fond blanc pour logos PNG chargés
 .avatar-img-custom.brand-logo-img-loaded {
   background-color: #fff;
-  margin-right: 25px;
-  position: absolute;
+  margin-right: 0;
+  position: relative;
 }
 
 .brand-row-top {

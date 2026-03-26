@@ -1,7 +1,11 @@
 import { useEffect, useState, useMemo } from "react";
 import "./FilterBar.scss";
 import Champs, { type SelectFilterOption } from "@src/components/champs/Champs";
+import type { FeedbackType } from "@src/components/user-profile/FeedbackTabs";
 import { getCategoryIconPathFromSubcategory } from "@src/utils/IconsUtils";
+import reportYellowIcon from "/assets/icons/reportYellowIcon.svg";
+import likeRedIcon from "/assets/icons/heart-header.svg";
+import suggestGreenIcon from "/assets/icons/suggest-header.svg";
 
 interface Props {
   filter:
@@ -48,6 +52,8 @@ interface Props {
     Record<string, string[]> // catégorie principale -> sous-catégories
   >;
   isFeedLoading?: boolean;
+  selectedTheme?: FeedbackType;
+  onThemeChange?: (theme: FeedbackType) => void;
 }
 
 const normalize = (str: string) =>
@@ -67,6 +73,30 @@ const normalizeBrandName = (value: string) =>
     .trim();
 
 const DEFAULT_CATEGORY_ICON = getCategoryIconPathFromSubcategory(undefined);
+
+const themeOptions: SelectFilterOption<FeedbackType>[] = [
+  {
+    value: "report",
+    iconUrl: reportYellowIcon,
+    iconAlt: "Signalements",
+    iconFallback: "S",
+    label: "Signalements",
+  },
+  {
+    value: "coupdecoeur",
+    iconUrl: likeRedIcon,
+    iconAlt: "Coups de cœur",
+    iconFallback: "C",
+    label: "Coups de cœur",
+  },
+  {
+    value: "suggestion",
+    iconUrl: suggestGreenIcon,
+    iconAlt: "Suggestions",
+    iconFallback: "I",
+    label: "Suggestions",
+  },
+];
 
 const filterOptions = [
   {
@@ -88,11 +118,6 @@ const filterOptions = [
     value: "chrono" as const,
     emoji: "📅",
     label: "Signalements les plus récents",
-  },
-  {
-    value: "urgent" as const,
-    emoji: "👀",
-    label: "À shaker vite",
   },
 ];
 
@@ -119,6 +144,8 @@ const FilterBar: React.FC<Props> = ({
   setSelectedSiteUrl,
   availableSubCategoriesByBrandAndCategory,
   isFeedLoading = false,
+  selectedTheme = "report",
+  onThemeChange = () => {},
 }) => {
   const [categorySearch, setCategorySearch] = useState("");
   const [disableBrandOnce, setDisableBrandOnce] = useState(true);
@@ -332,7 +359,7 @@ const FilterBar: React.FC<Props> = ({
       setViewMode("confirmed");
       onViewModeChange?.("confirmed");
       setActiveFilter("confirmed");
-    } else if (["rage", "popular", "urgent"].includes(value)) {
+    } else if (["rage", "popular"].includes(value)) {
       setFilter(value);
       setViewMode("chrono");
       onViewModeChange?.("chrono");
@@ -426,6 +453,11 @@ const FilterBar: React.FC<Props> = ({
     handleBrandSelect(value, siteUrl);
   };
 
+  const handleThemeSelect = (theme: FeedbackType) => {
+    if (theme === selectedTheme) return;
+    onThemeChange(theme);
+  };
+
   useEffect(() => {
     if (disableBrandOnce && !isFeedLoading) {
       setDisableBrandOnce(false);
@@ -440,6 +472,16 @@ const FilterBar: React.FC<Props> = ({
       >
         <div className="primary-filters">
           <Champs
+            options={themeOptions}
+            value={selectedTheme}
+            onChange={handleThemeSelect}
+            align="left"
+            minWidthPart="2"
+            minWidth={170}
+          />
+        </div>
+        <div className="secondary-filters-container">
+          <Champs
             options={filterOptions}
             value={normalizedSelectValue}
             onChange={handleFilterSelect}
@@ -447,10 +489,8 @@ const FilterBar: React.FC<Props> = ({
             activeClassName="hot-active"
             align="left"
             minWidthPart="2"
-            minWidth={275}
+            minWidth={235}
           />
-        </div>
-        <div className="secondary-filters-container">
           <Champs
             options={brandOptions}
             value={resolvedBrandValue}
@@ -458,7 +498,7 @@ const FilterBar: React.FC<Props> = ({
             className="brand-select-inline"
             disabled={disableBrandOnce}
             brandSelect={true}
-            minWidth={225}
+            minWidth={190}
             minWidthPart="2"
             align="left"
             loading={Boolean(isFeedLoading)}

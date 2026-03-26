@@ -9,10 +9,12 @@ import { FALLBACK_BRAND_PLACEHOLDER } from "@src/utils/brandLogos";
 import "./CdcTab.scss";
 import TabLayout from "./TabLayout";
 import EndOfList from "./EndOfList";
+import type { FeedbackType } from "@src/types/Reports";
 
 interface Props {
   activeFilter: string;
   setActiveFilter: (f: string) => void;
+  onThemeChange: (tab: FeedbackType) => void;
   selectedBrand: string;
   setSelectedBrand: (b: string) => void;
   selectedCategory: string;
@@ -33,6 +35,7 @@ interface Props {
 const CdcTabEnhanced: React.FC<Props> = ({
   activeFilter,
   setActiveFilter,
+  onThemeChange,
   selectedBrand,
   setSelectedBrand,
   selectedCategory,
@@ -149,6 +152,7 @@ const CdcTabEnhanced: React.FC<Props> = ({
           availableCategories={coupDeCoeurCategories}
           siteUrl={selectedSiteUrl}
           setSelectedSiteUrl={setSelectedSiteUrl}
+          onThemeChange={onThemeChange}
         />
       )}
       renderContent={() =>

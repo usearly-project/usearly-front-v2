@@ -1,13 +1,14 @@
 import React, { useCallback, useState } from "react";
 import HomeGroupedReportsList from "../home-grouped-reports-list/HomeGroupedReportsList";
-import FilterIllustration from "../home-illustration/FilterIllustration";
 import type { FeedbackType } from "@src/components/user-profile/FeedbackTabs";
 import SearchBar from "../components/searchBar/SearchBar";
 import EndOfList from "./EndOfList";
+import FeedbackRightSidebar from "./FeedbackRightSidebar";
 
 interface Props {
   activeFilter: string;
   setActiveFilter: (f: string) => void;
+  onThemeChange: (tab: FeedbackType) => void;
   selectedBrand: string;
   setSelectedBrand: (b: string) => void;
   selectedCategory: string;
@@ -23,6 +24,7 @@ interface Props {
 const ReportTab: React.FC<Props> = ({
   activeFilter,
   setActiveFilter,
+  onThemeChange,
   selectedBrand,
   setSelectedBrand,
   selectedCategory,
@@ -57,6 +59,7 @@ const ReportTab: React.FC<Props> = ({
           activeTab={"report" as FeedbackType}
           activeFilter={activeFilter}
           setActiveFilter={setActiveFilter}
+          onThemeChange={onThemeChange}
           viewMode={
             activeFilter === "confirmed"
               ? "confirmed"
@@ -85,12 +88,12 @@ const ReportTab: React.FC<Props> = ({
           onChange={handleSearchTermChange}
           placeholder="Rechercher un signalement"
         />
-        <FilterIllustration
-          filter={activeFilter}
+        <FeedbackRightSidebar
+          activeTab="report"
+          activeFilter={activeFilter}
           selectedBrand={selectedBrand}
-          siteUrl={selectedSiteUrl}
           selectedCategory={selectedCategory}
-          onglet="report"
+          selectedSiteUrl={selectedSiteUrl}
         />
       </aside>
     </div>
