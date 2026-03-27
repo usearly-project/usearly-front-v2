@@ -288,6 +288,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
+  margin-bottom: 3px;
 }
 
 .actions-row {
@@ -303,6 +304,12 @@
 
 .actions-right {
   display: flex;
+  button {
+    &:hover {
+      color: #ffffff;
+      background-color: #000000;
+    }
+  }
 }
 
 .solution-btn {

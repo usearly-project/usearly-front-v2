@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React from "react";
 import HomeGroupedReportsList from "../home-grouped-reports-list/HomeGroupedReportsList";
 import type { FeedbackType } from "@src/components/user-profile/FeedbackTabs";
 import SearchBar from "../components/searchBar/SearchBar";
@@ -19,6 +19,9 @@ interface Props {
   setSelectedSiteUrl: (url?: string) => void;
   brandBannerStyle: React.CSSProperties;
   displayedCount: number;
+  searchTerm: string;
+  onSearchTermChange: (value: string) => void;
+  showRightPanel?: boolean;
 }
 
 const ReportTab: React.FC<Props> = ({
@@ -35,12 +38,10 @@ const ReportTab: React.FC<Props> = ({
   selectedSiteUrl,
   brandBannerStyle,
   displayedCount,
+  searchTerm,
+  onSearchTermChange,
+  showRightPanel = true,
 }) => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const handleSearchTermChange = useCallback((value: string) => {
-    setSearchTerm(value);
-  }, []);
-
   const bannerClassName = [
     "report-banner-container",
     selectedBrand || selectedCategory
@@ -78,24 +79,26 @@ const ReportTab: React.FC<Props> = ({
           selectedSiteUrl={selectedSiteUrl}
           totalityCount={displayedCount}
           searchTerm={searchTerm}
-          onSearchTermChange={handleSearchTermChange}
+          onSearchTermChange={onSearchTermChange}
         />
         {displayedCount > 0 && <EndOfList />}
       </div>
-      <aside className="right-panel">
-        <SearchBar
-          value={searchTerm}
-          onChange={handleSearchTermChange}
-          placeholder="Rechercher un signalement"
-        />
-        <FeedbackRightSidebar
-          activeTab="report"
-          activeFilter={activeFilter}
-          selectedBrand={selectedBrand}
-          selectedCategory={selectedCategory}
-          selectedSiteUrl={selectedSiteUrl}
-        />
-      </aside>
+      {showRightPanel && (
+        <aside className="right-panel">
+          <SearchBar
+            value={searchTerm}
+            onChange={onSearchTermChange}
+            placeholder="Rechercher un signalement"
+          />
+          <FeedbackRightSidebar
+            activeTab="report"
+            activeFilter={activeFilter}
+            selectedBrand={selectedBrand}
+            selectedCategory={selectedCategory}
+            selectedSiteUrl={selectedSiteUrl}
+          />
+        </aside>
+      )}
     </div>
   );
 };
