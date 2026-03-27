@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./BrandResponseBanner.scss";
 import type { HasBrandResponse } from "@src/types/brandResponse";
-import ampoule from "/assets/svg/ampoule-bw.svg";
+import bubbleChat from "/assets/icons/answer-bubble.svg";
 import { useAuth } from "@src/services/AuthContext";
 
 type Props = {
@@ -31,7 +31,7 @@ const BrandResponseBanner: React.FC<Props> = ({ message, createdAt }) => {
   return (
     <div className="brand-response-banner">
       <div className="brand-response-header">
-        <img src={ampoule} className="icon" alt="" />
+        <img src={bubbleChat} className="icon" alt="" />
 
         <span className="title">Réponse de la marque</span>
 

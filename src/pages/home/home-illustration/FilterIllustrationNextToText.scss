@@ -93,8 +93,8 @@
       }
     }
     .filter-illustration-sidebar {
-      width: 100px;
-      top: 33%;
+      width: 125px;
+      top: 5%;
       right: 15px;
     }
   }
@@ -119,8 +119,8 @@
       }
     }
     .filter-illustration-sidebar {
-      width: 100px;
-      top: 32%;
+      width: 120px;
+      top: 5%;
       right: 20px;
     }
   }
@@ -134,8 +134,8 @@
     }
     .filter-illustration-sidebar {
       width: 100px;
-      top: 20%;
-      right: 0px;
+      top: 18%;
+      right: 5px;
     }
   }
 
@@ -176,12 +176,14 @@
   .filter-illustration-next-to-text__text {
     width: 100%;
     .filter-illustration-next-to-text__title {
+      display: block;
       color: #000;
       font-family: $font-family-4;
       font-size: 52px;
       font-style: normal;
       font-weight: 700;
       white-space: pre-line;
+      line-height: 1.1;
     }
   }
 

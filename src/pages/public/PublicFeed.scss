@@ -39,6 +39,20 @@
       .feedback-card {
         margin-bottom: 10px;
       }
+      .subcategory-block {
+        .subcategory-header {
+          .subcategory-right {
+            .expanded-header {
+              .avatar-logo-group {
+                margin-left: 15%;
+                .avatar-wrapper-custom {
+                  margin-left: -15px;
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
   @media screen and (max-width: 1400px) {

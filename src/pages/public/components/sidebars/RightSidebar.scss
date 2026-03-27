@@ -93,10 +93,16 @@
 
 .right-sidebar--theme-report {
   background-color: #d3e1ff;
+  .right-sidebar-illustration-text {
+    width: 100%;
+  }
 }
 
 .right-sidebar--theme-cdc {
   background-color: #ffe9e9;
+  .right-sidebar-illustration-text {
+    width: 100%;
+  }
 }
 
 .right-sidebar--theme-suggest {
