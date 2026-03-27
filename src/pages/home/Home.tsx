@@ -5,9 +5,12 @@ import { useFeedbackData } from "./hooks/useFeedbackData";
 import { useBrandColors } from "./hooks/useBrandColors";
 import { useCategories } from "./hooks/useCategories";
 import { useIsAtBottom } from "@src/hooks/detect-bottom";
+import { useIsMobile } from "@src/hooks/use-mobile";
 import ReportTab from "./home-tabs/ReportTab";
 import CdcTabEnhanced from "./home-tabs/CdcTabEnhanced";
 import SuggestionTabEnhanced from "./home-tabs/SuggestionTabEnhanced";
+import SearchBar from "./components/searchBar/SearchBar";
+import FeedbackRightSidebar from "./home-tabs/FeedbackRightSidebar";
 import LeftSidebar from "../public/components/sidebars/LeftSidebar";
 import HeroBanner from "../public/components/HeroBanner/HeroBanner";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -63,6 +66,7 @@ function Home() {
   const [activeFilter, setActiveFilter] = useState("chrono");
   const [suggestionSearch, setSuggestionSearch] = useState("");
   const [selectedSiteUrl, setSelectedSiteUrl] = useState<string | undefined>();
+  const [reportSearchTerm, setReportSearchTerm] = useState("");
   const [searchParams] = useSearchParams();
   const tabFromUrl = searchParams.get("tab") as FeedbackType | null;
   const navigate = useNavigate();
@@ -76,6 +80,7 @@ function Home() {
     thresholdPx: BOTTOM_THRESHOLD_PX,
     anchorSelector: FEEDBACK_LIST_WRAPPER_SELECTOR,
   });
+  const isMobile = useIsMobile("(max-width: 1350px)");
 
   useEffect(() => {
     document.body.classList.add("feedback-route");
@@ -108,6 +113,7 @@ function Home() {
       setActiveFilter(defaults.activeFilter);
       setSuggestionSearch(defaults.suggestionSearch);
       setSelectedSiteUrl(defaults.selectedSiteUrl);
+      setReportSearchTerm("");
 
       setActiveTab(safeTab);
     }
@@ -123,10 +129,17 @@ function Home() {
       setActiveFilter(defaults.activeFilter);
       setSuggestionSearch(defaults.suggestionSearch);
       setSelectedSiteUrl(defaults.selectedSiteUrl);
+      setReportSearchTerm("");
       setActiveTab(nextTab);
     },
     [activeTab],
   );
+
+  useEffect(() => {
+    if (activeTab !== "report") {
+      setReportSearchTerm("");
+    }
+  }, [activeTab]);
 
   const scrollToTop = useCallback(() => {
     if (typeof window === "undefined") return;
@@ -206,8 +219,27 @@ function Home() {
     <div className="home-page">
       <HeroBanner />
 
-      <main className="user-main-content">
+      <main className={`user-main-content ${isMobile ? "is-mobile" : ""}`}>
         <aside className="left-panel">
+          {isMobile && (
+            <div className="home-mobile-right-panel">
+              {activeTab === "report" && (
+                <SearchBar
+                  value={reportSearchTerm}
+                  onChange={setReportSearchTerm}
+                  placeholder="Rechercher un signalement"
+                />
+              )}
+
+              <FeedbackRightSidebar
+                activeTab={activeTab}
+                activeFilter={activeFilter}
+                selectedBrand={selectedBrand}
+                selectedCategory={selectedCategory}
+                selectedSiteUrl={selectedSiteUrl}
+              />
+            </div>
+          )}
           <LeftSidebar />
         </aside>
 
@@ -226,6 +258,9 @@ function Home() {
             brandBannerStyle={brandBannerStyle}
             selectedSiteUrl={selectedSiteUrl}
             displayedCount={displayedCount}
+            searchTerm={reportSearchTerm}
+            onSearchTermChange={setReportSearchTerm}
+            showRightPanel={!isMobile}
           />
         )}
 
@@ -249,6 +284,7 @@ function Home() {
             isInitialLoading={isInitialLoading}
             hasMore={hasMore}
             loadMore={loadMore}
+            showRightPanel={!isMobile}
           />
         )}
 
@@ -271,6 +307,7 @@ function Home() {
             filteredByCategory={filteredByCategory}
             selectedSiteUrl={selectedSiteUrl}
             isLoading={isLoading}
+            showRightPanel={!isMobile}
           />
         )}
       </main>

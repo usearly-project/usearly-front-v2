@@ -29,6 +29,7 @@ interface Props {
   totalCount: number;
   filteredByCategory: any[];
   isLoading: boolean;
+  showRightPanel?: boolean;
 }
 
 const SuggestionTabEnhanced: React.FC<Props> = ({
@@ -50,6 +51,7 @@ const SuggestionTabEnhanced: React.FC<Props> = ({
   totalCount,
   filteredByCategory,
   isLoading,
+  showRightPanel = true,
 }) => {
   // -----------------------------
   // Auto-assign du siteUrl
@@ -112,6 +114,7 @@ const SuggestionTabEnhanced: React.FC<Props> = ({
       selectedCategory={selectedCategory}
       selectedSiteUrl={selectedSiteUrl}
       isLoading={isLoading}
+      showRightPanel={showRightPanel}
       renderFilters={() => (
         <HomeFiltersSuggestion
           filter={activeFilter}

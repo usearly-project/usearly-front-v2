@@ -74,6 +74,10 @@
       cursor: default;
     }
   }
+
+  @media screen and (max-width: 1350px) {
+    max-width: none;
+  }
 }
 
 .feedback-main {
@@ -391,6 +395,10 @@
   min-height: 299px;
   height: auto;
   transition: transform 0.35s ease;
+
+  @media screen and (max-width: 1350px) {
+    width: 100%;
+  }
 
   .feedback-content {
     display: flex;

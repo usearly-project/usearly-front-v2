@@ -1,5 +1,6 @@
 import { pluralize } from "@src/utils/plurilize";
 import type { RightSidebarStatItem } from "./rightSidebarTypes";
+import arrowRight from "/assets/icons/arrow-right.svg";
 
 interface Props {
   items: RightSidebarStatItem[];
@@ -17,7 +18,9 @@ const RightSidebarStats = ({ items }: Props) => {
           className="stat-item"
           key={`${item.singular}-${item.suffix ?? "stat"}-${index}`}
         >
-          <span className="arrow">→</span>
+          <span className="arrow">
+            <img src={arrowRight} alt="arrow right" />
+          </span>
           <span className="value">{item.value}</span>
           <span className="label">
             {pluralize(item.value, item.singular, item.plural)}

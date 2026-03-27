@@ -25,6 +25,7 @@ interface TabLayoutProps {
 
   /** isLoading complet OU isInitialLoading */
   isLoading: boolean;
+  showRightPanel?: boolean;
 }
 
 const TabLayout: React.FC<TabLayoutProps> = ({
@@ -37,6 +38,7 @@ const TabLayout: React.FC<TabLayoutProps> = ({
   selectedCategory,
   renderFilters,
   renderContent,
+  showRightPanel = true,
 }) => {
   return (
     <div
@@ -65,15 +67,17 @@ const TabLayout: React.FC<TabLayoutProps> = ({
       {/* -----------------------------
           Colonne droite — BANDEAU
       --------------------------------*/}
-      <aside className="right-panel">
-        <FeedbackRightSidebar
-          activeTab={onglet}
-          activeFilter={activeFilter}
-          selectedBrand={selectedBrand}
-          selectedCategory={selectedCategory}
-          selectedSiteUrl={selectedSiteUrl}
-        />
-      </aside>
+      {showRightPanel && (
+        <aside className="right-panel">
+          <FeedbackRightSidebar
+            activeTab={onglet}
+            activeFilter={activeFilter}
+            selectedBrand={selectedBrand}
+            selectedCategory={selectedCategory}
+            selectedSiteUrl={selectedSiteUrl}
+          />
+        </aside>
+      )}
     </div>
   );
 };

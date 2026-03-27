@@ -7,6 +7,7 @@ import UserEmotionSummaryPanel from "../profile/banner/user-emotion/UserEmotionS
 import { useUserEmotionSummary } from "../profile/hook/userEmotionService";
 import UserProfileBanner from "./banner/UserProfileBanner";
 import UserLoveBrandsPanel from "../profile/banner/user-emotion/UserLoveBrandsPanel";
+import { useIsMobile } from "@src/hooks/use-mobile";
 import Abracadabra from "/assets/images/profil/Abracadabra.svg";
 
 const PROFILE_TITLES: Record<
@@ -20,6 +21,7 @@ const PROFILE_TITLES: Record<
 
 const UserProfilePage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<FeedbackType>("report");
+  const isMobile = useIsMobile("(max-width: 1350px)");
   const { title, subtitle } = PROFILE_TITLES[activeTab];
   const { data: emotionSummary, loading: loadingEmotionSummary } =
     useUserEmotionSummary(
@@ -36,7 +38,7 @@ const UserProfilePage: React.FC = () => {
   console.log("loading:", loadingEmotionSummary);
 
   return (
-    <div className="user-profile-page">
+    <div className={`user-profile-page ${isMobile ? "is-mobile" : ""}`}>
       <UserProfileBanner activeTab={activeTab} onTabChange={setActiveTab} />
 
       {/* 👇 NOUVEAU WRAPPER */}
