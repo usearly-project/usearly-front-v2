@@ -214,6 +214,8 @@ function Home() {
     coupDeCoeursForDisplay,
     suggestionsForDisplay,
   ]);
+  const showMobileFeedbackSidebar =
+    isMobile && !selectedBrand && !selectedCategory;
 
   return (
     <div className="home-page">
@@ -231,13 +233,15 @@ function Home() {
                 />
               )}
 
-              <FeedbackRightSidebar
-                activeTab={activeTab}
-                activeFilter={activeFilter}
-                selectedBrand={selectedBrand}
-                selectedCategory={selectedCategory}
-                selectedSiteUrl={selectedSiteUrl}
-              />
+              {showMobileFeedbackSidebar && (
+                <FeedbackRightSidebar
+                  activeTab={activeTab}
+                  activeFilter={activeFilter}
+                  selectedBrand={selectedBrand}
+                  selectedCategory={selectedCategory}
+                  selectedSiteUrl={selectedSiteUrl}
+                />
+              )}
             </div>
           )}
           <LeftSidebar />
