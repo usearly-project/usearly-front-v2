@@ -1,6 +1,6 @@
 import { useState } from "react";
 import MixedFeed from "@src/components/feed/MixedFeed";
-import type { PublicFeedFilterState } from "@src/components/feed/feedFilterTypes";
+import type { PublicFeedFilterState } from "@src/components/feed/types/feedFilterTypes";
 import { useIsMobile } from "@src/hooks/use-mobile";
 import "./PublicFeed.scss";
 import HeroBanner from "./components/HeroBanner/HeroBanner";
@@ -8,8 +8,8 @@ import LeftSidebar from "./components/sidebars/LeftSidebar";
 import RightSidebar from "./components/sidebars/RightSidebar";
 
 function PublicFeed() {
-  const isTablet = useIsMobile("(max-width: 1400px)");
-  const isMobile = useIsMobile("(max-width: 1090px)");
+  const isCompactDesktop = useIsMobile("(max-width: 1350px)");
+  const isMobileLayout = useIsMobile("(max-width: 992px)");
   const [publicFeedFilters, setPublicFeedFilters] =
     useState<PublicFeedFilterState>({
       selectedFilter: "all",
@@ -25,26 +25,17 @@ function PublicFeed() {
 
       {/* GRID */}
       <div className={`public-feed-layout`}>
-        <aside className="public-feed-left">
-          {isTablet ? (
-            <>
-              {isMobile ? null : (
-                <div className="public-feed-left-tablet">
-                  <RightSidebar filters={publicFeedFilters} />
-                  <LeftSidebar />
-                </div>
-              )}
-            </>
-          ) : (
+        {!isMobileLayout && (
+          <aside className="public-feed-left">
             <LeftSidebar />
-          )}
-        </aside>
+          </aside>
+        )}
 
         <main className="public-feed-center">
           <MixedFeed isPublic onPublicFiltersChange={setPublicFeedFilters} />
         </main>
 
-        {!isTablet && (
+        {!isCompactDesktop && (
           <aside className="public-feed-right">
             <RightSidebar filters={publicFeedFilters} />
           </aside>

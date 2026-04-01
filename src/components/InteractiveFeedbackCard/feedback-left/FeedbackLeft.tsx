@@ -1,317 +1,134 @@
-import React, { useRef, useLayoutEffect, useState, useMemo } from "react";
-import { decideIllustration } from "@src/utils/getIllustrationDecision";
-import { getBrandThemeColor } from "@src/utils/getBrandThemeColor";
-import type { CoupDeCoeur, Suggestion } from "@src/types/Reports";
+import React, { useMemo } from "react";
 import { BrandSvg } from "../../shared/BrandSvg";
-import { getOfficialPalette, pickSvgColor } from "@src/utils/brandColorUtils";
 import TypographyBlock from "./blocks/TypographyBlock";
 import EmojiBlock from "./blocks/EmojiBlock";
-import { countWordsFromHTML, htmlToWords } from "../utils/textFormatUtils";
-import {
-  breakAtBestVisualWidth,
-  reflowPreferTwoLines,
-} from "../utils/layoutUtils";
+import FeedbackBubble from "../components/FeedbackBubble";
 import { getTextColorForBackground } from "../utils/feedbackColors";
-import { getBrightness } from "../utils/colorUtils";
+import { getFeedbackThemeData } from "../utils/FeedbackLeft.utils";
+import { useFeedbackLayout } from "../hooks/useFeedbackLayout";
+import type { CoupDeCoeur, Suggestion } from "@src/types/Reports";
 
 interface Props {
   item: (CoupDeCoeur | Suggestion) & { type: "suggestion" | "coupdecoeur" };
   isExpanded?: boolean;
 }
 
-/** ✅ Mesure la hauteur réelle et décide wrap si > seuil (par défaut 50px) */
-function shouldWrapByHeight(el: HTMLElement, threshold = 50): boolean {
-  if (!el) return false;
-  const h = el.getBoundingClientRect().height;
-  return h > threshold;
-}
-
 const FeedbackLeft: React.FC<Props> = ({ item, isExpanded = false }) => {
-  const brandName = item.marque?.trim() ?? "";
-  const { base, light, isDark } = getBrandThemeColor(brandName);
-  // 🎨 Palette 3 couleurs cohérente
-  const palette = getOfficialPalette(brandName);
+  const theme = useMemo(() => getFeedbackThemeData(item), [item]);
+  const textColor = getTextColorForBackground(theme.base);
 
-  const brightness = getBrightness(base);
-  const isNearBlack = brightness < 25;
-  const isNearWhite = brightness > 240;
-  const isNeutralBrand = isNearBlack || isNearWhite;
-  // 🧠 Normalisation des couleurs extrêmes (noir / blanc)
-  let normalizedBase = base;
-
-  if (brightness < 25) {
-    // quasi noir
-    normalizedBase = "color-mix(in srgb, black 85%, white)"; // gris très foncé
-  } else if (brightness > 240) {
-    // quasi blanc
-    normalizedBase = "#E5E5E5"; // gris clair doux
-  }
-
-  const isTooLight = brightness > 235;
-  const adjustedBase = normalizedBase;
-  const adjustedLight = light;
-  const themeMode = isDark ? "dark" : "light";
-
-  // 🎨 La bulle utilise déjà base
-  const bubbleColor = adjustedBase;
-  let svgColor: string;
-
-  if (item.meta?.axe === "illustration") {
-    if (isNeutralBrand) {
-      const accents = ["#E53935", "#1E88E5", "#8E24AA", "#FB8C00"];
-      svgColor = accents[brandName.length % accents.length];
-    } else {
-      const brightness = getBrightness(adjustedBase);
-      svgColor =
-        brightness < 140
-          ? `color-mix(in srgb, ${adjustedBase} 30%, white)`
-          : `color-mix(in srgb, ${adjustedBase} 25%, black)`;
-    }
-  } else {
-    svgColor = pickSvgColor(palette, bubbleColor);
-  }
-
-  const illustration = decideIllustration(
-    item.title,
-    item.description?.slice(0, 400),
-    item.type,
-  );
-  const typographyIcon = decideIllustration(
-    item.title,
-    item.description?.slice(0, 400),
-    item.type,
-  );
-  const backgroundVariant =
-    item.meta?.axe === "illustration"
-      ? adjustedBase
-      : item.meta?.axe === "typography"
-        ? `color-mix(in srgb, ${adjustedBase} 20%, white)`
-        : item.meta?.axe === "emoji"
-          ? `color-mix(in srgb, ${adjustedBase} 10%, white)`
-          : adjustedBase;
-
-  const textColor = getTextColorForBackground(adjustedBase);
-  const highlightEmojiNeedsContrast = getBrightness(base) > 150;
-  const useDark =
-    highlightEmojiNeedsContrast === true ||
-    Number.isNaN(highlightEmojiNeedsContrast as unknown as number) ||
-    highlightEmojiNeedsContrast == null;
-  const highlightEmojiClass = useDark
-    ? "highlight-emoji highlight-emoji--dark"
-    : "highlight-emoji";
-  const highlightEmojiColor = highlightEmojiNeedsContrast
-    ? "#000000"
-    : adjustedBase;
-
-  // 🧷 Refs & état
-  const punchlinesRef = useRef<HTMLDivElement>(null);
-  const bubbleRefs = useRef<(HTMLDivElement | null)[]>([]);
-  // On stocke le NOMBRE DE MOTS si wrap, sinon null
-  const [wrappedWordsByIndex, setWrappedWordsByIndex] = useState<
-    (number | null)[]
-  >([]);
-
-  // Lignes stables
   const lines = useMemo(() => {
     if (!item.punchline) return [];
-    const normalized = item.punchline
+    return item.punchline
       .replace(/\\\\n/g, "\n")
-      .replace(/\\n/g, "\n");
-    return normalized.split("\n");
+      .replace(/\\n/g, "\n")
+      .split("\n");
   }, [item.punchline]);
 
-  // ✅ Recalcule : si wrap => nombre de mots, sinon null
-  useLayoutEffect(() => {
-    const compute = () => {
-      const next = bubbleRefs.current.map((el, i) => {
-        if (!el) return null;
-        return shouldWrapByHeight(el, 50)
-          ? countWordsFromHTML(lines[i] || "")
-          : null;
-      });
-      const same =
-        next.length === wrappedWordsByIndex.length &&
-        next.every((v, i) => v === wrappedWordsByIndex[i]);
-      if (!same) setWrappedWordsByIndex(next);
-    };
+  const { punchlinesRef, bubbleRefs, wrappedWordsByIndex } =
+    useFeedbackLayout(lines);
 
-    compute();
-
-    const ro = new ResizeObserver(compute);
-    if (punchlinesRef.current) ro.observe(punchlinesRef.current);
-    bubbleRefs.current.forEach((el) => el && ro.observe(el));
-
-    return () => ro.disconnect();
-  }, [lines]);
+  if (!item.punchline) return null;
 
   return (
     <div className={`feedback-type${isExpanded ? " is-expanded" : ""}`}>
-      {item.punchline ? (
-        <div
-          className="feedback-left"
-          style={{
-            backgroundColor: backgroundVariant,
-            ["--feedback-text-color" as any]:
-              item.meta?.axe === "typography" ? "#000000" : textColor,
-            ["--brand-color" as any]: adjustedBase,
-          }}
-          data-axe={item.meta?.axe || "typography"}
-          data-theme={themeMode}
-          data-light-brand={isTooLight ? "true" : "false"}
-        >
-          {/* === AXE TYPO === */}
-          {item.meta?.axe === "typography" ? (
-            <>
-              <TypographyBlock
-                punchline={item.punchline}
-                highlightedWords={item.meta?.highlightedWords}
-                baseColor={adjustedBase}
-                getTextColorForBackground={getTextColorForBackground}
-              />
-
-              {typographyIcon && (
-                <div className="typography-icon-wrapper">
-                  <BrandSvg
-                    src={typographyIcon}
-                    brandColor={`color-mix(in srgb, ${adjustedBase} 100%, white)`}
-                    className="typography-icon"
-                    alt="Decorative icon"
-                  />
-                </div>
-              )}
-            </>
-          ) : item.meta?.axe === "emoji" ? (
-            <EmojiBlock
+      <div
+        className="feedback-left"
+        style={{
+          backgroundColor: theme.backgroundVariant,
+          ["--feedback-text-color" as any]:
+            item.meta?.axe === "typography" ? "#000000" : textColor,
+          ["--brand-color" as any]: theme.base,
+        }}
+        data-axe={item.meta?.axe || "typography"}
+        data-theme={theme.isDark ? "dark" : "light"}
+        data-light-brand={theme.brightness > 235 ? "true" : "false"}
+      >
+        {/* === AXE TYPO === */}
+        {item.meta?.axe === "typography" && (
+          <>
+            <TypographyBlock
               punchline={item.punchline}
-              emoji={item.emoji}
               highlightedWords={item.meta?.highlightedWords}
-              highlightEmojiClass={highlightEmojiClass}
-              highlightEmojiColor={highlightEmojiColor}
-              backgroundVariant={backgroundVariant}
-              baseColor={adjustedBase}
-              lightColor={adjustedLight}
-              themeMode={themeMode}
-              highlightEmojiNeedsContrast={highlightEmojiNeedsContrast}
+              baseColor={theme.base}
+              getTextColorForBackground={getTextColorForBackground}
             />
-          ) : (
-            <>
-              <div className="punchlines" ref={punchlinesRef}>
-                {lines.map((line, index) => {
-                  const isPrimary = index === 0;
-                  //const bubbleBg = isPrimary ? "#ffffff" : adjustedBase;
-                  const isIllustration = item.meta?.axe === "illustration";
-                  const brandIsLight = getBrightness(adjustedBase) > 235;
 
-                  let bubbleBg;
-                  let bubbleTextColor;
-
-                  if (isIllustration) {
-                    if (isPrimary) {
-                      bubbleBg = brandIsLight ? "#000000" : "#ffffff";
-                      bubbleTextColor = brandIsLight ? "#ffffff" : "#000000";
-                    } else {
-                      bubbleBg = brandIsLight ? "#ffffff" : "#000000";
-                      bubbleTextColor = brandIsLight ? "#000000" : "#ffffff";
-                    }
-                  } else {
-                    bubbleBg = isPrimary ? "#ffffff" : adjustedBase;
-                    bubbleTextColor = isPrimary ? "#000000" : textColor;
-                  }
-
-                  const bubbleBorderWidth = isPrimary ? "2px" : "0px";
-                  const bubbleBorderColor = isPrimary
-                    ? "#000000"
-                    : "transparent";
-                  const bubbleTailOffset = "32px";
-
-                  const wrapWordCount = wrappedWordsByIndex[index]; // number | null
-                  const isWrapped = wrapWordCount != null;
-
-                  // ✨ Coupe visuelle optimisée quand wrap (sinon fallback 2 lignes)
-                  let formattedHtml = line;
-                  if (isWrapped) {
-                    const words = htmlToWords(line);
-                    const el = bubbleRefs.current[index];
-                    if (el && words.length > 2) {
-                      const k = Math.min(
-                        Math.max(2, breakAtBestVisualWidth(el, words)),
-                        words.length - 1,
-                      );
-                      const first = words.slice(0, k).join(" ");
-                      const second = words.slice(k).join(" ");
-                      formattedHtml = second ? `${first}<br/>${second}` : first;
-                    } else {
-                      formattedHtml = reflowPreferTwoLines(
-                        line,
-                        wrapWordCount as number,
-                      );
-                    }
-                  }
-
-                  return (
-                    <div
-                      key={index}
-                      ref={(el) => {
-                        bubbleRefs.current[index] = el;
-                      }}
-                      className={`bubble ${isPrimary ? "primary" : "secondary"} ${
-                        isWrapped ? "wrap" : "nowrap"
-                      } ${item.meta?.layoutType === "two-bubble" ? "two-bubble" : ""}`}
-                      data-wrapped={isWrapped ? "true" : "false"}
-                      data-wrap-word-count={wrapWordCount ?? undefined}
-                      style={{
-                        ["--bubble-bg" as any]: bubbleBg,
-                        ["--bubble-text" as any]: bubbleTextColor,
-                        ["--bubble-border-width" as any]: bubbleBorderWidth,
-                        ["--bubble-border-color" as any]: bubbleBorderColor,
-                        ["--bubble-tail-offset" as any]: bubbleTailOffset,
-                        ["--bubble-tail-size" as any]: "14px",
-                        backgroundColor: bubbleBg,
-                        color: bubbleTextColor,
-                      }}
-                      dangerouslySetInnerHTML={{ __html: formattedHtml }}
-                    />
-                  );
-                })}
+            {/* ✅ On affiche l'icône SEULEMENT si elle existe */}
+            {theme.illustration && (
+              <div className="typography-icon-wrapper">
+                <BrandSvg
+                  src={theme.illustration}
+                  brandColor={`color-mix(in srgb, ${theme.base} 100%, white)`}
+                  className="typography-icon"
+                  alt="Decorative icon"
+                />
               </div>
+            )}
+          </>
+        )}
 
-              {item.meta?.axe === "illustration" && illustration && (
-                <div
-                  className="illu-wrapper"
-                  style={{
-                    backgroundColor:
-                      item.meta?.axe === "illustration"
-                        ? "transparent"
-                        : `color-mix(in srgb, ${adjustedBase} 10%, white)`,
-                    color: "#000",
+        {/* AXE EMOJI */}
+        {item.meta?.axe === "emoji" && (
+          <EmojiBlock
+            punchline={item.punchline}
+            emoji={item.emoji}
+            highlightedWords={item.meta?.highlightedWords}
+            highlightEmojiClass={
+              theme.brightness > 150
+                ? "highlight-emoji highlight-emoji--dark"
+                : "highlight-emoji"
+            }
+            highlightEmojiColor={
+              theme.brightness > 150 ? "#000000" : theme.base
+            }
+            backgroundVariant={theme.backgroundVariant}
+            baseColor={theme.base}
+            lightColor={theme.light}
+            themeMode={theme.isDark ? "dark" : "light"}
+            highlightEmojiNeedsContrast={theme.brightness > 150}
+          />
+        )}
+
+        {/* AXE ILLUSTRATION / DEFAULT */}
+        {item.meta?.axe !== "typography" && item.meta?.axe !== "emoji" && (
+          <>
+            <div className="punchlines" ref={punchlinesRef}>
+              {lines.map((line, index) => (
+                <FeedbackBubble
+                  key={index}
+                  ref={(el) => {
+                    bubbleRefs.current[index] = el;
                   }}
-                >
-                  <BrandSvg
-                    src={illustration}
-                    brandColor={svgColor}
-                    className="illu-image"
-                    alt="Illustration"
-                  />
-                  {/* {item.type === "coupdecoeur" ? (
-                    <BrandSvg
-                      src={illustration}
-                      brandColor={svgColor}
-                      className="illu-image"
-                      alt="Illustration de la marque"
-                    />
-                  ) : (
-                    <img
-                      src={illustration}
-                      alt="illustration"
-                      className="illu-image"
-                    />
-                  )} */}
-                </div>
-              )}
-            </>
-          )}
-        </div>
-      ) : null}
+                  line={line}
+                  index={index}
+                  themeBase={theme.base}
+                  isIllustration={item.meta?.axe === "illustration"}
+                  brandBrightness={theme.brightness}
+                  wrapWordCount={wrappedWordsByIndex[index]}
+                  bubbleRefs={bubbleRefs}
+                  layoutType={item.meta?.layoutType}
+                  textColor={textColor}
+                />
+              ))}
+            </div>
+
+            {item.meta?.axe === "illustration" && (
+              <div
+                className="illu-wrapper"
+                style={{ backgroundColor: "transparent", color: "#000" }}
+              >
+                <BrandSvg
+                  src={theme.illustration || ""} // Sécurité pour le src
+                  // ✅ SÉCURITÉ POUR LA COULEUR : Si svgColor est undefined, on prend theme.base
+                  brandColor={theme.svgColor ?? theme.base}
+                  className="illu-image"
+                />
+              </div>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 };

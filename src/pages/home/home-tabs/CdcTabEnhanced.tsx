@@ -30,6 +30,7 @@ interface Props {
   isInitialLoading?: boolean;
   hasMore?: boolean;
   loadMore?: () => void;
+  showRightPanel?: boolean;
 }
 
 const CdcTabEnhanced: React.FC<Props> = ({
@@ -51,6 +52,7 @@ const CdcTabEnhanced: React.FC<Props> = ({
   isInitialLoading = false,
   hasMore = false,
   loadMore = () => {},
+  showRightPanel = true,
 }) => {
   const observerRef = useRef<HTMLDivElement | null>(null);
 
@@ -141,6 +143,7 @@ const CdcTabEnhanced: React.FC<Props> = ({
       selectedCategory={selectedCategory}
       selectedSiteUrl={selectedSiteUrl}
       isLoading={isInitialLoading} // important
+      showRightPanel={showRightPanel}
       renderFilters={() => (
         <HomeFiltersCdc
           filter={activeFilter}

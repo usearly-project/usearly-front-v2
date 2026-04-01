@@ -1,4 +1,4 @@
-import type { PublicFeedFilterState } from "@src/components/feed/feedFilterTypes";
+import type { PublicFeedFilterState } from "@src/components/feed/types/feedFilterTypes";
 import type { RightSidebarIllustrationConfig } from "./rightSidebarTypes";
 
 export const resolveRightSidebarIllustrationConfig = (

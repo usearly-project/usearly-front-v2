@@ -1,4 +1,4 @@
-type OptionProps<V extends string> = {
+/* type OptionProps<V extends string> = {
   value: V;
   label: string;
   leading?: React.ReactNode;
@@ -35,3 +35,4 @@ export function Option<V extends string>({
     </span>
   );
 }
+ */

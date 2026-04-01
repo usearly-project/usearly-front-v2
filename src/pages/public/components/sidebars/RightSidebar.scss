@@ -35,7 +35,7 @@
   }
 
   .stat-item {
-    display: flow;
+    display: ruby;
     align-items: baseline;
     line-height: 1.2;
     .value {
@@ -54,7 +54,7 @@
       font-weight: 400;
     }
     .arrow {
-      margin-right: 5px;
+      margin-right: 10px;
     }
   }
 
@@ -80,7 +80,7 @@
   padding-bottom: 40px;
 
   .filter-illustration-sidebar {
-    width: 100%;
+    width: auto;
     padding: 0;
   }
 
@@ -88,15 +88,22 @@
     margin-top: 20px;
     margin-bottom: 32.5px;
     width: 65%;
+    font-size: 13px;
   }
 }
 
 .right-sidebar--theme-report {
   background-color: #d3e1ff;
+  .right-sidebar-illustration-text {
+    width: 100%;
+  }
 }
 
 .right-sidebar--theme-cdc {
   background-color: #ffe9e9;
+  .right-sidebar-illustration-text {
+    width: 100%;
+  }
 }
 
 .right-sidebar--theme-suggest {
