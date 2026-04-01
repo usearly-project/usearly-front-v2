@@ -4,6 +4,7 @@ import { capitalizeFirstLetter } from "@src/utils/stringUtils";
 import FlatSubcategoryBlock from "../../confirm-reportlist/FlatSubcategoryBlock";
 import { getMostAdvancedStatus } from "@src/utils/ticketStatus";
 import type { TicketStatusKey } from "@src/types/ticketStatus";
+import { groupBrandReportsAsTickets } from "../utils/brandReportStats";
 /* import { useBrandResponsesMap } from "@src/hooks/useBrandResponsesMap";
 import { normalizeBrandResponse } from "@src/utils/brandResponse"; */
 
@@ -15,6 +16,7 @@ interface BrandFilteredSectionProps {
   filteredByCategory: any[];
   loadingFiltered: boolean;
   reportsToDisplay: any[];
+  showSelectedBrandSummary?: boolean;
 
   // ⚠️ conservée volontairement (utilisée ailleurs / contrat parent)
   getBrandLogo: (brand: string, siteUrl?: string) => string;
@@ -27,59 +29,23 @@ interface BrandFilteredSectionProps {
  * 1 ticket logique par subCategory (aligné front marque)
  */
 function groupReportsAsTickets(reports: any[]) {
-  const map: Record<string, any> = {};
+  const ticketGroups = groupBrandReportsAsTickets(reports);
 
-  for (const r of reports) {
-    const sub = r.subCategory || "Autre";
-
-    if (!map[sub]) {
-      map[sub] = {
-        subCategory: sub,
-        brand: r.marque,
-        siteUrl: r.siteUrl,
-        capture: r.capture ?? null,
-
-        pivotReportId: r.reportingId,
-        reportIds: [r.reportingId],
-
-        descriptions: Array.isArray(r.descriptions)
-          ? [...r.descriptions]
-          : r.description
-            ? [r.description]
-            : [],
-
-        status: r.status as TicketStatusKey,
-        count: 1,
-
-        // 🔥 ICI
-        solutionsCount: r.solutionsCount ?? 0,
-      };
-    } else {
-      if (r.reportingId < map[sub].pivotReportId) {
-        map[sub].pivotReportId = r.reportingId;
-      }
-
-      map[sub].reportIds.push(r.reportingId);
-      map[sub].count += 1;
-
-      if (Array.isArray(r.descriptions)) {
-        map[sub].descriptions.push(...r.descriptions);
-      } else if (r.description) {
-        map[sub].descriptions.push(r.description);
-      }
-
-      map[sub].status = getMostAdvancedStatus(
-        map[sub].status,
-        r.status as TicketStatusKey,
-      );
-
-      // 🔥 ICI
-      map[sub].solutionsCount =
-        (map[sub].solutionsCount ?? 0) + (r.solutionsCount ?? 0);
-    }
-  }
-
-  return Object.values(map);
+  return ticketGroups.map((ticket) => ({
+    ...ticket,
+    status: reports
+      .filter(
+        (report) => (report.subCategory || "Autre") === ticket.subCategory,
+      )
+      .reduce(
+        (currentStatus, report) =>
+          getMostAdvancedStatus(
+            currentStatus,
+            (report.status ?? currentStatus) as TicketStatusKey,
+          ),
+        ticket.status,
+      ),
+  }));
 }
 
 /**
@@ -93,6 +59,7 @@ const BrandFilteredSection: React.FC<BrandFilteredSectionProps> = ({
   filteredByCategory,
   loadingFiltered,
   reportsToDisplay,
+  showSelectedBrandSummary = true,
   loaderRef,
 }) => {
   /*   const allReportIds = reportsToDisplay.map((r) => r.reportingId);
@@ -124,7 +91,7 @@ const BrandFilteredSection: React.FC<BrandFilteredSectionProps> = ({
 
   return (
     <div className="grouped-by-category">
-      {selectedBrand && (
+      {selectedBrand && showSelectedBrandSummary && (
         <div className="selected-brand-summary">
           <div className="selected-brand-summary__brand">
             {/* <div className="selected-brand-summary__logo">
@@ -153,7 +120,7 @@ const BrandFilteredSection: React.FC<BrandFilteredSectionProps> = ({
                 <>
                   <span className="count">{ticketGroups.length}</span>
                   <span className="text">
-                    Signalement{ticketGroups.length > 1 ? "s" : ""} sur{" "}
+                    Problème{ticketGroups.length > 1 ? "s" : ""} sur{" "}
                     {capitalizeFirstLetter(selectedBrand)}
                   </span>
                 </>
@@ -183,7 +150,7 @@ const BrandFilteredSection: React.FC<BrandFilteredSectionProps> = ({
             key={ticket.pivotReportId}
             reportIds={ticket.reportIds}
             brand={ticket.brand}
-            siteUrl={ticket.siteUrl}
+            siteUrl={ticket.siteUrl ?? undefined}
             subcategory={ticket.subCategory}
             descriptions={ticket.descriptions}
             capture={ticket.capture}

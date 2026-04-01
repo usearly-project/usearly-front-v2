@@ -407,9 +407,6 @@
   --gap: 12px;
   width: 100%;
 
-  @media screen and (max-width: 1120px) {
-    margin-top: -30px;
-  }
   & {
     --pill-h: 44px;
     --gap: 12px;
@@ -580,6 +577,17 @@
     }
     .filters__pill--search {
       min-width: 240px; /* la recherche peut être un peu plus large */
+    }
+  }
+}
+
+@media screen and (min-width: 1120px) {
+  .home-grouped-reports-list__toolbar--with-brand-summary {
+    .filters {
+      .filters__row {
+        margin-bottom: 0px;
+        justify-content: flex-end;
+      }
     }
   }
 }
