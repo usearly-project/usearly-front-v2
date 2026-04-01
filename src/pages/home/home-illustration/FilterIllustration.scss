@@ -66,6 +66,28 @@
   width: 200px;
 }
 
+.filter-illustration-sidebar.filter-illustration-sidebar--brand-report {
+  width: 260px;
+  max-width: 100%;
+
+  .illustration-content.illustration-content--brand-report {
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 20px;
+    padding: 18px 16px 16px;
+    padding-top: 0px;
+    text-align: left;
+  }
+
+  .filter-illustration-sidebar__selected-brand-title {
+    margin: 0;
+    color: #000;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.15;
+  }
+}
+
 .filter-illustration-sidebar.filtered {
   position: relative;
   border-radius: 12px;
@@ -192,6 +214,12 @@
           object-fit: contain;
         }
       }
+    }
+
+    .filter-illustration-sidebar.filter-illustration-sidebar--brand-report {
+      position: static;
+      margin-top: 9px;
+      width: 260px;
     }
   }
 }

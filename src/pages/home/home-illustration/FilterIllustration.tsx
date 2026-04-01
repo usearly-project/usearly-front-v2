@@ -31,6 +31,7 @@ const suggestBrandSolo = "/assets/brandSolo/suggestBrandSolo.png";
 import { useEffect, useMemo } from "react";
 import { useBrandLogos } from "@src/hooks/useBrandLogos";
 import { getCategoryIconPathFromSubcategory } from "@src/utils/IconsBigUtils";
+import { capitalizeFirstLetter } from "@src/utils/stringUtils";
 import "./FilterIllustration.scss";
 import Avatar from "@src/components/shared/Avatar";
 import {
@@ -182,9 +183,18 @@ const FilterIllustration = ({
   // === Cas 1 : Marque sélectionnée ===
   if (selectedBrand || selectedCategory) {
     const showCategoryOnly = hasCategorySelection && !!categoryIcon;
-    const containerClassName = `filter-illustration-sidebar filtered${
-      !showCategoryOnly && brandSoloImg ? " brand-solo" : ""
-    }`;
+    const shouldShowSelectedBrandTitle =
+      onglet === "report" && !!selectedBrand && !selectedCategory;
+    const containerClassName = [
+      "filter-illustration-sidebar",
+      "filtered",
+      !showCategoryOnly && brandSoloImg ? "brand-solo" : "",
+      shouldShowSelectedBrandTitle
+        ? "filter-illustration-sidebar--brand-report"
+        : "",
+    ]
+      .filter(Boolean)
+      .join(" ");
 
     if (showCategoryOnly && categoryIcon) {
       return (
@@ -204,7 +214,22 @@ const FilterIllustration = ({
 
     return (
       <div className={containerClassName}>
-        <div className="illustration-content">
+        <div
+          className={[
+            "illustration-content",
+            shouldShowSelectedBrandTitle
+              ? "illustration-content--brand-report"
+              : "",
+          ]
+            .filter(Boolean)
+            .join(" ")}
+        >
+          {shouldShowSelectedBrandTitle && (
+            <h3 className="filter-illustration-sidebar__selected-brand-title">
+              Problèmes et{"\n"}bugs{"\u00A0"}
+              <span>{capitalizeFirstLetter(selectedBrand)}</span>
+            </h3>
+          )}
           <Avatar
             key={`${selectedBrand}-${siteUrl ?? ""}`}
             avatar={logoUrl}
