@@ -1,7 +1,6 @@
 import { useEffect, useState, useMemo } from "react";
 import "./FilterBar.scss";
 import Champs, { type SelectFilterOption } from "@src/components/champs/Champs";
-import type { FeedbackType } from "@src/components/user-profile/FeedbackTabs";
 // import { getCategoryIconPathFromSubcategory } from "@src/utils/IconsUtils";
 import reportYellowIcon from "/assets/icons/reportYellowIcon.svg";
 import likeRedIcon from "/assets/icons/heart-header.svg";
