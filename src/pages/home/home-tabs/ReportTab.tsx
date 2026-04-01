@@ -1,9 +1,9 @@
 import React from "react";
 import HomeGroupedReportsList from "../home-grouped-reports-list/HomeGroupedReportsList";
-import type { FeedbackType } from "@src/components/user-profile/FeedbackTabs";
 import SearchBar from "../components/searchBar/SearchBar";
 import EndOfList from "./EndOfList";
 import FeedbackRightSidebar from "./FeedbackRightSidebar";
+import type { FeedbackType } from "@src/types/Reports";
 
 interface Props {
   activeFilter: string;

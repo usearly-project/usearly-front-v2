@@ -4,7 +4,9 @@ import type { FeedbackType } from "@src/types/Reports";
 import reportYellowIcon from "/assets/icons/reportYellowIcon.svg";
 import likeRedIcon from "/assets/icons/heart-header.svg";
 import suggestGreenIcon from "/assets/icons/suggest-header.svg";
+import usearlyIcon from "/usearly-favicon.png";
 import "./FilterBar.scss";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export interface FilterOption {
   value: string;
@@ -33,7 +35,15 @@ interface Props {
   onThemeChange?: (theme: FeedbackType) => void;
 }
 
-const themeOptions: SelectFilterOption<FeedbackType>[] = [
+type ThemeOption = FeedbackType | "all";
+const themeOptions: SelectFilterOption<ThemeOption>[] = [
+  {
+    value: "all",
+    iconUrl: usearlyIcon,
+    iconAlt: "Actu",
+    iconFallback: "U",
+    label: "L'actu du moment",
+  },
   {
     value: "report",
     iconUrl: reportYellowIcon,
@@ -104,6 +114,10 @@ export const FilterBarGeneric: React.FC<Props> = ({
   selectedTheme = "report",
   onThemeChange = () => {},
 }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const displayedTheme: ThemeOption =
+    location.pathname === "/" ? "all" : selectedTheme;
   const selectOptions = useMemo<SelectFilterOption[]>(() => {
     return options.map((opt) => {
       const { emoji, text } = splitLeadingEmoji(opt.label);
@@ -244,8 +258,14 @@ export const FilterBarGeneric: React.FC<Props> = ({
     handleBrandChange(value, siteUrl);
   };
 
-  const handleThemeChange = (theme: FeedbackType) => {
+  const handleThemeChange = (theme: ThemeOption) => {
+    if (theme === "all") {
+      navigate("/", { replace: true });
+      return;
+    }
+
     if (theme === selectedTheme) return;
+
     onThemeChange(theme);
   };
 
@@ -253,8 +273,10 @@ export const FilterBarGeneric: React.FC<Props> = ({
     <div className="filter-bar-generic-container">
       <div className="filter-bar-generic-primary">
         <Champs
-          options={themeOptions}
-          value={selectedTheme}
+          options={
+            themeOptions as unknown as SelectFilterOption<FeedbackType>[]
+          }
+          value={displayedTheme as FeedbackType}
           onChange={handleThemeChange}
           align="left"
           minWidth={170}

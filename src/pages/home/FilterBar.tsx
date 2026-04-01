@@ -6,6 +6,9 @@ import type { FeedbackType } from "@src/components/user-profile/FeedbackTabs";
 import reportYellowIcon from "/assets/icons/reportYellowIcon.svg";
 import likeRedIcon from "/assets/icons/heart-header.svg";
 import suggestGreenIcon from "/assets/icons/suggest-header.svg";
+import type { FeedbackType } from "@src/types/Reports";
+import usearlyIcon from "/usearly-favicon.png";
+import type { FeedFilterValue } from "@src/components/feed/types/feedFilterTypes";
 
 interface Props {
   filter:
@@ -56,6 +59,8 @@ interface Props {
   onThemeChange?: (theme: FeedbackType) => void;
 }
 
+type ThemeOption = FeedbackType | "all";
+
 const normalize = (str: string) =>
   str
     .toLowerCase()
@@ -74,27 +79,40 @@ const normalizeBrandName = (value: string) =>
 
 // const DEFAULT_CATEGORY_ICON = getCategoryIconPathFromSubcategory(undefined);
 
-const themeOptions: SelectFilterOption<FeedbackType>[] = [
+const FILTER_LABELS: Record<FeedFilterValue, string> = {
+  all: "L'actu du moment",
+  report: "Signalements",
+  coupdecoeur: "Coups de cœur",
+  suggestion: "Suggestions",
+};
+const themeOptions: SelectFilterOption<ThemeOption>[] = [
+  {
+    value: "all",
+    iconUrl: usearlyIcon,
+    iconAlt: "All feedback",
+    iconFallback: "A",
+    label: FILTER_LABELS.all,
+  },
   {
     value: "report",
     iconUrl: reportYellowIcon,
     iconAlt: "Signalements",
     iconFallback: "S",
-    label: "Signalements",
+    label: FILTER_LABELS.report,
   },
   {
     value: "coupdecoeur",
     iconUrl: likeRedIcon,
     iconAlt: "Coups de cœur",
     iconFallback: "C",
-    label: "Coups de cœur",
+    label: FILTER_LABELS.coupdecoeur,
   },
   {
     value: "suggestion",
     iconUrl: suggestGreenIcon,
     iconAlt: "Suggestions",
     iconFallback: "I",
-    label: "Suggestions",
+    label: FILTER_LABELS.suggestion,
   },
 ];
 
@@ -453,7 +471,12 @@ const FilterBar: React.FC<Props> = ({
     handleBrandSelect(value, siteUrl);
   };
 
-  const handleThemeSelect = (theme: FeedbackType) => {
+  const handleThemeSelect = (theme: ThemeOption) => {
+    if (theme === "all") {
+      window.location.href = "/";
+      return;
+    }
+
     if (theme === selectedTheme) return;
     onThemeChange(theme);
   };
@@ -472,7 +495,9 @@ const FilterBar: React.FC<Props> = ({
       >
         <div className="primary-filters">
           <Champs
-            options={themeOptions}
+            options={
+              themeOptions as unknown as SelectFilterOption<FeedbackType>[]
+            }
             value={selectedTheme}
             onChange={handleThemeSelect}
             align="left"

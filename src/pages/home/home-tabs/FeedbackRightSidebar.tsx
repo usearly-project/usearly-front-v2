@@ -4,11 +4,11 @@ import type {
   PublicFeedFilterState,
   ReportFeedFilterValue,
   SuggestionFeedFilterValue,
-} from "@src/components/feed/feedFilterTypes";
-import type { FeedbackType } from "@src/components/user-profile/FeedbackTabs";
+} from "@src/components/feed/types/feedFilterTypes";
 import FilterIllustrationNextToText from "@src/pages/home/home-illustration/FilterIllustrationNextToText";
 import type { FilterIllustrationTabKey } from "@src/pages/home/home-illustration/filterIllustrationContent";
 import RightSidebar from "@src/pages/public/components/sidebars/RightSidebar";
+import type { FeedbackType } from "@src/types/Reports";
 
 interface Props {
   activeTab: FeedbackType;
