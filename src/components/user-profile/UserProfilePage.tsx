@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { type FeedbackType } from "./FeedbackTabs";
 import "./UserProfilePage.scss";
 import UserGroupedReportsList from "../profile/UserGroupedReportsList";
 import UserFeedbackView from "../profile/UserFeedbackView";
@@ -9,6 +8,7 @@ import UserProfileBanner from "./banner/UserProfileBanner";
 import UserLoveBrandsPanel from "../profile/banner/user-emotion/UserLoveBrandsPanel";
 import { useIsMobile } from "@src/hooks/use-mobile";
 import Abracadabra from "/assets/images/profil/Abracadabra.svg";
+import type { FeedbackType } from "@src/types/Reports";
 
 const PROFILE_TITLES: Record<
   FeedbackType,

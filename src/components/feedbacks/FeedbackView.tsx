@@ -10,6 +10,7 @@ import type {
   GroupedReport,
   CoupDeCoeur,
   Suggestion,
+  FeedbackType,
 } from "@src/types/Reports";
 import { useState, type JSX } from "react";
 import {
@@ -17,7 +18,6 @@ import {
   groupByBrand,
   explodeGroupedReports,
 } from "@src/utils/feedbackListUtils";
-import type { FeedbackType } from "../user-profile/FeedbackTabs";
 import InteractiveFeedbackCard from "../InteractiveFeedbackCard/InteractiveFeedbackCard";
 import FeedbackCardMobile from "./FeedbackCardMobile";
 import { useIsMobile } from "@src/hooks/use-mobile";

@@ -5,8 +5,8 @@ import { usePaginatedGroupedReportsByPopularEngagement } from "@src/hooks/usePag
 import { usePaginatedGroupedReportsByRage } from "@src/hooks/usePaginatedGroupedReportsByRage";
 import { useConfirmedFlatData } from "@src/hooks/useConfirmedFlatData";
 import { apiService } from "@src/services/apiService";
-import type { FeedbackType } from "@src/components/user-profile/FeedbackTabs";
 import { usePaginatedGroupedReportsByHot } from "./usePaginatedGroupedReportsByHot";
+import type { FeedbackType } from "@src/types/Reports";
 
 type SectionKey =
   | "loading"
