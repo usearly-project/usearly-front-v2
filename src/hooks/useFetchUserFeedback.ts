@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import type { FeedbackType } from "@src/components/user-profile/FeedbackTabs";
-import type { CoupDeCoeur, Suggestion } from "@src/types/Reports";
+import type { CoupDeCoeur, FeedbackType, Suggestion } from "@src/types/Reports";
 import {
   getUserCoupsDeCoeur,
   getUserSuggestions,

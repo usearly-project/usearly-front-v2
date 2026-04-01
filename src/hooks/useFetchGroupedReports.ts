@@ -1,5 +1,4 @@
 import { useEffect, useState, useCallback } from "react";
-import type { FeedbackType } from "@src/components/user-profile/FeedbackTabs";
 import {
   getAllPublicGroupedReports,
   getPublicCoupsDeCoeur,
@@ -9,6 +8,7 @@ import type {
   PublicGroupedReport,
   CoupDeCoeur,
   Suggestion,
+  FeedbackType,
 } from "@src/types/Reports";
 import type { TicketStatusKey } from "@src/types/ticketStatus";
 
