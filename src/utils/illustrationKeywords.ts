@@ -1,101 +1,136 @@
-export const illustrationKeywords: Record<string, string> = {
-  // 🏦 Banque
-  banque: "bancaire/cartecredit.svg",
-  carte: "bancaire/cartecredit.svg",
-  crédit: "bancaire/cartecredit.svg",
-  invest: "bancaire/invest.svg",
-  économie: "bancaire/tirelire.svg",
-  récompense: "bancaire/tirelire.svg",
-  points: "bancaire/tirelire.svg",
-  pdf: "bancaire/receipt.svg",
-  reçus: "bancaire/receipt.svg",
-  reçu: "bancaire/receipt.svg",
-
-  // 🎬 TV & Cinéma
-  cinéma: "tv_cinema/clapcinema.svg",
-  film: "tv_cinema/clapcinema.svg",
-  popcorn: "tv_cinema/popcorn.svg",
-  canapé: "tv_cinema/canape.svg",
-  série: "tv_cinema/canape.svg",
-
-  // 🎧 Culture & Musique
-  musique: "culture_musique/notemusique.svg",
-  chanson: "culture_musique/notemusique.svg",
-  concert: "culture_musique/rocksigne.svg",
-  livre: "culture_musique/openbook.svg",
-  lecture: "culture_musique/openbook.svg",
-  casque: "culture_musique/casquemusique.svg",
-
-  // 🛒 E-commerce
-  paiement: "ecommerce/cartecredit.svg",
-  commande: "ecommerce/caddie.svg",
-  achat: "ecommerce/fillbag.svg",
-  panier: "ecommerce/caddie.svg",
-  magasin: "ecommerce/largebag.svg",
-  vêtement: "ecommerce/cintre.svg",
-  vêtements: "ecommerce/mediumbag.svg",
-  mode: "ecommerce/cintre.svg",
-  collection: "ecommerce/caddie.svg",
-  categorie: "ecommerce/caddie.svg",
-  femme: "ecommerce/fillbag.svg",
-  homme: "ecommerce/largebag.svg",
-  enfant: "ecommerce/fillbag.svg",
-  taille: "ecommerce/cintre.svg",
-  tailles: "ecommerce/cintre.svg",
-
-  // 🍔 Food & Drink
-  repas: "food_drink/burger.svg",
-  restaurant: "food_drink/burger.svg",
-  livraison: "food_drink/livraisonvelo.svg",
-  colis: "food_drink/livraisonvelo.svg",
-  vélo: "food_drink/livraisonvelo.svg",
-  smoothie: "food_drink/smoothie.svg",
-  cocktail: "food_drink/cocktail.svg",
-  glace: "food_drink/ice.svg",
-
-  // 🏨 Hôtellerie & immobilier
-  hôtel: "hotelerie_immobilier/lit.svg",
-  chambre: "hotelerie_immobilier/lit.svg",
-  clé: "hotelerie_immobilier/clef.svg",
-  location: "hotelerie_immobilier/clef.svg",
-
-  // ✈️ Voyage & transport
-  avion: "voyage_transport/avion.svg",
-  trajet: "voyage_transport/chemin.svg",
-  itinéraire: "voyage_transport/chemin.svg",
-  billet: "voyage_transport/avion.svg",
-  vol: "voyage_transport/avion.svg",
-  train: "voyage_transport/train.svg",
-  valise: "voyage_transport/valise.svg",
-  transport: "voyage_transport/valise.svg",
-  réservation: "voyage_transport/valise.svg",
-  voyage: "voyage_transport/valise.svg",
-  logement: "voyage_transport/lit.svg",
-
-  // ⚽ Sport
-  sport: "sport/maillot.svg",
-  basket: "sport/basketball.svg",
-  foot: "sport/cagefoot.svg",
-  course: "sport/chaussurecourse.svg",
-  cible: "sport/cible.svg",
-  podium: "sport/podium.svg",
-  sac: "sport/sacsport.svg",
-
-  // 🌈 UI / Expérience
-  interface: "general/ordilike.svg",
-  design: "general/ordilike.svg",
-  animation: "general/ordilike.svg",
-  rapidité: "general/flechecoeur.svg",
-  performance: "general/flechecoeur.svg",
-
-  durable: "general/coeurlike.svg",
-
-  // 💬 Généraliste / fallback
-  like: "general/coeurlike.svg",
-  coeur: "general/coeurlike.svg",
-  love: "general/coeurdoigt.svg",
-  bravo: "general/applaudissement.svg",
-  rire: "general/emojiteterire.svg",
-  message: "general/messagelike.svg",
-  default: "general/coeurdoigt.svg",
+export const CATEGORY_MAPPING: Record<
+  string,
+  { high: string[]; low: string[] }
+> = {
+  bancaire: {
+    high: [
+      "banque",
+      "virement",
+      "compte",
+      "coffre",
+      "argent",
+      "investissement",
+      "épargne",
+    ],
+    low: [
+      "carte",
+      "crédit",
+      "paiement",
+      "reçu",
+      "reçus",
+      "points",
+      "économie",
+      "frais",
+    ],
+  },
+  tv_cinema: {
+    high: ["cinéma", "film", "série", "netflix", "popcorn", "clap"],
+    low: ["vidéo", "télé", "regarder", "canapé", "écran"],
+  },
+  culture_musique: {
+    high: ["musique", "concert", "album", "artiste", "rock", "festival"],
+    low: [
+      "chanson",
+      "casque",
+      "livre",
+      "lecture",
+      "écouter",
+      "ticket",
+      "billet",
+    ],
+  },
+  ecommerce: {
+    high: ["commande", "achat", "panier", "caddie", "shopping", "colis"],
+    low: [
+      "magasin",
+      "vêtement",
+      "vêtements",
+      "mode",
+      "taille",
+      "stock",
+      "prix",
+      "sac",
+    ],
+  },
+  food_drink: {
+    high: ["restaurant", "burger", "cocktail", "smoothie", "café", "brasserie"],
+    low: [
+      "repas",
+      "manger",
+      "boire",
+      "faim",
+      "soif",
+      "glace",
+      "ice",
+      "livraison",
+    ],
+  },
+  hotelerie_immobilier: {
+    high: ["hôtel", "chambre", "logement", "maison", "nuit", "résidence"],
+    low: ["clé", "clef", "location", "lit", "porte"],
+  },
+  voyage_transport: {
+    high: ["avion", "vol", "train", "valise", "vacances", "trajet"],
+    low: ["itinéraire", "transport", "gare", "chemin", "réservation", "billet"],
+  },
+  sport: {
+    high: [
+      "sport",
+      "match",
+      "podium",
+      "maillot",
+      "entraînement",
+      "foot",
+      "basket",
+    ],
+    low: ["course", "cible", "sac", "ballon", "chaussure", "sneaker"],
+  },
+  general: {
+    high: [
+      "interface",
+      "design",
+      "animation",
+      "rapidité",
+      "performance",
+      "top",
+      "génial",
+    ],
+    low: [
+      "durable",
+      "like",
+      "coeur",
+      "love",
+      "bravo",
+      "rire",
+      "message",
+      "appli",
+      "site",
+    ],
+  },
 };
+
+export const CATEGORY_IMAGES: Record<string, string> = {
+  bancaire: "cartecredit.svg",
+  tv_cinema: "clapcinema.svg",
+  culture_musique: "notemusique.svg",
+  ecommerce: "caddie.svg",
+  food_drink: "burger.svg",
+  hotelerie_immobilier: "lit.svg",
+  voyage_transport: "avion.svg",
+  sport: "maillot.svg",
+  general: "coeurdoigt.svg",
+};
+
+export const GENERAL_POOL = [
+  "applaudissement.svg",
+  "coeurdoigt.svg",
+  "coeurlike.svg",
+  "emojifacelove.svg",
+  "flechecoeur.svg",
+  "messageaime.svg",
+  "messagelike.svg",
+  "ordilike.svg",
+  "pouceenlair.svg",
+  "screenordilike.svg",
+  "telephonelike.svg",
+];

@@ -70,10 +70,18 @@ function Home() {
   const [searchParams] = useSearchParams();
   const tabFromUrl = searchParams.get("tab") as FeedbackType | null;
   const navigate = useNavigate();
-  const validTabs: FeedbackType[] = ["report", "coupdecoeur", "suggestion"];
+  //const validTabs: FeedbackType[] = ["report", "coupdecoeur", "suggestion"];
+  type ExtendedTab = FeedbackType | "all";
+
+  const validTabs: ExtendedTab[] = [
+    "all",
+    "report",
+    "coupdecoeur",
+    "suggestion",
+  ];
   const safeTab: FeedbackType =
-    tabFromUrl && validTabs.includes(tabFromUrl as FeedbackType)
-      ? (tabFromUrl as FeedbackType)
+    tabFromUrl && ["report", "coupdecoeur", "suggestion"].includes(tabFromUrl)
+      ? tabFromUrl
       : "report";
 
   const isAtBottom = useIsAtBottom({
@@ -95,10 +103,13 @@ function Home() {
   useEffect(() => {
     const tab = searchParams.get("tab");
 
-    const hasOnlyValidParam =
-      searchParams.has("tab") && validTabs.includes(tab as FeedbackType);
+    // ✅ si pas de tab → on laisse tranquille (mode "all" ou "/")
+    if (!tab) return;
 
-    if (!hasOnlyValidParam) {
+    //const validTabs: FeedbackType[] = ["report", "coupdecoeur", "suggestion"];
+
+    // ❌ uniquement si invalide
+    if (!validTabs.includes(tab as FeedbackType)) {
       navigate("/feedback?tab=report", { replace: true });
     }
   }, [searchParams]);
@@ -130,7 +141,8 @@ function Home() {
       setSuggestionSearch(defaults.suggestionSearch);
       setSelectedSiteUrl(defaults.selectedSiteUrl);
       setReportSearchTerm("");
-      setActiveTab(nextTab);
+      navigate(`/feedback?tab=${nextTab}`);
+      //setActiveTab(nextTab);
     },
     [activeTab],
   );
