@@ -2,8 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import "./UserFeedbackView.scss";
 import InteractiveFeedbackCard from "@src/components/InteractiveFeedbackCard/InteractiveFeedbackCard";
 import { useFetchUserFeedback } from "@src/hooks/useFetchUserFeedback";
-import type { FeedbackType } from "@src/components/user-profile/FeedbackTabs";
-import type { CoupDeCoeur, Suggestion } from "@src/types/Reports";
+import type { CoupDeCoeur, FeedbackType, Suggestion } from "@src/types/Reports";
 import SqueletonAnime from "../loader/SqueletonAnime";
 import Champs, { type SelectFilterOption } from "../champs/Champs";
 

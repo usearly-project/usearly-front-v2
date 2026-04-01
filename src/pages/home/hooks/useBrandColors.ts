@@ -1,8 +1,7 @@
 import { useMemo, useEffect, useState } from "react";
 import { hexToRgba } from "@src/utils/colorUtils";
 import { fetchValidBrandLogo } from "@src/utils/brandLogos";
-import type { FeedbackType } from "@src/components/user-profile/FeedbackTabs";
-import type { CoupDeCoeur, Suggestion } from "@src/types/Reports";
+import type { CoupDeCoeur, FeedbackType, Suggestion } from "@src/types/Reports";
 import { getRandomBrandColor } from "@src/utils/brandColors";
 
 export function useBrandColors(

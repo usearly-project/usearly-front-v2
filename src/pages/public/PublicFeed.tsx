@@ -1,6 +1,6 @@
 import { useState } from "react";
 import MixedFeed from "@src/components/feed/MixedFeed";
-import type { PublicFeedFilterState } from "@src/components/feed/feedFilterTypes";
+import type { PublicFeedFilterState } from "@src/components/feed/types/feedFilterTypes";
 import { useIsMobile } from "@src/hooks/use-mobile";
 import "./PublicFeed.scss";
 import HeroBanner from "./components/HeroBanner/HeroBanner";

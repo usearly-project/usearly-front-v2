@@ -1,6 +1,5 @@
+import type { FeedbackType } from "@src/types/Reports";
 import "./FeedbackTabs.scss";
-
-export type FeedbackType = "report" | "coupdecoeur" | "suggestion";
 
 const tabs: { key: FeedbackType; label: string }[] = [
   { key: "report", label: "Signalements" },

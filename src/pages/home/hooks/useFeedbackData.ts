@@ -1,6 +1,5 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
-import type { CoupDeCoeur, Suggestion } from "@src/types/Reports";
-import type { FeedbackType } from "@src/components/user-profile/FeedbackTabs";
+import type { CoupDeCoeur, FeedbackType, Suggestion } from "@src/types/Reports";
 import {
   getCoupsDeCoeurByBrand,
   getSuggestionsByBrand,

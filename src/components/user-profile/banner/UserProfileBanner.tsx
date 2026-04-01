@@ -4,20 +4,15 @@ import { useUserStatsSummary } from "@src/hooks/useUserStatsSummary";
 import { useIsMobile } from "@src/hooks/use-mobile";
 import Avatar from "@src/components/shared/Avatar";
 import { getDisplayName } from "@src/utils/avatarUtils";
-import { type FeedbackType } from "@src/components/user-profile/FeedbackTabs";
 import reportYellowIcon from "/assets/icons/reportYellowIcon.svg";
 import likeRedIcon from "/assets/icons/heart-header.svg";
 import suggestGreenIcon from "/assets/icons/suggest-header.svg";
 import badge from "/assets/icons/Little-badge.svg";
 import chatIcon from "/assets/images/chat-top-bar.svg";
-// import {
-//   LogoBig,
-//   LogoMedium,
-//   LogoSmall,
-// } from "@src/components/shared/DecorativeLogos";
 import { useCountUp } from "@src/components/profile/banner/user-emotion/useCountUp";
 import "./UserProfileBanner.scss";
 import UScoreIcon from "/assets/U-score-icon.svg";
+import type { FeedbackType } from "@src/types/Reports";
 
 type Props = {
   activeTab: FeedbackType;

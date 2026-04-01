@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import "./RightSidebar.scss";
-import type { PublicFeedFilterState } from "@src/components/feed/feedFilterTypes";
+import type { PublicFeedFilterState } from "@src/components/feed/types/feedFilterTypes";
 import RightSidebarDefaultCard from "./right-sidebar/RightSidebarDefaultCard";
 import RightSidebarIllustrationCard from "./right-sidebar/RightSidebarIllustrationCard";
 import { resolveRightSidebarIllustrationConfig } from "./right-sidebar/rightSidebarConfig";

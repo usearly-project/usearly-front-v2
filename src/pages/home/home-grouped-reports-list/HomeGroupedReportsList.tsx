@@ -5,7 +5,6 @@ import React, {
   useEffect,
   useCallback,
 } from "react";
-import type { FeedbackType } from "@src/components/user-profile/FeedbackTabs";
 import "./HomeGroupedReportsList.scss";
 import SqueletonAnime from "@src/components/loader/SqueletonAnime";
 import { useBrands } from "@src/hooks/useBrands";
@@ -23,6 +22,7 @@ import {
 import { useLocation } from "react-router-dom";
 import FilterBar from "../FilterBar";
 import HotSection from "./sections/HotSection";
+import type { FeedbackType } from "@src/types/Reports";
 const FilterBarAny = FilterBar as unknown as React.ComponentType<any>;
 
 interface Props {

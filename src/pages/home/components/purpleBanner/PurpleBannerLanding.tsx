@@ -1,7 +1,5 @@
 ﻿import { useEffect, useState } from "react";
-import FeedbackTabs, {
-  type FeedbackType,
-} from "@src/components/user-profile/FeedbackTabs";
+import FeedbackTabs from "@src/components/user-profile/FeedbackTabs";
 import "./PurpleBannerLanding.scss";
 import {
   LogoBig,
@@ -13,6 +11,7 @@ import emojiIcon from "/assets/images/emoji-top-bar.png";
 import badge from "/assets/icons/Little-badge.svg";
 import Buttons from "@src/components/buttons/Buttons";
 import { useNavigate } from "react-router-dom";
+import type { FeedbackType } from "./PurpleBanner";
 
 export type PurpleBannerProps = {
   activeTab?: FeedbackType;
