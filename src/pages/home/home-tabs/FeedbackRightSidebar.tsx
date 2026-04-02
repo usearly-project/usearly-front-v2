@@ -9,6 +9,7 @@ import FilterIllustrationNextToText from "@src/pages/home/home-illustration/Filt
 import type { FilterIllustrationTabKey } from "@src/pages/home/home-illustration/filterIllustrationContent";
 import RightSidebar from "@src/pages/public/components/sidebars/RightSidebar";
 import type { FeedbackType } from "@src/types/Reports";
+import type { BrandReportStats } from "../home-grouped-reports-list/utils/brandReportStats";
 
 interface Props {
   activeTab: FeedbackType;
@@ -16,6 +17,7 @@ interface Props {
   selectedBrand?: string;
   selectedCategory?: string;
   selectedSiteUrl?: string;
+  brandReportStats?: BrandReportStats | null;
 }
 
 const DEFAULT_PUBLIC_FEED_FILTERS: PublicFeedFilterState = {
@@ -106,6 +108,7 @@ const FeedbackRightSidebar = ({
   selectedBrand,
   selectedCategory,
   selectedSiteUrl,
+  brandReportStats,
 }: Props) => {
   const onglet = TAB_TO_ONGLET[activeTab];
   const isBrandFocused = isFeedbackBrandFocused({
@@ -129,6 +132,7 @@ const FeedbackRightSidebar = ({
         selectedCategory={selectedCategory}
         onglet={onglet}
         withText
+        brandReportStats={brandReportStats}
       />
     );
   }
