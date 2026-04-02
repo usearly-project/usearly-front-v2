@@ -1,3 +1,5 @@
+@use "@styles/base/_variables" as *;
+
 .filter-illustration-sidebar {
   width: 260px;
   padding: 8px;
@@ -66,6 +68,108 @@
   width: 200px;
 }
 
+.filter-illustration-sidebar.filter-illustration-sidebar--brand-report {
+  width: 260px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  border-radius: 20px;
+
+  &.filtered {
+    .illustration-content {
+      padding: 0;
+    }
+  }
+
+  .illustration-content.illustration-content--brand-report {
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 22px;
+    text-align: left;
+  }
+
+  .filter-illustration-sidebar__brand-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .filter-illustration-sidebar__selected-brand-title {
+    margin: 0;
+    color: #000;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.15;
+    overflow-wrap: anywhere;
+    text-overflow: ellipsis;
+  }
+
+  .filter-illustration-sidebar__selected-brand-description {
+    margin: 0;
+    color: #434760;
+    font-size: 14px;
+    line-height: 1.45;
+    font-weight: 400;
+  }
+
+  .filter-illustration-sidebar__brand-logo {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .filter-illustration-sidebar__brand-stats {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 24px;
+  }
+
+  .filter-illustration-sidebar__brand-stat {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .filter-illustration-sidebar__brand-stat-arrow {
+    color: #000;
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 1;
+    margin-top: -25px;
+    align-self: center;
+  }
+
+  .filter-illustration-sidebar__brand-stat-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .filter-illustration-sidebar__brand-stat-value {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    color: #000;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 0.92;
+    font-family: $font-family-3;
+    img {
+      margin-left: 5px;
+    }
+  }
+
+  .filter-illustration-sidebar__brand-stat-label {
+    color: #1d2137;
+    font-size: 20px;
+    line-height: 1.2;
+    margin-top: 4px;
+    font-family: $font-family-3;
+  }
+}
+
 .filter-illustration-sidebar.filtered {
   position: relative;
   border-radius: 12px;
@@ -85,7 +189,7 @@
     gap: 12px;
 
     p {
-      font-weight: 600;
+      font-weight: 400;
       font-size: 15px;
       color: #222;
     }
@@ -164,9 +268,9 @@
       }
     }
     .filter-illustration-sidebar {
-      position: absolute;
-      top: 50%;
-      right: 40px;
+      // position: absolute;
+      // top: 50%;
+      // right: 40px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -192,6 +296,10 @@
           object-fit: contain;
         }
       }
+    }
+
+    .filter-illustration-sidebar.filter-illustration-sidebar--brand-report {
+      width: 260px;
     }
   }
 }

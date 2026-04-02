@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import "./FilterBar.scss";
 import Champs, { type SelectFilterOption } from "@src/components/champs/Champs";
-import { getCategoryIconPathFromSubcategory } from "@src/utils/IconsUtils";
+// import { getCategoryIconPathFromSubcategory } from "@src/utils/IconsUtils";
 import reportYellowIcon from "/assets/icons/reportYellowIcon.svg";
 import likeRedIcon from "/assets/icons/heart-header.svg";
 import suggestGreenIcon from "/assets/icons/suggest-header.svg";
@@ -76,7 +76,7 @@ const normalizeBrandName = (value: string) =>
     .replace(/[\u0300-\u036f]/g, "")
     .trim();
 
-const DEFAULT_CATEGORY_ICON = getCategoryIconPathFromSubcategory(undefined);
+// const DEFAULT_CATEGORY_ICON = getCategoryIconPathFromSubcategory(undefined);
 
 const FILTER_LABELS: Record<FeedFilterValue, string> = {
   all: "L'actu du moment",
@@ -159,7 +159,7 @@ const FilterBar: React.FC<Props> = ({
   availableBrands,
   availableCategories,
   setSelectedSiteUrl,
-  availableSubCategoriesByBrandAndCategory,
+  // availableSubCategoriesByBrandAndCategory,
   isFeedLoading = false,
   selectedTheme = "report",
   onThemeChange = () => {},
@@ -197,7 +197,7 @@ const FilterBar: React.FC<Props> = ({
   );
   const hasSignalementOptions = signalementOptions.length > 0;
 
-  const filtersDisabled = Boolean(isFeedLoading);
+  // const filtersDisabled = Boolean(isFeedLoading);
 
   const [internalSelectedMainCategory, setInternalSelectedMainCategory] =
     useState("");
@@ -279,76 +279,76 @@ const FilterBar: React.FC<Props> = ({
     );
     return found?.value ?? "";
   }, [brandOptions, selectedBrand]);
-  const subCategoryOptions = useMemo<SelectFilterOption[]>(() => {
-    const placeholder: SelectFilterOption = {
-      value: "",
-      label: "Sous-catégorie",
-      iconUrl: DEFAULT_CATEGORY_ICON,
-      iconAlt: "Sous-catégorie",
-      iconFallback: "SC",
-    };
+  // const subCategoryOptions = useMemo<SelectFilterOption[]>(() => {
+  //   const placeholder: SelectFilterOption = {
+  //     value: "",
+  //     label: "Sous-catégorie",
+  //     iconUrl: DEFAULT_CATEGORY_ICON,
+  //     iconAlt: "Sous-catégorie",
+  //     iconFallback: "SC",
+  //   };
 
-    if (!selectedBrand || !selectedMainCategory) {
-      return [placeholder];
-    }
+  //   if (!selectedBrand || !selectedMainCategory) {
+  //     return [placeholder];
+  //   }
 
-    const subCategories =
-      availableSubCategoriesByBrandAndCategory?.[selectedBrand]?.[
-        selectedMainCategory
-      ] || [];
+  //   const subCategories =
+  //     availableSubCategoriesByBrandAndCategory?.[selectedBrand]?.[
+  //       selectedMainCategory
+  //     ] || [];
 
-    if (!subCategories.length) {
-      return [placeholder];
-    }
+  //   if (!subCategories.length) {
+  //     return [placeholder];
+  //   }
 
-    return [
-      placeholder,
-      ...subCategories.map((sub) => ({
-        value: sub,
-        label: sub,
-        iconUrl: getCategoryIconPathFromSubcategory(sub),
-        iconAlt: sub,
-        iconFallback: sub,
-      })),
-    ];
-  }, [
-    availableSubCategoriesByBrandAndCategory,
-    selectedBrand,
-    selectedMainCategory,
-  ]);
+  //   return [
+  //     placeholder,
+  //     ...subCategories.map((sub) => ({
+  //       value: sub,
+  //       label: sub,
+  //       iconUrl: getCategoryIconPathFromSubcategory(sub),
+  //       iconAlt: sub,
+  //       iconFallback: sub,
+  //     })),
+  //   ];
+  // }, [
+  //   availableSubCategoriesByBrandAndCategory,
+  //   selectedBrand,
+  //   selectedMainCategory,
+  // ]);
 
-  const mainCategoryOptions = useMemo<SelectFilterOption[]>(() => {
-    const placeholder: SelectFilterOption = {
-      value: "",
-      label: "Catégorie principale",
-      iconUrl: DEFAULT_CATEGORY_ICON,
-      iconAlt: "Catégorie principale",
-      iconFallback: "CP",
-    };
+  // const mainCategoryOptions = useMemo<SelectFilterOption[]>(() => {
+  //   const placeholder: SelectFilterOption = {
+  //     value: "",
+  //     label: "Catégorie principale",
+  //     iconUrl: DEFAULT_CATEGORY_ICON,
+  //     iconAlt: "Catégorie principale",
+  //     iconFallback: "CP",
+  //   };
 
-    if (!selectedBrand) {
-      return [placeholder];
-    }
+  //   if (!selectedBrand) {
+  //     return [placeholder];
+  //   }
 
-    const categories = Object.keys(
-      availableSubCategoriesByBrandAndCategory?.[selectedBrand] ?? {},
-    );
+  //   const categories = Object.keys(
+  //     availableSubCategoriesByBrandAndCategory?.[selectedBrand] ?? {},
+  //   );
 
-    if (!categories.length) {
-      return [placeholder];
-    }
+  //   if (!categories.length) {
+  //     return [placeholder];
+  //   }
 
-    return [
-      placeholder,
-      ...categories.map((cat) => ({
-        value: cat,
-        label: cat,
-        iconUrl: getCategoryIconPathFromSubcategory(cat),
-        iconAlt: cat,
-        iconFallback: cat,
-      })),
-    ];
-  }, [availableSubCategoriesByBrandAndCategory, selectedBrand]);
+  //   return [
+  //     placeholder,
+  //     ...categories.map((cat) => ({
+  //       value: cat,
+  //       label: cat,
+  //       iconUrl: getCategoryIconPathFromSubcategory(cat),
+  //       iconAlt: cat,
+  //       iconFallback: cat,
+  //     })),
+  //   ];
+  // }, [availableSubCategoriesByBrandAndCategory, selectedBrand]);
 
   const resetBrandFilters = () => {
     if (selectedBrand) {
@@ -389,13 +389,13 @@ const FilterBar: React.FC<Props> = ({
     }
   };
 
-  const handleCategorySelect = (category: string) => {
-    setSelectedCategory(category);
-    setViewMode("flat");
-    setFilter("");
-    onViewModeChange?.("flat");
-    setActiveFilter("");
-  };
+  // const handleCategorySelect = (category: string) => {
+  //   setSelectedCategory(category);
+  //   setViewMode("flat");
+  //   setFilter("");
+  //   onViewModeChange?.("flat");
+  //   setActiveFilter("");
+  // };
 
   useEffect(() => {
     const handleClickOutside = (e: Event) => {
@@ -552,7 +552,7 @@ const FilterBar: React.FC<Props> = ({
             />
           </div>
 
-          {/* Pill 2 : Catégorie principale (affichée si une marque est choisie) */}
+          {/* Catégories temporairement masquées quand une marque est sélectionnée.
           {selectedBrand && (
             <div className="filters__pill filters__pill--maincat">
               <Champs
@@ -575,7 +575,6 @@ const FilterBar: React.FC<Props> = ({
             </div>
           )}
 
-          {/* Pill 3 : Sous-catégorie (si cat principale choisie) */}
           {selectedBrand && selectedMainCategory && (
             <div className="filters__pill filters__pill--subcat">
               <Champs
@@ -589,7 +588,7 @@ const FilterBar: React.FC<Props> = ({
                 loading={filtersDisabled}
               />
             </div>
-          )}
+          )} */}
         </div>
       </div>
     );

@@ -9,6 +9,7 @@ import "./HomeGroupedReportsList.scss";
 import SqueletonAnime from "@src/components/loader/SqueletonAnime";
 import { useBrands } from "@src/hooks/useBrands";
 import { getBrandLogo } from "@src/utils/brandLogos";
+import { capitalizeFirstLetter } from "@src/utils/stringUtils";
 import BrandFilteredSection from "./sections/BrandFilteredSection";
 import ConfirmedSection from "./sections/ConfirmedSection";
 import RageSection from "./sections/RageSection";
@@ -23,6 +24,10 @@ import { useLocation } from "react-router-dom";
 import FilterBar from "../FilterBar";
 import HotSection from "./sections/HotSection";
 import type { FeedbackType } from "@src/types/Reports";
+import {
+  getBrandReportStats,
+  type BrandReportStats,
+} from "./utils/brandReportStats";
 const FilterBarAny = FilterBar as unknown as React.ComponentType<any>;
 
 interface Props {
@@ -44,6 +49,7 @@ interface Props {
   onSectionChange?: (section: string) => void;
   searchTerm?: string;
   onSearchTermChange?: (value: string) => void;
+  onBrandReportStatsChange?: (stats: BrandReportStats | null) => void;
 }
 
 /**
@@ -69,6 +75,7 @@ const HomeGroupedReportsList: React.FC<Props> = ({
   onSectionChange,
   searchTerm: externalSearchTerm,
   onSearchTermChange,
+  onBrandReportStatsChange,
 }) => {
   const loaderRef = useRef<HTMLDivElement | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -155,6 +162,23 @@ const HomeGroupedReportsList: React.FC<Props> = ({
     });
   }, [filteredByCategory, normalizedSearchTerm]);
 
+  const brandReportStats = useMemo(() => {
+    if (!selectedBrand || selectedCategory) {
+      return null;
+    }
+
+    if (loadingFiltered) {
+      return null;
+    }
+
+    return getBrandReportStats(reportsToDisplay);
+  }, [selectedBrand, selectedCategory, reportsToDisplay, loadingFiltered]);
+
+  useEffect(() => {
+    if (!onBrandReportStatsChange) return;
+    onBrandReportStatsChange(brandReportStats);
+  }, [brandReportStats, onBrandReportStatsChange]);
+
   useEffect(() => {
     if (!setSelectedSiteUrl) return;
 
@@ -228,6 +252,14 @@ const HomeGroupedReportsList: React.FC<Props> = ({
   }, [filteredReports]);
 
   const isFeedLoading = Boolean(reportData?.loading || loadingFiltered);
+  const shouldShowSelectedBrandSummary = Boolean(
+    selectedBrand && !loadingFiltered && reportsToDisplay.length > 0,
+  );
+
+  const selectedBrandSummaryCount = selectedCategory
+    ? filteredByCategory.length
+    : (brandReportStats?.problemsCount ?? 0);
+
   useEffect(() => {
     const el = loaderRef.current;
     if (!el) return;
@@ -274,34 +306,74 @@ const HomeGroupedReportsList: React.FC<Props> = ({
   // === Render ===
   return (
     <div className="home-grouped-reports-list">
-      <FilterBarAny
-        filter={filter || ""}
-        setFilter={setFilter}
-        viewMode={viewMode}
-        setViewMode={onViewModeChange}
-        setSelectedBrand={setSelectedBrand}
-        setSelectedCategory={setSelectedCategory}
-        selectedMainCategory={selectedMainCategory}
-        setSelectedMainCategory={setSelectedMainCategory}
-        setActiveFilter={setActiveFilter}
-        selectedTheme={activeTab}
-        onThemeChange={onThemeChange}
-        onViewModeChange={onViewModeChange}
-        isHotFilterAvailable={true}
-        dropdownRef={dropdownRef}
-        isDropdownOpen={isDropdownOpen}
-        setIsDropdownOpen={setIsDropdownOpen}
-        selectedBrand={selectedBrand}
-        selectedCategory={selectedCategory}
-        availableBrands={availableBrands}
-        setSelectedSiteUrl={setSelectedSiteUrl}
-        siteUrl={selectedSiteUrl}
-        availableCategories={availableSubCategories}
-        availableSubCategoriesByBrandAndCategory={
-          availableSubCategoriesByBrandAndCategory
-        }
-        isFeedLoading={isFeedLoading}
-      />
+      <div
+        className={[
+          "home-grouped-reports-list__toolbar",
+          shouldShowSelectedBrandSummary
+            ? "home-grouped-reports-list__toolbar--with-brand-summary"
+            : "",
+        ]
+          .filter(Boolean)
+          .join(" ")}
+      >
+        {shouldShowSelectedBrandSummary && (
+          <div className="selected-brand-summary">
+            <div className="selected-brand-summary__brand">
+              <div className="selected-brand-summary__info-container">
+                {selectedCategory ? (
+                  <>
+                    <span className="count">{selectedBrandSummaryCount}</span>
+                    <span className="text">
+                      Signalement
+                      {selectedBrandSummaryCount > 1 ? "s" : ""} lié
+                      {selectedBrandSummaryCount > 1 ? "s" : ""} à «{" "}
+                      <b>{selectedCategory}</b> » sur{" "}
+                      {capitalizeFirstLetter(selectedBrand)}
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <span className="count">{selectedBrandSummaryCount}</span>
+                    <span className="text">
+                      Problème{selectedBrandSummaryCount > 1 ? "s" : ""} sur{" "}
+                      {capitalizeFirstLetter(selectedBrand)}
+                    </span>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
+        <FilterBarAny
+          filter={filter || ""}
+          setFilter={setFilter}
+          viewMode={viewMode}
+          setViewMode={onViewModeChange}
+          setSelectedBrand={setSelectedBrand}
+          setSelectedCategory={setSelectedCategory}
+          selectedMainCategory={selectedMainCategory}
+          setSelectedMainCategory={setSelectedMainCategory}
+          setActiveFilter={setActiveFilter}
+          selectedTheme={activeTab}
+          onThemeChange={onThemeChange}
+          onViewModeChange={onViewModeChange}
+          isHotFilterAvailable={true}
+          dropdownRef={dropdownRef}
+          isDropdownOpen={isDropdownOpen}
+          setIsDropdownOpen={setIsDropdownOpen}
+          selectedBrand={selectedBrand}
+          selectedCategory={selectedCategory}
+          availableBrands={availableBrands}
+          setSelectedSiteUrl={setSelectedSiteUrl}
+          siteUrl={selectedSiteUrl}
+          availableCategories={availableSubCategories}
+          availableSubCategoriesByBrandAndCategory={
+            availableSubCategoriesByBrandAndCategory
+          }
+          isFeedLoading={isFeedLoading}
+        />
+      </div>
 
       {selectedBrand || selectedCategory ? (
         <BrandFilteredSection
@@ -313,6 +385,7 @@ const HomeGroupedReportsList: React.FC<Props> = ({
           loadingFiltered={loadingFiltered}
           reportsToDisplay={reportsToDisplay}
           getBrandLogo={getBrandLogo}
+          showSelectedBrandSummary={false}
           loaderRef={loaderRef}
         />
       ) : filter === "confirmed" ? (

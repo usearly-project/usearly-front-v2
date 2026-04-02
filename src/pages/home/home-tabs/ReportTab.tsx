@@ -4,6 +4,7 @@ import SearchBar from "../components/searchBar/SearchBar";
 import EndOfList from "./EndOfList";
 import FeedbackRightSidebar from "./FeedbackRightSidebar";
 import type { FeedbackType } from "@src/types/Reports";
+import type { BrandReportStats } from "../home-grouped-reports-list/utils/brandReportStats";
 
 interface Props {
   activeFilter: string;
@@ -42,6 +43,15 @@ const ReportTab: React.FC<Props> = ({
   onSearchTermChange,
   showRightPanel = true,
 }) => {
+  const [brandReportStats, setBrandReportStats] =
+    React.useState<BrandReportStats | null>(null);
+
+  React.useEffect(() => {
+    if (!selectedBrand || selectedCategory) {
+      setBrandReportStats(null);
+    }
+  }, [selectedBrand, selectedCategory]);
+
   const bannerClassName = [
     "report-banner-container",
     selectedBrand || selectedCategory
@@ -52,9 +62,15 @@ const ReportTab: React.FC<Props> = ({
   ]
     .filter(Boolean)
     .join(" ");
+  const rightPanelClassName = [
+    "right-panel",
+    selectedBrand || selectedCategory ? "right-panel--brand-colored" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return (
-    <div className={bannerClassName} style={brandBannerStyle}>
+    <div className={bannerClassName}>
       <div className="feedback-list-wrapper">
         <HomeGroupedReportsList
           activeTab={"report" as FeedbackType}
@@ -80,11 +96,12 @@ const ReportTab: React.FC<Props> = ({
           totalityCount={displayedCount}
           searchTerm={searchTerm}
           onSearchTermChange={onSearchTermChange}
+          onBrandReportStatsChange={setBrandReportStats}
         />
         {displayedCount > 0 && <EndOfList />}
       </div>
       {showRightPanel && (
-        <aside className="right-panel">
+        <aside className={rightPanelClassName} style={brandBannerStyle}>
           <SearchBar
             value={searchTerm}
             onChange={onSearchTermChange}
@@ -96,6 +113,7 @@ const ReportTab: React.FC<Props> = ({
             selectedBrand={selectedBrand}
             selectedCategory={selectedCategory}
             selectedSiteUrl={selectedSiteUrl}
+            brandReportStats={brandReportStats}
           />
         </aside>
       )}

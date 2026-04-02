@@ -8,6 +8,53 @@
   //   margin-top: 0px;
   // }
 
+  .home-grouped-reports-list__toolbar {
+    width: 100%;
+
+    &--with-brand-summary {
+      display: grid;
+      grid-template-columns: minmax(260px, 420px) minmax(0, 1fr);
+      align-items: end;
+      gap: 24px;
+      margin-bottom: 16px;
+
+      .selected-brand-summary {
+        margin-bottom: 0;
+        padding: 0;
+      }
+
+      .selected-brand-summary__brand {
+        align-items: flex-end;
+      }
+
+      .selected-brand-summary__info-container {
+        align-items: flex-end;
+        gap: 6px;
+
+        .text {
+          margin-bottom: 6px;
+        }
+      }
+
+      .filters {
+        min-width: 0;
+
+        @media screen and (max-width: 1120px) {
+          margin-top: 0;
+        }
+      }
+
+      @media screen and (max-width: 1120px) {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 12px;
+
+        .selected-brand-summary {
+          width: 100%;
+        }
+      }
+    }
+  }
+
   .selected-brand-summary {
     display: flex;
     flex-direction: column;
