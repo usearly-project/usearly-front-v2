@@ -1,152 +1,88 @@
-import { useEffect, useState } from "react";
-import BrandProgressRow from "./BrandProgressRow";
+import { useMemo } from "react";
+import BrandsGrid from "./BrandsGrid";
+import ReportSidebar from "./ReportSidebar";
 import "./LeftSidebar.scss";
-import { getTrendingBrands } from "@src/services/feedbackService";
+import type { FeedbackType } from "@src/types/Reports";
+import cdcIcon from "/assets/icons/cdc-icon.svg";
+import suggestIcon from "/assets/icons/suggest-icon.svg";
 
-type Brand = {
-  brandName: string;
-  siteUrl: string;
-  count: number;
-  progress: number;
-  message: string;
-};
-const LeftSidebar = () => {
-  const [brands, setBrands] = useState<Brand[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [showAll, setShowAll] = useState(false);
-  const displayedBrands = showAll ? brands.slice(0, 10) : brands.slice(0, 3);
+type FeedItem = { marque?: string; siteUrl?: string };
 
-  const [tooltip, setTooltip] = useState<{
-    visible: boolean;
-    x: number;
-    y: number;
-    text: string;
-  }>({
-    visible: false,
-    x: 0,
-    y: 0,
-    text: "",
-  });
+interface Props {
+  activeTab: FeedbackType;
+  feedbackData: FeedItem[];
+}
 
-  useEffect(() => {
-    const fetchBrands = async () => {
-      try {
-        const data = await getTrendingBrands();
-        setBrands(data);
-      } catch (e) {
-        console.error("Erreur trending brands:", e);
-      } finally {
-        setLoading(false);
-      }
-    };
+function computeBrandStats(feedbackData: FeedItem[]) {
+  const counts = new Map<
+    string,
+    { brandName: string; siteUrl: string; count: number }
+  >();
 
-    fetchBrands();
-  }, []);
-
-  const handleSeeAll = (e: React.MouseEvent) => {
-    if (brands.length <= 3) {
-      const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
-
-      const padding = 12;
-      const tooltipWidth = 220;
-
-      let x = rect.left + rect.width / 2;
-
-      if (x + tooltipWidth / 2 > window.innerWidth) {
-        x = window.innerWidth - tooltipWidth / 2 - padding;
-      }
-
-      if (x - tooltipWidth / 2 < padding) {
-        x = tooltipWidth / 2 + padding;
-      }
-
-      setTooltip({
-        visible: true,
-        x,
-        y: rect.top - 8,
-        text: "Aucune autre marque ne nécessite d’action pour le moment",
-      });
-
-      setTimeout(() => {
-        setTooltip((prev) => ({ ...prev, visible: false }));
-      }, 2500);
+  for (const item of feedbackData) {
+    const key = (item.marque || "").toLowerCase().trim();
+    if (!key) continue;
+    const existing = counts.get(key);
+    if (existing) {
+      existing.count += 1;
     } else {
-      setShowAll((prev) => !prev);
+      counts.set(key, {
+        brandName: item.marque!,
+        siteUrl: item.siteUrl || "",
+        count: 1,
+      });
     }
-  };
-  return (
-    <div className="left-sidebar">
-      <h3>Les marques à faire réagir en ce moment !</h3>
+  }
 
-      <div className="brands-list">
-        {loading ? (
-          <p>Chargement...</p>
-        ) : brands.length === 0 ? (
-          <p className="empty">Aucune marque à faire réagir pour le moment</p>
-        ) : (
-          displayedBrands.map((brand, index) => (
-            <BrandProgressRow
-              key={brand.siteUrl}
-              name={brand.brandName}
-              siteUrl={brand.siteUrl}
-              progress={brand.progress}
-              label={brand.message}
-              count={brand.count}
-              isTop={index === 0}
-              onHover={(e, text) => {
-                const rect = e.currentTarget.getBoundingClientRect();
-                const padding = 12;
-                const tooltipWidth = 180; // estimation safe
-                let x = rect.left + rect.width / 2;
-                // 🔥 clamp à droite
-                if (x + tooltipWidth > window.innerWidth) {
-                  x = window.innerWidth - tooltipWidth - padding;
-                }
-                // 🔥 clamp à gauche
-                if (x < padding) {
-                  x = padding;
-                }
-                setTooltip({
-                  visible: true,
-                  x,
-                  y: rect.top - 10,
-                  text,
-                });
-              }}
-              onLeave={() => {
-                setTimeout(() => {
-                  setTooltip((prev) => ({ ...prev, visible: false }));
-                }, 50);
-              }}
-            />
-          ))
-        )}
-      </div>
+  return Array.from(counts.values())
+    .sort((a, b) => b.count - a.count || a.brandName.localeCompare(b.brandName))
+    .slice(0, 5);
+}
 
-      <div className="see-all-wrapper">
-        <button className="see-all" onClick={handleSeeAll}>
-          {showAll ? "Voir moins" : "Voir toutes les marques"}
-        </button>
+const LeftSidebar = ({ activeTab, feedbackData }: Props) => {
+  const brandStats = useMemo(() => {
+    if (activeTab !== "coupdecoeur" && activeTab !== "suggestion") return [];
+    return computeBrandStats(feedbackData);
+  }, [activeTab, feedbackData]);
+
+  if (activeTab === "suggestion") {
+    return (
+      <div className="left-sidebar">
+        <h3>
+          Les marques qui vous <img src={suggestIcon} alt="" /> inspirent en ce
+          moment !
+        </h3>
+        <BrandsGrid brands={brandStats} />
+        <p className="sidebar-text">
+          Ces marques génèrent le plus de{" "}
+          <strong>soutien de la communauté</strong> en ce moment.
+          <br />
+          Toi aussi exprime ta créativité et améliore tes sites et apps préférés
+          !
+        </p>
       </div>
-      <p className="sidebar-text">
-        Ces marques crispent beaucoup d’utilisateurs en ce moment. <br />
-        Ajoute ton signalement et faisons bouger les choses ensemble.
-      </p>
-      {tooltip.visible && (
-        <div
-          className="global-tooltip"
-          style={{
-            position: "fixed",
-            top: tooltip.y,
-            left: tooltip.x,
-            transform: "translate(-50%, -120%)",
-          }}
-        >
-          {tooltip.text}
-        </div>
-      )}
-    </div>
-  );
+    );
+  }
+
+  if (activeTab === "coupdecoeur") {
+    return (
+      <div className="left-sidebar">
+        <h3>
+          Les marques qui font battre votre
+          <img src={cdcIcon} alt="icon coeur" /> en ce moment !
+        </h3>
+        <BrandsGrid brands={brandStats} />
+        <p className="sidebar-text">
+          <strong>Ces marques génèrent beaucoup d'amour</strong> auprès des
+          utilisateurs en ce moment.
+          <br />
+          Toi aussi exprime ton amour aux marques qui te facilitent la vie !
+        </p>
+      </div>
+    );
+  }
+
+  return <ReportSidebar />;
 };
 
 export default LeftSidebar;

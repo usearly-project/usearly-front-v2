@@ -256,7 +256,7 @@ function Home() {
               )}
             </div>
           )}
-          <LeftSidebar />
+          <LeftSidebar activeTab={activeTab} feedbackData={feedbackData} />
         </aside>
 
         {activeTab === "report" && (
