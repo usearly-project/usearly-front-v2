@@ -281,3 +281,14 @@ export const getSolutionsByReport = async (reportId: string) => {
 
   return response.data;
 };
+
+export const postReportDescription = async (data: {
+  reportingId: string;
+  emoji: string;
+  description: string;
+  subCategory: string;
+}) => {
+  // Pas besoin de try/catch si on ne fait que "throw error"
+  const response = await apiService.post("/report/description", data);
+  return response.data;
+};

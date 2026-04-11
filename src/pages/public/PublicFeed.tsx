@@ -20,10 +20,8 @@ function PublicFeed() {
 
   return (
     <div className="public-feed-page">
-      {/* HEADER */}
-      <HeroBanner />
+      <HeroBanner isMobile={isMobileLayout} />
 
-      {/* GRID */}
       <div className={`public-feed-layout`}>
         {!isMobileLayout && (
           <aside className="public-feed-left">
@@ -32,7 +30,12 @@ function PublicFeed() {
         )}
 
         <main className="public-feed-center">
-          <MixedFeed isPublic onPublicFiltersChange={setPublicFeedFilters} />
+          {/* AJOUT DE LA PROP isMobile ICI */}
+          <MixedFeed
+            isPublic
+            onPublicFiltersChange={setPublicFeedFilters}
+            isMobile={isMobileLayout}
+          />
         </main>
 
         {!isCompactDesktop && (

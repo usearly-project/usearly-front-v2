@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./SolutionItem.scss";
 import { voteSolution } from "@src/services/feedbackService";
+import Avatar from "../shared/Avatar";
 
 type Props = {
   solution: any;
@@ -80,7 +81,14 @@ export default function SolutionItem({ solution }: Props) {
 
         <div className="solution-footer">
           <div className="author">
-            <img src={solution.author.avatar} alt="" />
+            <Avatar
+              avatar={solution.author.avatar}
+              pseudo={solution.author.pseudo}
+              type="user"
+              className="avatar"
+              wrapperClassName="avatar-wrapper-override"
+              sizeHW={30}
+            />
             <span>{solution.author.pseudo}</span>
           </div>
 

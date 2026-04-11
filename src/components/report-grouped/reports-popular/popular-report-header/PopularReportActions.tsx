@@ -1,3 +1,4 @@
+import React from "react";
 import ReportActionsBarWithReactions from "@src/components/shared/ReportActionsBarWithReactions";
 
 interface Props {
@@ -31,17 +32,19 @@ const PopularReportActions: React.FC<Props> = ({
     <ReportActionsBarWithReactions
       userId={userProfile?.id}
       descriptionId={descriptionId}
-      reportsCount={item.count}
+      // On retire ou on met à 0 les props liées au compteur de signalements
+      // pour éviter l'affichage du doublon (avatars + chiffre)
+      reportsCount={0}
+      descriptions={[]}
       showBrandResponseInline={true}
       status={item.status}
       type="report"
-      descriptions={item.descriptions.map((d: any) => ({
-        author: d.author,
-      }))}
       solutionsCount={solutionsCount}
       hasBrandResponse={hasBrandResponse}
       brandResponse={brandResponse}
       commentsCount={currentCount}
+      brandName={item.marque}
+      siteUrl={item.siteUrl}
       onReactClick={() => {
         if (isPublic) return;
       }}
