@@ -1,5 +1,4 @@
-@use "@src/styles/base/variables" as *;
-
+// --- DESIGN DESKTOP (WEB) ---
 .hero-banner {
   position: relative;
   isolation: isolate;
@@ -8,7 +7,7 @@
   background-repeat: no-repeat;
   background-position: right 30px top -30px;
   background-size: 220px auto;
-  padding: 40px 0; // ❗ enlever le padding horizontal ici
+  padding: 40px 0;
   color: white;
   width: 100vw;
 
@@ -25,49 +24,22 @@
     z-index: 0;
   }
 
-  @media (max-width: 1024px) {
-    background-position: right -52px center;
-    background-size: 180px auto;
-
-    &::before {
-      background-position: left -104px center;
-      background-size: 210px auto;
-    }
-  }
-
-  @media (max-width: 768px) {
-    background-position: right -68px bottom 12px;
-    background-size: 145px auto;
-
-    &::before {
-      background-position: left -96px top 24px;
-      background-size: 180px auto;
-    }
-  }
-
   .hero-content {
-    max-width: 1200px; // 🔥 clé
-    margin: 0 auto; // 🔥 centre le contenu
-    padding: 0 40px; // espace interne propre
-    position: relative;
-    z-index: 1;
-
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 32px;
-
-    @media screen and (max-width: 901px) {
-      flex-direction: column;
-      gap: 40px;
-    }
+    position: relative;
+    z-index: 1;
   }
 
   .hero-left h1 {
     font-size: 34px;
     font-weight: 300;
-    font-family: $font-family-4;
   }
+
   .highlight-container {
     display: inline-block;
     transform: rotate(-4deg);
@@ -78,9 +50,7 @@
       border: 3px solid #ffffff;
       padding: 1px 18px;
       border-radius: 999px;
-      font-weight: 500;
       font-family: "Otomanopee One";
-
       &::after {
         content: "";
         position: absolute;
@@ -97,110 +67,69 @@
     }
   }
 
-  .hero-right {
-    text-align: right;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-  }
-
   .hero-stats {
     display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    flex-wrap: wrap;
-    margin-top: 16px;
     gap: 30px;
-  }
-
-  .hero-impact {
-    font-size: 16px;
-    margin-bottom: 6px;
-    font-family: $font-family-3;
-  }
-
-  .stat {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    opacity: 1;
-
-    .stat-value {
-      font-size: 48px;
-      font-weight: 800;
-      line-height: 1;
-    }
-
-    img {
-      width: 2.8em; // 🔥 proportionnel au texte
-      height: 2.8em;
-      transform: translateY(0.08em);
-    }
-  }
-
-  .hero-tabs {
-    display: flex;
-    justify-content: flex-end;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 22px;
-  }
-
-  .hero-tab {
-    appearance: none;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 255, 0.08);
-    color: rgba(255, 255, 255, 0.78);
-    border-radius: 999px;
-    padding: 10px 16px;
-    font-size: 13px;
-    font-weight: 600;
-    line-height: 1;
-    cursor: pointer;
-    transition:
-      background-color 0.2s ease,
-      border-color 0.2s ease,
-      color 0.2s ease,
-      transform 0.2s ease;
-
-    &:hover {
-      color: #fff;
-      border-color: rgba(255, 255, 255, 0.45);
-      background: rgba(255, 255, 255, 0.14);
-      transform: translateY(-1px);
-    }
-
-    &.is-active {
-      background: #fff;
-      color: #10163a;
-      border-color: #fff;
-    }
-  }
-
-  @media screen and (max-width: 901px) {
-    .hero-right {
-      text-align: center;
+    margin-top: 16px;
+    .stat {
+      display: flex;
       align-items: center;
-    }
-
-    .hero-stats,
-    .hero-tabs {
-      justify-content: center;
+      gap: 8px;
+      .stat-value {
+        font-size: 48px;
+        font-weight: 800;
+        line-height: 1;
+      }
+      img {
+        width: 2.8em;
+        height: 2.8em;
+      }
     }
   }
 
-  @media screen and (max-width: 768px) {
-    .hero-left h1 {
-      font-size: 28px;
-      text-align: center;
-    }
+  .hero-tab.is-active {
+    background: #fff;
+    color: #10163a;
+  }
+}
 
-    .hero-stats {
-      gap: 20px;
-    }
+// --- DESIGN MOBILE (BANDEAU FIN) ---
+.hero-banner-mobile {
+  background-color: #10163a;
+  padding: 15px 20px;
+  color: white;
+  width: 100vw;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
-    .stat .stat-value {
-      font-size: 40px;
+  .mobile-impact-text {
+    font-size: 13px;
+    font-weight: 300;
+    margin-bottom: 8px;
+    opacity: 0.8;
+  }
+
+  .mobile-stats-row {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+
+    .mobile-stat {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+
+      .value {
+        font-size: 28px;
+        font-weight: 800;
+        line-height: 1;
+      }
+
+      img {
+        width: 22px;
+        height: 22px;
+        object-fit: contain;
+      }
     }
   }
 }

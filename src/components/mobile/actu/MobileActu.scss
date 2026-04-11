@@ -1,0 +1,454 @@
+$blue-bg: #f1f7fe;
+$yellow: #ffeb3b;
+$green-progress: #48bb78;
+
+.mobile-actu-card {
+  background: #fff;
+  border-radius: 24px;
+  padding: 16px;
+  margin: 10px 12px;
+  border: 1px solid #f2f2f2;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  // --- HEADER ---
+  .mobile-actu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .header-reporters {
+      .reporters-inline-stack {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        .avatar-pile {
+          display: flex;
+          .pile-item {
+            margin-right: -10px;
+            .avatar-img-custom {
+              border: 1.5px solid #fff !important;
+              border-radius: 50% !important;
+            }
+          }
+        }
+        .count {
+          font-weight: 700;
+          font-size: 13px;
+        }
+      }
+      .type-badge-icon {
+        font-size: 20px;
+      }
+    }
+
+    .header-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      .author-text {
+        font-size: 13px;
+        color: #4a5568;
+        strong {
+          color: #000;
+        }
+      }
+      .avatar-overlap-wrapper {
+        position: relative;
+        width: 55px;
+        height: 38px;
+        .main-avatar {
+          position: absolute;
+          left: 0;
+          top: 0;
+          z-index: 1;
+          .avatar-img-custom {
+            border: 2.5px solid #fff !important;
+          }
+        }
+        .brand-badge {
+          position: absolute;
+          right: -10px;
+          bottom: 0;
+          width: 38px;
+          height: 38px;
+          z-index: 2;
+          background: #fff;
+          border-radius: 50%;
+          padding: 1.5px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+      }
+    }
+  }
+
+  // --- BODY ---
+  .mobile-actu-body {
+    .title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      .title-group {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        .icon-q {
+          width: 26px;
+          height: 26px;
+          border: 2px solid #000;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 900;
+        }
+        .title {
+          font-size: 17px;
+          font-weight: 800;
+          margin: 0;
+        }
+      }
+      .date-relative {
+        font-size: 12px;
+        color: #a0aec0;
+      }
+    }
+    .description {
+      font-size: 14px;
+      color: #4a5568;
+      .see-more {
+        font-weight: 800;
+        color: #000;
+        cursor: pointer;
+      }
+    }
+
+    .suggestion-progress {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 15px;
+      .bar-container {
+        flex: 1;
+        height: 8px;
+        background: #e2e8f0;
+        border-radius: 10px;
+        position: relative;
+        .bar-fill {
+          height: 100%;
+          background: $green-progress;
+          border-radius: 10px;
+        }
+        .star-icon {
+          position: absolute;
+          top: -8px;
+          width: 24px;
+          height: 24px;
+        }
+      }
+      .votes-nb {
+        font-size: 13px;
+        font-weight: 800;
+      }
+    }
+
+    .brand-response-box {
+      background: $blue-bg;
+      border-radius: 16px;
+      padding: 14px;
+      margin-top: 12px;
+      .box-header {
+        display: flex;
+        justify-content: space-between;
+        .title-group {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          font-weight: 700;
+        }
+      }
+      .box-content {
+        font-size: 13px;
+        .more {
+          font-weight: 800;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  // Zone de commentaires mobile
+  .mobile-comments-section {
+    background: #f8fafc;
+    margin: 10px -16px -16px -16px; // On colle aux bords du bas de la carte
+    padding: 16px;
+    border-top: 1px solid #edf2f7;
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+  }
+
+  // --- FOOTER ---
+  .mobile-actu-footer {
+    padding-top: 12px;
+    border-top: 1px solid #f2f2f2;
+    margin-top: 10px;
+
+    // --- 1. Style pour SIGNALEMENT (PopularReportActions) ---
+    .popular-report-actions {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      padding: 0 !important;
+      background: transparent !important;
+      border: none !important;
+
+      .actions-left {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+      }
+
+      .actions-right {
+        .btn-solution,
+        .btn-soutenir {
+          border-radius: 50px !important;
+          padding: 8px 20px !important;
+          font-weight: 800 !important;
+        }
+      }
+    }
+
+    // --- 2. Style pour CDC / SUGGESTION (FeedbackRight) ---
+    .feedback-right {
+      width: 100% !important;
+      padding: 0 !important;
+      border: none !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 12px;
+
+      // ANTI-DUPLICATION : On masque tout ce qui est déjà dans le Body de MobileActu
+      .right-header,
+      .brand-info-row,
+      .feedback-description,
+      .feedback-author-row, // Ajouté : Masque "Manon x Zara" interne
+      .feedback-status,     // Ajouté : Masque la date "1 mois" interne
+      .description-text {
+        // Ajouté : Masque le texte de secours interne
+        display: none !important;
+      }
+
+      // Force la barre de progression Suggestion à prendre toute la largeur
+      .suggestion-progress-container,
+      .progress-section {
+        width: 100% !important;
+        margin: 0 !important;
+      }
+
+      // Aligne les boutons de réactions et "Soutenir" en bas sur une seule ligne
+      .right-footer,
+      .feedback-actions-row {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        width: 100% !important;
+        background: transparent !important;
+        padding: 0 !important;
+
+        // On s'assure que le bouton Soutenir a le même look que sur Signalement
+        .btn-soutenir {
+          border-radius: 50px !important;
+          padding: 8px 20px !important;
+          font-weight: 800 !important;
+          background: #fff;
+          border: 1px solid #000;
+        }
+      }
+    }
+  }
+
+  .feedback-type,
+  .feedback-left {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important;
+  }
+
+  // On cible le container que tu as ajouté dans FeedbackRight.tsx
+  .feedback-mobile-visual-container {
+    // 1. FORCE LE BORD À BORD
+    // On calcule 100% de la largeur + les 16px de padding de chaque côté (32px total)
+    width: calc(100% + 32px) !important;
+    margin-left: -16px !important; // Tire l'image vers la gauche pour coller au bord
+    margin-right: -16px !important; // Tire l'image vers la droite
+
+    margin-top: 4px;
+    margin-bottom: 16px;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+
+    // 2. FORCE LE CONTENU À PRENDRE TOUTE LA PLACE
+    .feedback-type,
+    .feedback-left {
+      height: 100% !important;
+      width: 100% !important;
+      padding: 0 !important;
+      display: flex !important;
+      flex-direction: column !important;
+    }
+
+    // 3. TAILLE DE L'ICÔNE (Caddie)
+    .illu-wrapper {
+      flex: 1 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+
+      svg,
+      .illu-image,
+      img {
+        // On augmente encore un peu pour que ce soit imposant comme sur ta maquette
+        width: 180px !important;
+        height: 180px !important;
+        max-width: 80% !important;
+        object-fit: contain !important;
+      }
+    }
+
+    // 4. LES BULLES (Punchlines)
+    // On remet du padding interne pour que les bulles ne touchent pas le bord de l'écran
+    .punchlines {
+      padding: 20px !important;
+    }
+  }
+
+  .report-actions-bar {
+    // 1. On cache les textes des boutons de gauche
+    .reagir-span-btn,
+    .commenter-span-btn {
+      display: none !important;
+    }
+
+    // 2. On ajuste l'espacement pour que les icônes ne soient pas collées
+    .actions-left {
+      gap: 25px !important; // Plus d'espace entre le pouce et la bulle
+
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 5px; // Plus facile à cliquer sur mobile
+
+        svg {
+          margin: 0 !important; // Enlève la marge qui servait à décoller du texte
+        }
+      }
+    }
+
+    // 3. Bouton Solution : On garde juste "Solution (X)" ou l'icône
+    .actions-right {
+      .solution-btn {
+        padding: 6px 14px !important;
+        min-width: unset !important; // Permet au bouton de rétrécir
+
+        span {
+          font-size: 13px; // Un peu plus petit pour mobile
+          // Optionnel : si tu veux cacher "Proposer une solution" quand c'est vide
+          // et ne garder que l'icône, tu peux ajouter une logique ici
+        }
+      }
+    }
+  }
+
+  .description-container {
+    position: relative;
+
+    .see-more,
+    .see-less {
+      display: inline-block;
+      color: #000;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 14px;
+      margin-top: 5px;
+      &:active {
+        opacity: 0.7;
+      }
+    }
+
+    .user-capture-wrapper {
+      margin-top: 15px;
+      width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: zoom-in; // Curseur loupe pour indiquer le zoom
+      position: relative;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+
+      .user-capture-img {
+        width: 100%;
+        height: auto;
+        display: block;
+        object-fit: contain;
+      }
+
+      .zoom-icon-overlay {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        background: rgba(255, 255, 255, 0.8);
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        opacity: 0;
+        transition: opacity 0.2s ease;
+      }
+
+      &:hover .zoom-icon-overlay {
+        opacity: 1;
+      }
+    }
+  }
+}
+.image-zoom-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999999;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+
+  .zoomed-img {
+    max-width: 95%;
+    max-height: 90%;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    animation: zoomIn 0.25s ease-out;
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

@@ -57,6 +57,7 @@
   padding: 16px 8px 0px 8px;
 
   .counts-row {
+    // ... Garde ton code counts-row tel quel ...
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -73,31 +74,13 @@
       font-family: "Arial";
       color: #686c7d;
 
-      :hover {
-        color: #111827;
-      }
-
       .emoji-icon {
         font-size: 24px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        line-height: 1; // force la hauteur exacte
-        vertical-align: middle; // renfort inline
-        text-decoration: none;
+        vertical-align: middle;
       }
-
       .reaction-count {
-        line-height: 1; // force l'alignement vertical
-        margin: 0; // supprime tout margin résiduel
         margin-left: 5px;
         vertical-align: middle;
-        display: inline-flex; // garantit l'alignement
-        align-items: center;
-      }
-
-      svg {
-        color: #6b7280;
       }
     }
   }
@@ -113,9 +96,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 5px;
+    gap: 10px; // Légèrement augmenté pour l'espace entre les blocs
     padding: 0.5rem 0 0.2rem 0;
-    font-family: variables.$font-family;
+    // font-family: variables.$font-family; // Assure-toi que cette variable est bien importée
 
     .actions-left {
       display: flex;
@@ -123,68 +106,102 @@
 
       button {
         display: flex;
-        align-items: flex-start;
+        align-items: center; // Aligné au centre pour les icônes nues
         gap: 0.3rem;
         background: none;
         border: none;
         cursor: pointer;
         font-size: 13px;
         padding: 0;
-        transition: color 0.2s;
         color: #535353;
+      }
+    }
 
-        &:hover {
-          color: #111827;
+    // --- NOUVEAU : BLOC CENTRE (SIGNALER) ---
+    .actions-center {
+      .signaler-btn-mobile {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 14px;
+        background: #fff;
+        border: 1px solid #e2e8f0; // Bordure grise comme ta capture
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 13px;
+        color: #000;
+        white-space: nowrap;
 
-          svg {
-            color: #111827;
-          }
+        svg {
+          stroke-width: 2.5px;
+          color: #000;
         }
 
-        span {
-          .partager-span-btn {
-            margin-top: 1px;
-          }
-          .commenter-span-btn {
-            margin-top: 1px;
-          }
-          .reagir-span-btn {
-            margin-top: 3px;
-          }
+        &:active {
+          background: #f7fafc;
         }
       }
     }
 
-    .status-right {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+    // --- MISE À JOUR : BLOC DROITE (SOLUTION) ---
+    .actions-right {
+      .solution-btn {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 12px;
+        border-radius: 50px;
+        border: none;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 13px;
+        white-space: nowrap;
+        transition: transform 0.1s;
 
-      padding: 5px 10px;
+        &:active {
+          transform: scale(0.96);
+        }
 
-      border-radius: 999px;
+        &.solution-btn-active {
+          background: #ffeb3b; // Ton jaune
+          color: #000;
+        }
 
-      font-size: 12px;
-      font-weight: 600;
-      line-height: 1;
+        &.solution-btn-empty {
+          background: #f8fafc;
+          border: 1px solid #e2e8f0;
+          color: #64748b;
+        }
 
-      color: var(--status-color);
+        img {
+          flex-shrink: 0;
+        }
+      }
+    }
+  }
 
-      background: color-mix(in srgb, var(--status-color) 12%, white);
+  // --- LOGIQUE MOBILE (POUR MASQUER LES TEXTES) ---
+  @media (max-width: 600px) {
+    .actions-row {
+      .actions-left {
+        gap: 1.2rem; // On réduit un peu l'espace entre les icônes nues
 
-      border: 1px solid color-mix(in srgb, var(--status-color) 28%, transparent);
-
-      white-space: nowrap;
-
-      .icon-statut {
-        width: 13px;
-        height: 13px;
-        flex-shrink: 0;
-        opacity: 0.85;
+        .reagir-span-btn,
+        .commenter-span-btn {
+          display: none !important; // Magie : les textes disparaissent
+        }
       }
 
-      .status-label {
-        transform: translateY(0.5px); // alignement optique
+      .actions-center {
+        .signaler-btn-mobile span {
+          font-size: 12px; // Texte un peu plus compact
+        }
+      }
+
+      .actions-right {
+        .solution-btn span {
+          font-size: 12px;
+        }
       }
     }
   }

@@ -50,6 +50,12 @@ const SectionHookUsers = ({
       />
     );
   }
+  const handleInstallExtension = () => {
+    window.open(
+      "https://chromewebstore.google.com/detail/usearly-%E2%80%93-extension-assis/geclfkocbehpdojggpaeeofgdiiajcii",
+      "_blank",
+    );
+  };
 
   return (
     <>
@@ -60,7 +66,11 @@ const SectionHookUsers = ({
             <p className="hook-users-subtitle">{SECTION_HOOK_USERS_SUBTITLE}</p>
           </div>
           <div className="hook-users-content-buttons">
-            <button type="button" className="hook-users-extension-button">
+            <button
+              type="button"
+              className="hook-users-extension-button"
+              onClick={handleInstallExtension}
+            >
               <img src={chromeLogo} width={46} height={46} alt="Chrome" />
               {EXTENSION_BUTTON_LABEL}
             </button>

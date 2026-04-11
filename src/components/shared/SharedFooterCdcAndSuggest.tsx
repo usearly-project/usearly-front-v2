@@ -54,9 +54,10 @@ const SharedFooterCdcAndSuggest: React.FC<Props> = ({
     .sort((a, b) => b.count - a.count);
 
   const topThree = allReactions.slice(0, 3);
-  const totalCount = isGuestMode
+  const total = allReactions.reduce((acc, r) => acc + r.count, 0);
+  /* const totalCount = isGuestMode
     ? allReactions.reduce((acc, r) => acc + r.count, 0)
-    : 0;
+    : 0; */
 
   const safeCommentCount = isGuestMode ? 0 : commentCount;
 
@@ -70,7 +71,7 @@ const SharedFooterCdcAndSuggest: React.FC<Props> = ({
     <div className={`shared-footer-cdc ${isExpired ? "expired" : ""}`}>
       {/* Ligne emoji + compteur commentaires */}
       <div className="footer-header-row">
-        <EmojiSummary topReactions={topThree} totalCount={totalCount} />
+        <EmojiSummary topReactions={topThree} totalCount={total} />
 
         <div className="comment-count-right">
           <CommentCountLabel

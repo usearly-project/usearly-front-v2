@@ -77,3 +77,17 @@
     margin-left: 0;
   }
 }
+
+.is-mobile {
+  .primary-filters {
+    // On cache la petite flèche (chevron) du composant Champs
+    // Remplace .chevron par la vraie classe utilisée dans ton composant Champs
+    svg,
+    .icon-arrow {
+      display: none !important;
+    }
+
+    // On désactive les effets de survol
+    pointer-events: none;
+  }
+}

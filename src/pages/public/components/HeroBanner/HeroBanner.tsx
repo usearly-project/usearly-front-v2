@@ -9,15 +9,19 @@ import "./HeroBanner.scss";
 type HeroBannerProps = {
   activeTab?: FeedbackType;
   onTabChange?: (tab: FeedbackType) => void;
+  isMobile?: boolean;
 };
 
-const HeroBanner = ({ activeTab, onTabChange }: HeroBannerProps) => {
+const HeroBanner = ({
+  activeTab,
+  onTabChange,
+  isMobile = false,
+}: HeroBannerProps) => {
   const [stats, setStats] = useState({
     reports: 0,
     coupsDeCoeur: 0,
     suggestions: 0,
   });
-
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -26,57 +30,66 @@ const HeroBanner = ({ activeTab, onTabChange }: HeroBannerProps) => {
         const data = await getWeeklyImpact();
         setStats(data);
       } catch (error) {
-        console.error("Erreur récupération stats:", error);
+        console.error("Erreur stats:", error);
       } finally {
         setLoading(false);
       }
     };
-
     fetchStats();
   }, []);
 
-  const hasTabs = activeTab !== undefined && onTabChange !== undefined;
-  const statItems: {
-    key: FeedbackType;
-    label: string;
-    value: number;
-    icon: string;
-    alt: string;
-  }[] = [
+  const statItems = [
     {
       key: "report",
-      label: "Signalements",
       value: stats.reports,
       icon: reportYellowIcon,
       alt: "Signalements",
     },
     {
       key: "coupdecoeur",
-      label: "Coups de cœur",
       value: stats.coupsDeCoeur,
       icon: likeRedIcon,
       alt: "Coups de cœur",
     },
     {
       key: "suggestion",
-      label: "Suggestions",
       value: stats.suggestions,
       icon: suggestGreenIcon,
       alt: "Suggestions",
     },
   ];
 
+  // SI MOBILE : On affiche le bandeau fin
+  if (isMobile) {
+    return (
+      <div className="hero-banner-mobile">
+        <p className="mobile-impact-text">
+          L'impact de la communauté cette semaine :
+        </p>
+        <div className="mobile-stats-row">
+          {statItems.map((item) => (
+            <div className="mobile-stat" key={item.key}>
+              <span className="value">{loading ? "..." : item.value}</span>
+              <img src={item.icon} alt={item.alt} />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // SINON : On affiche le design Desktop normal
   return (
-    <div className={`hero-banner${hasTabs ? " hero-banner--with-tabs" : ""}`}>
+    <div
+      className={`hero-banner ${activeTab !== undefined ? "hero-banner--with-tabs" : ""}`}
+    >
       <div className="hero-content">
         <div className="hero-left">
           <h1>
             <span className="highlight-container">
               <span className="highlight">Ensemble</span>
             </span>
-            on fait
-            <br />
-            bouger les marques !
+            on fait <br /> bouger les marques !
           </h1>
         </div>
 
@@ -84,7 +97,6 @@ const HeroBanner = ({ activeTab, onTabChange }: HeroBannerProps) => {
           <p className="hero-impact">
             L'impact de la communauté cette semaine :
           </p>
-
           <div className="hero-stats">
             {statItems.map((item) => (
               <div className="stat" key={item.key}>
@@ -96,17 +108,19 @@ const HeroBanner = ({ activeTab, onTabChange }: HeroBannerProps) => {
             ))}
           </div>
 
-          {hasTabs && (
+          {activeTab !== undefined && onTabChange && (
             <div className="hero-tabs">
               {statItems.map((item) => (
                 <button
                   key={item.key}
-                  type="button"
-                  aria-pressed={activeTab === item.key}
-                  className={`hero-tab${activeTab === item.key ? " is-active" : ""}`}
-                  onClick={() => onTabChange(item.key)}
+                  className={`hero-tab ${activeTab === item.key ? "is-active" : ""}`}
+                  onClick={() => onTabChange(item.key as FeedbackType)}
                 >
-                  {item.label}
+                  {item.key === "report"
+                    ? "Signalements"
+                    : item.key === "coupdecoeur"
+                      ? "Coups de cœur"
+                      : "Suggestions"}
                 </button>
               ))}
             </div>
