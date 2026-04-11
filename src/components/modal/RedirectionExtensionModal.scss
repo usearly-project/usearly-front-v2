@@ -1,0 +1,372 @@
+// VARIABLES (Pour correspondre au design)
+$lavender-bg: #8b8eff;
+$pure-black: #000000;
+$pure-white: #ffffff;
+$chrome-dots: #ddd;
+$highlight-yellow: #fffb00;
+
+.usearly-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999999; // [MODIFIÉ] Très élevé pour passer au-dessus de tout
+  backdrop-filter: blur(4px);
+
+  .usearly-modal-content {
+    background-color: $lavender-bg;
+    width: 90%;
+    max-width: 700px; // [MODIFIÉ] Un peu plus large pour le confort
+    border-radius: 28px;
+    padding: 50px 40px 40px 40px; // [MODIFIÉ] Plus de padding haut
+    position: relative;
+    color: $pure-black;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.3s ease-out;
+
+    .close-x {
+      position: absolute;
+      top: 20px;
+      right: 25px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: $pure-white;
+      cursor: pointer;
+      opacity: 0.8;
+      z-index: 10;
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    .modal-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+      margin-bottom: 30px;
+
+      // Icône flottante
+      .warning-icon-wrapper {
+        position: absolute;
+        top: -25px;
+        left: -20px;
+        width: 70px;
+        height: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 20;
+
+        img {
+          width: 40px;
+          height: auto;
+        }
+      }
+
+      h2 {
+        font-size: 32px;
+        font-weight: 900;
+        margin: 10px 0 20px 0; // 🟢 Espace sous le titre
+        line-height: 1.1;
+        max-width: 90%;
+        color: #000;
+      }
+
+      .modal-desc {
+        font-size: 16px;
+        line-height: 1.4;
+        color: #000;
+        margin: 0 auto;
+
+        strong {
+          font-weight: 800;
+        }
+
+        .highlight {
+          display: block; // 🟢 Force le "👉 Une fois sur place..." à la ligne
+          margin-top: 10px;
+          font-weight: 700;
+        }
+      }
+    }
+
+    // 🟢 CENTRE AUSSI LES BOUTONS
+    .modal-actions-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 40px;
+      width: 100%;
+    }
+
+    .modal-actions-row {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-bottom: 40px;
+
+      button {
+        padding: 12px 35px;
+        border-radius: 12px;
+        font-weight: 900;
+        font-size: 16px;
+        cursor: pointer;
+        border: 1px solid $pure-black;
+        transition: transform 0.1s;
+
+        &:active {
+          transform: scale(0.95);
+        }
+      }
+
+      .btn-go {
+        background-color: $pure-white;
+        color: $pure-black;
+        &:hover {
+          background: #f8f8f8;
+        }
+      }
+
+      .btn-cancel {
+        background-color: $pure-black;
+        color: $pure-white;
+        &:hover {
+          background: #333;
+        }
+      }
+    }
+
+    .browser-mockup-container {
+      width: 100%;
+      background: $pure-black;
+      border-radius: 20px;
+      border: 3px solid $pure-black;
+      overflow: visible;
+      display: flex;
+      flex-direction: column;
+
+      .browser-chrome-bar {
+        background: $pure-white;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        padding: 0 15px;
+        gap: 15px;
+        border-bottom: 3px solid $pure-black; // [MODIFIÉ] Bordure épaisse
+        z-index: 10;
+        border-radius: 12px;
+
+        .dots {
+          display: flex;
+          gap: 6px;
+          span {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #eee;
+            border: 1px solid #ccc;
+          }
+        }
+
+        .url-bar {
+          flex: 1;
+          background: #f1f1f1;
+          height: 26px;
+          border-radius: 8px;
+          font-size: 12px;
+          display: flex;
+          align-items: center;
+          padding: 0 12px;
+          color: #666;
+          border: 1px solid #ddd;
+        }
+      }
+
+      .browser-content {
+        height: 280px;
+        display: flex;
+        position: relative;
+        overflow: visible;
+
+        .content-left-dark {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center; // [MODIFIÉ] Centré
+          padding: 0 20px;
+
+          .chrome-install-btn {
+            background: #ffffff;
+            color: #000000;
+            padding: 10px 16px; // Un peu moins de padding
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            font-weight: 800;
+            cursor: pointer;
+            transition: transform 0.1s;
+
+            // 🟢 CORRECTION DE LA TAILLE DU LOGO CHROME
+            img {
+              width: 60px;
+              height: 60px;
+              object-fit: contain;
+            }
+
+            // Optionnel : ajuste la taille du texte si besoin
+            span,
+            text {
+              font-size: 14px;
+              line-height: 1.2;
+              text-align: left;
+            }
+
+            &:hover {
+              transform: translate(-2px, -2px);
+            }
+          }
+          .help-text {
+            color: $lavender-bg;
+            font-size: 12px;
+            margin-top: 15px;
+            font-weight: 600;
+            cursor: pointer;
+          }
+        }
+
+        .content-right-white {
+          width: 300px;
+          background: $pure-white;
+          margin: 25px 60px 25px 0;
+          border-radius: 20px;
+          border: 3px solid $pure-black;
+          position: relative;
+          padding: 30px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-start;
+          text-align: left;
+
+          .widget-close-small {
+            position: absolute;
+            top: 12px;
+            right: 15px;
+            color: #ccc;
+            font-size: 18px;
+          }
+
+          h3 {
+            font-size: 18px;
+            margin: 0 0 25px 0;
+            line-height: 1.2;
+          }
+
+          .search-bar-sim {
+            border: 1px solid $pure-black;
+            border-radius: 30px;
+            padding: 5px 15px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            background: #fff;
+            input {
+              border: none;
+              flex: 1;
+              font-size: 14px;
+              &:focus {
+                outline: none;
+              }
+            }
+          }
+
+          // SIDEBAR
+          .usearly-sidebar-exact {
+            position: absolute;
+            right: -60px; // Ajuste selon ton besoin pour que ça dépasse
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px; // Un peu plus large pour laisser respirer les icônes
+            background: #ffffff;
+            border-radius: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center; // 🟢 CENTRE HORIZONTALEMENT
+            padding: 10px 0;
+            gap: 15px; // Espace régulier entre les icônes
+
+            .side-item {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 100%;
+
+              img {
+                width: 28px; // Taille des icônes coeurs/étoiles
+                height: auto;
+                object-fit: contain;
+              }
+            }
+
+            // 🟢 LOGO U (Plus grand et centré)
+            .side-logo-u {
+              padding-bottom: 12px;
+              border-bottom: 1px solid #eee;
+              width: 80%; // Pour que la bordure ne touche pas les bords de la sidebar
+
+              img {
+                width: 38px; // 🟢 BEAUCOUP PLUS GROS comme sur la maquette
+                height: auto;
+              }
+            }
+
+            // 🟢 ICÔNE SIGNALEMENT (L'icône jaune)
+            /* .side-warning {
+              img {
+                width: 34px; // Un peu plus gros que les autres icônes
+              }
+            } */
+
+            // 🟢 LES POINTS DU BAS
+            .side-dots-container {
+              margin-top: auto; // Pousse vers le bas
+              background: #f5f5f5; // Petit cercle gris comme sur ta 2ème image
+              width: 34px;
+              height: 34px;
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+
+              .side-dots {
+                color: #999;
+                font-weight: bold;
+                margin-top: -8px; // Ajustement optique pour centrer les points
+                font-size: 18px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}

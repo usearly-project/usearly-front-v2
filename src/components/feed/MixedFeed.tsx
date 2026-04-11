@@ -1,3 +1,4 @@
+import React from "react";
 import { useMixedFeed } from "./hooks/useMixedFeed";
 import FeedItemRenderer from "./FeedItemRenderer";
 import ExpandableSearchBar from "@src/components/shared/search/ExpandableSearchBar";
@@ -14,13 +15,14 @@ import { getItemId } from "./utils/MixedFeed.utils";
 interface Props {
   isPublic?: boolean;
   onPublicFiltersChange?: (filters: any) => void;
+  isMobile?: boolean;
 }
 
 const MixedFeed: React.FC<Props> = ({
   isPublic = false,
   onPublicFiltersChange,
+  isMobile = false,
 }) => {
-  // Logic extracted to useMixedFeed hook for better maintainability
   const {
     filteredFeed,
     loading,
@@ -41,55 +43,66 @@ const MixedFeed: React.FC<Props> = ({
     activeSecondaryFilterLabel,
   } = useMixedFeed(isPublic, onPublicFiltersChange);
 
+  // --- LOGIQUE DE FILTRAGE MOBILE ---
+  // Sur mobile, on ne garde que "L'actu du moment" (valeur "all")
+  const displayedOptions = isMobile
+    ? FILTER_OPTIONS.filter((opt) => opt.value === "all")
+    : FILTER_OPTIONS;
+
   const showSecondaryFilter = isPublic && selectedFilter !== "all";
 
   return (
-    <div className="mixed-feed">
+    <div className={`mixed-feed ${isMobile ? "is-mobile" : ""}`}>
       <div className="feed-header">
         <div className="feed-header__top">
           <div className="primary-filters">
             <Champs
-              options={FILTER_OPTIONS}
-              value={selectedFilter}
-              onChange={handleFilter}
+              options={displayedOptions}
+              value={isMobile ? "all" : selectedFilter}
+              onChange={isMobile ? () => {} : handleFilter} // Bloque le changement sur mobile
               align="left"
             />
           </div>
 
-          {showSecondaryFilter ? (
-            <div className="feed-header__secondary">
-              {selectedFilter === "report" && (
-                <Champs
-                  options={REPORT_FILTER_OPTIONS}
-                  value={reportFeedFilter}
-                  onChange={(v) => setReportFeedFilter(v as any)}
-                  align="left"
+          {/* On n'affiche pas les filtres secondaires ni la recherche sur mobile selon ton souhait */}
+          {!isMobile && (
+            <>
+              {showSecondaryFilter ? (
+                <div className="feed-header__secondary">
+                  {selectedFilter === "report" && (
+                    <Champs
+                      options={REPORT_FILTER_OPTIONS}
+                      value={reportFeedFilter}
+                      onChange={(v) => setReportFeedFilter(v as any)}
+                      align="left"
+                    />
+                  )}
+                  {selectedFilter === "coupdecoeur" && (
+                    <Champs
+                      options={CDC_FILTER_OPTIONS}
+                      value={cdcFeedFilter}
+                      onChange={(v) => setCdcFeedFilter(v as any)}
+                      align="left"
+                    />
+                  )}
+                  {selectedFilter === "suggestion" && (
+                    <Champs
+                      options={SUGGESTION_FILTER_OPTIONS}
+                      value={suggestionFeedFilter}
+                      onChange={(v) => setSuggestionFeedFilter(v as any)}
+                      align="left"
+                    />
+                  )}
+                </div>
+              ) : (
+                <ExpandableSearchBar
+                  value={searchValue}
+                  onChange={setSearchValue}
+                  onClear={() => setSearchValue("")}
+                  placeholder="Rechercher..."
                 />
               )}
-              {selectedFilter === "coupdecoeur" && (
-                <Champs
-                  options={CDC_FILTER_OPTIONS}
-                  value={cdcFeedFilter}
-                  onChange={(v) => setCdcFeedFilter(v as any)}
-                  align="left"
-                />
-              )}
-              {selectedFilter === "suggestion" && (
-                <Champs
-                  options={SUGGESTION_FILTER_OPTIONS}
-                  value={suggestionFeedFilter}
-                  onChange={(v) => setSuggestionFeedFilter(v as any)}
-                  align="left"
-                />
-              )}
-            </div>
-          ) : (
-            <ExpandableSearchBar
-              value={searchValue}
-              onChange={setSearchValue}
-              onClear={() => setSearchValue("")}
-              placeholder="Rechercher..."
-            />
+            </>
           )}
         </div>
       </div>
@@ -108,6 +121,7 @@ const MixedFeed: React.FC<Props> = ({
             item={item}
             isOpen={true}
             isPublic={isPublic}
+            isMobile={isMobile}
           />
         ))}
 

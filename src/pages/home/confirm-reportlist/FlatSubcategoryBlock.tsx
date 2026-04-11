@@ -354,6 +354,8 @@ const FlatSubcategoryBlock: React.FC<Props> = ({
             descriptions={descriptions}
             hasBrandResponse={hasBrandResponse}
             status={status}
+            brandName={brand}
+            siteUrl={siteUrl}
             type="report"
             solutionsCount={solutionsCount}
             onReactClick={() => {}}

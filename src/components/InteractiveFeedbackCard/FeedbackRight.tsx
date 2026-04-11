@@ -10,12 +10,14 @@ import suggestIcon from "/assets/icons/suggest-icon.svg";
 
 interface Props {
   item: any;
+  isMobile?: boolean;
+  renderMobileVisual?: React.ReactNode;
   onToggle?: (id: string) => void;
   userProfile: any;
   selectedImage: string | null;
   setSelectedImage: (value: string | null) => void;
   isExpired: boolean;
-  votes: number;
+  votes: number; // 🟢 C'est cette valeur qui change lors du vote
   max: number;
   barRef: React.RefObject<HTMLDivElement | null>;
   thumbLeft: number;
@@ -37,12 +39,12 @@ const isValidDate = (value: any) => {
 
 const FeedbackRight: React.FC<Props> = ({
   item,
-  /* onToggle, */
+  isMobile = false,
+  renderMobileVisual,
   userProfile,
-  /* selectedImage, */
   setSelectedImage,
   isExpired,
-  votes,
+  votes, // 🟢 Valeur réactive reçue du parent
   max,
   barRef,
   thumbLeft,
@@ -67,72 +69,52 @@ const FeedbackRight: React.FC<Props> = ({
   const shouldShowToggle =
     description.length > DESCRIPTION_LIMIT || item.capture;
   const brandName = item.marque?.trim() ?? "";
+
   const headerTypeIcon =
     item.type === "coupdecoeur"
       ? cdcIcon
       : item.type === "suggestion"
         ? suggestIcon
         : null;
-
-  // ✅ Sécurisation du siteUrl et normalisation
   const siteUrl = item?.siteUrl ?? undefined;
-  /* const brandEntries = brandName ? [{ brand: brandName, siteUrl }] : []; */
 
   const toggleText = () => {
-    if (animationCleanupRef.current) {
-      animationCleanupRef.current();
-    }
+    if (animationCleanupRef.current) animationCleanupRef.current();
     previousHeightRef.current = cardRef.current
       ? cardRef.current.offsetHeight
       : null;
     setShowFullText((prev) => !prev);
   };
+
   const openLightbox = (imageSrc: string) => {
     setSelectedImage(imageSrc);
     document.body.classList.add("lightbox-open");
     document.body.style.overflow = "hidden";
   };
-  console.log("🧩 FEEDBACKRIGHT LOGO DEBUG", {
-    marque: item.marque,
-    siteUrl: item.siteUrl,
-    keys: Object.keys(item || {}),
-  });
-
-  console.log("🧩 FEEDBACKRIGHT DEBUG AUTHOR", item.author);
 
   useEffect(() => {
     return () => {
-      if (animationCleanupRef.current) {
-        animationCleanupRef.current();
-      }
+      if (animationCleanupRef.current) animationCleanupRef.current();
     };
   }, []);
 
   useLayoutEffect(() => {
     const element = cardRef.current;
     const startHeight = previousHeightRef.current;
-
-    if (!element || startHeight === null) {
-      return;
-    }
-
+    if (!element || startHeight === null) return;
     const endHeight = element.offsetHeight;
-
     if (startHeight === endHeight) {
       previousHeightRef.current = null;
       animationCleanupRef.current = null;
       return;
     }
-
     element.classList.add("is-resizing");
     element.style.height = `${startHeight}px`;
     element.style.transition = "none";
-
     const rafId = window.requestAnimationFrame(() => {
       element.style.transition = "height 320ms cubic-bezier(0.4, 0, 0.2, 1)";
       element.style.height = `${endHeight}px`;
     });
-
     const finishAnimation = () => {
       element.classList.remove("is-resizing");
       element.style.removeProperty("height");
@@ -140,25 +122,17 @@ const FeedbackRight: React.FC<Props> = ({
       previousHeightRef.current = null;
       animationCleanupRef.current = null;
     };
-
     const handleTransitionEnd = (event: TransitionEvent) => {
       if (event.propertyName !== "height") return;
       element.removeEventListener("transitionend", handleTransitionEnd);
       window.cancelAnimationFrame(rafId);
       finishAnimation();
     };
-
     element.addEventListener("transitionend", handleTransitionEnd);
-
     animationCleanupRef.current = () => {
       element.removeEventListener("transitionend", handleTransitionEnd);
       window.cancelAnimationFrame(rafId);
       finishAnimation();
-    };
-
-    return () => {
-      element.removeEventListener("transitionend", handleTransitionEnd);
-      window.cancelAnimationFrame(rafId);
     };
   }, [showFullText]);
 
@@ -169,8 +143,7 @@ const FeedbackRight: React.FC<Props> = ({
   return (
     <div
       ref={cardRef}
-      className={`feedback-right${showFullText ? " is-expanded" : ""}`}
-      //onClick={() => onToggle(item.id)}
+      className={`feedback-right${showFullText ? " is-expanded" : ""}${isMobile ? " is-mobile-version" : ""}`}
     >
       <div className="feedback-content">
         <div className="feedback-header">
@@ -183,7 +156,6 @@ const FeedbackRight: React.FC<Props> = ({
                 <img src={headerTypeIcon} alt="" />
               </span>
             )}
-
             <div className="feedback-meta">
               <UserBrandLine
                 userId={item.author?.id}
@@ -202,7 +174,6 @@ const FeedbackRight: React.FC<Props> = ({
               )}
             </div>
           </div>
-
           <div className="avatar-with-brand">
             <div className="user-avatar-wrapper">
               <Avatar
@@ -226,9 +197,13 @@ const FeedbackRight: React.FC<Props> = ({
           </div>
         </div>
 
-        <div className="feedback-body">
-          {/* <h2 className="cdc-post-title">{item.title}</h2> */}
+        {isMobile && renderMobileVisual && (
+          <div className="feedback-mobile-visual-container">
+            {renderMobileVisual}
+          </div>
+        )}
 
+        <div className="feedback-body">
           <p
             className={`feedback-body-text ${showFullText ? " is-expanded" : ""}`}
           >
@@ -237,7 +212,6 @@ const FeedbackRight: React.FC<Props> = ({
               : description.length > DESCRIPTION_LIMIT
                 ? `${description.slice(0, DESCRIPTION_LIMIT)}…`
                 : description}
-
             {item.capture && showFullText && (
               <div className="capture-wrapper">
                 <img
@@ -251,27 +225,25 @@ const FeedbackRight: React.FC<Props> = ({
                 />
               </div>
             )}
-
             {shouldShowToggle && (
-              <>
-                <button
-                  className="see-more"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    toggleText();
-                  }}
-                >
-                  {showFullText ? "Voir moins" : "Voir plus"}
-                </button>
-              </>
+              <button
+                className="see-more"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleText();
+                }}
+              >
+                {showFullText ? "Voir moins" : "Voir plus"}
+              </button>
             )}
           </p>
         </div>
       </div>
 
+      {/* 🟢 BARRE DE PROGRESSION : On utilise bien 'votes' qui vient des props */}
       {item.type === "suggestion" && (
         <FeedbackProgressBar
-          votes={votes}
+          votes={votes} // IMPORTANT : Utilise la prop 'votes', pas 'item.votes'
           max={max}
           expiresInDays={expiresInDays}
           barRef={barRef}
@@ -295,6 +267,7 @@ const FeedbackRight: React.FC<Props> = ({
           showComments={showComments}
           onToggleComments={onToggleComments}
           isGuest={isGuest}
+          // Si SharedFooterCdcAndSuggest affiche aussi le nombre de votes, passe lui 'votes' ici
         />
       </div>
     </div>

@@ -81,3 +81,60 @@
     color: #000 !important;
   }
 }
+
+/* --- ADAPTATION MOBILE (MAQUETTE) --- */
+@media (max-width: 768px) {
+  .feedback-left {
+    padding: 24px !important; // Plus d'espace sur les bords
+    justify-content: flex-start !important; // On part du haut
+    gap: 32px !important; // CRUCIAL : Crée l'espace vide entre texte et image
+    text-align: left !important; // On aligne à gauche comme la maquette
+    align-items: flex-start !important;
+
+    .punchlines {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .illu-wrapper {
+      flex: 1; // Prend toute la place restante vers le bas
+      width: 100%;
+      margin-top: 0 !important;
+      display: flex;
+      align-items: center; // Centre l'image verticalement dans le vide restant
+      justify-content: center;
+
+      img,
+      .illu-image,
+      svg {
+        width: auto !important;
+        height: auto !important;
+        max-width: 85% !important; // L'illustration devient imposante
+        max-height: 80% !important;
+        object-fit: contain !important;
+      }
+    }
+
+    // Si tu es en axe Typography (titre sans bulles)
+    .punchline-typography {
+      font-size: 1.4rem !important;
+      text-align: left !important;
+      width: 100%;
+    }
+
+    // Style forcé des bulles pour le mobile
+    .feedback-bubble {
+      box-shadow: 4px 4px 0px #000 !important;
+      border: 2px solid #000 !important;
+      border-radius: 16px !important;
+      padding: 10px 16px !important;
+      font-size: 15px !important;
+      background: #fff !important;
+      color: #000 !important;
+      width: fit-content !important;
+    }
+  }
+}
