@@ -132,6 +132,10 @@
         color: #000;
         white-space: nowrap;
 
+        .signaler-span-btn {
+          font-weight: 500;
+        }
+
         svg {
           stroke-width: 2.5px;
           color: #000;
@@ -145,12 +149,39 @@
 
     // --- MISE À JOUR : BLOC DROITE (SOLUTION) ---
     .actions-right {
+      gap: 10px;
+      .signaler-btn-mobile {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 14px;
+        background: #fff;
+        border: 1px solid #e2e8f0; // Bordure grise comme ta capture
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 13px;
+        color: #000;
+        white-space: nowrap;
+
+        .signaler-span-btn {
+          font-weight: 500;
+        }
+
+        svg {
+          stroke-width: 2.5px;
+          color: #000;
+        }
+
+        &:active {
+          background: #f7fafc;
+        }
+      }
       .solution-btn {
         display: flex;
         align-items: center;
         gap: 6px;
         padding: 6px 12px;
-        border-radius: 50px;
+        border-radius: 8px;
         border: none;
         cursor: pointer;
         font-weight: 700;
@@ -416,6 +447,71 @@
 
 .report-actions-bar {
   position: relative; // 🔥 obligatoire
+
+  .signaler-btn-mobile[data-tooltip],
+  .solution-btn[data-tooltip] {
+    position: relative;
+  }
+
+  .signaler-btn-mobile[data-tooltip]::before,
+  .solution-btn[data-tooltip]::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 3px);
+    transform: translateX(-50%);
+    border-width: 5px;
+    border-style: solid;
+    border-color: #111 transparent transparent transparent;
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      opacity 0.15s ease,
+      transform 0.15s ease;
+    z-index: 1001;
+  }
+
+  .signaler-btn-mobile[data-tooltip]::after,
+  .solution-btn[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 12px);
+    transform: translate(-50%, 4px);
+    background: #111;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      opacity 0.15s ease,
+      transform 0.15s ease;
+    z-index: 1001;
+  }
+
+  .signaler-btn-mobile[data-tooltip]:hover::before,
+  .signaler-btn-mobile[data-tooltip]:hover::after,
+  .signaler-btn-mobile[data-tooltip]:focus-visible::before,
+  .signaler-btn-mobile[data-tooltip]:focus-visible::after,
+  .solution-btn[data-tooltip]:hover::before,
+  .solution-btn[data-tooltip]:hover::after,
+  .solution-btn[data-tooltip]:focus-visible::before,
+  .solution-btn[data-tooltip]:focus-visible::after {
+    opacity: 1;
+    transform: translateX(-50%);
+  }
+
+  .signaler-btn-mobile[data-tooltip]:hover::after,
+  .signaler-btn-mobile[data-tooltip]:focus-visible::after,
+  .solution-btn[data-tooltip]:hover::after,
+  .solution-btn[data-tooltip]:focus-visible::after {
+    transform: translate(-50%, 0);
+  }
 
   .auth-tooltip {
     position: fixed;
