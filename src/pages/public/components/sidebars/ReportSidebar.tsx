@@ -79,7 +79,7 @@ function ReportSidebar() {
 
   return (
     <div className="left-sidebar">
-      <h3>Les marques à faire réagir en ce moment !</h3>
+      <h3>Les marques à faire réagir en ce moment{`\u00a0`}!</h3>
 
       <div className="brands-list">
         {reportLoading ? (
