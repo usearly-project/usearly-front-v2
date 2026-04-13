@@ -52,7 +52,7 @@ const LeftSidebar = ({ activeTab, feedbackData = [] }: Props) => {
           Les marques qui vous <img src={suggestIcon} alt="" /> inspirent en ce
           moment !
         </h3>
-        <BrandsGrid brands={[]} />
+        <BrandsGrid brands={brandStats} />
         <p className="sidebar-text">
           Ces marques génèrent le plus de{" "}
           <strong>soutien de la communauté</strong> en ce moment.
