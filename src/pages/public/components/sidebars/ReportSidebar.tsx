@@ -30,7 +30,6 @@ function ReportSidebar() {
     y: 0,
     text: "",
   });
-
   const displayedBrands = showAll
     ? reportBrands.slice(0, 10)
     : reportBrands.slice(0, 3);
@@ -68,7 +67,7 @@ function ReportSidebar() {
     }
   };
 
-  const handleHover = (e: React.MouseEvent<HTMLElement>, text: string) => {
+  const handleHover = (e: React.MouseEvent, text: string) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = clampX(rect.left + rect.width / 2, 180, 12);
     setTooltip({ visible: true, x, y: rect.top - 10, text });
@@ -109,10 +108,12 @@ function ReportSidebar() {
           {showAll ? "Voir moins" : "Voir toutes les marques"}
         </button>
       </div>
+
       <p className="sidebar-text">
-        Ces marques crispent beaucoup d'utilisateurs en ce moment. <br />
+        Ces marques crispent beaucoup d&apos;utilisateurs en ce moment. <br />
         Ajoute ton signalement et faisons bouger les choses ensemble.
       </p>
+
       {tooltip.visible && (
         <div
           className="global-tooltip"

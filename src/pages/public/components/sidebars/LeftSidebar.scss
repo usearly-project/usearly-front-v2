@@ -163,6 +163,11 @@
   grid-template-columns: repeat(5, 1fr);
   gap: 12px 8px;
   margin-bottom: 20px;
+
+  .empty {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
 }
 
 .brand-grid-item {

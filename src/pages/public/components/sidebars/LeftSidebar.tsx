@@ -9,8 +9,8 @@ import suggestIcon from "/assets/icons/suggest-icon.svg";
 type FeedItem = { marque?: string; siteUrl?: string };
 
 interface Props {
-  activeTab: FeedbackType;
-  feedbackData: FeedItem[];
+  activeTab?: FeedbackType;
+  feedbackData?: FeedItem[];
 }
 
 function computeBrandStats(feedbackData: FeedItem[]) {
@@ -39,7 +39,7 @@ function computeBrandStats(feedbackData: FeedItem[]) {
     .slice(0, 5);
 }
 
-const LeftSidebar = ({ activeTab, feedbackData }: Props) => {
+const LeftSidebar = ({ activeTab, feedbackData = [] }: Props) => {
   const brandStats = useMemo(() => {
     if (activeTab !== "coupdecoeur" && activeTab !== "suggestion") return [];
     return computeBrandStats(feedbackData);
@@ -52,7 +52,7 @@ const LeftSidebar = ({ activeTab, feedbackData }: Props) => {
           Les marques qui vous <img src={suggestIcon} alt="" /> inspirent en ce
           moment !
         </h3>
-        <BrandsGrid brands={brandStats} />
+        <BrandsGrid brands={[]} />
         <p className="sidebar-text">
           Ces marques génèrent le plus de{" "}
           <strong>soutien de la communauté</strong> en ce moment.
