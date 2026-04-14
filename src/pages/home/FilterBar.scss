@@ -454,6 +454,9 @@
     &--brand {
       grid-area: brand;
     }
+    &--theme {
+      grid-area: theme;
+    }
     &--maincat {
       grid-area: maincat;
     }
@@ -578,6 +581,20 @@
     .filters__pill--search {
       min-width: 240px; /* la recherche peut être un peu plus large */
     }
+  }
+}
+
+.filters--brand-selected {
+  .filters__row {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+  }
+
+  .filters__pill--theme,
+  .filters__pill--brand {
+    flex: 0 1 auto;
+    min-width: 190px;
   }
 }
 

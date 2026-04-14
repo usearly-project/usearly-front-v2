@@ -533,10 +533,25 @@ const FilterBar: React.FC<Props> = ({
   } else if (selectedBrand) {
     return (
       <div
-        className="filters"
+        className="filters filters--brand-selected"
         data-has-category-options={hasSignalementOptions}
       >
         <div className="filters__row">
+          {/* Pill 0 : Type de feedback, gardé visible même avec une marque */}
+          <div className="filters__pill filters__pill--theme">
+            <Champs
+              options={
+                themeOptions as unknown as SelectFilterOption<FeedbackType>[]
+              }
+              value={selectedTheme}
+              onChange={handleThemeSelect}
+              className="pill__control"
+              align="left"
+              minWidthPart="2"
+              minWidth={170}
+            />
+          </div>
+
           {/* Pill 1 : Marque (toujours visible) */}
           <div className="filters__pill filters__pill--brand">
             <Champs

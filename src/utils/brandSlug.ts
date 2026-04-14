@@ -14,6 +14,24 @@ export type ResolvedBrandSlug = {
   siteUrl?: string;
 };
 
+const TAB_PATH_SEGMENTS: Record<FeedbackType, string> = {
+  report: "probleme",
+  coupdecoeur: "coup-de-coeur",
+  suggestion: "suggestion",
+};
+
+const PATH_SEGMENT_TO_TAB: Record<string, FeedbackType> = {
+  probleme: "report",
+  problemes: "report",
+  signalement: "report",
+  signalements: "report",
+  "coup-de-coeur": "coupdecoeur",
+  "coups-de-coeur": "coupdecoeur",
+  coupdecoeur: "coupdecoeur",
+  suggestion: "suggestion",
+  suggestions: "suggestion",
+};
+
 export const toBrandSlug = (value: string) =>
   value
     .toLowerCase()
@@ -30,6 +48,13 @@ const getBrandName = (entry: BrandEntry) => {
 
 const getBrandSiteUrl = (entry: BrandEntry) =>
   typeof entry === "string" ? undefined : entry.siteUrl;
+
+export const getFeedbackTabFromPathSegment = (
+  segment?: string,
+): FeedbackType | null => {
+  if (!segment) return null;
+  return PATH_SEGMENT_TO_TAB[toBrandSlug(segment)] ?? null;
+};
 
 export const findBrandBySlug = (
   brands: BrandEntry[],
@@ -80,6 +105,5 @@ export const getFeedbackPath = (tab: FeedbackType) =>
 
 export const getFeedbackBrandPath = (brand: string, tab: FeedbackType) => {
   const slug = toBrandSlug(brand);
-  const tabQuery = tab === "report" ? "" : `?tab=${tab}`;
-  return `/feedback/${slug}${tabQuery}`;
+  return `/feedback/${slug}/${TAB_PATH_SEGMENTS[tab]}`;
 };

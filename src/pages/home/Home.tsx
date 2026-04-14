@@ -25,7 +25,7 @@ import {
   findBrandBySlug,
   getFeedbackBrandPath,
   getFeedbackPath,
-  toBrandSlug,
+  getFeedbackTabFromPathSegment,
   uniqueBrandsBySlug,
 } from "@src/utils/brandSlug";
 
@@ -99,12 +99,19 @@ function Home() {
   const tabFromUrl = searchParams.get("tab") as FeedbackType | null;
   const navigate = useNavigate();
   const location = useLocation();
-  const { brandSlug } = useParams<{ brandSlug?: string }>();
+  const { brandSlug, feedbackKind } = useParams<{
+    brandSlug?: string;
+    feedbackKind?: string;
+  }>();
   const isBrandRoute = Boolean(brandSlug);
+  const tabFromPath = getFeedbackTabFromPathSegment(feedbackKind);
   //const validTabs: FeedbackType[] = ["report", "coupdecoeur", "suggestion"];
   const safeTab: FeedbackType =
-    tabFromUrl && FEEDBACK_TABS.includes(tabFromUrl) ? tabFromUrl : "report";
-  const normalizedRouteBrandSlug = brandSlug ? toBrandSlug(brandSlug) : "";
+    isBrandRoute && tabFromPath
+      ? tabFromPath
+      : tabFromUrl && FEEDBACK_TABS.includes(tabFromUrl)
+        ? tabFromUrl
+        : "report";
 
   const { brands: reportBrandLookup, loading: reportBrandsLoading } = useBrands(
     "report",
@@ -174,6 +181,8 @@ function Home() {
   useEffect(() => {
     const tab = searchParams.get("tab");
 
+    if (isBrandRoute) return;
+
     // ✅ si pas de tab → on laisse tranquille (mode "all" ou "/")
     if (!tab) return;
 
@@ -181,27 +190,26 @@ function Home() {
 
     // ❌ uniquement si invalide
     if (!VALID_TABS.includes(tab as ExtendedTab)) {
-      navigate(
-        isBrandRoute && normalizedRouteBrandSlug
-          ? `/feedback/${normalizedRouteBrandSlug}`
-          : "/feedback",
-        { replace: true },
-      );
+      navigate("/feedback", { replace: true });
     }
-  }, [isBrandRoute, navigate, normalizedRouteBrandSlug, searchParams]);
+  }, [isBrandRoute, navigate, searchParams]);
 
   useEffect(() => {
     if (safeTab !== activeTab) {
       const defaults = getDefaultFilters(safeTab);
 
-      setSelectedBrand(isBrandRoute ? "" : defaults.selectedBrand);
+      if (!isBrandRoute) {
+        setSelectedBrand(defaults.selectedBrand);
+      }
       setSelectedCategory(defaults.selectedCategory);
       setSelectedMainCategory(defaults.selectedMainCategory);
       setActiveFilter(
         isBrandRoute ? getBrandActiveFilter(safeTab) : defaults.activeFilter,
       );
       setSuggestionSearch(defaults.suggestionSearch);
-      setSelectedSiteUrl(isBrandRoute ? undefined : defaults.selectedSiteUrl);
+      if (!isBrandRoute) {
+        setSelectedSiteUrl(defaults.selectedSiteUrl);
+      }
       setReportSearchTerm("");
 
       setActiveTab(safeTab);
@@ -215,11 +223,14 @@ function Home() {
       setSelectedCategory(defaults.selectedCategory);
       setSelectedMainCategory(defaults.selectedMainCategory);
       setActiveFilter(
-        isBrandRoute ? getBrandActiveFilter(nextTab) : defaults.activeFilter,
+        currentSelectedBrand
+          ? getBrandActiveFilter(nextTab)
+          : defaults.activeFilter,
       );
       setSuggestionSearch(defaults.suggestionSearch);
       setReportSearchTerm("");
-      if (isBrandRoute && currentSelectedBrand) {
+
+      if (currentSelectedBrand) {
         navigate(getFeedbackBrandPath(currentSelectedBrand, nextTab));
       } else {
         setSelectedBrand(defaults.selectedBrand);
@@ -228,7 +239,7 @@ function Home() {
       }
       //setActiveTab(nextTab);
     },
-    [activeTab, currentSelectedBrand, isBrandRoute, navigate],
+    [activeTab, currentSelectedBrand, navigate],
   );
 
   useEffect(() => {
