@@ -50,7 +50,7 @@ const SuggestionCard = () => (
         </div>
         <p className="buzz-desc">
           Une idée simple, mais qui changerait la vie des binge-watchers...
-          <button className="link-more" type="button">
+          <button className="link-more" type="button" aria-label="Voir plus">
             Voir plus
           </button>
         </p>
@@ -83,7 +83,12 @@ const SuggestionCard = () => (
       </div>
     </div>
 
-    <button className="pill-cta suggestion-cta">Ajouter à la roadmap</button>
+    <button
+      className="pill-cta suggestion-cta"
+      aria-label="Ajouter à la roadmap"
+    >
+      Ajouter à la roadmap
+    </button>
   </div>
 );
 

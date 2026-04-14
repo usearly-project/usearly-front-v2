@@ -92,6 +92,7 @@ const ChronoSection: React.FC<ChronoSectionProps> = ({
             type="button"
             onClick={onClearSearchTerm}
             className="clear-button"
+            aria-label="Effacer"
           >
             Effacer
           </button>

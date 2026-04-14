@@ -130,6 +130,7 @@ const PopularSection: React.FC<PopularSectionProps> = ({
           type="button"
           onClick={() => setSearchTerm("")}
           className="clear-button"
+          aria-label="Effacer"
         >
           Effacer
         </button>

@@ -20,6 +20,7 @@ const FeedbackTabs = ({ activeTab, onTabChange }: FeedbackTabsProps) => {
           key={tab.key}
           className={`tab-btn ${activeTab === tab.key ? "active" : ""}`}
           onClick={() => onTabChange(tab.key)} // ✅ Plus d'erreur ici
+          aria-label={tab.label}
         >
           {tab.label}
         </button>

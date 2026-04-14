@@ -168,7 +168,11 @@ const PublicSuggestionCard: React.FC<Props> = ({ item }) => {
               )}
               {shouldShowToggle && (
                 <>
-                  <button className="see-more" onClick={toggleText}>
+                  <button
+                    className="see-more"
+                    onClick={toggleText}
+                    aria-label="Voir moins"
+                  >
                     Voir moins
                   </button>
                 </>
@@ -180,7 +184,11 @@ const PublicSuggestionCard: React.FC<Props> = ({ item }) => {
                 ? `${description.slice(0, DESCRIPTION_LIMIT)}…`
                 : description}
               {shouldShowToggle && (
-                <button className="see-more" onClick={toggleText}>
+                <button
+                  className="see-more"
+                  onClick={toggleText}
+                  aria-label="Voir plus"
+                >
                   Voir plus
                 </button>
               )}
@@ -204,6 +212,7 @@ const PublicSuggestionCard: React.FC<Props> = ({ item }) => {
           <button
             className="vote-button disabled"
             onClick={() => alert("Connectez-vous pour voter")}
+            aria-label="Connectez-vous pour voter"
           >
             🔒 Connectez-vous pour voter
           </button>

@@ -95,6 +95,12 @@ const FlatSubcategoryBlockMobile: React.FC<Props> = ({
         type="button"
         className="flat-subcategory-mobile__header"
         onClick={onToggleExpanded}
+        aria-label={
+          "Ouvrir le signalement " +
+          (subcategory?.trim().length
+            ? subcategory
+            : initialDescription?.title || "Autre problème")
+        }
       >
         <div className="flat-subcategory-mobile__left">
           <img
@@ -168,6 +174,7 @@ const FlatSubcategoryBlockMobile: React.FC<Props> = ({
                   e.stopPropagation();
                   onToggleFullText();
                 }}
+                aria-label={showFullText ? "Voir moins" : "Voir plus"}
               >
                 {showFullText ? "Voir moins" : "Voir plus"}
               </button>
@@ -281,11 +288,19 @@ const FlatSubcategoryBlockMobile: React.FC<Props> = ({
               {descriptions.length - 1 > 2 && (
                 <div className="flat-subcategory-mobile__others-actions">
                   {visibleDescriptionsCount < descriptions.length - 1 ? (
-                    <button type="button" onClick={onShowMoreSimilar}>
+                    <button
+                      type="button"
+                      onClick={onShowMoreSimilar}
+                      aria-label="Voir plus"
+                    >
                       Voir plus
                     </button>
                   ) : (
-                    <button type="button" onClick={onShowLessSimilar}>
+                    <button
+                      type="button"
+                      onClick={onShowLessSimilar}
+                      aria-label="Voir moins"
+                    >
                       Voir moins
                     </button>
                   )}

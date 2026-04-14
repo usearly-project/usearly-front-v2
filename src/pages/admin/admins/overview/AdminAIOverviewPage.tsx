@@ -44,7 +44,9 @@ export default function AdminAIOverviewPage() {
   if (error || !data) {
     return (
       <div className="ai-error">
-        <button onClick={() => navigate(-1)}>← Retour</button>
+        <button onClick={() => navigate(-1)} aria-label="Retour">
+          ← Retour
+        </button>
         <p>{error}</p>
       </div>
     );
@@ -61,7 +63,9 @@ export default function AdminAIOverviewPage() {
   return (
     <div className="admin-ai-page">
       <header className="ai-header">
-        <button onClick={() => navigate(-1)}>← Marques partenaires</button>
+        <button onClick={() => navigate(-1)} aria-label="Marques partenaires">
+          ← Marques partenaires
+        </button>
         <h1>Analyse AI</h1>
         <p>Vue globale des marques</p>
       </header>
@@ -72,6 +76,7 @@ export default function AdminAIOverviewPage() {
           <button
             className={!aiOnly ? "active" : ""}
             onClick={() => setAiOnly(false)}
+            aria-label="Toutes les données"
           >
             Toutes les données
           </button>
@@ -79,6 +84,7 @@ export default function AdminAIOverviewPage() {
           <button
             className={aiOnly ? "active" : ""}
             onClick={() => setAiOnly(true)}
+            aria-label="Recommandations AI"
           >
             Recommandations AI
           </button>

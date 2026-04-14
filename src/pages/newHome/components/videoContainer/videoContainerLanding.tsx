@@ -528,6 +528,7 @@ const VideoContainerLanding = () => {
           type="button"
           className={`playIcon ${isPaused ? "is-visible" : "is-hidden"}`}
           onClick={togglePlay}
+          aria-label={isPaused ? "Lire la vidéo" : "Mettre la vidéo en pause"}
         >
           <img src={PlayerIcon} alt="" aria-hidden="true" />
         </button>
@@ -577,7 +578,12 @@ const VideoContainerLanding = () => {
             onMouseEnter={() => setIsUsingVolume(true)}
             onMouseLeave={() => setIsUsingVolume(false)}
           >
-            <button type="button" className="volume-btn" onClick={toggleMute}>
+            <button
+              type="button"
+              className="volume-btn"
+              onClick={toggleMute}
+              aria-label={isMuted ? "Activer le son" : "Couper le son"}
+            >
               <span>
                 <img src={isMuted ? MuteIcon : VolumeIcon} alt="" />
               </span>
@@ -600,6 +606,9 @@ const VideoContainerLanding = () => {
             onClick={() => {
               void toggleFullscreen();
             }}
+            aria-label={
+              isFullscreen ? "Quitter le plein écran" : "Passer en plein écran"
+            }
           >
             <img
               src={isFullscreen ? ExitFullScreenIcon : EnterFullScreenIcon}

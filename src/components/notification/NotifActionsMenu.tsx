@@ -25,6 +25,7 @@ const NotifActionsMenu: React.FC<Props> = ({ onClose, onDelete }) => {
           onDelete();
           onClose();
         }}
+        aria-label="Supprimer"
       >
         <i className="fa fa-trash" /> Supprimer
       </button>

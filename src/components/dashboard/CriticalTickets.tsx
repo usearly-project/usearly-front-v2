@@ -84,7 +84,7 @@ export default function CriticalTickets() {
         <div className="critical-focus__left">
           <div className="critical-focus__header">
             <div className="critical-focus__label">Tickets critiques</div>
-            <button className="critical-focus__filter">
+            <button className="critical-focus__filter" aria-label="Filtrer">
               <Filter className="h-4 w-4" strokeWidth={1.8} />
               Filtrer
             </button>
@@ -123,6 +123,7 @@ export default function CriticalTickets() {
                                     [ticket.title]: !isOpen,
                                   }));
                                 }}
+                                aria-label={isOpen ? "Voir moins" : "Voir plus"}
                               >
                                 {isOpen ? "Voir moins" : "Voir plus"}
                               </button>
@@ -151,7 +152,10 @@ export default function CriticalTickets() {
                         {ticket.count}
                       </span>
                     </div>
-                    <button className="critical-ticket__cta">
+                    <button
+                      className="critical-ticket__cta"
+                      aria-label="Voir le ticket"
+                    >
                       Voir le ticket
                     </button>
                   </div>

@@ -251,8 +251,17 @@ const AdminBrandsPage = () => {
             </p>
 
             <div className="modal-actions">
-              <button onClick={() => setBrandToDelete(null)}>Annuler</button>
-              <button className="danger" onClick={handleDeleteBrand}>
+              <button
+                onClick={() => setBrandToDelete(null)}
+                aria-label="Annuler"
+              >
+                Annuler
+              </button>
+              <button
+                className="danger"
+                onClick={handleDeleteBrand}
+                aria-label="Supprimer"
+              >
                 Supprimer
               </button>
             </div>

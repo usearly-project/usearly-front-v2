@@ -232,6 +232,7 @@ const FeedbackRight: React.FC<Props> = ({
                   e.stopPropagation();
                   toggleText();
                 }}
+                aria-label={showFullText ? "Voir moins" : "Voir plus"}
               >
                 {showFullText ? "Voir moins" : "Voir plus"}
               </button>

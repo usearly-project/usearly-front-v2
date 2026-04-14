@@ -131,8 +131,14 @@ const EditBrandModal = ({ open, brand, onClose, onSuccess }: Props) => {
         </div>
 
         <div className="actions">
-          <button onClick={onClose}>Annuler</button>
-          <button onClick={handleSubmit} disabled={loading || !hasChanges}>
+          <button onClick={onClose} aria-label="Annuler">
+            Annuler
+          </button>
+          <button
+            onClick={handleSubmit}
+            disabled={loading || !hasChanges}
+            aria-label={loading ? "…" : "Enregistrer"}
+          >
             {loading ? "…" : "Enregistrer"}
           </button>
         </div>

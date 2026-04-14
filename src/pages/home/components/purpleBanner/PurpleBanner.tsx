@@ -43,6 +43,7 @@ export default function PurpleBanner({
           <button
             className={`stat ${activeTab === "report" ? "active" : ""}`}
             onClick={() => onTabChange("report")}
+            aria-label="Voir les signalements"
           >
             <div className="stat-value">
               {loading ? "…" : reports}
@@ -58,6 +59,7 @@ export default function PurpleBanner({
           <button
             className={`stat ${activeTab === "coupdecoeur" ? "active" : ""}`}
             onClick={() => onTabChange("coupdecoeur")}
+            aria-label="Voir les coups de cœur"
           >
             <div className="stat-value">
               {loading ? "…" : hearts}
@@ -73,6 +75,7 @@ export default function PurpleBanner({
           <button
             className={`stat ${activeTab === "suggestion" ? "active" : ""}`}
             onClick={() => onTabChange("suggestion")}
+            aria-label="Voir les suggestions"
           >
             <div className="stat-value">
               {loading ? "…" : suggestions}

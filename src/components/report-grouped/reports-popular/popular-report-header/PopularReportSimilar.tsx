@@ -93,6 +93,7 @@ const PopularReportSimilar: React.FC<Props> = ({
                   Math.min(prev + 2, additionalDescriptions.length),
                 )
               }
+              aria-label="Voir plus"
             >
               Voir plus
             </button>
@@ -100,6 +101,7 @@ const PopularReportSimilar: React.FC<Props> = ({
             <button
               className="see-more-descriptions"
               onClick={() => setVisibleDescriptionsCount(2)}
+              aria-label="Voir moins"
             >
               Voir moins
             </button>

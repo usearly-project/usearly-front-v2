@@ -103,6 +103,7 @@ const SharedFooterCdcAndSuggest: React.FC<Props> = ({
               aria-pressed={showComments}
               onClick={toggleComments}
               disabled={isExpired}
+              aria-label="Commenter"
             >
               <MessageCircle size={16} />
               {type === "coupdecoeur" && "Commenter"}
@@ -116,6 +117,7 @@ const SharedFooterCdcAndSuggest: React.FC<Props> = ({
               className="share-btn share-btn-centre"
               onClick={() => setShowShareModal(true)}
               disabled={isExpired}
+              aria-label="Partager"
             >
               <Share2 size={16} />
               {type === "coupdecoeur" && "Partager"}

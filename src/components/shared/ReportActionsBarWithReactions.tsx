@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
-import { ThumbsUp, MessageCircle, Hand } from "lucide-react";
+import { ThumbsUp, MessageCircle } from "lucide-react";
+// import { Hand } from "lucide-react";
 import { useReactionsForDescription } from "@src/hooks/useReactionsForDescription";
 import { getEmojisForType } from "@src/components/constants/emojiMapByType";
 import "./ReportActionsBar.scss";
@@ -12,6 +13,8 @@ import { useAuth } from "@src/services/AuthContext";
 import lightBulbLight from "/assets/icons/lightBulbLight.svg";
 import lightBulbNoLight from "/assets/icons/lightBulbNoLight.svg";
 import RedirectionExtensionModal from "../modal/RedirectionExtensionModal";
+import simpleLeftHand from "/assets/icons/simple-left-hand.svg";
+import { useIsMobile } from "@src/hooks/use-mobile";
 
 interface Props {
   type: "report" | "suggestion" | "coupDeCoeur";
@@ -41,6 +44,7 @@ interface Props {
   }[];
   onOpenSolutionModal?: () => void;
   onOpenSolutionsList?: () => void;
+  isMobile?: boolean;
 }
 
 const ReportActionsBarWithReactions: React.FC<Props> = ({
@@ -55,9 +59,12 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
   onOpenSolutionModal,
   brandName,
   siteUrl,
+  isMobile: isMobileProp,
 }) => {
   const { userProfile } = useAuth();
   const isAuthenticated = !!userProfile?.id;
+  const detectedIsMobile = useIsMobile();
+  const isMobile = isMobileProp ?? detectedIsMobile;
 
   // 🟢 ÉTAT POUR LA MODAL D'EXTENSION
   const [showExtensionModal, setShowExtensionModal] = useState(false);
@@ -73,6 +80,8 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
   const statusConfig = TICKET_STATUSES.find((s) => s.key === status);
   const [showAuthTooltip, setShowAuthTooltip] = useState(false);
   const [tooltipText, setTooltipText] = useState("");
+  const solutionTooltipLabel =
+    solutionsCount > 0 ? "Solutions" : "Proposer une solution";
 
   if (!statusConfig) return null;
 
@@ -83,10 +92,7 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
       return;
     }
 
-    // Détection simple Desktop (largeur > 768px par exemple)
-    const isDesktop = window.innerWidth > 768;
-
-    if (isDesktop) {
+    if (!isMobile) {
       setShowExtensionModal(true);
     } else {
       onToggleSimilarReports?.();
@@ -121,7 +127,7 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
   const totalCount = allReactions.reduce((acc, r) => acc + r.count, 0);
 
   return (
-    <div className="report-actions-bar">
+    <div className={`report-actions-bar${isMobile ? " is-mobile" : ""}`}>
       {/* ... (Reste du JSX des compteurs identique) ... */}
       <div className="counts-row">
         <div className="count-left">
@@ -182,6 +188,7 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
               onClick={() =>
                 !isAuthenticated && triggerTooltip("Connecte-toi pour réagir")
               }
+              aria-label="Réagir"
             >
               <ThumbsUp size={18} />
               <span className="reagir-span-btn">Réagir</span>
@@ -204,6 +211,7 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
                 ? triggerTooltip("Connecte-toi pour commenter")
                 : onCommentClick()
             }
+            aria-label="Commenter"
           >
             <MessageCircle size={18} />
             <span className="commenter-span-btn">Commenter</span>
@@ -211,16 +219,32 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
         </div>
 
         {/* 🟢 CENTRE : BOUTON SIGNALER MODIFIÉ */}
-        <div className="actions-center">
-          <button className="signaler-btn-mobile" onClick={handleSignalerClick}>
-            <Hand size={18} />
-            <span className="signaler-span-btn">Signaler</span>
+        {/* <div className="actions-center">
+          <button
+            className="signaler-btn-mobile"
+            data-tooltip="Signaler"
+            aria-label="Signaler"
+            onClick={handleSignalerClick}
+          >
+            <img src={simpleLeftHand} alt="" />
+            <span className="signaler-span-btn">J'ai aussi ce problème</span>
           </button>
-        </div>
+        </div> */}
 
         <div className="actions-right">
           <button
+            className="signaler-btn-mobile"
+            data-tooltip="Signaler"
+            aria-label="Signaler"
+            onClick={handleSignalerClick}
+          >
+            <img src={simpleLeftHand} alt="" />
+            <span className="signaler-span-btn">J'ai aussi ce problème</span>
+          </button>
+          <button
             className={`solution-btn ${solutionsCount > 0 ? "solution-btn-active" : "solution-btn-empty"}`}
+            data-tooltip={solutionTooltipLabel}
+            aria-label={solutionTooltipLabel}
             onClick={() =>
               !isAuthenticated
                 ? triggerTooltip("Connecte-toi")
@@ -233,7 +257,10 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
               height={26}
               alt="bulb"
             />
-            <span className="solution-span-btn">({solutionsCount})</span>
+            <span className="solution-span-btn">
+              {isMobile ? null : solutionsCount > 1 ? "Solutions" : "Solution"}{" "}
+              ({solutionsCount})
+            </span>
           </button>
         </div>
       </div>

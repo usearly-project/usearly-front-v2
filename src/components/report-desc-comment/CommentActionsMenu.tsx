@@ -17,12 +17,20 @@ const CommentActionsMenu = ({ onDelete }: { onDelete: () => void }) => {
 
   return (
     <div className="comment-actions-menu" ref={menuRef}>
-      <button className="menu-toggle-btn" onClick={() => setIsOpen(!isOpen)}>
+      <button
+        className="menu-toggle-btn"
+        onClick={() => setIsOpen(!isOpen)}
+        aria-label="Ouvrir le menu du commentaire"
+      >
         <MoreHorizontal size={18} />
       </button>
       {isOpen && (
         <div className="menu-dropdown">
-          <button className="menu-item delete" onClick={onDelete}>
+          <button
+            className="menu-item delete"
+            onClick={onDelete}
+            aria-label="Supprimer"
+          >
             <Trash2 size={14} /> Supprimer
           </button>
           {/* <button className="menu-item">

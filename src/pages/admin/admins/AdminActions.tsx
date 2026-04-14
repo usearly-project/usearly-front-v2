@@ -43,6 +43,7 @@ const AdminActions = ({ admin, onRoleChange, onRequestDelete }: Props) => {
         <button
           className="admin-delete-btn"
           onClick={() => onRequestDelete(admin)}
+          aria-label="Supprimer"
         >
           Supprimer
         </button>

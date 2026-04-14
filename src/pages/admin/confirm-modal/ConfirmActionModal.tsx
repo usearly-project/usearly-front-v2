@@ -39,12 +39,17 @@ const ConfirmActionModal = ({
             <p>{description}</p>
 
             <div className="actions">
-              <button className="cancel" onClick={onCancel}>
+              <button
+                className="cancel"
+                onClick={onCancel}
+                aria-label="Annuler"
+              >
                 Annuler
               </button>
               <button
                 className={danger ? "danger" : "confirm"}
                 onClick={onConfirm}
+                aria-label={confirmLabel}
               >
                 {confirmLabel}
               </button>

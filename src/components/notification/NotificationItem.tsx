@@ -91,6 +91,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
             e.stopPropagation();
             setConfirmDeleteId(n.id);
           }}
+          aria-label="Ouvrir les actions de la notification"
         >
           <i className="fa fa-ellipsis-v" />
         </button>

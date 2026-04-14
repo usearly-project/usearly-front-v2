@@ -115,6 +115,13 @@ const HeroBanner = ({
                   key={item.key}
                   className={`hero-tab ${activeTab === item.key ? "is-active" : ""}`}
                   onClick={() => onTabChange(item.key as FeedbackType)}
+                  aria-label={
+                    item.key === "report"
+                      ? "Signalements"
+                      : item.key === "coupdecoeur"
+                        ? "Coups de cœur"
+                        : "Suggestions"
+                  }
                 >
                   {item.key === "report"
                     ? "Signalements"

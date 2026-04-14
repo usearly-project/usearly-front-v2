@@ -103,16 +103,21 @@ function ReportSidebar() {
       </div>
 
       <div className="see-all-wrapper">
-        <button className="see-all" onClick={handleSeeAll}>
+        <button
+          className="see-all"
+          onClick={handleSeeAll}
+          aria-label={showAll ? "Voir moins" : "Voir toutes les marques"}
+        >
           {showAll ? "Voir moins" : "Voir toutes les marques"}
         </button>
       </div>
 
       <p className="sidebar-text">
-        Ces marques crispent beaucoup d&apos;utilisateurs en ce moment. <br />
-        Ajoute ton signalement et faisons bouger les choses ensemble.
+        Ces marques crispent beaucoup d&apos;utilisateurs en ce moment.
       </p>
-
+      <h1 className="sidebar-title">
+        Signalez les bugs en ligne et faites bouger les marques !
+      </h1>
       {tooltip.visible && (
         <div
           className="global-tooltip"

@@ -51,7 +51,11 @@ export default function ReactionPickerTrigger({
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
     >
-      <button type="button" disabled={disabled}>
+      <button
+        type="button"
+        disabled={disabled}
+        aria-label={type === "coupdecoeur" ? "Réagir" : "Choisir une réaction"}
+      >
         <ThumbsUp size={16} />
         {type === "coupdecoeur" && <span>Réagir</span>}
       </button>

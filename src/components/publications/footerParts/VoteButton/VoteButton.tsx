@@ -13,6 +13,7 @@ export default function VoteButton({ isExpired = false, onClick }: Props) {
         if (!isExpired) onClick?.(e);
       }}
       disabled={isExpired}
+      aria-label={isExpired ? "Expiré" : "Soutenir"}
     >
       {isExpired ? "Expiré" : "Soutenir"}
     </button>

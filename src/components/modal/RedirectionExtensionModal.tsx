@@ -86,10 +86,14 @@ const RedirectionExtensionModal: React.FC<RedirectionExtensionModalProps> = ({
         </div>
 
         <div className="modal-actions-row">
-          <button className="btn-go" onClick={handleGoClick}>
+          <button
+            className="btn-go"
+            onClick={handleGoClick}
+            aria-label="J'y vais"
+          >
             J'y vais
           </button>
-          <button className="btn-cancel" onClick={onClose}>
+          <button className="btn-cancel" onClick={onClose} aria-label="Annuler">
             Annuler
           </button>
         </div>
@@ -114,6 +118,7 @@ const RedirectionExtensionModal: React.FC<RedirectionExtensionModalProps> = ({
               <button
                 className="chrome-install-btn"
                 onClick={handleInstallExtension}
+                aria-label="Installer l'extension"
               >
                 <img src={chromeLogo} alt="Chrome" />
                 Installer l'extension
@@ -127,7 +132,12 @@ const RedirectionExtensionModal: React.FC<RedirectionExtensionModalProps> = ({
             </div>
 
             <div className="content-right-white">
-              <button className="widget-close-small">✕</button>
+              <button
+                className="widget-close-small"
+                aria-label="Fermer le widget Usearly"
+              >
+                ✕
+              </button>
               <div className="widget-inner">
                 <h3>
                   <strong>10 problèmes</strong> signalés sur ce site
