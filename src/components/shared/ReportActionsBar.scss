@@ -184,7 +184,7 @@
         border-radius: 8px;
         border: none;
         cursor: pointer;
-        font-weight: 700;
+        font-weight: 500;
         font-size: 13px;
         white-space: nowrap;
         transition: transform 0.1s;
@@ -199,9 +199,7 @@
         }
 
         &.solution-btn-empty {
-          background: #f8fafc;
           border: 1px solid #e2e8f0;
-          color: #64748b;
         }
 
         img {

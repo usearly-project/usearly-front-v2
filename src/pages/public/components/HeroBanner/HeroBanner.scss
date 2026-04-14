@@ -51,6 +51,7 @@
       padding: 1px 18px;
       border-radius: 999px;
       font-family: "Otomanopee One";
+      font-weight: normal;
       &::after {
         content: "";
         position: absolute;
@@ -78,7 +79,7 @@
       opacity: 1;
       .stat-value {
         font-size: 48px;
-        font-weight: 700;
+        font-weight: 600;
         line-height: 1;
       }
       img {
