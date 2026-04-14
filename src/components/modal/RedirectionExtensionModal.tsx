@@ -8,6 +8,7 @@ import logoExtension from "/assets/icons/logo-extension.svg";
 import chromeLogo from "/assets/logo/chrome.svg";
 import ExtensionRedirect from "../extension-redirect/ExtensionRedirect";
 import Modal from "../ui/Modal";
+import { Button } from "../ui/button";
 
 interface RedirectionExtensionModalProps {
   onClose: () => void;
@@ -86,16 +87,29 @@ const RedirectionExtensionModal: React.FC<RedirectionExtensionModalProps> = ({
         </div>
 
         <div className="modal-actions-row">
-          <button
+          <Button
+            className="btn-go"
+            variant={"secondary"}
+            onClick={handleGoClick}
+            aria-label="J'y vais"
+          >
+            J'y vais
+          </Button>
+          {/* <button
             className="btn-go"
             onClick={handleGoClick}
             aria-label="J'y vais"
           >
             J'y vais
-          </button>
-          <button className="btn-cancel" onClick={onClose} aria-label="Annuler">
+          </button> */}
+          <Button
+            className="btn-cancel"
+            variant={"secondary"}
+            onClick={onClose}
+            aria-label="Annuler"
+          >
             Annuler
-          </button>
+          </Button>
         </div>
 
         <div className="browser-mockup-container">
@@ -140,7 +154,8 @@ const RedirectionExtensionModal: React.FC<RedirectionExtensionModalProps> = ({
               </button>
               <div className="widget-inner">
                 <h3>
-                  <strong>10 problèmes</strong> signalés sur ce site
+                  <span className="widget-inner-text-bubble">10 problèmes</span>{" "}
+                  signalés sur ce site
                 </h3>
                 <div className="search-bar-sim">
                   <input

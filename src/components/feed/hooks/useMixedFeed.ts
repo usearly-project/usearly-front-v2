@@ -17,6 +17,7 @@ import {
   sortCdcByFilter,
   sortSuggestionsByFilter,
 } from "../utils/MixedFeed.utils";
+import { useAuthTooltip } from "@src/hooks/useAuthTooltip";
 
 // Note : On pourrait aussi mettre ces labels dans un fichier constants
 const REPORT_FILTER_LABELS: Record<ReportFeedFilterValue, string> = {
@@ -46,8 +47,8 @@ export const useMixedFeed = (
   const { isAuthenticated } = useAuth();
   const { feed, loadMore, loading, hasMore } = usePublicFeed();
   const [searchValue, setSearchValue] = useState("");
-  const [showAuthTooltip, setShowAuthTooltip] = useState(false);
-  const [tooltipText, setTooltipText] = useState("");
+  const { showAuthTooltip, tooltipText, tooltipPosition, triggerTooltip } =
+    useAuthTooltip();
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -103,13 +104,6 @@ export const useMixedFeed = (
     suggestionFeedFilter,
     searchValue,
   ]);
-
-  // --- ACTIONS ---
-  const triggerTooltip = (text: string) => {
-    setTooltipText(text);
-    setShowAuthTooltip(true);
-    setTimeout(() => setShowAuthTooltip(false), 2000);
-  };
 
   const handleFilter = (type: FeedFilterValue) => {
     if (type === "all") {
@@ -180,6 +174,7 @@ export const useMixedFeed = (
     setSuggestionFeedFilter,
     showAuthTooltip,
     tooltipText,
+    tooltipPosition,
     activeSecondaryFilterLabel,
   };
 };

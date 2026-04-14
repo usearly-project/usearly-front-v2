@@ -281,6 +281,7 @@ export const FilterBarGeneric: React.FC<Props> = ({
           align="left"
           minWidth={170}
           minWidthPart="2"
+          fitWidthToOptions
         />
       </div>
 

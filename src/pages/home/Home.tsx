@@ -417,7 +417,7 @@ function Home() {
 
   return (
     <div className="home-page">
-      <HeroBanner />
+      <HeroBanner onTabChange={handleTabChange} />
 
       <main className={`user-main-content ${isMobile ? "is-mobile" : ""}`}>
         <aside className="left-panel">

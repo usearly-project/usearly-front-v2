@@ -67,9 +67,19 @@
     width: 100%;
   }
 
+  .primary-filters {
+    width: fit-content;
+    max-width: 100%;
+  }
+
   .primary-filters > *,
   .feed-header__secondary > * {
     width: 100%;
+  }
+
+  .primary-filters > * {
+    width: fit-content;
+    max-width: 100%;
   }
 
   .feed-header__search {

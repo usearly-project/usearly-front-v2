@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type MouseEvent } from "react";
 import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
 import { useAuth } from "@src/services/AuthContext";
@@ -17,6 +17,8 @@ import SolutionModal from "@src/components/ui/SolutionModal";
 import SolutionsModal from "@src/components/ui/SolutionsModal";
 import BrandResponseBanner from "@src/components/brand-response-banner/BrandResponseBanner";
 import type { BrandResponseData } from "@src/types/brandResponse";
+import AuthTooltip from "@src/components/shared/AuthTooltip";
+import { useAuthTooltip } from "@src/hooks/useAuthTooltip";
 
 interface Props {
   item: PopularGroupedReport;
@@ -44,6 +46,8 @@ const PopularReportCard: React.FC<Props> = ({
     Record<string, number>
   >({});
   const [showCapturePreview, setShowCapturePreview] = useState(false);
+  const { showAuthTooltip, tooltipText, tooltipPosition, triggerTooltip } =
+    useAuthTooltip();
   const firstDescription = item.descriptions?.[0];
   const descriptionId = firstDescription?.id ?? "";
   const brandResponse =
@@ -51,8 +55,6 @@ const PopularReportCard: React.FC<Props> = ({
 
   const [showSolutionModal, setShowSolutionModal] = useState(false);
   const [showSolutionsList, setShowSolutionsList] = useState(false);
-  const [showAuthTooltip, setShowAuthTooltip] = useState(false);
-  const [tooltipText, setTooltipText] = useState("");
   const [solutionsCount, setSolutionsCount] = useState(
     item.solutionsCount ?? 0,
   );
@@ -132,17 +134,9 @@ const PopularReportCard: React.FC<Props> = ({
   const captureUrl = firstDescription.capture ?? null;
   const additionalDescriptions = item.descriptions.slice(1);
 
-  const triggerTooltip = (text: string) => {
-    setTooltipText(text);
-    setShowAuthTooltip(true);
-
-    setTimeout(() => {
-      setShowAuthTooltip(false);
-    }, 2000);
-  };
-  const handleCommentClick = () => {
+  const handleCommentClick = (event?: MouseEvent<HTMLElement>) => {
     if (!userProfile?.id) {
-      triggerTooltip("Connecte-toi pour voir la réponse de la marque");
+      triggerTooltip("Connecte-toi pour voir la réponse de la marque", event);
       return; // ⛔ on bloque
     }
 
@@ -248,7 +242,11 @@ const PopularReportCard: React.FC<Props> = ({
             }}
             isPublic={isPublic}
           />
-          {showAuthTooltip && <div className="auth-tooltip">{tooltipText}</div>}
+          <AuthTooltip
+            show={showAuthTooltip}
+            text={tooltipText}
+            position={tooltipPosition}
+          />
           <PopularReportComments
             userProfile={userProfile}
             descriptionId={descriptionId}

@@ -42,11 +42,11 @@
 
   .highlight-container {
     display: inline-block;
-    transform: rotate(-4deg);
-    margin-right: 5px;
+    transform: translateX(12px) rotate(-4deg);
+    margin-right: 17px;
     .highlight {
       position: relative;
-      background: #5c8cff;
+      background: #7f5cfd;
       border: 3px solid #ffffff;
       padding: 1px 18px;
       border-radius: 999px;
@@ -59,7 +59,7 @@
         right: 40px;
         width: 18px;
         height: 18px;
-        background: #5c8cff;
+        background: #7f5cfd;
         border-right: 3px solid #ffffff;
         border-bottom: 3px solid #ffffff;
         transform: rotate(45deg);
@@ -73,10 +73,32 @@
     gap: 30px;
     margin-top: 16px;
     .stat {
+      appearance: none;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
       display: flex;
       align-items: center;
       gap: 8px;
       opacity: 1;
+      padding: 4px 6px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+
+      &:hover,
+      &:focus-visible {
+        transform: scale(1.1);
+      }
+
+      &:focus-visible {
+        outline: 2px solid rgba(255, 255, 255, 0.85);
+        outline-offset: 3px;
+      }
+
       .stat-value {
         font-size: 48px;
         font-weight: 600;
@@ -85,6 +107,7 @@
       img {
         width: 2.8em;
         height: 2.8em;
+        pointer-events: none;
       }
     }
   }
@@ -92,6 +115,43 @@
   .hero-tab.is-active {
     background: #fff;
     color: #10163a;
+  }
+}
+
+.hero-banner,
+.hero-banner-mobile {
+  .auth-tooltip {
+    position: fixed;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #111;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 1000;
+    animation: heroAuthTooltipFadeInOut 2s ease forwards;
+    pointer-events: none;
+  }
+}
+
+@keyframes heroAuthTooltipFadeInOut {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 10px);
+  }
+  20% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -5px);
   }
 }
 
@@ -117,9 +177,22 @@
     gap: 25px;
 
     .mobile-stat {
+      appearance: none;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
       display: flex;
       align-items: center;
       gap: 6px;
+      padding: 4px;
+      border-radius: 8px;
+      cursor: pointer;
+
+      &:focus-visible {
+        outline: 2px solid rgba(255, 255, 255, 0.85);
+        outline-offset: 3px;
+      }
 
       .value {
         font-size: 28px;
@@ -131,6 +204,7 @@
         width: 22px;
         height: 22px;
         object-fit: contain;
+        pointer-events: none;
       }
     }
   }
