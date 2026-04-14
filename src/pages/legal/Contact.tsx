@@ -84,6 +84,7 @@ export default function Contact() {
                 <button
                   className="contact-form__button contact-form__button--primary"
                   type="submit"
+                  aria-label="Commencer"
                 >
                   Commencer
                 </button>
@@ -122,6 +123,7 @@ export default function Contact() {
                     className="contact-form__button contact-form__button--secondary"
                     type="button"
                     onClick={() => setStep(1)}
+                    aria-label="Retour"
                   >
                     Retour
                   </button>
@@ -129,6 +131,7 @@ export default function Contact() {
                   <button
                     className="contact-form__button contact-form__button--primary"
                     type="submit"
+                    aria-label="Envoyer"
                   >
                     Envoyer
                   </button>

@@ -122,10 +122,14 @@ const CreateBrandModal = ({ open, onClose, onSuccess, onCreated }: Props) => {
           {error && <p className="error">{error}</p>}
 
           <div className="actions">
-            <button type="button" onClick={onClose}>
+            <button type="button" onClick={onClose} aria-label="Annuler">
               Annuler
             </button>
-            <button type="submit" disabled={loading}>
+            <button
+              type="submit"
+              disabled={loading}
+              aria-label={loading ? "Création…" : "Créer"}
+            >
               {loading ? "Création…" : "Créer"}
             </button>
           </div>

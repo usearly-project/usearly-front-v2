@@ -49,6 +49,7 @@ const PopularReportContent: React.FC<Props> = ({
                 e.stopPropagation();
                 setShowFullText((prev) => !prev);
               }}
+              aria-label={showFullText ? "Voir moins" : "Voir plus"}
             >
               {showFullText ? "Voir moins" : "Voir plus"}
             </button>

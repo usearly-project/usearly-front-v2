@@ -130,7 +130,7 @@ const CommentForm: React.FC<Props> = ({ avatarUrl, value, onSubmit }) => {
           )}
         </div>
 
-        <button type="submit" className="comment-submit">
+        <button type="submit" className="comment-submit" aria-label="Envoyer">
           Envoyer
         </button>
       </form>

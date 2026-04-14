@@ -83,7 +83,11 @@ const AdminUserDetail = () => {
 
   return (
     <div className="admin-user-detail">
-      <button className="back-btn" onClick={() => navigate(-1)}>
+      <button
+        className="back-btn"
+        onClick={() => navigate(-1)}
+        aria-label="Retour"
+      >
         ← Retour
       </button>
 
@@ -149,6 +153,11 @@ const AdminUserDetail = () => {
               user.expiredAt ? "admin-btn-success" : "admin-btn-warning"
             }`}
             onClick={handleToggleSuspension}
+            aria-label={
+              user.expiredAt
+                ? "Réactiver l’utilisateur"
+                : "Suspendre l’utilisateur"
+            }
           >
             {user.expiredAt
               ? "Réactiver l’utilisateur"
@@ -159,6 +168,7 @@ const AdminUserDetail = () => {
             type="button"
             className="admin-btn admin-btn-danger"
             onClick={() => setShowDeleteModal(true)}
+            aria-label="Supprimer l’utilisateur"
           >
             Supprimer l’utilisateur
           </button>
@@ -176,8 +186,17 @@ const AdminUserDetail = () => {
             </p>
 
             <div className="modal-actions">
-              <button onClick={() => setShowDeleteModal(false)}>Annuler</button>
-              <button className="danger" onClick={handleDeleteUser}>
+              <button
+                onClick={() => setShowDeleteModal(false)}
+                aria-label="Annuler"
+              >
+                Annuler
+              </button>
+              <button
+                className="danger"
+                onClick={handleDeleteUser}
+                aria-label="Supprimer"
+              >
                 Supprimer
               </button>
             </div>

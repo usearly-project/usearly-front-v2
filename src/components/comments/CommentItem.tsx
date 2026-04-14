@@ -103,6 +103,11 @@ const CommentItem: React.FC<CommentItemProps> = ({
             className={`like-button ${liked ? "active" : ""}`}
             onClick={handleToggleLike}
             disabled={isLoading}
+            aria-label={
+              liked
+                ? "Retirer la mention utile"
+                : "Marquer le commentaire comme utile"
+            }
           >
             <ThumbsUp size={14} />
             <p> utile </p>

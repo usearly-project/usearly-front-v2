@@ -21,6 +21,7 @@ const EmojiWithTooltip: React.FC<Props> = ({
       <button
         className={`emoji-button ${isSelected ? "selected" : ""}`}
         onClick={onClick}
+        aria-label={label}
       >
         <span className="emoji">{emoji}</span>
         {count !== undefined && count > 0 && (

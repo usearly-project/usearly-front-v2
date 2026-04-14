@@ -255,6 +255,7 @@ export default function SelectFilter<V extends string = string>(
                   onChange(placeholderOption.value as V);
                   setOpen(false);
                 }}
+                aria-label={placeholderResetLabel ?? "Réinitialiser"}
               >
                 {placeholderResetLabel ?? "Réinitialiser"}
               </button>

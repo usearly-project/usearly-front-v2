@@ -38,7 +38,11 @@ export default function FavoriteCarouselSection() {
             ))}
           </h2>
 
-          {!isMobile && <button className="favorite-button">Découvrir</button>}
+          {!isMobile && (
+            <button className="favorite-button" aria-label="Découvrir">
+              Découvrir
+            </button>
+          )}
         </div>
 
         <div className="favorite-right">
@@ -49,7 +53,11 @@ export default function FavoriteCarouselSection() {
           )}
         </div>
 
-        {isMobile && <button className="favorite-button">Découvrir</button>}
+        {isMobile && (
+          <button className="favorite-button" aria-label="Découvrir">
+            Découvrir
+          </button>
+        )}
       </div>
     </section>
   );

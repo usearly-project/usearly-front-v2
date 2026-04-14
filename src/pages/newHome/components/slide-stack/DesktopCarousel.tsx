@@ -344,6 +344,7 @@ export default function DesktopCarousel({ onSlideChange }: Props) {
             key={i}
             className={`carousel-dot ${currentRealIndex === i ? "active" : ""}`}
             onClick={() => moveToSlide(() => centerStartIndex + i)}
+            aria-label={"Aller à la slide " + (i + 1)}
           />
         ))}
         <span className="carousel-dots-chevron" onClick={next}>

@@ -34,26 +34,42 @@ const BrandActionsMenu = ({
 
   return (
     <div className="brand-actions-menu" ref={ref}>
-      <button className="kebab-btn" onClick={() => setOpen((v) => !v)}>
+      <button
+        className="kebab-btn"
+        onClick={() => setOpen((v) => !v)}
+        aria-label="Ouvrir le menu des actions de la marque"
+      >
         <MoreVertical size={18} />
       </button>
 
       {open && (
         <div className="dropdown">
-          <button onClick={() => onEdit(brand)}>
+          <button onClick={() => onEdit(brand)} aria-label="Modifier la marque">
             <Edit size={16} /> Modifier
           </button>
 
-          <button onClick={() => onToggleStatus(brand)}>
+          <button
+            onClick={() => onToggleStatus(brand)}
+            aria-label={
+              brand.isActive ? "Désactiver la marque" : "Activer la marque"
+            }
+          >
             <Power size={16} />
             {brand.isActive ? "Désactiver" : "Activer"}
           </button>
 
-          <button onClick={() => onResetPassword(brand)}>
+          <button
+            onClick={() => onResetPassword(brand)}
+            aria-label="Réinitialiser le mot de passe de la marque"
+          >
             <Key size={16} /> Reset mot de passe
           </button>
 
-          <button className="danger" onClick={() => onDelete(brand)}>
+          <button
+            className="danger"
+            onClick={() => onDelete(brand)}
+            aria-label="Supprimer la marque"
+          >
             <Trash2 size={16} /> Supprimer
           </button>
         </div>

@@ -103,7 +103,11 @@ function ReportSidebar() {
       </div>
 
       <div className="see-all-wrapper">
-        <button className="see-all" onClick={handleSeeAll}>
+        <button
+          className="see-all"
+          onClick={handleSeeAll}
+          aria-label={showAll ? "Voir moins" : "Voir toutes les marques"}
+        >
           {showAll ? "Voir moins" : "Voir toutes les marques"}
         </button>
       </div>

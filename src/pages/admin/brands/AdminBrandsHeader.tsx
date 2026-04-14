@@ -105,6 +105,7 @@ const AdminBrandsHeader = ({
           <button
             onClick={() => setVisibleFilter(!visibleFilter)}
             className="admin-brands-action-filter-button"
+            aria-label="Ouvrir les filtres des marques"
           >
             Filtrer{activeFilterCount > 0 ? ` (${activeFilterCount})` : ""}
           </button>
@@ -142,6 +143,7 @@ const AdminBrandsHeader = ({
                         aria-pressed={filters.plans.includes(
                           option.value as AdminBrandsFiltersState["plans"][number],
                         )}
+                        aria-label={option.label}
                       >
                         {option.label}
                       </button>
@@ -172,6 +174,7 @@ const AdminBrandsHeader = ({
                           )
                         }
                         aria-pressed={filters.sectors.includes(option.value)}
+                        aria-label={option.label}
                       >
                         {option.label}
                       </button>
@@ -204,6 +207,7 @@ const AdminBrandsHeader = ({
                           )
                         }
                         aria-pressed={filters.lastAction === option.value}
+                        aria-label={option.label}
                       >
                         {option.label}
                       </button>
@@ -218,6 +222,7 @@ const AdminBrandsHeader = ({
                   className="admin-brands-action-filter-clear"
                   onClick={() => onClearFilters()}
                   disabled={activeFilterCount === 0}
+                  aria-label="Réinitialiser les filtres"
                 >
                   Réinitialiser
                 </button>
@@ -238,6 +243,7 @@ const AdminBrandsHeader = ({
           <button
             className="admin-brands-actions-add-brand-button"
             onClick={onAddBrand}
+            aria-label="Ajouter une marque"
           >
             + Ajouter
           </button>
@@ -252,6 +258,9 @@ const AdminBrandsHeader = ({
               type="button"
               className="admin-brands-filter-chip"
               onClick={() => handleRemovePlan(plan)}
+              aria-label={
+                "Retirer le filtre " + (planLabelByValue[plan] ?? plan)
+              }
             >
               {planLabelByValue[plan] ?? plan}
               <span className="admin-brands-filter-chip-close">
@@ -265,6 +274,9 @@ const AdminBrandsHeader = ({
               type="button"
               className="admin-brands-filter-chip"
               onClick={() => handleRemoveSector(sector)}
+              aria-label={
+                "Retirer le filtre " + (sectorLabelByValue[sector] ?? sector)
+              }
             >
               {sectorLabelByValue[sector] ?? sector}
               <span className="admin-brands-filter-chip-close">
@@ -277,6 +289,11 @@ const AdminBrandsHeader = ({
               type="button"
               className="admin-brands-filter-chip"
               onClick={handleRemoveLastAction}
+              aria-label={
+                "Retirer le filtre " +
+                (lastActionLabelByValue[filters.lastAction] ??
+                  filters.lastAction)
+              }
             >
               {lastActionLabelByValue[filters.lastAction] ?? filters.lastAction}
               <span className="admin-brands-filter-chip-close">

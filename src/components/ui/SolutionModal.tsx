@@ -81,6 +81,7 @@ const SolutionModal: React.FC<Props> = ({ reportId, onClose, onSuccess }) => {
             className="solution-btn-secondary"
             onClick={onClose}
             disabled={loading}
+            aria-label="Annuler"
           >
             Annuler
           </button>
@@ -89,6 +90,7 @@ const SolutionModal: React.FC<Props> = ({ reportId, onClose, onSuccess }) => {
             className="solution-btn-primary"
             onClick={handleSubmit}
             disabled={loading}
+            aria-label={loading ? "Envoi..." : "Partager la solution"}
           >
             {loading ? "Envoi..." : "Partager la solution"}
           </button>

@@ -206,6 +206,7 @@ export default function UserProfileBanner({ activeTab, onTabChange }: Props) {
                   }}
                   className={`stat ${activeTab === item.tab ? "active" : ""}`}
                   onClick={() => handleStatSelect(item.tab)}
+                  aria-label={item.label + " : " + item.value}
                 >
                   <div className="stat-value">
                     {item.value}

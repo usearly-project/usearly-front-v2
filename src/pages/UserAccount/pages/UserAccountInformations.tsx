@@ -224,6 +224,7 @@ function UserAccountInformations() {
                 type="button"
                 className="edit-profile-btn"
                 onClick={() => setIsEditing(true)}
+                aria-label="Modifier"
               >
                 Modifier
               </button>
@@ -235,6 +236,7 @@ function UserAccountInformations() {
                   setIsEditing(false);
                   fetchUserProfile();
                 }}
+                aria-label="Annuler"
               >
                 Annuler
               </button>
@@ -336,6 +338,7 @@ function UserAccountInformations() {
         type="button"
         className="delete-account-btn"
         onClick={() => setShowDeleteModal(true)}
+        aria-label="Supprimer mon compte"
       >
         Supprimer mon compte
       </button>
@@ -352,6 +355,7 @@ function UserAccountInformations() {
                 type="button"
                 className="cancel-btn"
                 onClick={() => setShowDeleteModal(false)}
+                aria-label="Annuler"
               >
                 Annuler
               </button>
@@ -360,6 +364,7 @@ function UserAccountInformations() {
                 type="button"
                 className="confirm-delete-btn"
                 onClick={handleDeleteAccount}
+                aria-label="Oui, supprimer"
               >
                 Oui, supprimer
               </button>

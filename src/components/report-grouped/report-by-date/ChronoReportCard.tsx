@@ -273,6 +273,7 @@ const ChronoReportCard: React.FC<Props> = ({ item, isOpen, onToggle }) => {
                       e.stopPropagation();
                       handleToggleFullText();
                     }}
+                    aria-label={showFullText ? "Voir moins" : "Voir plus"}
                   >
                     {showFullText ? "Voir moins" : "Voir plus"}
                   </button>
@@ -346,7 +347,11 @@ const ChronoReportCard: React.FC<Props> = ({ item, isOpen, onToggle }) => {
       {showCapturePreview && item.capture && (
         <div className="capture-overlay" onClick={handleCloseCapture}>
           <div className="capture-modal" onClick={(e) => e.stopPropagation()}>
-            <button className="close-btn" onClick={handleCloseCapture}>
+            <button
+              className="close-btn"
+              onClick={handleCloseCapture}
+              aria-label="Fermer la capture"
+            >
               ✕
             </button>
 

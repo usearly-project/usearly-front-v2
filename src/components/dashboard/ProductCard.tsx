@@ -84,7 +84,10 @@ const ProductCard = () => {
           </div>
         </div>
         <div className="w-full flex justify-center">
-          <button className="p-3 px-5 rounded-full border border-foreground text-foreground text-sm font-semibold shadow-[0_8px_20px_rgba(0,0,0,0.06)] hover:-translate-y-0.5 transition-all">
+          <button
+            className="p-3 px-5 rounded-full border border-foreground text-foreground text-sm font-semibold shadow-[0_8px_20px_rgba(0,0,0,0.06)] hover:-translate-y-0.5 transition-all"
+            aria-label="Voir plus"
+          >
             Voir plus
           </button>
         </div>

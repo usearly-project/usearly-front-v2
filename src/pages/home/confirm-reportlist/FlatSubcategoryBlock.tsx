@@ -296,6 +296,7 @@ const FlatSubcategoryBlock: React.FC<Props> = ({
                       e.stopPropagation();
                       handleToggleFullText();
                     }}
+                    aria-label={showFullText ? "Voir moins" : "Voir plus"}
                   >
                     {showFullText ? "Voir moins" : "Voir plus"}
                   </button>
@@ -447,6 +448,7 @@ const FlatSubcategoryBlock: React.FC<Props> = ({
                     <button
                       className="see-more-descriptions"
                       onClick={handleShowMoreSimilar}
+                      aria-label="Voir plus"
                     >
                       Voir plus
                     </button>
@@ -455,6 +457,7 @@ const FlatSubcategoryBlock: React.FC<Props> = ({
                       <button
                         className="see-more-descriptions"
                         onClick={handleShowLessSimilar}
+                        aria-label="Voir moins"
                       >
                         Voir moins
                       </button>

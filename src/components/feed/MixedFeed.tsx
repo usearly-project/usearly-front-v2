@@ -127,7 +127,11 @@ const MixedFeed: React.FC<Props> = ({
 
         {loading && <p className="feed-loading">Chargement...</p>}
         {!loading && hasMore && (
-          <button onClick={loadMore} className="load-more-btn">
+          <button
+            onClick={loadMore}
+            className="load-more-btn"
+            aria-label="Voir plus"
+          >
             Voir plus
           </button>
         )}

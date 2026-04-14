@@ -140,7 +140,7 @@ const CommentInputSection: React.FC<Props> = ({
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
           />
-          <button type="submit">Envoyer</button>
+          <button type="submit" aria-label="Envoyer le commentaire">Envoyer</button>
         </form>
       )}
 
@@ -191,9 +191,9 @@ const CommentInputSection: React.FC<Props> = ({
                   </div>
                   <p className="comment-text">{comment.content}</p>
                   <div className="comment-actions">
-                    <button type="button">J’aime</button>
+                    <button type="button" aria-label="J’aime ce commentaire">J’aime</button>
                     <span> | </span>
-                    <button type="button">Répondre</button>
+                    <button type="button" aria-label="Répondre à ce commentaire">Répondre</button>
                   </div>
                 </div>
               </li>
@@ -204,6 +204,7 @@ const CommentInputSection: React.FC<Props> = ({
             <button
               className="load-more-comments-btn"
               onClick={() => setVisibleCount((prev) => prev + 3)}
+              aria-label="Afficher plus de commentaires"
             >
               <span className="load-more-icon">
                 <MoveDiagonal size={18} />

@@ -188,6 +188,7 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
               onClick={() =>
                 !isAuthenticated && triggerTooltip("Connecte-toi pour réagir")
               }
+              aria-label="Réagir"
             >
               <ThumbsUp size={18} />
               <span className="reagir-span-btn">Réagir</span>
@@ -210,6 +211,7 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
                 ? triggerTooltip("Connecte-toi pour commenter")
                 : onCommentClick()
             }
+            aria-label="Commenter"
           >
             <MessageCircle size={18} />
             <span className="commenter-span-btn">Commenter</span>

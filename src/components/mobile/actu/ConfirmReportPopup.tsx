@@ -113,6 +113,9 @@ const ConfirmReportPopup: React.FC<Props> = ({
           className={`crp-confirm-btn ${isSubmitting ? "loading" : ""}`}
           onClick={handleSubmit}
           disabled={isSubmitting}
+          aria-label={
+            isSubmitting ? "Signalement en cours" : "Signaler aussi ce problème"
+          }
         >
           {isSubmitting ? (
             <Loader2 className="animate-spin" size={22} />

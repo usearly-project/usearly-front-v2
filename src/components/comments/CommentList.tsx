@@ -96,6 +96,7 @@ const CommentList: React.FC<Props> = ({
             <button
               className="load-more-comments-btn"
               onClick={() => setVisibleCount((prev) => prev + 3)}
+              aria-label="Afficher plus de commentaires"
             >
               <span className="load-more-icon">
                 <MoveDiagonal size={18} />

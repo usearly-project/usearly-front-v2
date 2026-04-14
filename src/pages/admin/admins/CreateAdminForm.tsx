@@ -68,7 +68,7 @@ const CreateAdminForm = ({
         />
       </div>
 
-      <button type="submit" className="submit-btn">
+      <button type="submit" className="submit-btn" aria-label="Créer l’admin">
         Créer l’admin
       </button>
     </form>

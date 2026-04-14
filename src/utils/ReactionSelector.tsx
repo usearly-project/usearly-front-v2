@@ -37,7 +37,7 @@ const ReactionSelector: React.FC<Props> = ({ userId, targetId }) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <button className="main-reaction">
+      <button className="main-reaction" aria-label="Choisir une réaction">
         {selected || "😊"} {selected ? getCount(selected) : ""}
       </button>
 
@@ -51,6 +51,7 @@ const ReactionSelector: React.FC<Props> = ({ userId, targetId }) => {
                 await handleReact(emoji);
                 setIsOpen(false);
               }}
+              aria-label={"Réagir avec " + emoji}
             >
               {emoji}
               <span className="count">{getCount(emoji)}</span>

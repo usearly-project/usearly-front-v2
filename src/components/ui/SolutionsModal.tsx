@@ -48,7 +48,11 @@ export default function SolutionsModal({
             <h2>Solutions de la communauté</h2>
           </div>
 
-          <button className="close-btn-icon" onClick={onClose}>
+          <button
+            className="close-btn-icon"
+            onClick={onClose}
+            aria-label="Fermer la fenêtre des solutions"
+          >
             <X size={18} />
           </button>
         </div>
@@ -88,11 +92,15 @@ export default function SolutionsModal({
         )}
 
         {/* FOOTER */}
-        <button className="add-solution" onClick={onAddSolution}>
+        <button
+          className="add-solution"
+          onClick={onAddSolution}
+          aria-label="Proposer une autre solution"
+        >
           💡 Proposer une autre solution
         </button>
 
-        <button className="close-btn" onClick={onClose}>
+        <button className="close-btn" onClick={onClose} aria-label="Fermer">
           Fermer
         </button>
       </div>

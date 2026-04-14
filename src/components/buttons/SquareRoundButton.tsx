@@ -8,7 +8,9 @@ const SquareRoundButton = ({
   classNames: string;
 }) => {
   return (
-    <button className={`square-round-button ` + classNames}>{text}</button>
+    <button className={`square-round-button ` + classNames} aria-label={text}>
+      {text}
+    </button>
   );
 };
 

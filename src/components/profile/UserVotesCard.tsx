@@ -236,6 +236,7 @@ const UserVotesCard: React.FC = () => {
             onClick={() => setIsExpanded((prev) => !prev)}
             aria-expanded={isExpanded}
             aria-controls="user-votes-list"
+            aria-label={isExpanded ? "Voir moins" : "Voir plus"}
           >
             {isExpanded ? "Voir moins" : "Voir plus"}
           </button>
