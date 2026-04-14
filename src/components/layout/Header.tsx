@@ -6,6 +6,7 @@ import Logo from "@src/assets/logo.svg";
 import { useAuth } from "@src/services/AuthContext";
 import { getNotifications } from "@src/services/notificationService";
 import Buttons from "@src/components/buttons/Buttons";
+import UsearlyText from "/assets/UsearlyText.svg";
 
 const HEADER_HIDE_SCROLL_Y = 30;
 const HEADER_SHOW_TOP_SCROLL_Y = 2;
@@ -224,7 +225,9 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
         {/* ================= LOGO ================= */}
         <div className="logo" onClick={() => navigate("/home")}>
           <img src={Logo} alt="Usearly Logo" />
-          <span className="logo-text">Usearly</span>
+          <span className="logo-text">
+            <img src={UsearlyText} alt="logo usearly" />
+          </span>
         </div>
 
         {/* ================= BURGER (Mobile only via CSS) ================= */}

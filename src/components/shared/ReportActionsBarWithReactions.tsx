@@ -10,7 +10,7 @@ import type { HasBrandResponse } from "@src/types/brandResponse";
 import ReportAvatars from "@src/pages/public/components/ReportAvatar/ReportsAvatar";
 import type { User } from "@src/types/Reports";
 import { useAuth } from "@src/services/AuthContext";
-import lightBulbLight from "/assets/icons/lightBulbLight.svg";
+import lightBulbLight from "/assets/icons/solution-icon-light.svg";
 import lightBulbNoLight from "/assets/icons/lightBulbNoLight.svg";
 import RedirectionExtensionModal from "../modal/RedirectionExtensionModal";
 import simpleLeftHand from "/assets/icons/simple-left-hand.svg";
@@ -253,8 +253,8 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
           >
             <img
               src={solutionsCount > 0 ? lightBulbLight : lightBulbNoLight}
-              width={26}
-              height={26}
+              width={24}
+              height={24}
               alt="bulb"
             />
             <span className="solution-span-btn">
