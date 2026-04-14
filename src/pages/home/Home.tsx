@@ -13,12 +13,40 @@ import SearchBar from "./components/searchBar/SearchBar";
 import FeedbackRightSidebar from "./home-tabs/FeedbackRightSidebar";
 import LeftSidebar from "../public/components/sidebars/LeftSidebar";
 import HeroBanner from "../public/components/HeroBanner/HeroBanner";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
+import { useBrands } from "@src/hooks/useBrands";
+import {
+  findBrandBySlug,
+  getFeedbackBrandPath,
+  getFeedbackPath,
+  toBrandSlug,
+  uniqueBrandsBySlug,
+} from "@src/utils/brandSlug";
 
 const FEEDBACK_LIST_WRAPPER_SELECTOR = ".feedback-list-wrapper";
 const BOTTOM_THRESHOLD_PX = 12;
 const getDefaultActiveFilter = (tab: FeedbackType) =>
   tab === "suggestion" ? "allSuggest" : "chrono";
+
+const getBrandActiveFilter = (tab: FeedbackType) =>
+  tab === "report" ? "" : "brandSolo";
+
+type ExtendedTab = FeedbackType | "all";
+
+const VALID_TABS: ExtendedTab[] = [
+  "all",
+  "report",
+  "coupdecoeur",
+  "suggestion",
+];
+
+const FEEDBACK_TABS: FeedbackType[] = ["report", "coupdecoeur", "suggestion"];
 
 const getDefaultFilters = (tab: FeedbackType) => ({
   selectedBrand: "",
@@ -70,19 +98,62 @@ function Home() {
   const [searchParams] = useSearchParams();
   const tabFromUrl = searchParams.get("tab") as FeedbackType | null;
   const navigate = useNavigate();
+  const location = useLocation();
+  const { brandSlug } = useParams<{ brandSlug?: string }>();
+  const isBrandRoute = Boolean(brandSlug);
   //const validTabs: FeedbackType[] = ["report", "coupdecoeur", "suggestion"];
-  type ExtendedTab = FeedbackType | "all";
-
-  const validTabs: ExtendedTab[] = [
-    "all",
-    "report",
-    "coupdecoeur",
-    "suggestion",
-  ];
   const safeTab: FeedbackType =
-    tabFromUrl && ["report", "coupdecoeur", "suggestion"].includes(tabFromUrl)
-      ? tabFromUrl
-      : "report";
+    tabFromUrl && FEEDBACK_TABS.includes(tabFromUrl) ? tabFromUrl : "report";
+  const normalizedRouteBrandSlug = brandSlug ? toBrandSlug(brandSlug) : "";
+
+  const { brands: reportBrandLookup, loading: reportBrandsLoading } = useBrands(
+    "report",
+    { enabled: isBrandRoute },
+  );
+  const { brands: cdcBrandLookup, loading: cdcBrandsLoading } = useBrands(
+    "coupdecoeur",
+    { enabled: isBrandRoute },
+  );
+  const { brands: suggestionBrandLookup, loading: suggestionBrandsLoading } =
+    useBrands("suggestion", { enabled: isBrandRoute });
+
+  const currentTabBrandLookup = useMemo(() => {
+    if (safeTab === "coupdecoeur") return cdcBrandLookup;
+    if (safeTab === "suggestion") return suggestionBrandLookup;
+    return reportBrandLookup;
+  }, [safeTab, cdcBrandLookup, reportBrandLookup, suggestionBrandLookup]);
+
+  const allBrandLookup = useMemo(
+    () =>
+      uniqueBrandsBySlug([
+        ...reportBrandLookup,
+        ...cdcBrandLookup,
+        ...suggestionBrandLookup,
+      ]),
+    [cdcBrandLookup, reportBrandLookup, suggestionBrandLookup],
+  );
+
+  const resolvedRouteBrand = useMemo(() => {
+    if (!brandSlug) return null;
+    return (
+      findBrandBySlug(currentTabBrandLookup, brandSlug) ||
+      findBrandBySlug(allBrandLookup, brandSlug)
+    );
+  }, [allBrandLookup, brandSlug, currentTabBrandLookup]);
+
+  const isAnyBrandLookupLoading =
+    reportBrandsLoading || cdcBrandsLoading || suggestionBrandsLoading;
+  const isBrandLookupLoading =
+    isBrandRoute && !resolvedRouteBrand && isAnyBrandLookupLoading;
+  const isBrandRouteNotFound =
+    isBrandRoute && !isBrandLookupLoading && !resolvedRouteBrand;
+  const routeSelectedBrand =
+    isBrandRoute && resolvedRouteBrand ? resolvedRouteBrand.marque : "";
+  const currentSelectedBrand = routeSelectedBrand || selectedBrand;
+  const currentSelectedSiteUrl =
+    isBrandRoute && resolvedRouteBrand
+      ? resolvedRouteBrand.siteUrl || selectedSiteUrl
+      : selectedSiteUrl;
 
   const isAtBottom = useIsAtBottom({
     thresholdPx: BOTTOM_THRESHOLD_PX,
@@ -109,42 +180,55 @@ function Home() {
     //const validTabs: FeedbackType[] = ["report", "coupdecoeur", "suggestion"];
 
     // ❌ uniquement si invalide
-    if (!validTabs.includes(tab as FeedbackType)) {
-      navigate("/feedback?tab=report", { replace: true });
+    if (!VALID_TABS.includes(tab as ExtendedTab)) {
+      navigate(
+        isBrandRoute && normalizedRouteBrandSlug
+          ? `/feedback/${normalizedRouteBrandSlug}`
+          : "/feedback",
+        { replace: true },
+      );
     }
-  }, [searchParams]);
+  }, [isBrandRoute, navigate, normalizedRouteBrandSlug, searchParams]);
 
   useEffect(() => {
     if (safeTab !== activeTab) {
       const defaults = getDefaultFilters(safeTab);
 
-      setSelectedBrand(defaults.selectedBrand);
+      setSelectedBrand(isBrandRoute ? "" : defaults.selectedBrand);
       setSelectedCategory(defaults.selectedCategory);
       setSelectedMainCategory(defaults.selectedMainCategory);
-      setActiveFilter(defaults.activeFilter);
+      setActiveFilter(
+        isBrandRoute ? getBrandActiveFilter(safeTab) : defaults.activeFilter,
+      );
       setSuggestionSearch(defaults.suggestionSearch);
-      setSelectedSiteUrl(defaults.selectedSiteUrl);
+      setSelectedSiteUrl(isBrandRoute ? undefined : defaults.selectedSiteUrl);
       setReportSearchTerm("");
 
       setActiveTab(safeTab);
     }
-  }, [safeTab]);
+  }, [activeTab, isBrandRoute, safeTab]);
   const handleTabChange = useCallback(
     (nextTab: FeedbackType) => {
       if (nextTab === activeTab) return;
 
       const defaults = getDefaultFilters(nextTab);
-      setSelectedBrand(defaults.selectedBrand);
       setSelectedCategory(defaults.selectedCategory);
       setSelectedMainCategory(defaults.selectedMainCategory);
-      setActiveFilter(defaults.activeFilter);
+      setActiveFilter(
+        isBrandRoute ? getBrandActiveFilter(nextTab) : defaults.activeFilter,
+      );
       setSuggestionSearch(defaults.suggestionSearch);
-      setSelectedSiteUrl(defaults.selectedSiteUrl);
       setReportSearchTerm("");
-      navigate(`/feedback?tab=${nextTab}`);
+      if (isBrandRoute && currentSelectedBrand) {
+        navigate(getFeedbackBrandPath(currentSelectedBrand, nextTab));
+      } else {
+        setSelectedBrand(defaults.selectedBrand);
+        setSelectedSiteUrl(defaults.selectedSiteUrl);
+        navigate(getFeedbackPath(nextTab));
+      }
       //setActiveTab(nextTab);
     },
-    [activeTab],
+    [activeTab, currentSelectedBrand, isBrandRoute, navigate],
   );
 
   useEffect(() => {
@@ -165,11 +249,66 @@ function Home() {
     });
   }, []);
 
+  useEffect(() => {
+    if (isBrandRoute) return;
+
+    setSelectedBrand("");
+    setSelectedSiteUrl(undefined);
+  }, [isBrandRoute, location.pathname]);
+
+  useEffect(() => {
+    if (!isBrandRoute || !resolvedRouteBrand) return;
+
+    const canonicalPath = getFeedbackBrandPath(
+      resolvedRouteBrand.marque,
+      safeTab,
+    );
+    const currentPath = `${location.pathname}${location.search}`;
+
+    if (currentPath !== canonicalPath) {
+      navigate(canonicalPath, { replace: true });
+    }
+
+    setSelectedBrand(resolvedRouteBrand.marque);
+    setSelectedSiteUrl(resolvedRouteBrand.siteUrl);
+    setSelectedCategory("");
+    setSelectedMainCategory("");
+    setSuggestionSearch("");
+    setActiveFilter(getBrandActiveFilter(safeTab));
+    setReportSearchTerm("");
+  }, [
+    isBrandRoute,
+    location.pathname,
+    location.search,
+    navigate,
+    resolvedRouteBrand,
+    safeTab,
+  ]);
+
   // ✅ Gestion de la marque
-  const handleSetBrand = useCallback((brand: string, siteUrl?: string) => {
-    setSelectedBrand(brand);
-    setSelectedSiteUrl(siteUrl);
-  }, []);
+  const handleSetBrand = useCallback(
+    (brand: string, siteUrl?: string) => {
+      const normalizedBrand = brand.trim();
+
+      if (!normalizedBrand) {
+        setSelectedBrand("");
+        setSelectedSiteUrl(undefined);
+        navigate(getFeedbackPath(activeTab));
+        return;
+      }
+
+      setSelectedBrand(normalizedBrand);
+      setSelectedSiteUrl(siteUrl);
+
+      const nextPath = getFeedbackBrandPath(normalizedBrand, activeTab);
+      const currentPath = `${location.pathname}${location.search}`;
+
+      if (currentPath !== nextPath) {
+        navigate(nextPath);
+      }
+    },
+    [activeTab, location.pathname, location.search, navigate],
+  );
 
   // ✅ Appel du hook au niveau du composant (conforme aux règles React)
   const {
@@ -184,22 +323,22 @@ function Home() {
   } = useFeedbackData(
     activeTab,
     activeFilter,
-    selectedBrand,
+    currentSelectedBrand,
     selectedCategory,
     suggestionSearch,
   );
 
   const { brandBannerStyle, suggestionBannerStyle } = useBrandColors(
     activeTab,
-    selectedBrand,
+    currentSelectedBrand,
     feedbackData,
-    selectedSiteUrl,
+    currentSelectedSiteUrl,
   );
 
   const { suggestionCategories, coupDeCoeurCategories } = useCategories(
     activeTab,
     feedbackData,
-    selectedBrand,
+    currentSelectedBrand,
   );
 
   const handleSuggestionBrandChange = useCallback(
@@ -227,7 +366,43 @@ function Home() {
     suggestionsForDisplay,
   ]);
   const showMobileFeedbackSidebar =
-    isMobile && !selectedBrand && !selectedCategory;
+    isMobile && !currentSelectedBrand && !selectedCategory;
+
+  if (isBrandLookupLoading || isBrandRouteNotFound) {
+    return (
+      <div className="home-page">
+        <HeroBanner />
+        <main className="feedback-brand-state">
+          <div className="feedback-brand-state__panel">
+            {isBrandLookupLoading ? (
+              <>
+                <p className="feedback-brand-state__eyebrow">Page marque</p>
+                <h1>Chargement de la marque...</h1>
+                <p>On prépare les feedbacks associés à cette marque.</p>
+              </>
+            ) : (
+              <>
+                <p className="feedback-brand-state__eyebrow">
+                  Marque introuvable
+                </p>
+                <h1>Aucun feedback pour cette marque</h1>
+                <p>
+                  La marque demandée n'existe pas ou l'adresse ne correspond à
+                  aucune marque connue.
+                </p>
+                <Link
+                  className="feedback-brand-state__link"
+                  to={getFeedbackPath(safeTab)}
+                >
+                  Revenir aux feedbacks
+                </Link>
+              </>
+            )}
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="home-page">
@@ -249,9 +424,9 @@ function Home() {
                 <FeedbackRightSidebar
                   activeTab={activeTab}
                   activeFilter={activeFilter}
-                  selectedBrand={selectedBrand}
+                  selectedBrand={currentSelectedBrand}
                   selectedCategory={selectedCategory}
-                  selectedSiteUrl={selectedSiteUrl}
+                  selectedSiteUrl={currentSelectedSiteUrl}
                 />
               )}
             </div>
@@ -264,7 +439,7 @@ function Home() {
             activeFilter={activeFilter}
             setActiveFilter={setActiveFilter}
             onThemeChange={handleTabChange}
-            selectedBrand={selectedBrand}
+            selectedBrand={currentSelectedBrand}
             setSelectedBrand={handleSetBrand}
             selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
@@ -272,7 +447,7 @@ function Home() {
             setSelectedMainCategory={setSelectedMainCategory}
             setSelectedSiteUrl={setSelectedSiteUrl}
             brandBannerStyle={brandBannerStyle}
-            selectedSiteUrl={selectedSiteUrl}
+            selectedSiteUrl={currentSelectedSiteUrl}
             displayedCount={displayedCount}
             searchTerm={reportSearchTerm}
             onSearchTermChange={setReportSearchTerm}
@@ -285,7 +460,7 @@ function Home() {
             activeFilter={activeFilter}
             setActiveFilter={setActiveFilter}
             onThemeChange={handleTabChange}
-            selectedBrand={selectedBrand}
+            selectedBrand={currentSelectedBrand}
             setSelectedBrand={handleSetBrand}
             selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
@@ -294,7 +469,7 @@ function Home() {
             coupDeCoeursForDisplay={coupDeCoeursForDisplay}
             totalCount={totalCount}
             filteredByCategory={filteredByCategory}
-            selectedSiteUrl={selectedSiteUrl}
+            selectedSiteUrl={currentSelectedSiteUrl}
             setSelectedSiteUrl={setSelectedSiteUrl}
             isLoading={isLoading}
             isInitialLoading={isInitialLoading}
@@ -309,7 +484,7 @@ function Home() {
             activeFilter={activeFilter}
             setActiveFilter={setActiveFilter}
             onThemeChange={handleTabChange}
-            selectedBrand={selectedBrand}
+            selectedBrand={currentSelectedBrand}
             handleSuggestionBrandChange={handleSuggestionBrandChange}
             selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
@@ -321,7 +496,7 @@ function Home() {
             suggestionsForDisplay={suggestionsForDisplay}
             totalCount={totalCount}
             filteredByCategory={filteredByCategory}
-            selectedSiteUrl={selectedSiteUrl}
+            selectedSiteUrl={currentSelectedSiteUrl}
             isLoading={isLoading}
             showRightPanel={!isMobile}
           />
