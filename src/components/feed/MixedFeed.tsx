@@ -4,6 +4,7 @@ import FeedItemRenderer from "./FeedItemRenderer";
 import ExpandableSearchBar from "@src/components/shared/search/ExpandableSearchBar";
 import Champs from "@src/components/champs/Champs";
 import "./MixedFeed.scss";
+import AuthTooltip from "@src/components/shared/AuthTooltip";
 import {
   FILTER_OPTIONS,
   REPORT_FILTER_OPTIONS,
@@ -40,6 +41,7 @@ const MixedFeed: React.FC<Props> = ({
     setSuggestionFeedFilter,
     showAuthTooltip,
     tooltipText,
+    tooltipPosition,
     activeSecondaryFilterLabel,
   } = useMixedFeed(isPublic, onPublicFiltersChange);
 
@@ -61,6 +63,7 @@ const MixedFeed: React.FC<Props> = ({
               value={isMobile ? "all" : selectedFilter}
               onChange={isMobile ? () => {} : handleFilter} // Bloque le changement sur mobile
               align="left"
+              fitWidthToOptions
             />
           </div>
 
@@ -137,7 +140,11 @@ const MixedFeed: React.FC<Props> = ({
         )}
       </div>
 
-      {showAuthTooltip && <div className="auth-tooltip">{tooltipText}</div>}
+      <AuthTooltip
+        show={showAuthTooltip}
+        text={tooltipText}
+        position={tooltipPosition}
+      />
     </div>
   );
 };

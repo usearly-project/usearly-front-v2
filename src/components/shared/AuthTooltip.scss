@@ -1,0 +1,58 @@
+.auth-tooltip.auth-tooltip-portal {
+  position: fixed;
+  bottom: 55px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #111;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 14px;
+  white-space: nowrap;
+  z-index: 10000;
+  animation: authTooltipFadeInOut 2s ease forwards;
+  pointer-events: none;
+}
+
+.auth-tooltip.auth-tooltip-portal--at-pointer {
+  bottom: auto;
+  transform: translate(10px, -50%);
+  animation: authTooltipFadeInOutAtPointer 2s ease forwards;
+}
+
+@keyframes authTooltipFadeInOut {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 10px);
+  }
+  20% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -5px);
+  }
+}
+
+@keyframes authTooltipFadeInOutAtPointer {
+  0% {
+    opacity: 0;
+    transform: translate(4px, -50%);
+  }
+  20% {
+    opacity: 1;
+    transform: translate(10px, -50%);
+  }
+  80% {
+    opacity: 1;
+    transform: translate(10px, -50%);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(16px, -50%);
+  }
+}

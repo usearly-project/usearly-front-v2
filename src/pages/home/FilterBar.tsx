@@ -502,6 +502,7 @@ const FilterBar: React.FC<Props> = ({
             align="left"
             minWidthPart="2"
             minWidth={170}
+            fitWidthToOptions
           />
         </div>
         <div className="secondary-filters-container">
@@ -549,6 +550,7 @@ const FilterBar: React.FC<Props> = ({
               align="left"
               minWidthPart="2"
               minWidth={170}
+              fitWidthToOptions
             />
           </div>
 

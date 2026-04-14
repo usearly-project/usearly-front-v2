@@ -15,6 +15,8 @@ import lightBulbNoLight from "/assets/icons/lightBulbNoLight.svg";
 import RedirectionExtensionModal from "../modal/RedirectionExtensionModal";
 import simpleLeftHand from "/assets/icons/simple-left-hand.svg";
 import { useIsMobile } from "@src/hooks/use-mobile";
+import AuthTooltip from "@src/components/shared/AuthTooltip";
+import { useAuthTooltip } from "@src/hooks/useAuthTooltip";
 
 interface Props {
   type: "report" | "suggestion" | "coupDeCoeur";
@@ -78,17 +80,17 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const hoverTimeout = useRef<NodeJS.Timeout | null>(null);
   const statusConfig = TICKET_STATUSES.find((s) => s.key === status);
-  const [showAuthTooltip, setShowAuthTooltip] = useState(false);
-  const [tooltipText, setTooltipText] = useState("");
+  const { showAuthTooltip, tooltipText, tooltipPosition, triggerTooltip } =
+    useAuthTooltip();
   const solutionTooltipLabel =
     solutionsCount > 0 ? "Solutions" : "Proposer une solution";
 
   if (!statusConfig) return null;
 
   // --- LOGIQUE DU CLIC SIGNALER ---
-  const handleSignalerClick = () => {
+  const handleSignalerClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (!isAuthenticated) {
-      triggerTooltip("Connecte-toi pour signaler");
+      triggerTooltip("Connecte-toi pour signaler", event);
       return;
     }
 
@@ -106,12 +108,6 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
     }
     await handleReact(emoji);
     setShowEmojiPicker(false);
-  };
-
-  const triggerTooltip = (text: string) => {
-    setTooltipText(text);
-    setShowAuthTooltip(true);
-    setTimeout(() => setShowAuthTooltip(false), 2000);
   };
 
   const reporters = (descriptions ?? [])
@@ -185,8 +181,9 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
             }}
           >
             <button
-              onClick={() =>
-                !isAuthenticated && triggerTooltip("Connecte-toi pour réagir")
+              onClick={(event) =>
+                !isAuthenticated &&
+                triggerTooltip("Connecte-toi pour réagir", event)
               }
               aria-label="Réagir"
             >
@@ -206,9 +203,9 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
           </div>
 
           <button
-            onClick={() =>
+            onClick={(event) =>
               !isAuthenticated
-                ? triggerTooltip("Connecte-toi pour commenter")
+                ? triggerTooltip("Connecte-toi pour commenter", event)
                 : onCommentClick()
             }
             aria-label="Commenter"
@@ -245,16 +242,16 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
             className={`solution-btn ${solutionsCount > 0 ? "solution-btn-active" : "solution-btn-empty"}`}
             data-tooltip={solutionTooltipLabel}
             aria-label={solutionTooltipLabel}
-            onClick={() =>
+            onClick={(event) =>
               !isAuthenticated
-                ? triggerTooltip("Connecte-toi")
+                ? triggerTooltip("Connecte-toi", event)
                 : onOpenSolutionModal?.()
             }
           >
             <img
               src={solutionsCount > 0 ? lightBulbLight : lightBulbNoLight}
-              width={24}
-              height={24}
+              width={22}
+              height={22}
               alt="bulb"
             />
             <span className="solution-span-btn">
@@ -274,7 +271,11 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
         />
       )}
 
-      {showAuthTooltip && <div className="auth-tooltip">{tooltipText}</div>}
+      <AuthTooltip
+        show={showAuthTooltip}
+        text={tooltipText}
+        position={tooltipPosition}
+      />
     </div>
   );
 };

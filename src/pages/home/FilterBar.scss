@@ -72,6 +72,11 @@
       width: 100%;
     }
 
+    .primary-filters {
+      width: fit-content;
+      max-width: 100%;
+    }
+
     .secondary-filters-container {
       justify-content: flex-start;
       flex-wrap: wrap;
@@ -86,9 +91,18 @@
       align-items: stretch;
     }
 
+    .primary-filters {
+      align-items: flex-start;
+    }
+
     .primary-filters > *,
     .secondary-filters-container > * {
       width: 100%;
+    }
+
+    .primary-filters > * {
+      width: fit-content;
+      max-width: 100%;
     }
   }
 

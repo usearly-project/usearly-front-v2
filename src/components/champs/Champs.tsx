@@ -31,6 +31,7 @@ type Props<V extends string = string> = {
   iconVisible?: boolean;
   minWidth?: number;
   minWidthPart?: "1" | "2" | "both";
+  fitWidthToOptions?: boolean;
   align?: "left" | "center" | "right";
   placeholderResetLabel?: string;
   loading?: boolean;
@@ -54,6 +55,7 @@ export default function SelectFilter<V extends string = string>(
     brandSelect,
     iconVisible = true,
     minWidth = 0,
+    fitWidthToOptions = false,
     align = "center",
     minWidthPart = "both",
     placeholderResetLabel,
@@ -120,8 +122,10 @@ export default function SelectFilter<V extends string = string>(
     );
   }, [iconVisible, isBrandSelect, selected]);
 
+  const shouldMeasureOptionsWidth = isBrandSelect || fitWidthToOptions;
+
   useLayoutEffect(() => {
-    if (shouldHideForLoading || !isBrandSelect) {
+    if (shouldHideForLoading || !shouldMeasureOptionsWidth) {
       setAutoMinWidth(null);
       return;
     }
@@ -141,7 +145,7 @@ export default function SelectFilter<V extends string = string>(
     measure();
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);
-  }, [isBrandSelect, shouldHideForLoading, options]);
+  }, [shouldMeasureOptionsWidth, shouldHideForLoading, options, iconVisible]);
 
   useEffect(() => {
     if (!open) return;
@@ -171,7 +175,11 @@ export default function SelectFilter<V extends string = string>(
   };
 
   const cssMinW =
-    Math.max(minWidth, isBrandSelect && autoMinWidth ? autoMinWidth : 0) + "px";
+    Math.max(
+      minWidth,
+      shouldMeasureOptionsWidth && autoMinWidth ? autoMinWidth : 0,
+    ) + "px";
+  const shouldApplyWrapperWidth = fitWidthToOptions && Boolean(autoMinWidth);
 
   return (
     <div
@@ -180,7 +188,10 @@ export default function SelectFilter<V extends string = string>(
       onClick={toggleOpen}
       style={{
         textAlign: align as any,
-        minWidth: minWidthPart !== "2" ? cssMinW : undefined,
+        minWidth:
+          minWidthPart !== "2" || fitWidthToOptions ? cssMinW : undefined,
+        width: shouldApplyWrapperWidth ? cssMinW : undefined,
+        maxWidth: fitWidthToOptions ? "100%" : undefined,
         display: shouldHideForLoading ? "none" : "block",
       }}
     >
@@ -276,7 +287,7 @@ export default function SelectFilter<V extends string = string>(
           "Choisir une marque"
         }
       />
-      {isBrandSelect && (
+      {shouldMeasureOptionsWidth && (
         <div
           className="select-filter-measurements"
           ref={measurementRef}
@@ -285,6 +296,19 @@ export default function SelectFilter<V extends string = string>(
           {options.map((opt, i) => (
             <Trigger
               key={i}
+              leading={
+                fitWidthToOptions && iconVisible
+                  ? isBrandSelect
+                    ? Utils.renderBrandAvatar(
+                        opt,
+                        Utils.BRAND_AVATAR_SIZE,
+                        !opt.value ? "brand-logo--placeholder" : "",
+                        !!opt.value,
+                        !opt.value ? "?" : undefined,
+                      )
+                    : Utils.renderLeadingVisual(opt)
+                  : null
+              }
               label={Utils.getDisplayLabel(opt.label, isBrandSelect)}
               className="select-filter-measure-item"
             />
