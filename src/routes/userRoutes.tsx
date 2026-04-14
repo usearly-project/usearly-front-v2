@@ -48,4 +48,12 @@ export const userRoutes: RouteObject[] = [
       </ProtectedRoute>
     ),
   },
+  {
+    path: "/feedback/:brandSlug",
+    element: (
+      <ProtectedRoute allowedTypes={["user"]}>
+        <Home />
+      </ProtectedRoute>
+    ),
+  },
 ];

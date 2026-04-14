@@ -107,7 +107,7 @@ const SuggestionTabEnhanced: React.FC<Props> = ({
   return (
     <TabLayout
       containerClassName="suggestion-banner-container"
-      bannerStyle={selectedBrand ? suggestionBannerStyle : brandBannerStyle}
+      bannerStyle={selectedBrand ? brandBannerStyle : suggestionBannerStyle}
       activeFilter={activeFilter}
       onglet="suggestion"
       selectedBrand={selectedBrand}

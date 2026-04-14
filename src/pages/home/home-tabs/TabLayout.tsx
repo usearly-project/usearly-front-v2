@@ -40,13 +40,24 @@ const TabLayout: React.FC<TabLayoutProps> = ({
   renderContent,
   showRightPanel = true,
 }) => {
+  const isBrandFocused = Boolean(selectedBrand || selectedCategory);
+  const containerClasses = [
+    containerClassName,
+    selectedBrand ? "banner-filtered" : `banner-${activeFilter}`,
+    selectedBrand ? "brandSelected" : "",
+    selectedCategory ? "brandCategorySelected" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+  const rightPanelClasses = [
+    "right-panel",
+    isBrandFocused ? "right-panel--brand-colored" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <div
-      className={`${containerClassName} ${
-        selectedBrand ? "banner-filtered" : `banner-${activeFilter}`
-      }`}
-      style={bannerStyle}
-    >
+    <div className={containerClasses} style={bannerStyle}>
       {/* -----------------------------
           Colonne centrale
       --------------------------------*/}
@@ -68,7 +79,10 @@ const TabLayout: React.FC<TabLayoutProps> = ({
           Colonne droite — BANDEAU
       --------------------------------*/}
       {showRightPanel && (
-        <aside className="right-panel">
+        <aside
+          className={rightPanelClasses}
+          style={isBrandFocused ? bannerStyle : undefined}
+        >
           <FeedbackRightSidebar
             activeTab={onglet}
             activeFilter={activeFilter}
