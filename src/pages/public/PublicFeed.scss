@@ -54,11 +54,11 @@
   }
 
   @media screen and (max-width: 1350px) {
-    grid-template-columns: minmax(300px, 310px) 1fr;
+    grid-template-columns: minmax(280px, 280px) 1fr minmax(280px, 280px);
     max-width: none;
     gap: 15px;
-    padding-left: 14px;
-    padding-right: 14px;
+    padding-left: 60px;
+    padding-right: 60px;
 
     .public-feed-center {
       .mixed-feed {

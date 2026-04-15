@@ -8,7 +8,7 @@ import LeftSidebar from "./components/sidebars/LeftSidebar";
 import RightSidebar from "./components/sidebars/RightSidebar";
 
 function PublicFeed() {
-  const isCompactDesktop = useIsMobile("(max-width: 1350px)");
+  // const isCompactDesktop = useIsMobile("(max-width: 1350px)");
   const isMobileLayout = useIsMobile("(max-width: 992px)");
   const [publicFeedFilters, setPublicFeedFilters] =
     useState<PublicFeedFilterState>({
@@ -38,7 +38,7 @@ function PublicFeed() {
           />
         </main>
 
-        {!isCompactDesktop && (
+        {!isMobileLayout && (
           <aside className="public-feed-right">
             <RightSidebar filters={publicFeedFilters} />
           </aside>
