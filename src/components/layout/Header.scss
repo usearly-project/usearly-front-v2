@@ -40,6 +40,10 @@
     gap: 0.6rem;
     cursor: pointer;
 
+    &.navigation-blocked {
+      cursor: default;
+    }
+
     img {
       width: 36px;
       height: auto;
@@ -870,6 +874,10 @@
     gap: 5px;
     cursor: pointer;
     z-index: 1200;
+  }
+
+  .header .burger.navigation-blocked {
+    cursor: default;
   }
 
   .header .burger span {

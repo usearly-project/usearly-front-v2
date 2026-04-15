@@ -1,3 +1,5 @@
+@use "@src/styles/base/variables" as *;
+
 $blue-bg: #f1f7fe;
 $yellow: #ffeb3b;
 $green-progress: #48bb78;
@@ -6,9 +8,10 @@ $green-progress: #48bb78;
   background: #fff;
   border-radius: 24px;
   padding: 16px;
+  padding-bottom: 8px;
   margin: 10px 12px;
-  border: 1px solid #f2f2f2;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  border: 0.5px solid #ededed;
+  box-shadow: 0 2px 2.2px 0 rgba(0, 0, 0, 0.13);
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -18,25 +21,30 @@ $green-progress: #48bb78;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 10px;
 
     .header-reporters {
       .reporters-inline-stack {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 28px;
         .avatar-pile {
           display: flex;
+          flex-direction: row-reverse;
           .pile-item {
-            margin-right: -10px;
+            margin-right: -20px;
+            .avatar-wrapper-custom {
+              border: 1px solid #fff;
+              max-height: 20px !important;
+            }
             .avatar-img-custom {
-              // border: 1.5px solid #fff !important;
               border-radius: 50% !important;
             }
           }
         }
         .count {
-          font-weight: 700;
-          font-size: 13px;
+          font-weight: 900;
+          font-size: 28px;
         }
       }
       .type-badge-icon {
@@ -47,18 +55,20 @@ $green-progress: #48bb78;
     .header-author {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 6px;
       .author-text {
-        font-size: 13px;
-        color: #4a5568;
+        font-size: 12px;
+        font-weight: 400;
+        color: #1a1a1a;
         strong {
           color: #000;
         }
       }
       .avatar-overlap-wrapper {
         position: relative;
-        width: 55px;
-        height: 38px;
+        width: 50px;
+        height: 50px;
+        margin-right: 32px;
         .main-avatar {
           position: absolute;
           left: 0;
@@ -70,10 +80,10 @@ $green-progress: #48bb78;
         }
         .brand-badge {
           position: absolute;
-          right: -10px;
+          right: -35px;
           bottom: 0;
-          width: 38px;
-          height: 38px;
+          width: 50px;
+          height: 50px;
           z-index: 2;
           background: #fff;
           border-radius: 50%;
@@ -86,6 +96,8 @@ $green-progress: #48bb78;
 
   // --- BODY ---
   .mobile-actu-body {
+    --subcategory-icon-width: 60px;
+
     .title-row {
       display: flex;
       justify-content: space-between;
@@ -95,6 +107,9 @@ $green-progress: #48bb78;
         display: flex;
         align-items: center;
         gap: 8px;
+        .subcategory-icon {
+          flex: 0 0 auto;
+        }
         .icon-q {
           width: 26px;
           height: 26px;
@@ -106,9 +121,11 @@ $green-progress: #48bb78;
           font-weight: 900;
         }
         .title {
-          font-size: 17px;
+          font-size: 18px;
           font-weight: 800;
+          font-family: $font-family-3;
           margin: 0;
+          line-height: 1.2;
         }
       }
       .date-relative {
@@ -117,8 +134,9 @@ $green-progress: #48bb78;
       }
     }
     .description {
-      font-size: 14px;
-      color: #4a5568;
+      font-size: 15px;
+      color: #000;
+      font-weight: 300;
       .see-more {
         font-weight: 800;
         color: #000;
@@ -193,8 +211,6 @@ $green-progress: #48bb78;
   // --- FOOTER ---
   .mobile-actu-footer {
     padding-top: 12px;
-    border-top: 1px solid #f2f2f2;
-    margin-top: 10px;
 
     // --- 1. Style pour SIGNALEMENT (PopularReportActions) ---
     .popular-report-actions {
@@ -235,7 +251,7 @@ $green-progress: #48bb78;
       .brand-info-row,
       .feedback-description,
       .feedback-author-row, // Ajouté : Masque "Manon x Zara" interne
-      .feedback-status,     // Ajouté : Masque la date "1 mois" interne
+      .feedback-status, // Ajouté : Masque la date "1 mois" interne
       .description-text {
         // Ajouté : Masque le texte de secours interne
         display: none !important;
@@ -278,51 +294,91 @@ $green-progress: #48bb78;
     height: 100% !important;
   }
 
-  // On cible le container que tu as ajouté dans FeedbackRight.tsx
   .feedback-mobile-visual-container {
-    // 1. FORCE LE BORD À BORD
-    // On calcule 100% de la largeur + les 16px de padding de chaque côté (32px total)
     width: calc(100% + 32px) !important;
-    margin-left: -16px !important; // Tire l'image vers la gauche pour coller au bord
-    margin-right: -16px !important; // Tire l'image vers la droite
-
+    margin-left: -16px !important;
+    margin-right: -16px !important;
     margin-top: 4px;
-    margin-bottom: 16px;
-    aspect-ratio: 1 / 1;
+    min-height: clamp(340px, 95vw, 460px);
     overflow: hidden;
 
-    // 2. FORCE LE CONTENU À PRENDRE TOUTE LA PLACE
     .feedback-type,
     .feedback-left {
-      height: 100% !important;
-      width: 100% !important;
-      padding: 0 !important;
+      align-items: center !important;
       display: flex !important;
       flex-direction: column !important;
+      gap: 18px !important;
+      height: 100% !important;
+      justify-content: center !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      min-height: clamp(340px, 95vw, 460px) !important;
+      padding: 0 !important;
+      width: 100% !important;
     }
 
-    // 3. TAILLE DE L'ICÔNE (Caddie)
     .illu-wrapper {
-      flex: 1 !important;
-      display: flex !important;
       align-items: center !important;
+      display: flex !important;
+      flex: 0 0 auto !important;
       justify-content: center !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100% !important;
 
       svg,
       .illu-image,
       img {
-        // On augmente encore un peu pour que ce soit imposant comme sur ta maquette
-        width: 180px !important;
-        height: 180px !important;
-        max-width: 80% !important;
+        height: clamp(190px, 52vw, 240px) !important;
+        max-width: 82% !important;
         object-fit: contain !important;
+        width: clamp(190px, 52vw, 240px) !important;
       }
     }
 
-    // 4. LES BULLES (Punchlines)
-    // On remet du padding interne pour que les bulles ne touchent pas le bord de l'écran
     .punchlines {
-      padding: 20px !important;
+      align-items: center !important;
+      box-sizing: border-box !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: center !important;
+      margin: 0 !important;
+      padding: 0 8px !important;
+      text-align: center !important;
+      width: 100% !important;
+
+      .bubble,
+      .bubble.primary,
+      .bubble.secondary {
+        align-items: center !important;
+        align-self: center !important;
+        border-radius: 999px !important;
+        box-sizing: border-box !important;
+        display: flex !important;
+        font-size: clamp(19px, 5vw, 24px) !important;
+        justify-content: center !important;
+        line-height: 1.1 !important;
+        max-width: calc(100vw - 32px) !important;
+        min-width: 0 !important;
+        overflow-wrap: normal !important;
+        padding: 11px 24px !important;
+        text-align: center !important;
+        white-space: nowrap !important;
+        width: fit-content !important;
+        word-break: normal !important;
+
+        br {
+          display: none !important;
+        }
+      }
+
+      .bubble.primary {
+        transform: translateX(-20px) !important;
+      }
+
+      .bubble.secondary {
+        transform: translateX(40px) !important;
+      }
     }
   }
 
@@ -354,6 +410,7 @@ $green-progress: #48bb78;
       .solution-btn {
         padding: 6px 14px !important;
         min-width: unset !important; // Permet au bouton de rétrécir
+        background-color: #fff;
 
         span {
           font-size: 13px; // Un peu plus petit pour mobile
@@ -366,6 +423,8 @@ $green-progress: #48bb78;
 
   .description-container {
     position: relative;
+    margin-left: calc(var(--subcategory-icon-width) + 5px);
+    padding-right: 10px;
 
     .see-more,
     .see-less {
@@ -419,6 +478,17 @@ $green-progress: #48bb78;
     }
   }
 }
+
+.type-cdc {
+  .is-mobile-version {
+    .feedback-content {
+      .feedback-mobile-visual-container {
+        margin-top: 0;
+      }
+    }
+  }
+}
+
 .image-zoom-overlay {
   position: fixed;
   top: 0;

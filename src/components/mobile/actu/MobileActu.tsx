@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import "./MobileActu.scss";
 
@@ -17,6 +17,8 @@ import { getCategoryIconPathFromSubcategory } from "@src/utils/IconsUtils";
 import starProgressBar from "/assets/icons/icon-progress-bar.svg";
 import { useMobileActu } from "../hooks/useMobileActu";
 
+const DEFAULT_SUBCATEGORY_ICON_WIDTH = 60;
+
 interface MobileActuProps {
   item: any;
   type: "report" | "suggestion" | "cdc";
@@ -30,6 +32,10 @@ const MobileActu: React.FC<MobileActuProps> = ({
 }) => {
   const { userProfile } = useAuth();
   const barRef = useRef<HTMLDivElement>(null);
+  const subcategoryIconRef = useRef<HTMLImageElement>(null);
+  const [subcategoryIconWidth, setSubcategoryIconWidth] = useState(
+    DEFAULT_SUBCATEGORY_ICON_WIDTH,
+  );
   const { state, actions } = useMobileActu(item, type, userProfile);
 
   const isReport = type === "report";
@@ -37,6 +43,36 @@ const MobileActu: React.FC<MobileActuProps> = ({
   const author = isReport ? firstDesc?.author : item.author;
   const brandName = isReport ? item.marque : item.brand || item.marque;
   const userCapture = firstDesc?.capture || item.capture;
+
+  useEffect(() => {
+    if (!isReport) return;
+
+    const icon = subcategoryIconRef.current;
+    if (!icon) return;
+
+    const updateIconWidth = () => {
+      const width = icon.getBoundingClientRect().width;
+
+      if (width > 0) {
+        setSubcategoryIconWidth(width);
+      }
+    };
+
+    updateIconWidth();
+    icon.addEventListener("load", updateIconWidth);
+
+    let resizeObserver: ResizeObserver | undefined;
+
+    if (typeof ResizeObserver !== "undefined") {
+      resizeObserver = new ResizeObserver(updateIconWidth);
+      resizeObserver.observe(icon);
+    }
+
+    return () => {
+      icon.removeEventListener("load", updateIconWidth);
+      resizeObserver?.disconnect();
+    };
+  }, [isReport, item.subCategory]);
 
   return (
     <div className={`mobile-actu-card type-${type}`}>
@@ -85,7 +121,7 @@ const MobileActu: React.FC<MobileActuProps> = ({
                             avatar={r.author?.avatar}
                             pseudo={r.author?.pseudo}
                             type="user"
-                            sizeHW={22}
+                            sizeHW={30}
                           />
                         </div>
                       ))}
@@ -103,7 +139,7 @@ const MobileActu: React.FC<MobileActuProps> = ({
                   avatar={author?.avatar}
                   pseudo={author?.pseudo}
                   type="user"
-                  sizeHW={38}
+                  sizeHW={50}
                 />
                 <div className="brand-badge">
                   <Avatar
@@ -114,7 +150,7 @@ const MobileActu: React.FC<MobileActuProps> = ({
                     }
                     pseudo={brandName}
                     type="brand"
-                    sizeHW={38}
+                    sizeHW={50}
                     preferBrandLogo={true}
                   />
                 </div>
@@ -122,10 +158,18 @@ const MobileActu: React.FC<MobileActuProps> = ({
             </div>
           </div>
 
-          <div className="mobile-actu-body">
+          <div
+            className="mobile-actu-body"
+            style={
+              {
+                "--subcategory-icon-width": `${subcategoryIconWidth}px`,
+              } as React.CSSProperties
+            }
+          >
             <div className="title-row">
               <div className="title-group">
                 <img
+                  ref={subcategoryIconRef}
                   src={getCategoryIconPathFromSubcategory(item.subCategory)}
                   alt=""
                   className="subcategory-icon"

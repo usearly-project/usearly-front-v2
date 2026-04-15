@@ -101,7 +101,7 @@ const HeroBanner = ({
     return (
       <div className="hero-banner-mobile">
         <p className="mobile-impact-text">
-          L'impact de la communauté cette semaine :
+          L'impact de la communauté cette semaine
         </p>
         <div className="mobile-stats-row">
           {statItems.map((item) => (

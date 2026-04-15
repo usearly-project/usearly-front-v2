@@ -59,7 +59,10 @@
 
 @media (max-width: 768px) {
   .feed-header__top {
+    flex-direction: row !important;
+    padding: 0 16px;
     align-items: stretch;
+    flex-wrap: nowrap;
   }
 
   .primary-filters,
@@ -88,16 +91,91 @@
   }
 }
 
-.is-mobile {
-  .primary-filters {
-    // On cache la petite flèche (chevron) du composant Champs
-    // Remplace .chevron par la vraie classe utilisée dans ton composant Champs
-    svg,
-    .icon-arrow {
-      display: none !important;
+.mixed-feed.is-mobile {
+  .feed-header__top {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .feed-header__mobile-title {
+    margin: 0;
+    color: #111827;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.15;
+  }
+
+  .feed-header__brand-filter {
+    // Ancienne largeur : 100%
+    width: 230px;
+    max-width: 100%;
+
+    .select-filter-wrapper {
+      width: 165px;
+      max-width: 100%;
+      min-width: 165px !important;
     }
 
-    // On désactive les effets de survol
-    pointer-events: none;
+    .popup-hot-filter {
+      // Ancien format : 230px fixes, ce qui pouvait sortir de l'écran mobile.
+      // width: 230px;
+      // max-width: 100%;
+      // min-width: 230px !important;
+      left: auto;
+      right: 0;
+      width: min(230px, calc(100vw - 32px));
+      max-width: calc(100vw - 32px);
+      min-width: min(230px, calc(100vw - 32px)) !important;
+
+      &.is-open {
+        max-height: min(360px, calc(100dvh - 140px));
+      }
+
+      .popup-hot-filter-container {
+        overscroll-behavior: contain;
+      }
+    }
+
+    .select-filter-display {
+      justify-content: space-between;
+
+      .select-filter-icon--image {
+        width: 25px;
+        height: 25px;
+      }
+    }
+
+    .select-filter-content {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .select-filter-label {
+      display: block;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .select-filter-option-label {
+      white-space: nowrap;
+    }
+
+    .select-filter-option-leading .select-filter-icon--image {
+      width: 35px;
+      height: 35px;
+    }
+  }
+
+  .primary-filters {
+    width: 100%;
+
+    // Ancien rendu mobile : le titre passait par un Champs désactivé.
+    // svg,
+    // .icon-arrow {
+    //   display: none !important;
+    // }
+    // pointer-events: none;
   }
 }

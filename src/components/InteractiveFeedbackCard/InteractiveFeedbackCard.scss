@@ -40,6 +40,9 @@
             .feedback-meta {
               .user-brand-line {
                 font-size: clamp(8px, 1vw, 12px);
+                .user-name {
+                  font-weight: 400;
+                }
               }
               .feedback-date {
                 font-size: clamp(8px, 1.5vw, 12px);
@@ -125,6 +128,9 @@
     align-items: center;
     gap: 0.5rem;
     margin-bottom: 20px;
+    @media screen and (max-width: 768px) {
+      margin-bottom: 10px;
+    }
 
     .pg {
       position: relative;
@@ -137,8 +143,10 @@
 
     .pg-fill {
       height: 100%;
-      background: #5d87ff;
+      background: #83f6ad;
       border-radius: 999px;
+      border: 1px solid #0c0c0c;
+      box-shadow: 3px 1px 0 0 #000;
       transition: width 0.25s ease;
     }
 
@@ -407,6 +415,9 @@
     flex: 1 1 auto;
     min-height: 0;
     gap: 22.5px;
+    @media screen and (max-width: 768px) {
+      gap: 8px;
+    }
 
     .feedback-header {
       display: flex;
@@ -571,6 +582,11 @@
         overflow-y: visible;
         max-height: none;
         margin: 0;
+        color: #000;
+
+        @media screen and (max-width: 768px) {
+          margin: 12px 0;
+        }
 
         &.is-expanded {
           overflow-y: visible;
@@ -641,7 +657,9 @@
   }
 
   .feedback-right {
-    padding: 12px;
+    padding-left: 12px;
+    padding-bottom: 0px;
+    padding-right: 0;
   }
 
   .feedback-comments {

@@ -1,7 +1,7 @@
 import Avatar from "@src/components/shared/Avatar";
 import type { BrandReportStats } from "../home-grouped-reports-list/utils/brandReportStats";
 import arrowRight from "/assets/icons/arrow-right.svg";
-import lightBulbNoLight from "/assets/icons/lightBulbNoLight.svg";
+import lightBulbNoLight from "/assets/icons/solution-icon-light.svg";
 
 const brandStatsNumberFormatter = new Intl.NumberFormat("fr-FR");
 

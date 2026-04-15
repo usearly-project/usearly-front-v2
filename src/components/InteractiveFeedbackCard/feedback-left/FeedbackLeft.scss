@@ -88,15 +88,27 @@
     padding: 24px !important; // Plus d'espace sur les bords
     justify-content: flex-start !important; // On part du haut
     gap: 32px !important; // CRUCIAL : Crée l'espace vide entre texte et image
-    text-align: left !important; // On aligne à gauche comme la maquette
-    align-items: flex-start !important;
+    text-align: center !important;
+    align-items: center !important;
 
     .punchlines {
       width: 100%;
       display: flex;
       flex-direction: column;
+      align-items: center;
       gap: 10px;
       margin-bottom: 10px;
+    }
+
+    .feedback-bubble {
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    .punchlines .bubble,
+    .punchlines .bubble.primary,
+    .punchlines .bubble.secondary {
+      align-self: center !important;
     }
 
     .illu-wrapper {
@@ -121,7 +133,7 @@
     // Si tu es en axe Typography (titre sans bulles)
     .punchline-typography {
       font-size: 1.4rem !important;
-      text-align: left !important;
+      text-align: center !important;
       width: 100%;
     }
 

@@ -6,6 +6,7 @@ import Logo from "@src/assets/logo.svg";
 import { useAuth } from "@src/services/AuthContext";
 import { getNotifications } from "@src/services/notificationService";
 import Buttons from "@src/components/buttons/Buttons";
+import { useIsMobile } from "@src/hooks/use-mobile";
 import UsearlyText from "/assets/UsearlyText.svg";
 
 const HEADER_HIDE_SCROLL_Y = 30;
@@ -34,6 +35,8 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
   const prevUnreadCountRef = useRef(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isHeaderHidden, setIsHeaderHidden] = useState(false);
+  const isMobileHeader = useIsMobile("(max-width: 768px)");
+  const isHeaderNavigationBlocked = isMobileHeader;
   const hiddenRef = useRef(false);
   const lastScrollYRef = useRef(0);
   const activeScrollYRef = useRef(0);
@@ -96,6 +99,13 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  useEffect(() => {
+    if (isHeaderNavigationBlocked) {
+      setMobileMenuOpen(false);
+      setUserMenuOpen(false);
+    }
+  }, [isHeaderNavigationBlocked]);
 
   useEffect(() => {
     const isFeedbackRoute = location.pathname.startsWith("/");
@@ -215,6 +225,18 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
     navigate("/");
   };
 
+  const handleLogoClick = () => {
+    if (isHeaderNavigationBlocked) return;
+
+    navigate("/home");
+  };
+
+  const handleBurgerClick = () => {
+    if (isHeaderNavigationBlocked) return;
+
+    setMobileMenuOpen((prev) => !prev);
+  };
+
   return (
     <header
       className={`header component-header-container ${heroMode ? "hero-mode" : ""} ${
@@ -223,7 +245,11 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
     >
       <div className="header-container">
         {/* ================= LOGO ================= */}
-        <div className="logo" onClick={() => navigate("/home")}>
+        <div
+          className={`logo ${isHeaderNavigationBlocked ? "navigation-blocked" : ""}`}
+          onClick={handleLogoClick}
+          aria-disabled={isHeaderNavigationBlocked}
+        >
           <img src={Logo} alt="Usearly Logo" />
           <span className="logo-text">
             <img src={UsearlyText} alt="logo usearly" />
@@ -232,8 +258,11 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
 
         {/* ================= BURGER (Mobile only via CSS) ================= */}
         <div
-          className={`burger ${mobileMenuOpen ? "open" : ""}`}
-          onClick={() => setMobileMenuOpen((prev) => !prev)}
+          className={`burger ${mobileMenuOpen ? "open" : ""} ${
+            isHeaderNavigationBlocked ? "navigation-blocked" : ""
+          }`}
+          onClick={handleBurgerClick}
+          aria-disabled={isHeaderNavigationBlocked}
         >
           <span></span>
           <span></span>

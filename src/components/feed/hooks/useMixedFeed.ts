@@ -3,8 +3,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { usePublicFeed } from "@src/hooks/usePublicFeed";
 import { useAuth } from "@src/services/AuthContext";
 import { filterFeedItems } from "@src/utils/feedSearch";
+import type { FeedItem } from "@src/types/feedItem";
 import type {
   FeedFilterValue,
+  FeedBrandFilterOption,
   ReportFeedFilterValue,
   CdcFeedFilterValue,
   SuggestionFeedFilterValue,
@@ -40,13 +42,32 @@ const SUGGESTION_FILTER_LABELS: Record<SuggestionFeedFilterValue, string> = {
   likedSuggestion: "Suggestions adoptées",
 };
 
+const normalizeBrandName = (value: string) =>
+  value
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim();
+
+const getFeedItemBrand = (item: FeedItem) =>
+  String(item.data.marque ?? "").trim();
+
+const getFeedItemSiteUrl = (item: FeedItem) => {
+  const siteUrl = item.data.siteUrl;
+  return typeof siteUrl === "string" && siteUrl.trim()
+    ? siteUrl.trim()
+    : undefined;
+};
+
 export const useMixedFeed = (
   isPublic: boolean,
   onPublicFiltersChange?: (filters: PublicFeedFilterState) => void,
+  isMobile = false,
 ) => {
   const { isAuthenticated } = useAuth();
   const { feed, loadMore, loading, hasMore } = usePublicFeed();
   const [searchValue, setSearchValue] = useState("");
+  const [selectedBrand, setSelectedBrand] = useState("");
   const { showAuthTooltip, tooltipText, tooltipPosition, triggerTooltip } =
     useAuthTooltip();
 
@@ -61,6 +82,32 @@ export const useMixedFeed = (
     useState<CdcFeedFilterValue>("chrono");
   const [suggestionFeedFilter, setSuggestionFeedFilter] =
     useState<SuggestionFeedFilterValue>("allSuggest");
+
+  const availableBrands = useMemo<FeedBrandFilterOption[]>(() => {
+    const brandMap = new Map<string, FeedBrandFilterOption>();
+
+    feed.forEach((item) => {
+      const brand = getFeedItemBrand(item);
+      if (!brand) return;
+
+      const key = normalizeBrandName(brand);
+      const siteUrl = getFeedItemSiteUrl(item);
+      const existing = brandMap.get(key);
+
+      if (!existing) {
+        brandMap.set(key, { brand, siteUrl });
+        return;
+      }
+
+      if (siteUrl && !existing.siteUrl) {
+        existing.siteUrl = siteUrl;
+      }
+    });
+
+    return Array.from(brandMap.values()).sort((a, b) =>
+      a.brand.localeCompare(b.brand, "fr", { sensitivity: "base" }),
+    );
+  }, [feed]);
 
   // --- LOGIQUE DE L'URL ---
   const selectedFilter: FeedFilterValue = useMemo(() => {
@@ -83,14 +130,24 @@ export const useMixedFeed = (
               : item.type === selectedFilter,
           );
 
-    let sorted = typeFiltered;
+    const normalizedSelectedBrand = normalizeBrandName(selectedBrand);
+    const brandFiltered =
+      isMobile && normalizedSelectedBrand
+        ? typeFiltered.filter(
+            (item) =>
+              normalizeBrandName(getFeedItemBrand(item)) ===
+              normalizedSelectedBrand,
+          )
+        : typeFiltered;
+
+    let sorted = brandFiltered;
     if (selectedFilter === "report") {
-      sorted = sortReportsByFilter(typeFiltered as any, reportFeedFilter);
+      sorted = sortReportsByFilter(brandFiltered as any, reportFeedFilter);
     } else if (selectedFilter === "coupdecoeur") {
-      sorted = sortCdcByFilter(typeFiltered as any, cdcFeedFilter);
+      sorted = sortCdcByFilter(brandFiltered as any, cdcFeedFilter);
     } else if (selectedFilter === "suggestion") {
       sorted = sortSuggestionsByFilter(
-        typeFiltered as any,
+        brandFiltered as any,
         suggestionFeedFilter,
       );
     }
@@ -103,6 +160,8 @@ export const useMixedFeed = (
     cdcFeedFilter,
     suggestionFeedFilter,
     searchValue,
+    selectedBrand,
+    isMobile,
   ]);
 
   const handleFilter = (type: FeedFilterValue) => {
@@ -140,12 +199,19 @@ export const useMixedFeed = (
   }, [selectedFilter, isPublic]);
 
   useEffect(() => {
+    if (!isMobile && selectedBrand) {
+      setSelectedBrand("");
+    }
+  }, [isMobile, selectedBrand]);
+
+  useEffect(() => {
     if (isPublic && onPublicFiltersChange) {
       onPublicFiltersChange({
         selectedFilter,
         reportFeedFilter,
         cdcFeedFilter,
         suggestionFeedFilter,
+        selectedBrand: isMobile ? selectedBrand : "",
       });
     }
   }, [
@@ -153,6 +219,8 @@ export const useMixedFeed = (
     reportFeedFilter,
     cdcFeedFilter,
     suggestionFeedFilter,
+    selectedBrand,
+    isMobile,
     isPublic,
     onPublicFiltersChange,
   ]);
@@ -164,6 +232,9 @@ export const useMixedFeed = (
     loadMore,
     searchValue,
     setSearchValue,
+    selectedBrand,
+    setSelectedBrand,
+    availableBrands,
     selectedFilter,
     handleFilter,
     reportFeedFilter,

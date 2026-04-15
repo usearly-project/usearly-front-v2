@@ -11,7 +11,7 @@ import ReportAvatars from "@src/pages/public/components/ReportAvatar/ReportsAvat
 import type { User } from "@src/types/Reports";
 import { useAuth } from "@src/services/AuthContext";
 import lightBulbLight from "/assets/icons/solution-icon-light.svg";
-import lightBulbNoLight from "/assets/icons/lightBulbNoLight.svg";
+import lightBulbNoLight from "/assets/icons/solution-icon-light.svg";
 import RedirectionExtensionModal from "../modal/RedirectionExtensionModal";
 import simpleLeftHand from "/assets/icons/simple-left-hand.svg";
 import { useIsMobile } from "@src/hooks/use-mobile";
@@ -187,7 +187,7 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
               }
               aria-label="Réagir"
             >
-              <ThumbsUp size={18} />
+              <ThumbsUp size={isMobile ? 18 : 22} />
               <span className="reagir-span-btn">Réagir</span>
             </button>
             {showEmojiPicker && isAuthenticated && (
@@ -210,7 +210,7 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
             }
             aria-label="Commenter"
           >
-            <MessageCircle size={18} />
+            <MessageCircle size={isMobile ? 18 : 22} />
             <span className="commenter-span-btn">Commenter</span>
           </button>
         </div>
@@ -236,7 +236,7 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
             onClick={handleSignalerClick}
           >
             <img src={simpleLeftHand} alt="" />
-            <span className="signaler-span-btn">J'ai aussi ce problème</span>
+            <span className="signaler-span-btn">Signaler</span>
           </button>
           <button
             className={`solution-btn ${solutionsCount > 0 ? "solution-btn-active" : "solution-btn-empty"}`}
