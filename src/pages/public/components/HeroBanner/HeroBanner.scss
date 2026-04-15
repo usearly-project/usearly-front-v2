@@ -157,24 +157,54 @@
 
 // --- DESIGN MOBILE (BANDEAU FIN) ---
 .hero-banner-mobile {
-  background-color: #10163a;
-  padding: 15px 20px;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 150px;
+  background:
+    radial-gradient(
+      circle at 48% 32%,
+      rgba(255, 255, 255, 0.03) 0,
+      rgba(255, 255, 255, 0) 36%
+    ),
+    #0e0431;
+  padding: 17px 20px 13px;
   color: white;
-  width: 100vw;
+  width: 100%;
   text-align: center;
+  place-content: center;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
+  &::before {
+    content: "";
+    position: absolute;
+    top: -45px;
+    left: -38px;
+    z-index: -1;
+    width: 205px;
+    height: 160px;
+    background: url("/assets/images/chat-top-bar.svg") center / contain
+      no-repeat;
+    opacity: 0.14;
+    pointer-events: none;
+  }
+
   .mobile-impact-text {
-    font-size: 13px;
-    font-weight: 300;
-    margin-bottom: 8px;
-    opacity: 0.8;
+    position: relative;
+    z-index: 1;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.2;
+    margin: 0 0 12px;
+    opacity: 0.88;
   }
 
   .mobile-stats-row {
+    position: relative;
+    z-index: 1;
     display: flex;
     justify-content: center;
-    gap: 25px;
+    gap: 27px;
 
     .mobile-stat {
       appearance: none;
@@ -184,8 +214,9 @@
       font: inherit;
       display: flex;
       align-items: center;
-      gap: 6px;
-      padding: 4px;
+      gap: 5px;
+      min-width: 50px;
+      padding: 0;
       border-radius: 8px;
       cursor: pointer;
 
@@ -195,16 +226,53 @@
       }
 
       .value {
-        font-size: 28px;
-        font-weight: 800;
-        line-height: 1;
+        font-size: 42px;
+        font-weight: 900;
+        line-height: 0.95;
+        letter-spacing: 0;
       }
 
       img {
-        width: 22px;
-        height: 22px;
+        width: 32px;
+        height: 32px;
         object-fit: contain;
         pointer-events: none;
+      }
+    }
+  }
+}
+
+@media (min-width: 520px) and (max-width: 992px) {
+  .hero-banner-mobile {
+    min-height: 112px;
+    padding-top: 20px;
+
+    &::before {
+      top: -78px;
+      left: -34px;
+      width: 270px;
+      height: 210px;
+    }
+
+    .mobile-impact-text {
+      font-size: 16px;
+      margin-bottom: 14px;
+    }
+
+    .mobile-stats-row {
+      gap: 54px;
+
+      .mobile-stat {
+        min-width: 68px;
+
+        .value {
+          font-size: 34px;
+        }
+
+        img {
+          width: 28px;
+          height: 28px;
+        }
       }
     }
   }

@@ -64,7 +64,7 @@ const FeedbackBubble = forwardRef<HTMLDivElement, BubbleProps>((props, ref) => {
       );
       const first = words.slice(0, k).join(" ");
       const second = words.slice(k).join(" ");
-      formattedHtml = second ? `${first}<br/>${second}` : first;
+      formattedHtml = second ? `${first} <br/>${second}` : first;
     } else {
       formattedHtml = reflowPreferTwoLines(line, wrapWordCount as number);
     }

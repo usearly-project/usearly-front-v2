@@ -67,5 +67,5 @@ export function reflowPreferTwoLines(
   const first = words.slice(0, k).join(" ");
   const second = words.slice(k).join(" ");
 
-  return second ? `${first}<br/>${second}` : first;
+  return second ? `${first} <br/>${second}` : first;
 }

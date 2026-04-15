@@ -124,7 +124,7 @@
               object-fit: cover;
               border-radius: 50%;
               // border: 2px solid #f0f0f0;
-              backdrop-filter: blur(5px);
+              background-color: white;
             }
 
             .avatar-fallback-custom {
