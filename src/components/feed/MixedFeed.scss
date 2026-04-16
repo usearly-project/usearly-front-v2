@@ -93,8 +93,10 @@
 
 .mixed-feed.is-mobile {
   .feed-header__top {
-    flex-direction: column;
+    flex-direction: row;
     align-items: stretch;
+    flex-wrap: nowrap;
+    padding-left: 16px;
   }
 
   .feed-header__mobile-title {
