@@ -28,7 +28,7 @@ export default function PrivacyPolicy() {
             Nous ne collectons pas de données permettant d’identifier
             directement une personne (telles que nom, prénom, adresse postale ou
             numéro de téléphone). Cependant, certaines données techniques, comme
-            l’adresse IP, peuvent être collectées dans le cadre du
+            l’adresse email, pseudo, peuvent être collectées dans le cadre du
             fonctionnement du service.
           </p>
 
