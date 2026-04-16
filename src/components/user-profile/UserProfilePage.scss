@@ -9,6 +9,10 @@
 
 .profile-main-wrapper {
   position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 10px;
   margin-top: 24px;
   width: 90%;
   max-width: 1100px;
@@ -16,12 +20,33 @@
   margin-left: auto;
   margin-right: auto;
   .user-main-content {
+    flex: 1 1 655px;
+    min-width: 0;
+    max-width: 616px;
+    margin-left: 0;
+    margin-right: 0;
+
     @media screen and (max-width: 992px) {
       justify-content: flex-end;
+      max-width: unset;
+
       .feedback-list-wrapper {
         width: 100%;
         max-width: unset;
       }
+    }
+  }
+
+  > .right-panel {
+    flex: 0 0 400px;
+    align-items: flex-start;
+
+    .suggestion-img-side-container {
+      margin-top: 10px;
+    }
+
+    @media screen and (max-width: 1350px) {
+      display: none;
     }
   }
 }
@@ -198,19 +223,12 @@
   margin-top: 24px;
   margin-left: auto;
   margin-right: auto;
+
   .feedback-list-wrapper {
-    width: 65%;
-    max-width: 655px;
+    width: 100%;
+    max-width: 616px;
   }
-  .right-panel {
-    align-items: flex-start;
-    .suggestion-img-side-container {
-      margin-top: 10px;
-    }
-    @media screen and (max-width: 992px) {
-      display: none;
-    }
-  }
+
   .profile-filters-container {
     .profile-filters {
       .control {
@@ -240,8 +258,12 @@
 
 // Colonne droite
 .right-panel {
-  width: 400px;
-  margin: 10px 0;
+  width: 275px;
+  min-width: 275px;
+  margin: 75px 0;
+  @media screen and (max-width: 1220px) {
+    margin: 0;
+  }
 
   .separator {
     height: 1px;
@@ -254,9 +276,6 @@
 .cdc-banner-container {
   .feedback-list-wrapper {
     .feedback-view-container {
-      @media screen and (min-width: 1350px) {
-        margin-right: 30px;
-      }
       .right-panel {
         margin-top: 0;
         align-self: center;

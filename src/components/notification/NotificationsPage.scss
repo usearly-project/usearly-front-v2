@@ -273,7 +273,7 @@
 
           .feedback-card {
             width: 100%;
-            max-width: 655px;
+            max-width: 616px;
             margin: 0 auto;
             margin-bottom: 0;
             background: #fff;
@@ -283,7 +283,7 @@
             transition: box-shadow 0.2s ease;
 
             &:hover {
-              box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+              box-shadow: 0 2px 2px rgba(0, 0, 0, 0.12);
             }
 
             .feedback-type {

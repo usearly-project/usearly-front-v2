@@ -184,7 +184,7 @@ export const FilterBarGeneric: React.FC<Props> = ({
   const brandOptions = useMemo<SelectFilterOption[]>(() => {
     const placeholder: SelectFilterOption = {
       value: "",
-      label: "Choisir une marque",
+      label: "Marques",
     };
     const decorated = brandEntries.map((entry) => {
       return {

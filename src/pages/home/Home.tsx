@@ -166,7 +166,7 @@ function Home() {
     thresholdPx: BOTTOM_THRESHOLD_PX,
     anchorSelector: FEEDBACK_LIST_WRAPPER_SELECTOR,
   });
-  const isMobile = useIsMobile("(max-width: 1350px)");
+  const isMobile = useIsMobile("(max-width: 1220px)");
 
   useEffect(() => {
     document.body.classList.add("feedback-route");
@@ -376,8 +376,6 @@ function Home() {
     coupDeCoeursForDisplay,
     suggestionsForDisplay,
   ]);
-  const showMobileFeedbackSidebar =
-    isMobile && !currentSelectedBrand && !selectedCategory;
 
   if (isBrandLookupLoading || isBrandRouteNotFound) {
     return (
@@ -421,27 +419,6 @@ function Home() {
 
       <main className={`user-main-content ${isMobile ? "is-mobile" : ""}`}>
         <aside className="left-panel">
-          {isMobile && (
-            <div className="home-mobile-right-panel">
-              {activeTab === "report" && (
-                <SearchBar
-                  value={reportSearchTerm}
-                  onChange={setReportSearchTerm}
-                  placeholder="Rechercher un signalement"
-                />
-              )}
-
-              {showMobileFeedbackSidebar && (
-                <FeedbackRightSidebar
-                  activeTab={activeTab}
-                  activeFilter={activeFilter}
-                  selectedBrand={currentSelectedBrand}
-                  selectedCategory={selectedCategory}
-                  selectedSiteUrl={currentSelectedSiteUrl}
-                />
-              )}
-            </div>
-          )}
           <LeftSidebar activeTab={activeTab} feedbackData={feedbackData} />
         </aside>
 
@@ -512,6 +489,24 @@ function Home() {
             showRightPanel={!isMobile}
           />
         )}
+        <aside className="right-panel">
+          <div className="home-mobile-right-panel">
+            {activeTab === "report" && (
+              <SearchBar
+                value={reportSearchTerm}
+                onChange={setReportSearchTerm}
+                placeholder="Rechercher un signalement"
+              />
+            )}
+            <FeedbackRightSidebar
+              activeTab={activeTab}
+              activeFilter={activeFilter}
+              selectedBrand={currentSelectedBrand}
+              selectedCategory={selectedCategory}
+              selectedSiteUrl={currentSelectedSiteUrl}
+            />
+          </div>
+        </aside>
       </main>
 
       {isAtBottom && (

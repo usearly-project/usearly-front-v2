@@ -20,6 +20,21 @@ const Layout = ({ children }: LayoutProps) => {
   const [HeaderHeight, setHeaderHeight] = useState<number>(headerheight);
 
   useEffect(() => {
+    if (!location.hash) {
+      return;
+    }
+
+    const targetId = decodeURIComponent(location.hash.slice(1));
+    const scrollTimeout = window.setTimeout(() => {
+      document
+        .getElementById(targetId)
+        ?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 80);
+
+    return () => window.clearTimeout(scrollTimeout);
+  }, [location.pathname, location.hash]);
+
+  useEffect(() => {
     const getHeader = () =>
       document.querySelector("header.header") as HTMLElement | null;
 

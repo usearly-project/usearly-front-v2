@@ -33,7 +33,7 @@ const ProfileFilters: React.FC<Props> = ({
   const brandOptions = React.useMemo<SelectFilterOption[]>(() => {
     const placeholder: SelectFilterOption = {
       value: "",
-      label: "Choisir une marque",
+      label: "Marques",
     };
     if (!availableBrands.length) return [placeholder];
 

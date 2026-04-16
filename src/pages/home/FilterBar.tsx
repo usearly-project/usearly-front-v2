@@ -119,22 +119,22 @@ const filterOptions = [
   {
     value: "hot" as const,
     emoji: "🔥",
-    label: "Problèmes les plus signalés",
+    label: "Les plus signalés",
   },
   {
     value: "rage" as const,
     emoji: "😡",
-    label: "Problèmes les plus rageants",
+    label: "Les plus rageants",
   },
   {
     value: "popular" as const,
     emoji: "👍",
-    label: "Signalements les plus populaires",
+    label: "Les plus populaires",
   },
   {
     value: "chrono" as const,
     emoji: "📅",
-    label: "Signalements les plus récents",
+    label: "Les plus récents",
   },
 ];
 
@@ -255,7 +255,7 @@ const FilterBar: React.FC<Props> = ({
   const brandOptions = useMemo<SelectFilterOption[]>(() => {
     const placeholder: SelectFilterOption = {
       value: "",
-      label: "Choisir une marque",
+      label: "Marques",
     };
     const decorated = brandEntries.map((entry) => {
       return {

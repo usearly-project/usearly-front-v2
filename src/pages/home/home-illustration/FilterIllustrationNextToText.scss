@@ -57,6 +57,10 @@
       }
     }
     .filter-illustration-sidebar {
+      width: 90px;
+      top: 20%;
+      right: 3%;
+
       .illustration-content {
         img {
           top: 15%;
@@ -64,6 +68,20 @@
           width: 54px;
         }
       }
+    }
+  }
+  &.is-rage {
+    .filter-illustration-sidebar {
+      width: 90px;
+      top: 3%;
+      right: 6%;
+    }
+  }
+  &.is-popular {
+    .filter-illustration-sidebar {
+      width: 100px;
+      top: 12%;
+      right: 4%;
     }
   }
 
@@ -93,7 +111,7 @@
       }
     }
     .filter-illustration-sidebar {
-      width: 125px;
+      width: 115px;
       top: 5%;
       right: 15px;
     }
@@ -107,8 +125,8 @@
     }
     .filter-illustration-sidebar {
       width: 75px;
-      top: 5%;
-      right: 30px;
+      top: 2.5%;
+      right: 10px;
     }
   }
 
@@ -119,7 +137,7 @@
       }
     }
     .filter-illustration-sidebar {
-      width: 120px;
+      width: 100px;
       top: 5%;
       right: 20px;
     }
@@ -134,7 +152,7 @@
     }
     .filter-illustration-sidebar {
       width: 100px;
-      top: 18%;
+      top: 27%;
       right: 5px;
     }
   }
@@ -148,9 +166,9 @@
       }
     }
     .filter-illustration-sidebar {
-      width: 125px;
-      top: 23%;
-      right: -5px;
+      width: 115px;
+      top: 48%;
+      right: 10px;
     }
   }
 
@@ -164,7 +182,7 @@
     }
     .filter-illustration-sidebar {
       width: 90px;
-      top: 27%;
+      top: 45%;
       right: 15px;
     }
   }

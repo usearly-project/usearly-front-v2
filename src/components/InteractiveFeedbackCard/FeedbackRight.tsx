@@ -181,6 +181,7 @@ const FeedbackRight: React.FC<Props> = ({
                 pseudo={item.author?.pseudo || "Utilisateur"}
                 type="user"
                 wrapperClassName="user-avatar"
+                sizeHW={isMobile ? 32 : 40}
               />
               {brandName && (
                 <div className="brand-overlay">
@@ -190,6 +191,7 @@ const FeedbackRight: React.FC<Props> = ({
                     type="brand"
                     siteUrl={siteUrl}
                     wrapperClassName="brand-logo"
+                    sizeHW={isMobile ? 32 : 40}
                   />
                 </div>
               )}
