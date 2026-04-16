@@ -174,6 +174,7 @@ const ReportListView: React.FC<Props> = ({
             type="button"
             onClick={onClearSearchTerm}
             className="clear-button"
+            aria-label="Effacer"
           >
             Effacer
           </button>

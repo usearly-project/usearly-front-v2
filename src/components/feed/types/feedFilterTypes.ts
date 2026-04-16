@@ -14,9 +14,15 @@ export type SuggestionFeedFilterValue =
   | "recentSuggestion"
   | "likedSuggestion";
 
+export type FeedBrandFilterOption = {
+  brand: string;
+  siteUrl?: string;
+};
+
 export interface PublicFeedFilterState {
   selectedFilter: FeedFilterValue;
   reportFeedFilter: ReportFeedFilterValue;
   cdcFeedFilter: CdcFeedFilterValue;
   suggestionFeedFilter: SuggestionFeedFilterValue;
+  selectedBrand?: string;
 }

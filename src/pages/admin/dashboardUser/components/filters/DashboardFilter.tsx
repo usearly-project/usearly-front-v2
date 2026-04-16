@@ -238,6 +238,7 @@ const DashboardFilter = ({
                 type="button"
                 className="select-statut-icon dashboard-filter-select"
                 onClick={() => toggleDropdown("statut")}
+                aria-label="Filtrer par statut"
               >
                 {statutButtonContent}
               </button>
@@ -251,6 +252,7 @@ const DashboardFilter = ({
                         statut.includes(status.value) ? "is-selected" : ""
                       }`}
                       onClick={() => toggleStatutSelection(status.value)}
+                      aria-label={"Filtrer par statut " + status.label}
                     >
                       <span
                         className="dashboard-filter-dot"
@@ -271,6 +273,7 @@ const DashboardFilter = ({
                 type="button"
                 className="select-contributor-icon dashboard-filter-select"
                 onClick={() => toggleDropdown("contributor")}
+                aria-label="Filtrer par contributeur"
               >
                 {contributorButtonContent}
               </button>
@@ -290,6 +293,7 @@ const DashboardFilter = ({
                         } as CSSProperties
                       }
                       onClick={() => toggleContributorSelection(item.value)}
+                      aria-label={"Filtrer par contributeur " + item.label}
                     >
                       {item.label}
                     </button>
@@ -303,6 +307,7 @@ const DashboardFilter = ({
                 type="button"
                 className="select-up-icon dashboard-filter-select"
                 onClick={() => toggleDropdown("upRange")}
+                aria-label="Filtrer par UP"
               >
                 {upRangeButtonLabel}
               </button>
@@ -316,6 +321,7 @@ const DashboardFilter = ({
                         upRange === range.value ? "is-selected" : ""
                       }`}
                       onClick={() => handleUpRangeOptionSelect(range.value)}
+                      aria-label={"Filtrer par UP " + range.label}
                     >
                       {range.label}
                     </button>
@@ -328,6 +334,7 @@ const DashboardFilter = ({
               <button
                 className="select--icon dashboard-filter-select"
                 onClick={handleToggleFilters}
+                aria-label="Afficher plus de filtres"
               >
                 Plus de Filtre
               </button>
@@ -370,6 +377,7 @@ const DashboardFilter = ({
                                     nextValue as DashboardUserFiltersState[typeof filter.key],
                                   )
                                 }
+                                aria-label={option.label}
                               >
                                 {option.label}
                               </button>
@@ -386,6 +394,7 @@ const DashboardFilter = ({
                       className="dashboard-filter-more-reset"
                       onClick={handleResetMoreFilters}
                       disabled={!hasMoreFiltersSelected}
+                      aria-label="Réinitialiser les filtres"
                     >
                       Réinitialiser
                     </button>

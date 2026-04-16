@@ -40,6 +40,10 @@
     gap: 0.6rem;
     cursor: pointer;
 
+    &.navigation-blocked {
+      cursor: default;
+    }
+
     img {
       width: 36px;
       height: auto;
@@ -49,7 +53,48 @@
       font-weight: 700;
       font-size: 1.2rem;
       color: #000;
+      img {
+        width: 70px;
+        height: auto;
+      }
     }
+  }
+
+  .header-download-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 38px;
+    padding: 0.5rem 0.9rem;
+    border: 1px solid #111111;
+    border-radius: 8px;
+    background: #111111;
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1.1;
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease;
+
+    &:hover,
+    &:focus-visible {
+      background: #ffffff;
+      color: #111111;
+      border-color: #111111;
+    }
+
+    &:focus-visible {
+      outline: 2px solid #111111;
+      outline-offset: 3px;
+    }
+  }
+
+  .header-download-cta--mobile {
+    display: none;
   }
 
   .nav-links {
@@ -723,7 +768,7 @@
 }
 
 /* Visible uniquement en mobile */
-@media (max-width: 768px) {
+@media (max-width: 1080px) {
   .mobile-close,
   .mobile-divider,
   .mobile-item,
@@ -748,7 +793,7 @@
 }
 
 /* MOBILE */
-@media (max-width: 768px) {
+@media (max-width: 1080px) {
   /* 🔥 Cacher nav desktop */
   .nav-links {
     display: none;
@@ -832,7 +877,7 @@
    FIX RESPONSIVE MOBILE
 =============================== */
 
-@media (max-width: 768px) {
+@media (max-width: 1080px) {
   /* On override la version desktop */
   .header .nav-links {
     display: none !important;
@@ -859,6 +904,19 @@
     display: none !important;
   }
 
+  .header .header-download-cta--desktop {
+    display: none;
+  }
+
+  .header .header-download-cta--mobile {
+    display: inline-flex;
+    min-height: 36px;
+    margin-left: auto;
+    margin-right: 12px;
+    padding: 0.45rem 0.7rem;
+    font-size: 13px;
+  }
+
   /* Burger visible */
   .header .burger {
     display: flex !important;
@@ -866,6 +924,10 @@
     gap: 5px;
     cursor: pointer;
     z-index: 1200;
+  }
+
+  .header .burger.navigation-blocked {
+    cursor: default;
   }
 
   .header .burger span {
@@ -906,7 +968,7 @@
    MOBILE DRAWER STYLE CLEAN
 ===================================== */
 
-@media (max-width: 768px) {
+@media (max-width: 1080px) {
   /* Links propres */
   .header .nav-links.mobile-open .link {
     font-size: 17px;
@@ -1005,7 +1067,7 @@
   display: none;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1080px) {
   .burger {
     display: flex;
     flex-direction: column;

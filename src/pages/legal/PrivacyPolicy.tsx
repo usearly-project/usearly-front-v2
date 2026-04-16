@@ -5,145 +5,197 @@ export default function PrivacyPolicy() {
   return (
     <>
       <div className="legal-container">
-        <h1>Politique de confidentialité</h1>
+        <h1>Politique de confidentialité Usearly</h1>
 
         <p className="legal-updated">
           Dernière mise à jour : {new Date().getFullYear()}
         </p>
 
         <section>
-          <h2>1. Notre principe</h2>
+          <h2>1. Introduction</h2>
           <p>
-            Notre principe Usearly est conçu pour respecter votre vie privée.
-            Nous ne collectons aucune donnée permettant d’identifier directement
-            une personne, telle que : nom prénom adresse postale numéro de
-            téléphone données bancaires
+            Usearly est conçu pour respecter la vie privée des utilisateurs.
+            Cette politique explique quelles données sont collectées, comment
+            elles sont utilisées et protégées dans le cadre de l’utilisation de
+            la plateforme et de l’extension Chrome Usearly.
           </p>
         </section>
 
         <section>
           <h2>2. Données collectées</h2>
+
           <p>
-            Usearly ne vend aucune donnée personnelle.{" "}
-            <p>
-              Lors de l’inscription et de l’utilisation de la plateforme, seules
-              les informations suivantes sont demandées :
-              <ul>
-                <li>Un pseudonyme</li>
-                <li>L’âge</li>
-                <li>Le sexe</li>
-                <li>
-                  Les contributions publiées (signalements, suggestions, votes,
-                  commentaires)
-                </li>
-                <li>
-                  Aucune information civile ou administrative n’est requise.
-                  <br />
-                  <br />
-                </li>
-              </ul>
-            </p>
+            Nous ne collectons pas de données permettant d’identifier
+            directement une personne (telles que nom, prénom, adresse postale ou
+            numéro de téléphone). Cependant, certaines données techniques, comme
+            l’adresse IP, peuvent être collectées dans le cadre du
+            fonctionnement du service.
           </p>
 
           <p>
-            <strong>L’extension peut collecter :</strong>
+            Certaines données peuvent être collectées dans le cadre de
+            l’utilisation du service :
           </p>
 
           <ul>
+            <li>Un pseudonyme (fourni par l’utilisateur)</li>
             <li>
-              Les contenus de feedback soumis volontairement par l’utilisateur
+              L’âge (requis afin de vérifier que l’utilisateur respecte l’âge
+              minimum d’utilisation du service)
             </li>
-            <li>Les captures d’écran ajoutées volontairement</li>
+            <li>Le sexe (facultatif)</li>
             <li>
-              Les enregistrements vocaux uniquement à des fins de transcription
-              (si utilisés)
+              Les contributions publiées (signalements, suggestions, votes,
+              commentaires)
             </li>
-            <li>L’URL du site sur lequel le feedback est envoyé</li>
           </ul>
 
           <p>
-            Les enregistrements vocaux sont traités uniquement pour la
-            transcription et ne sont pas conservés de manière permanente.
+            <strong>
+              Dans le cadre de l’extension Chrome, les données suivantes peuvent
+              être collectées uniquement lorsque l’utilisateur interagit avec
+              l’extension :
+            </strong>
+          </p>
+
+          <ul>
+            <li>L’URL du site web sur lequel un signalement est effectué</li>
+            <li>
+              Les interactions utilisateur (clics liés au signalement,
+              confirmations)
+            </li>
+            <li>Le contenu des signalements soumis volontairement</li>
+            <li>
+              Les captures d’écran ajoutées volontairement par l’utilisateur
+            </li>
+            <li>
+              Les enregistrements vocaux (uniquement si l’utilisateur utilise la
+              dictée vocale)
+            </li>
+          </ul>
+
+          <p>
+            Ces données ne sont jamais collectées automatiquement sans action
+            explicite de l’utilisateur.
           </p>
         </section>
 
         <section>
-          <h2>3. Permissions navigateur</h2>
-          <p>
-            Usearly demande uniquement les autorisations strictement nécessaires
-            pour :
-          </p>
-
-          <ul>
-            <li>Capturer une capture d’écran lorsque l’utilisateur l’initie</li>
-            <li>Accéder à l’onglet actif pour contextualiser le feedback</li>
-            <li>
-              Utiliser le microphone uniquement si l’utilisateur active la
-              dictée vocale
-            </li>
-            <li>Stocker les préférences utilisateur localement</li>
-          </ul>
-        </section>
-
-        <section>
-          <h2>4. Utilisation des données</h2>
+          <h2>3. Utilisation des données</h2>
           <p>Les données collectées sont utilisées uniquement pour :</p>
 
           <ul>
-            <li>Afficher votre profil public sous pseudonyme</li>
-            <li>Permettre l’interaction avec les marques</li>
-            <li>Regrouper les signalements similaires</li>
-            <li>Produire des statistiques globales anonymisées</li>
-            <li>Améliorer les expériences proposées par les marques</li>
-            <li>Fournir des solutions aux problèmes signalés</li>
-            <li>Optimiser les services</li>
-            Les analyses sont réalisées à partir de données agrégées.
+            <li>
+              Permettre aux utilisateurs de signaler des problèmes et partager
+              des suggestions
+            </li>
+            <li>Améliorer l’expérience utilisateur</li>
+            <li>Regrouper et analyser les signalements</li>
+            <li>Fournir des solutions pertinentes aux problèmes rencontrés</li>
+            <li>Assurer le bon fonctionnement du service</li>
           </ul>
+
+          <p>
+            Les analyses sont réalisées à partir de données agrégées lorsque
+            cela est possible.
+          </p>
         </section>
 
         <section>
-          <h2>5. Aucune revente de données </h2>
+          <h2>4. Permissions du navigateur</h2>
+          <p>
+            L’extension Usearly utilise uniquement les autorisations nécessaires
+            à son fonctionnement :
+          </p>
+
+          <ul>
+            <li>
+              activeTab : pour interagir avec la page active lorsque
+              l’utilisateur déclenche une action
+            </li>
+            <li>
+              scripting : pour injecter l’interface Usearly sur la page active
+            </li>
+            <li>
+              tabs : pour identifier l’URL du site concerné par un signalement
+            </li>
+            <li>
+              storage : pour stocker les préférences utilisateur localement
+            </li>
+            <li>
+              contextMenus : pour ajouter des options de signalement accessibles
+              rapidement
+            </li>
+          </ul>
+
+          <p>
+            Ces autorisations sont utilisées uniquement lorsque l’utilisateur
+            interagit avec l’extension et jamais en arrière-plan sans action de
+            sa part.
+          </p>
+        </section>
+
+        <section>
+          <h2>5. Partage des données</h2>
           <p>
             Usearly ne vend, ne loue et ne cède aucune information à des tiers.
             Les marques partenaires ont uniquement accès aux contributions liées
             à leurs propres signalements, sous pseudonyme.
           </p>
         </section>
+
         <section>
           <h2>6. Données techniques</h2>
+
           <p>
-            Afin d’assurer la sécurité et le bon fonctionnement de la
-            plateforme, Usearly traite des données techniques strictement
-            nécessaires, telles que :
-            <ul>
-              <li>l’adresse IP</li>
-              <li>les journaux de connexion</li>
-              <li>les informations liées au navigateur ou à l’appareil</li>
-              <li>Produire des statistiques globales anonymisées</li>
-              <strong>Ces données sont utilisées uniquement pour :</strong>
-              <li>
-                sécuriser le service prévenir les abus ou comportements
-                frauduleux
-              </li>
-              <li>assurer la stabilité technique</li>
-              Elles ne sont ni exploitées à des fins publicitaires, ni revendues
-              à des tiers. Elles sont conservées pour une durée limitée et
-              proportionnée aux exigences de sécurité.
-            </ul>
+            Afin d’assurer la sécurité et le bon fonctionnement du service,
+            certaines données techniques peuvent être collectées :
           </p>
-        </section>
-        <section>
-          <h2>5. Sécurité</h2>
+
+          <ul>
+            <li>Adresse IP</li>
+            <li>Journaux de connexion</li>
+            <li>Informations liées au navigateur ou à l’appareil</li>
+          </ul>
+
+          <p>Ces données sont utilisées uniquement pour :</p>
+
+          <ul>
+            <li>Sécuriser le service</li>
+            <li>Prévenir les abus</li>
+            <li>Assurer la stabilité technique</li>
+          </ul>
+
           <p>
-            Nous mettons en œuvre des mesures de sécurité adaptées afin de
-            protéger les données des utilisateurs.
+            Nous mettons en œuvre des mesures de sécurité appropriées pour
+            protéger les données des utilisateurs contre tout accès non
+            autorisé, modification ou divulgation.
           </p>
         </section>
 
         <section>
-          <h2>6. Contact</h2>
+          <h2>7. Conservation des données</h2>
+          <p>
+            Les données sont conservées uniquement pendant la durée nécessaire
+            au fonctionnement du service et supprimées lorsqu’elles ne sont plus
+            utiles.
+          </p>
+        </section>
+
+        <section>
+          <h2>8. Contact</h2>
           <p>Pour toute question relative à la confidentialité :</p>
           <p className="legal-contact">📩 support@usearly.com</p>
+        </section>
+
+        <section>
+          <h2>9. Transparence</h2>
+          <p>
+            Usearly s’engage à une transparence totale concernant l’utilisation
+            des données. Aucune donnée n’est collectée à l’insu de l’utilisateur
+            et toutes les actions impliquant des données nécessitent une
+            interaction explicite.
+          </p>
         </section>
       </div>
 

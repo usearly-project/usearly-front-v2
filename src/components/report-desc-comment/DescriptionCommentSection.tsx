@@ -126,7 +126,11 @@ const DescriptionCommentSection: React.FC<Props> = ({
                 displayAsTextLike
               />
               <span className="divider">|</span>
-              <button className="reply-button" onClick={toggleComments}>
+              <button
+                className="reply-button"
+                onClick={toggleComments}
+                aria-label="Répondre"
+              >
                 Répondre
                 {comments.length > 0 && (
                   <span className="comment-count">
@@ -144,7 +148,11 @@ const DescriptionCommentSection: React.FC<Props> = ({
                   descriptionId={descriptionId}
                   type={type}
                 />
-                <button className="comment-toggle-btn" onClick={toggleComments}>
+                <button
+                  className="comment-toggle-btn"
+                  onClick={toggleComments}
+                  aria-label="Afficher les commentaires"
+                >
                   <MessageCircleMore size={16} />
                   {comments.length > 0 && (
                     <span className="comment-inline-count">
@@ -155,7 +163,7 @@ const DescriptionCommentSection: React.FC<Props> = ({
                     <span className="icon-tooltip">Commentaires</span>
                   )}
                 </button>
-                <button className="comment-toggle-btn">
+                <button className="comment-toggle-btn" aria-label="Partager">
                   <Share2 size={16} />
                   {type === "suggestion" && (
                     <span className="icon-tooltip">Partager</span>

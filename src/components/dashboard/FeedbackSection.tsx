@@ -35,7 +35,7 @@ const FeedbackSection = () => {
             </h2>
           </div>
 
-          <button className="feedback-card__filter">
+          <button className="feedback-card__filter" aria-label="Filtrer">
             <SlidersHorizontal className="h-4 w-4" strokeWidth={1.8} />
             Filtrer
           </button>

@@ -80,7 +80,10 @@ const UserStatsCard = ({ dashboard = false }: UserStatsCardProps) => {
           </span>
         </div>
         <div className="badge">
-          <button onClick={() => setShowBadge(!showBadge)}>
+          <button
+            onClick={() => setShowBadge(!showBadge)}
+            aria-label={showBadge ? "Voir moins" : "Voir plus"}
+          >
             {showBadge ? "Voir moins" : "Voir plus"}
           </button>
 

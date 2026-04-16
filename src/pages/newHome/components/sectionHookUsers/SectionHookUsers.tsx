@@ -70,6 +70,7 @@ const SectionHookUsers = ({
               type="button"
               className="hook-users-extension-button"
               onClick={handleInstallExtension}
+              aria-label={EXTENSION_BUTTON_LABEL}
             >
               <img src={chromeLogo} width={46} height={46} alt="Chrome" />
               {EXTENSION_BUTTON_LABEL}
@@ -80,7 +81,11 @@ const SectionHookUsers = ({
             />
           </div>
           <div className="hook-users-content-explication">
-            <button type="button" onClick={() => setIsExtensionModalOpen(true)}>
+            <button
+              type="button"
+              onClick={() => setIsExtensionModalOpen(true)}
+              aria-label="Comment installer l’extension en 2 minutes ?"
+            >
               Comment installer l’extension en 2 minutes ?
             </button>
           </div>

@@ -42,9 +42,9 @@ const HomeFiltersCdc = ({
 
   const baseOptions = useMemo(
     () => [
-      { value: "popular", label: "👍 Coups de cœur populaires" },
-      { value: "enflammes", label: "❤️‍🔥 Coups de cœur les plus enflammés" },
-      { value: "chrono", label: "💌 Coups de cœur les plus récents" },
+      { value: "popular", label: "👍 Populaires" },
+      { value: "enflammes", label: "❤️‍🔥 Les plus enflammés" },
+      { value: "chrono", label: "💌 Les plus récents" },
     ],
     [],
   );

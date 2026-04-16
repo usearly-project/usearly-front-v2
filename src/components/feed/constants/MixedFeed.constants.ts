@@ -27,28 +27,28 @@ export const FILTER_OPTIONS: any[] = [
 ];
 
 export const REPORT_FILTER_OPTIONS: any[] = [
-  { value: "hot", emoji: "🔥", label: "Problèmes les plus signalés" },
-  { value: "rage", emoji: "😡", label: "Problèmes les plus rageants" },
-  { value: "popular", emoji: "👍", label: "Signalements les plus populaires" },
-  { value: "chrono", emoji: "📅", label: "Signalements les plus récents" },
+  { value: "hot", emoji: "🔥", label: "Les plus signalés" },
+  { value: "rage", emoji: "😡", label: "Les plus rageants" },
+  { value: "popular", emoji: "👍", label: "Les plus populaires" },
+  { value: "chrono", emoji: "📅", label: "Les plus récents" },
 ];
 
 export const CDC_FILTER_OPTIONS: any[] = [
-  { value: "popular", emoji: "👍", label: "Coups de cœur populaires" },
+  { value: "popular", emoji: "👍", label: "Populaires" },
   {
     value: "enflammes",
     emoji: "❤️‍🔥",
-    label: "Coups de cœur les plus enflammés",
+    label: "Les plus enflammés",
   },
-  { value: "chrono", emoji: "💌", label: "Coups de cœur les plus récents" },
+  { value: "chrono", emoji: "💌", label: "Les plus récents" },
 ];
 
 export const SUGGESTION_FILTER_OPTIONS: any[] = [
-  { value: "allSuggest", emoji: "👍️", label: "Suggestions populaires" },
+  { value: "allSuggest", emoji: "👍️", label: "Populaires" },
   {
     value: "recentSuggestion",
     emoji: "🪄",
-    label: "Suggestions ouvertes aux votes",
+    label: "Ouvertes aux votes",
   },
-  { value: "likedSuggestion", emoji: "🙌", label: "Suggestions adoptées" },
+  { value: "likedSuggestion", emoji: "🙌", label: "Adoptées" },
 ];

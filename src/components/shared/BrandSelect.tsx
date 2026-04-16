@@ -32,7 +32,7 @@ export const BrandSelect = ({
   selectedBrand = "",
   onSelect,
   onClear,
-  placeholder = "Choisir une marque",
+  placeholder = "Marques",
   searchPlaceholder = "Rechercher une marque…",
   className = "",
 }: BrandSelectProps) => {
@@ -164,6 +164,9 @@ export const BrandSelect = ({
         type="button"
         className={triggerClassName}
         onClick={() => setOpen((prev) => !prev)}
+        aria-label={
+          selectedBrand ? "Marque sélectionnée : " + selectedBrand : placeholder
+        }
       >
         {!isAllValue(selectedBrand) && (
           <span className="brand-badge">{renderBadge(selectedBrand)}</span>
@@ -188,6 +191,7 @@ export const BrandSelect = ({
                 type="button"
                 className="brand-select__search-clear"
                 onClick={() => setQuery("")}
+                aria-label="Effacer la recherche de marque"
               >
                 <X size={14} />
               </button>
@@ -216,6 +220,7 @@ export const BrandSelect = ({
                       setQuery("");
                       setOpen(false);
                     }}
+                    aria-label={"Sélectionner " + brand}
                   >
                     <span className="brand-badge">{renderBadge(brand)}</span>
                     <span className="brand-select__option-label">{brand}</span>
@@ -234,6 +239,7 @@ export const BrandSelect = ({
                 setQuery("");
                 setOpen(false);
               }}
+              aria-label="Retirer la marque"
             >
               <X size={14} />
               Retirer la marque

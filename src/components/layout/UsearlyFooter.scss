@@ -24,6 +24,31 @@
     background-color: #000;
     color: #ffffff5e;
 
+    .app-download-cta {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.14);
+      color: #ffffff;
+
+      .app-download-cta__title {
+        color: #ffffff;
+      }
+
+      .app-download-cta__description {
+        color: rgba(255, 255, 255, 0.64);
+      }
+
+      .app-download-cta__link {
+        border-color: rgba(255, 255, 255, 0.88);
+        background: #ffffff;
+        color: #000000;
+
+        &:hover {
+          background: transparent;
+          color: #ffffff;
+        }
+      }
+    }
+
     .footer-container {
       ul {
         margin-top: 50px;

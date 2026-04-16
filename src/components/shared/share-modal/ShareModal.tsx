@@ -114,7 +114,11 @@ const ShareModal: React.FC<Props> = ({ suggestionId, onClose }) => {
       <div className="share-modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <h3>Partager la suggestion</h3>
-          <button className="close-btn" onClick={onClose}>
+          <button
+            className="close-btn"
+            onClick={onClose}
+            aria-label="Fermer la fenêtre de partage"
+          >
             <X />
           </button>
         </div>
@@ -136,7 +140,12 @@ const ShareModal: React.FC<Props> = ({ suggestionId, onClose }) => {
                 type="user"
               />
               <span>{selected.pseudo}</span>
-              <button onClick={() => setSelected(null)}>×</button>
+              <button
+                onClick={() => setSelected(null)}
+                aria-label="Retirer l’utilisateur sélectionné"
+              >
+                ×
+              </button>
             </div>
           ) : (
             results.length > 0 && (
@@ -161,13 +170,14 @@ const ShareModal: React.FC<Props> = ({ suggestionId, onClose }) => {
 
         {/* Actions principales */}
         <div className="modal-actions">
-          <button className="cancel-btn" onClick={onClose}>
+          <button className="cancel-btn" onClick={onClose} aria-label="Annuler">
             Annuler
           </button>
           <button
             className="share-btn"
             onClick={handleShareInternal}
             disabled={!query && !selected}
+            aria-label="Partager"
           >
             Partager
           </button>
@@ -180,24 +190,28 @@ const ShareModal: React.FC<Props> = ({ suggestionId, onClose }) => {
             <button
               onClick={() => handleShareSocial("whatsapp")}
               className="whatsapp"
+              aria-label="Partager sur WhatsApp"
             >
               <FaWhatsapp size={24} color="#25D366" /> WhatsApp
             </button>
             <button
               onClick={() => handleShareSocial("facebook")}
               className="facebook"
+              aria-label="Partager sur Facebook"
             >
               <FaFacebook size={24} color="#1877F2" /> Facebook
             </button>
             <button
               onClick={() => handleShareSocial("linkedin")}
               className="linkedin"
+              aria-label="Partager sur LinkedIn"
             >
               <FaLinkedin size={24} color="#0A66C2" /> LinkedIn
             </button>
             <button
               onClick={() => handleShareSocial("twitter")}
               className="twitter"
+              aria-label="Partager sur Twitter/X"
             >
               <FaTwitter size={24} color="#1D9BF0" /> Twitter/X
             </button>

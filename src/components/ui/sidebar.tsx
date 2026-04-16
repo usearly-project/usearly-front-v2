@@ -282,6 +282,7 @@ const SidebarTrigger = React.forwardRef<
         onClick?.(event);
         toggleSidebar();
       }}
+      aria-label="Afficher ou masquer la barre latérale"
       {...props}
     >
       <PanelLeft />

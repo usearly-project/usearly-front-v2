@@ -16,7 +16,7 @@ const RightSidebarDefaultCard = ({ loading, stats }: Props) => {
       </h3>
 
       <p className="subtitle">
-        Les sujets qui font réagir la communauté en ce moment.
+        Les problèmes qui font réagir la communauté en ce moment.
       </p>
 
       {loading ? <p>Chargement...</p> : <RightSidebarStats items={stats} />}

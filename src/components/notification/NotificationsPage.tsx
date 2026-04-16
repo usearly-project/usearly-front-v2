@@ -317,6 +317,7 @@ const NotificationsPage: React.FC = () => {
                                   handleDelete(notif.id);
                                   setMenuOpenId(null);
                                 }}
+                                aria-label="Supprimer"
                               >
                                 Supprimer
                               </button>

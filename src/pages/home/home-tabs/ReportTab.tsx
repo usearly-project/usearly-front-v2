@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import HomeGroupedReportsList from "../home-grouped-reports-list/HomeGroupedReportsList";
-import SearchBar from "../components/searchBar/SearchBar";
+// import SearchBar from "../components/searchBar/SearchBar";
 import EndOfList from "./EndOfList";
-import FeedbackRightSidebar from "./FeedbackRightSidebar";
+// import FeedbackRightSidebar from "./FeedbackRightSidebar";
 import type { FeedbackType } from "@src/types/Reports";
 import type { BrandReportStats } from "../home-grouped-reports-list/utils/brandReportStats";
 
@@ -37,16 +37,19 @@ const ReportTab: React.FC<Props> = ({
   setSelectedMainCategory,
   setSelectedSiteUrl,
   selectedSiteUrl,
-  brandBannerStyle,
+  // brandBannerStyle,
   displayedCount,
   searchTerm,
   onSearchTermChange,
-  showRightPanel = true,
+  // showRightPanel = true,
 }) => {
-  const [brandReportStats, setBrandReportStats] =
-    React.useState<BrandReportStats | null>(null);
-
-  React.useEffect(() => {
+  const [, setBrandReportStats] = React.useState<BrandReportStats | null>(null);
+  // Ancien code desactive : appeler setBrandReportStats pendant le rendu
+  // declenche l'erreur React "Too many re-renders".
+  // if (!brandReportStats) {
+  //   setBrandReportStats(null);
+  // }
+  useEffect(() => {
     if (!selectedBrand || selectedCategory) {
       setBrandReportStats(null);
     }
@@ -62,12 +65,12 @@ const ReportTab: React.FC<Props> = ({
   ]
     .filter(Boolean)
     .join(" ");
-  const rightPanelClassName = [
-    "right-panel",
-    selectedBrand || selectedCategory ? "right-panel--brand-colored" : "",
-  ]
-    .filter(Boolean)
-    .join(" ");
+  // const rightPanelClassName = [
+  //   "right-panel",
+  //   selectedBrand || selectedCategory ? "right-panel--brand-colored" : "",
+  // ]
+  //   .filter(Boolean)
+  //   .join(" ");
 
   return (
     <div className={bannerClassName}>
@@ -100,23 +103,6 @@ const ReportTab: React.FC<Props> = ({
         />
         {displayedCount > 0 && <EndOfList />}
       </div>
-      {showRightPanel && (
-        <aside className={rightPanelClassName} style={brandBannerStyle}>
-          <SearchBar
-            value={searchTerm}
-            onChange={onSearchTermChange}
-            placeholder="Rechercher un signalement"
-          />
-          <FeedbackRightSidebar
-            activeTab="report"
-            activeFilter={activeFilter}
-            selectedBrand={selectedBrand}
-            selectedCategory={selectedCategory}
-            selectedSiteUrl={selectedSiteUrl}
-            brandReportStats={brandReportStats}
-          />
-        </aside>
-      )}
     </div>
   );
 };

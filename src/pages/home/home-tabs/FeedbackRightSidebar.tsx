@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import type { CSSProperties } from "react";
 import type {
   CdcFeedFilterValue,
   PublicFeedFilterState,
@@ -17,6 +18,7 @@ interface Props {
   selectedBrand?: string;
   selectedCategory?: string;
   selectedSiteUrl?: string;
+  brandBannerStyle?: CSSProperties;
   brandReportStats?: BrandReportStats | null;
 }
 
@@ -108,6 +110,7 @@ const FeedbackRightSidebar = ({
   selectedBrand,
   selectedCategory,
   selectedSiteUrl,
+  brandBannerStyle,
   brandReportStats,
 }: Props) => {
   const onglet = TAB_TO_ONGLET[activeTab];
@@ -132,6 +135,7 @@ const FeedbackRightSidebar = ({
         selectedCategory={selectedCategory}
         onglet={onglet}
         withText
+        containerStyle={selectedBrand ? brandBannerStyle : undefined}
         brandReportStats={brandReportStats}
       />
     );

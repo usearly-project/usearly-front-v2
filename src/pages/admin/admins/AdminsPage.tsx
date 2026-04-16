@@ -124,8 +124,17 @@ const AdminsPage = () => {
             </p>
 
             <div className="modal-actions">
-              <button onClick={() => setAdminToDelete(null)}>Annuler</button>
-              <button className="danger" onClick={handleConfirmDelete}>
+              <button
+                onClick={() => setAdminToDelete(null)}
+                aria-label="Annuler"
+              >
+                Annuler
+              </button>
+              <button
+                className="danger"
+                onClick={handleConfirmDelete}
+                aria-label="Supprimer"
+              >
                 Supprimer
               </button>
             </div>

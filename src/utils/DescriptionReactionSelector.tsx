@@ -78,6 +78,7 @@ const DescriptionReactionSelector = forwardRef(
           className={`main-reaction ${displayAsTextLike ? "as-text-like" : ""} ${
             hasReacted ? "reacted" : ""
           }`}
+          aria-label={displayAsTextLike ? "J’aime" : "Choisir une réaction"}
         >
           {displayAsTextLike ? (
             <>

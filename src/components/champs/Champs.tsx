@@ -31,13 +31,15 @@ type Props<V extends string = string> = {
   iconVisible?: boolean;
   minWidth?: number;
   minWidthPart?: "1" | "2" | "both";
+  fitWidthToOptions?: boolean;
   align?: "left" | "center" | "right";
   placeholderResetLabel?: string;
   loading?: boolean;
+  fixedBrandIconUrl?: string;
 };
 
 const normalize = (label?: string) => label?.toLowerCase().trim() ?? "";
-const PLACEHOLDER_LABEL = normalize("Choisir une marque");
+const PLACEHOLDER_LABEL = normalize("Marques");
 
 export default function SelectFilter<V extends string = string>(
   props: Props<V>,
@@ -54,10 +56,12 @@ export default function SelectFilter<V extends string = string>(
     brandSelect,
     iconVisible = true,
     minWidth = 0,
+    fitWidthToOptions = false,
     align = "center",
     minWidthPart = "both",
     placeholderResetLabel,
     loading = false,
+    fixedBrandIconUrl,
   } = props;
   const [open, setOpen] = useState(false);
   const [offset, setOffset] = useState<number | null>(null);
@@ -109,6 +113,12 @@ export default function SelectFilter<V extends string = string>(
 
   const selectedVisual = useMemo(() => {
     if (!iconVisible) return null;
+    if (isBrandSelect && fixedBrandIconUrl) {
+      return Utils.renderLeadingVisual({
+        iconUrl: fixedBrandIconUrl,
+        label: selected?.label ?? placeholderOption?.label,
+      });
+    }
     if (!isBrandSelect) return Utils.renderLeadingVisual(selected);
     const isP = !selected?.value;
     return Utils.renderBrandAvatar(
@@ -118,10 +128,18 @@ export default function SelectFilter<V extends string = string>(
       !isP,
       isP ? "?" : undefined,
     );
-  }, [iconVisible, isBrandSelect, selected]);
+  }, [
+    iconVisible,
+    isBrandSelect,
+    fixedBrandIconUrl,
+    selected,
+    placeholderOption,
+  ]);
+
+  const shouldMeasureOptionsWidth = isBrandSelect || fitWidthToOptions;
 
   useLayoutEffect(() => {
-    if (shouldHideForLoading || !isBrandSelect) {
+    if (shouldHideForLoading || !shouldMeasureOptionsWidth) {
       setAutoMinWidth(null);
       return;
     }
@@ -141,7 +159,7 @@ export default function SelectFilter<V extends string = string>(
     measure();
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);
-  }, [isBrandSelect, shouldHideForLoading, options]);
+  }, [shouldMeasureOptionsWidth, shouldHideForLoading, options, iconVisible]);
 
   useEffect(() => {
     if (!open) return;
@@ -171,7 +189,11 @@ export default function SelectFilter<V extends string = string>(
   };
 
   const cssMinW =
-    Math.max(minWidth, isBrandSelect && autoMinWidth ? autoMinWidth : 0) + "px";
+    Math.max(
+      minWidth,
+      shouldMeasureOptionsWidth && autoMinWidth ? autoMinWidth : 0,
+    ) + "px";
+  const shouldApplyWrapperWidth = fitWidthToOptions && Boolean(autoMinWidth);
 
   return (
     <div
@@ -180,7 +202,10 @@ export default function SelectFilter<V extends string = string>(
       onClick={toggleOpen}
       style={{
         textAlign: align as any,
-        minWidth: minWidthPart !== "2" ? cssMinW : undefined,
+        minWidth:
+          minWidthPart !== "2" || fitWidthToOptions ? cssMinW : undefined,
+        width: shouldApplyWrapperWidth ? cssMinW : undefined,
+        maxWidth: fitWidthToOptions ? "100%" : undefined,
         display: shouldHideForLoading ? "none" : "block",
       }}
     >
@@ -211,23 +236,28 @@ export default function SelectFilter<V extends string = string>(
               label={Utils.getDisplayLabel(opt.label, isBrandSelect)}
               leading={
                 iconVisible
-                  ? brandSelect === true
-                    ? Utils.renderBrandAvatar(
-                        opt,
-                        Utils.BRAND_AVATAR_SIZE_OPTION,
-                        !opt.value ? "brand-logo--placeholder" : "",
-                        !!opt.value,
-                      )
-                    : brandSelect === false
-                      ? Utils.renderLeadingVisual(opt)
-                      : opt.emoji || !isBrandSelect // Cas automatique
+                  ? fixedBrandIconUrl && isBrandSelect
+                    ? Utils.renderLeadingVisual({
+                        iconUrl: fixedBrandIconUrl,
+                        label: opt.label,
+                      })
+                    : brandSelect === true
+                      ? Utils.renderBrandAvatar(
+                          opt,
+                          Utils.BRAND_AVATAR_SIZE_OPTION,
+                          !opt.value ? "brand-logo--placeholder" : "",
+                          !!opt.value,
+                        )
+                      : brandSelect === false
                         ? Utils.renderLeadingVisual(opt)
-                        : Utils.renderBrandAvatar(
-                            opt,
-                            Utils.BRAND_AVATAR_SIZE_OPTION,
-                            !opt.value ? "brand-logo--placeholder" : "",
-                            !!opt.value,
-                          )
+                        : opt.emoji || !isBrandSelect // Cas automatique
+                          ? Utils.renderLeadingVisual(opt)
+                          : Utils.renderBrandAvatar(
+                              opt,
+                              Utils.BRAND_AVATAR_SIZE_OPTION,
+                              !opt.value ? "brand-logo--placeholder" : "",
+                              !!opt.value,
+                            )
                   : null
               }
               selected={opt.value === value}
@@ -255,6 +285,7 @@ export default function SelectFilter<V extends string = string>(
                   onChange(placeholderOption.value as V);
                   setOpen(false);
                 }}
+                aria-label={placeholderResetLabel ?? "Réinitialiser"}
               >
                 {placeholderResetLabel ?? "Réinitialiser"}
               </button>
@@ -271,11 +302,10 @@ export default function SelectFilter<V extends string = string>(
       <Trigger
         leading={selectedVisual}
         label={
-          Utils.getDisplayLabel(selected?.label, isBrandSelect) ||
-          "Choisir une marque"
+          Utils.getDisplayLabel(selected?.label, isBrandSelect) || "Marques"
         }
       />
-      {isBrandSelect && (
+      {shouldMeasureOptionsWidth && (
         <div
           className="select-filter-measurements"
           ref={measurementRef}
@@ -284,6 +314,24 @@ export default function SelectFilter<V extends string = string>(
           {options.map((opt, i) => (
             <Trigger
               key={i}
+              leading={
+                fitWidthToOptions && iconVisible
+                  ? fixedBrandIconUrl && isBrandSelect
+                    ? Utils.renderLeadingVisual({
+                        iconUrl: fixedBrandIconUrl,
+                        label: opt.label,
+                      })
+                    : isBrandSelect
+                      ? Utils.renderBrandAvatar(
+                          opt,
+                          Utils.BRAND_AVATAR_SIZE,
+                          !opt.value ? "brand-logo--placeholder" : "",
+                          !!opt.value,
+                          !opt.value ? "?" : undefined,
+                        )
+                      : Utils.renderLeadingVisual(opt)
+                  : null
+              }
               label={Utils.getDisplayLabel(opt.label, isBrandSelect)}
               className="select-filter-measure-item"
             />

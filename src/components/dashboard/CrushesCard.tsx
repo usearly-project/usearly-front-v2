@@ -96,7 +96,9 @@ const CrushesCard = () => {
         </div>
       </div>
 
-      <button className="pill-cta crush-cta">Mettre en avant</button>
+      <button className="pill-cta crush-cta" aria-label="Mettre en avant">
+        Mettre en avant
+      </button>
     </div>
   );
 };

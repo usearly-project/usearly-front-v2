@@ -3,8 +3,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { usePublicFeed } from "@src/hooks/usePublicFeed";
 import { useAuth } from "@src/services/AuthContext";
 import { filterFeedItems } from "@src/utils/feedSearch";
+import type { FeedItem } from "@src/types/feedItem";
 import type {
   FeedFilterValue,
+  FeedBrandFilterOption,
   ReportFeedFilterValue,
   CdcFeedFilterValue,
   SuggestionFeedFilterValue,
@@ -17,37 +19,57 @@ import {
   sortCdcByFilter,
   sortSuggestionsByFilter,
 } from "../utils/MixedFeed.utils";
+import { useAuthTooltip } from "@src/hooks/useAuthTooltip";
 
 // Note : On pourrait aussi mettre ces labels dans un fichier constants
 const REPORT_FILTER_LABELS: Record<ReportFeedFilterValue, string> = {
-  hot: "Problèmes les plus signalés",
-  rage: "Problèmes les plus rageants",
-  popular: "Signalements les plus populaires",
-  chrono: "Signalements les plus récents",
+  hot: "Les plus signalés",
+  rage: "Les plus rageants",
+  popular: "Les plus populaires",
+  chrono: "Les plus récents",
   urgent: "À shaker vite",
 };
 
 const CDC_FILTER_LABELS: Record<CdcFeedFilterValue, string> = {
-  popular: "Coups de cœur populaires",
-  enflammes: "Coups de cœur les plus enflammés",
-  chrono: "Coups de cœur les plus récents",
+  popular: "Populaires",
+  enflammes: "Les plus enflammés",
+  chrono: "Les plus récents",
 };
 
 const SUGGESTION_FILTER_LABELS: Record<SuggestionFeedFilterValue, string> = {
-  allSuggest: "Suggestions populaires",
-  recentSuggestion: "Suggestions ouvertes aux votes",
-  likedSuggestion: "Suggestions adoptées",
+  allSuggest: "Populaires",
+  recentSuggestion: "Ouvertes aux votes",
+  likedSuggestion: "Adoptées",
+};
+
+const normalizeBrandName = (value: string) =>
+  value
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim();
+
+const getFeedItemBrand = (item: FeedItem) =>
+  String(item.data.marque ?? "").trim();
+
+const getFeedItemSiteUrl = (item: FeedItem) => {
+  const siteUrl = item.data.siteUrl;
+  return typeof siteUrl === "string" && siteUrl.trim()
+    ? siteUrl.trim()
+    : undefined;
 };
 
 export const useMixedFeed = (
   isPublic: boolean,
   onPublicFiltersChange?: (filters: PublicFeedFilterState) => void,
+  isMobile = false,
 ) => {
   const { isAuthenticated } = useAuth();
   const { feed, loadMore, loading, hasMore } = usePublicFeed();
   const [searchValue, setSearchValue] = useState("");
-  const [showAuthTooltip, setShowAuthTooltip] = useState(false);
-  const [tooltipText, setTooltipText] = useState("");
+  const [selectedBrand, setSelectedBrand] = useState("");
+  const { showAuthTooltip, tooltipText, tooltipPosition, triggerTooltip } =
+    useAuthTooltip();
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -60,6 +82,32 @@ export const useMixedFeed = (
     useState<CdcFeedFilterValue>("chrono");
   const [suggestionFeedFilter, setSuggestionFeedFilter] =
     useState<SuggestionFeedFilterValue>("allSuggest");
+
+  const availableBrands = useMemo<FeedBrandFilterOption[]>(() => {
+    const brandMap = new Map<string, FeedBrandFilterOption>();
+
+    feed.forEach((item) => {
+      const brand = getFeedItemBrand(item);
+      if (!brand) return;
+
+      const key = normalizeBrandName(brand);
+      const siteUrl = getFeedItemSiteUrl(item);
+      const existing = brandMap.get(key);
+
+      if (!existing) {
+        brandMap.set(key, { brand, siteUrl });
+        return;
+      }
+
+      if (siteUrl && !existing.siteUrl) {
+        existing.siteUrl = siteUrl;
+      }
+    });
+
+    return Array.from(brandMap.values()).sort((a, b) =>
+      a.brand.localeCompare(b.brand, "fr", { sensitivity: "base" }),
+    );
+  }, [feed]);
 
   // --- LOGIQUE DE L'URL ---
   const selectedFilter: FeedFilterValue = useMemo(() => {
@@ -82,14 +130,24 @@ export const useMixedFeed = (
               : item.type === selectedFilter,
           );
 
-    let sorted = typeFiltered;
+    const normalizedSelectedBrand = normalizeBrandName(selectedBrand);
+    const brandFiltered =
+      isMobile && normalizedSelectedBrand
+        ? typeFiltered.filter(
+            (item) =>
+              normalizeBrandName(getFeedItemBrand(item)) ===
+              normalizedSelectedBrand,
+          )
+        : typeFiltered;
+
+    let sorted = brandFiltered;
     if (selectedFilter === "report") {
-      sorted = sortReportsByFilter(typeFiltered as any, reportFeedFilter);
+      sorted = sortReportsByFilter(brandFiltered as any, reportFeedFilter);
     } else if (selectedFilter === "coupdecoeur") {
-      sorted = sortCdcByFilter(typeFiltered as any, cdcFeedFilter);
+      sorted = sortCdcByFilter(brandFiltered as any, cdcFeedFilter);
     } else if (selectedFilter === "suggestion") {
       sorted = sortSuggestionsByFilter(
-        typeFiltered as any,
+        brandFiltered as any,
         suggestionFeedFilter,
       );
     }
@@ -102,14 +160,9 @@ export const useMixedFeed = (
     cdcFeedFilter,
     suggestionFeedFilter,
     searchValue,
+    selectedBrand,
+    isMobile,
   ]);
-
-  // --- ACTIONS ---
-  const triggerTooltip = (text: string) => {
-    setTooltipText(text);
-    setShowAuthTooltip(true);
-    setTimeout(() => setShowAuthTooltip(false), 2000);
-  };
 
   const handleFilter = (type: FeedFilterValue) => {
     if (type === "all") {
@@ -146,12 +199,19 @@ export const useMixedFeed = (
   }, [selectedFilter, isPublic]);
 
   useEffect(() => {
+    if (!isMobile && selectedBrand) {
+      setSelectedBrand("");
+    }
+  }, [isMobile, selectedBrand]);
+
+  useEffect(() => {
     if (isPublic && onPublicFiltersChange) {
       onPublicFiltersChange({
         selectedFilter,
         reportFeedFilter,
         cdcFeedFilter,
         suggestionFeedFilter,
+        selectedBrand: isMobile ? selectedBrand : "",
       });
     }
   }, [
@@ -159,6 +219,8 @@ export const useMixedFeed = (
     reportFeedFilter,
     cdcFeedFilter,
     suggestionFeedFilter,
+    selectedBrand,
+    isMobile,
     isPublic,
     onPublicFiltersChange,
   ]);
@@ -170,6 +232,9 @@ export const useMixedFeed = (
     loadMore,
     searchValue,
     setSearchValue,
+    selectedBrand,
+    setSelectedBrand,
+    availableBrands,
     selectedFilter,
     handleFilter,
     reportFeedFilter,
@@ -180,6 +245,7 @@ export const useMixedFeed = (
     setSuggestionFeedFilter,
     showAuthTooltip,
     tooltipText,
+    tooltipPosition,
     activeSecondaryFilterLabel,
   };
 };

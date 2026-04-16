@@ -8,8 +8,12 @@
   width: 100%;
 
   @media screen and (max-width: 980px) {
-    flex-wrap: wrap;
-    align-items: flex-start;
+    // Ancien comportement : les filtres passaient sur plusieurs lignes.
+    // flex-wrap: wrap;
+    // align-items: flex-start;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
   }
 
   @media screen and (max-width: 680px) {
@@ -24,7 +28,9 @@
   min-width: 0;
 
   @media screen and (max-width: 980px) {
-    width: 100%;
+    // width: 100%;
+    width: fit-content;
+    max-width: 100%;
   }
 }
 
@@ -40,18 +46,115 @@
     min-width: 0;
   }
 
-  @media screen and (max-width: 980px) {
-    width: 100%;
-    flex-wrap: wrap;
+  @media screen and (max-width: 700px) {
+    // Ancien comportement : les actions prenaient une ligne dédiée.
+    // width: 100%;
+    // flex-wrap: wrap;
+    width: auto;
+    flex-wrap: nowrap;
     justify-content: flex-start;
   }
 
+  @media screen and (max-width: 980px) {
+    // Ancien comportement : les actions passaient sous le filtre principal.
+    // width: 100%;
+    // flex-wrap: wrap;
+    width: auto;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    margin-left: 0;
+
+    > .brand-select-inline {
+      max-width: 125px;
+
+      > .select-filter-display {
+        max-width: 125px;
+
+        // Ancien comportement : le filtre gardait le logo ou les initiales de marque.
+        .select-filter-leading {
+          display: none;
+        }
+
+        .select-filter-content {
+          min-width: 0;
+        }
+
+        .select-filter-label {
+          font-size: 0;
+          overflow: hidden;
+          text-overflow: ellipsis;
+
+          &::after {
+            content: "Marque";
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+
   @media screen and (max-width: 680px) {
-    flex-direction: column;
-    align-items: stretch;
+    // Ancien comportement : les filtres passaient en colonne sur mobile.
+    // flex-direction: column;
+    // align-items: stretch;
+    flex-direction: row;
+    align-items: center;
 
     > * {
-      width: 100%;
+      // width: 100%;
+      width: auto;
+      max-width: none;
+    }
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .filter-bar-generic-actions > .brand-select-inline {
+    flex: 0 0 auto;
+    width: fit-content;
+    min-width: 0 !important;
+    max-width: 100%;
+
+    .select-filter-display {
+      width: auto;
+    }
+  }
+}
+
+@media screen and (max-width: 630px) {
+  .filter-bar-generic-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .filter-bar-generic-primary {
+    align-self: flex-start;
+    width: fit-content;
+    max-width: 100%;
+  }
+
+  .filter-bar-generic-actions {
+    align-self: flex-start;
+    // Ancien comportement : la largeur suivait le contenu.
+    // width: fit-content;
+    width: 100%;
+    max-width: 100%;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 10px;
+
+    > * {
+      align-self: flex-start;
+      width: fit-content;
+      max-width: 100%;
+    }
+
+    > .brand-select-inline {
+      max-width: 125px;
+
+      > .select-filter-display {
+        max-width: 125px;
+      }
     }
   }
 }

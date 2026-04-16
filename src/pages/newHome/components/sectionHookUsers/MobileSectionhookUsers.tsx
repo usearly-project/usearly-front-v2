@@ -42,7 +42,10 @@ const MobileSectionHookUsers = ({
         </div>
 
         <div className="mobile-sectionhook-users__actions">
-          <button className="mobile-sectionhook-users__extension-button">
+          <button
+            className="mobile-sectionhook-users__extension-button"
+            aria-label={extensionLabel}
+          >
             <img
               src={extensionIconSrc}
               width={40}

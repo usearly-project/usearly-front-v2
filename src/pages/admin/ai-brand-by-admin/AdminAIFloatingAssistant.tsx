@@ -27,12 +27,17 @@ const AdminAIFloatingAssistant = () => {
         <div className="ai-panel">
           <div className="ai-header">
             <span>Assistant AI</span>
-            <button onClick={() => setOpen(false)}>✕</button>
+            <button
+              onClick={() => setOpen(false)}
+              aria-label="Fermer l’assistant AI"
+            >
+              ✕
+            </button>
           </div>
 
           <div className="ai-questions">
             {QUICK_QUESTIONS.map((q) => (
-              <button key={q} onClick={() => askAI(q)}>
+              <button key={q} onClick={() => askAI(q)} aria-label={q}>
                 {q}
               </button>
             ))}
@@ -50,6 +55,7 @@ const AdminAIFloatingAssistant = () => {
                 askAI(input);
                 setInput("");
               }}
+              aria-label="Envoyer la question"
             >
               ➤
             </button>

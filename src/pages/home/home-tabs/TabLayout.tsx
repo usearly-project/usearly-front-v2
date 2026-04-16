@@ -1,5 +1,4 @@
 import React from "react";
-import FeedbackRightSidebar from "./FeedbackRightSidebar";
 
 interface TabLayoutProps {
   /** Classe container : cdc-banner-container | suggestion-banner-container */
@@ -32,21 +31,22 @@ const TabLayout: React.FC<TabLayoutProps> = ({
   containerClassName,
   bannerStyle,
   activeFilter,
-  onglet,
   selectedBrand,
-  selectedSiteUrl,
   selectedCategory,
   renderFilters,
   renderContent,
-  showRightPanel = true,
 }) => {
+  const containerClasses = [
+    containerClassName,
+    selectedBrand ? "banner-filtered" : `banner-${activeFilter}`,
+    selectedBrand ? "brandSelected" : "",
+    selectedCategory ? "brandCategorySelected" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <div
-      className={`${containerClassName} ${
-        selectedBrand ? "banner-filtered" : `banner-${activeFilter}`
-      }`}
-      style={bannerStyle}
-    >
+    <div className={containerClasses} style={bannerStyle}>
       {/* -----------------------------
           Colonne centrale
       --------------------------------*/}
@@ -67,8 +67,11 @@ const TabLayout: React.FC<TabLayoutProps> = ({
       {/* -----------------------------
           Colonne droite — BANDEAU
       --------------------------------*/}
-      {showRightPanel && (
-        <aside className="right-panel">
+      {/* {showRightPanel && (
+        <aside
+          className={rightPanelClasses}
+          style={isBrandFocused ? bannerStyle : undefined}
+        >
           <FeedbackRightSidebar
             activeTab={onglet}
             activeFilter={activeFilter}
@@ -77,7 +80,7 @@ const TabLayout: React.FC<TabLayoutProps> = ({
             selectedSiteUrl={selectedSiteUrl}
           />
         </aside>
-      )}
+      )} */}
     </div>
   );
 };

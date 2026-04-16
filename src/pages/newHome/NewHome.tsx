@@ -10,6 +10,7 @@ import ScrollInlineImages from "./components/scroll-text/ScrollInlineImages";
 // import FavoriteSection from "./components/slide-stack/FavoriteSection";
 import InfiniteCarouselBanner from "./components/infiniteCarouselBanner/InfiniteCarouselBanner";
 import { useIsAtBottom } from "@src/hooks/detect-bottom";
+import AppDownloadSection from "@src/components/app-download/AppDownloadSection";
 
 const BOTTOM_THRESHOLD_PX = 12;
 
@@ -27,6 +28,7 @@ const NewHome: React.FC = () => {
       <section className="new-home-video-section">
         <VideoContainerLanding />
       </section>
+      <AppDownloadSection />
 
       <div className="new-home-main">
         <ExtensionExample />

@@ -3,6 +3,8 @@ import "./BrandResponseBanner.scss";
 import type { HasBrandResponse } from "@src/types/brandResponse";
 import bubbleChat from "/assets/icons/answer-bubble.svg";
 import { useAuth } from "@src/services/AuthContext";
+import AuthTooltip from "@src/components/shared/AuthTooltip";
+import { useAuthTooltip } from "@src/hooks/useAuthTooltip";
 
 type Props = {
   message: string;
@@ -15,19 +17,11 @@ type Props = {
 const BrandResponseBanner: React.FC<Props> = ({ message, createdAt }) => {
   const { userProfile } = useAuth();
   const [expanded, setExpanded] = useState(false);
-  const [showAuthTooltip, setShowAuthTooltip] = useState(false);
-  const [tooltipText, setTooltipText] = useState("");
+  const { showAuthTooltip, tooltipText, tooltipPosition, triggerTooltip } =
+    useAuthTooltip();
   const MAX_LENGTH = 140;
   const isLong = message.length > MAX_LENGTH;
 
-  const triggerTooltip = (text: string) => {
-    setTooltipText(text);
-    setShowAuthTooltip(true);
-
-    setTimeout(() => {
-      setShowAuthTooltip(false);
-    }, 2000);
-  };
   return (
     <div className="brand-response-banner">
       <div className="brand-response-header">
@@ -59,7 +53,7 @@ const BrandResponseBanner: React.FC<Props> = ({ message, createdAt }) => {
               e.stopPropagation();
 
               if (!userProfile?.id && !expanded) {
-                triggerTooltip("Connecte-toi pour voir la réponse complète");
+                triggerTooltip("Connecte-toi pour voir la réponse complète", e);
                 return;
               }
 
@@ -71,7 +65,11 @@ const BrandResponseBanner: React.FC<Props> = ({ message, createdAt }) => {
         )}
       </p>
 
-      {showAuthTooltip && <div className="auth-tooltip">{tooltipText}</div>}
+      <AuthTooltip
+        show={showAuthTooltip}
+        text={tooltipText}
+        position={tooltipPosition}
+      />
     </div>
   );
 };

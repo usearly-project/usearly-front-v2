@@ -68,7 +68,8 @@ export const resolveRightSidebarIllustrationConfig = (
         onglet: "coupdecoeur",
         text: "Les coups de cœur qui embrasent le plus la communauté.",
         themeClass: "right-sidebar--theme-cdc",
-        statsMode: "cdc-enflammes",
+        // statsMode: "cdc-enflammes",
+        statsMode: "none",
       };
     }
 
@@ -77,7 +78,8 @@ export const resolveRightSidebarIllustrationConfig = (
       onglet: "coupdecoeur",
       text: "Les derniers coups de cœur partagés par la communauté.",
       themeClass: "right-sidebar--theme-cdc",
-      statsMode: "cdc-chrono",
+      // statsMode: "cdc-chrono",
+      statsMode: "none",
     };
   }
 
@@ -97,7 +99,8 @@ export const resolveRightSidebarIllustrationConfig = (
       onglet: "suggestion",
       text: "Les suggestions encore ouvertes aux votes de la communauté.",
       themeClass: "right-sidebar--theme-suggest",
-      statsMode: "suggestion-recent",
+      // statsMode: "suggestion-recent",
+      statsMode: "none",
     };
   }
 
@@ -106,6 +109,7 @@ export const resolveRightSidebarIllustrationConfig = (
     onglet: "suggestion",
     text: "Les suggestions déjà adoptées et validées collectivement.",
     themeClass: "right-sidebar--theme-suggest",
-    statsMode: "suggestion-liked",
+    // statsMode: "suggestion-liked",
+    statsMode: "none",
   };
 };

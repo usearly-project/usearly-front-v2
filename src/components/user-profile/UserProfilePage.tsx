@@ -56,35 +56,35 @@ const UserProfilePage: React.FC = () => {
               <UserFeedbackView activeTab={activeTab} />
             )}
           </div>
-
-          <aside className="right-panel">
-            {activeTab === "suggestion" && (
-              // <UserVotesCard />
-              <div className="suggestion-img-side-container">
-                <img
-                  className="suggestion-img-side-img"
-                  src={Abracadabra}
-                  alt="image abracadabra"
-                />
-              </div>
-            )}
-
-            {(activeTab === "report" || activeTab === "coupdecoeur") && (
-              <>
-                {/* 🔵 Bloc émotions (inchangé) */}
-                <UserEmotionSummaryPanel
-                  data={emotionSummary}
-                  loading={loadingEmotionSummary}
-                />
-
-                {/* 🔽 SECTION SÉPARÉE */}
-                <div className="love-brands-section">
-                  <UserLoveBrandsPanel brands={emotionSummary?.brands ?? []} />
-                </div>
-              </>
-            )}
-          </aside>
         </main>
+
+        <aside className="right-panel">
+          {activeTab === "suggestion" && (
+            // <UserVotesCard />
+            <div className="suggestion-img-side-container">
+              <img
+                className="suggestion-img-side-img"
+                src={Abracadabra}
+                alt="image abracadabra"
+              />
+            </div>
+          )}
+
+          {(activeTab === "report" || activeTab === "coupdecoeur") && (
+            <>
+              {/* 🔵 Bloc émotions (inchangé) */}
+              <UserEmotionSummaryPanel
+                data={emotionSummary}
+                loading={loadingEmotionSummary}
+              />
+
+              {/* 🔽 SECTION SÉPARÉE */}
+              <div className="love-brands-section">
+                <UserLoveBrandsPanel brands={emotionSummary?.brands ?? []} />
+              </div>
+            </>
+          )}
+        </aside>
       </div>
     </div>
   );

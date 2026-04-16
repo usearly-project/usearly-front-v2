@@ -116,6 +116,7 @@ const OtherDescriptions: React.FC<Props> = ({
               [sub.subCategory]: true,
             }))
           }
+          aria-label="Afficher plus de signalements"
         >
           <ChevronDown size={14} /> Afficher plus de signalements
         </button>

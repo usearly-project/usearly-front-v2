@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
-import { ThumbsUp, MessageCircle, Hand } from "lucide-react";
+import { ThumbsUp, MessageCircle } from "lucide-react";
+// import { Hand } from "lucide-react";
 import { useReactionsForDescription } from "@src/hooks/useReactionsForDescription";
 import { getEmojisForType } from "@src/components/constants/emojiMapByType";
 import "./ReportActionsBar.scss";
@@ -9,9 +10,13 @@ import type { HasBrandResponse } from "@src/types/brandResponse";
 import ReportAvatars from "@src/pages/public/components/ReportAvatar/ReportsAvatar";
 import type { User } from "@src/types/Reports";
 import { useAuth } from "@src/services/AuthContext";
-import lightBulbLight from "/assets/icons/lightBulbLight.svg";
-import lightBulbNoLight from "/assets/icons/lightBulbNoLight.svg";
+import lightBulbLight from "/assets/icons/solution-icon-light.svg";
+import lightBulbNoLight from "/assets/icons/solution-icon-light.svg";
 import RedirectionExtensionModal from "../modal/RedirectionExtensionModal";
+import simpleLeftHand from "/assets/icons/simple-left-hand.svg";
+import { useIsMobile } from "@src/hooks/use-mobile";
+import AuthTooltip from "@src/components/shared/AuthTooltip";
+import { useAuthTooltip } from "@src/hooks/useAuthTooltip";
 
 interface Props {
   type: "report" | "suggestion" | "coupDeCoeur";
@@ -41,6 +46,7 @@ interface Props {
   }[];
   onOpenSolutionModal?: () => void;
   onOpenSolutionsList?: () => void;
+  isMobile?: boolean;
 }
 
 const ReportActionsBarWithReactions: React.FC<Props> = ({
@@ -55,9 +61,14 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
   onOpenSolutionModal,
   brandName,
   siteUrl,
+  isMobile: isMobileProp,
 }) => {
   const { userProfile } = useAuth();
   const isAuthenticated = !!userProfile?.id;
+  const detectedIsMobile = useIsMobile();
+  const isMobile = isMobileProp ?? detectedIsMobile;
+  const is1350px = useIsMobile("(max-width: 1350px)");
+  const is1200px = useIsMobile("(max-width: 1200px)");
 
   // 🟢 ÉTAT POUR LA MODAL D'EXTENSION
   const [showExtensionModal, setShowExtensionModal] = useState(false);
@@ -71,22 +82,21 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const hoverTimeout = useRef<NodeJS.Timeout | null>(null);
   const statusConfig = TICKET_STATUSES.find((s) => s.key === status);
-  const [showAuthTooltip, setShowAuthTooltip] = useState(false);
-  const [tooltipText, setTooltipText] = useState("");
+  const { showAuthTooltip, tooltipText, tooltipPosition, triggerTooltip } =
+    useAuthTooltip();
+  const solutionTooltipLabel =
+    solutionsCount > 0 ? "Solutions" : "Proposer une solution";
 
   if (!statusConfig) return null;
 
   // --- LOGIQUE DU CLIC SIGNALER ---
-  const handleSignalerClick = () => {
+  const handleSignalerClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (!isAuthenticated) {
-      triggerTooltip("Connecte-toi pour signaler");
+      triggerTooltip("Connecte-toi pour signaler", event);
       return;
     }
 
-    // Détection simple Desktop (largeur > 768px par exemple)
-    const isDesktop = window.innerWidth > 768;
-
-    if (isDesktop) {
+    if (!isMobile) {
       setShowExtensionModal(true);
     } else {
       onToggleSimilarReports?.();
@@ -102,12 +112,6 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
     setShowEmojiPicker(false);
   };
 
-  const triggerTooltip = (text: string) => {
-    setTooltipText(text);
-    setShowAuthTooltip(true);
-    setTimeout(() => setShowAuthTooltip(false), 2000);
-  };
-
   const reporters = (descriptions ?? [])
     .map((d) => d.author)
     .filter((u): u is User => !!u);
@@ -121,7 +125,7 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
   const totalCount = allReactions.reduce((acc, r) => acc + r.count, 0);
 
   return (
-    <div className="report-actions-bar">
+    <div className={`report-actions-bar${isMobile ? " is-mobile" : ""}`}>
       {/* ... (Reste du JSX des compteurs identique) ... */}
       <div className="counts-row">
         <div className="count-left">
@@ -179,12 +183,16 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
             }}
           >
             <button
-              onClick={() =>
-                !isAuthenticated && triggerTooltip("Connecte-toi pour réagir")
+              onClick={(event) =>
+                !isAuthenticated &&
+                triggerTooltip("Connecte-toi pour réagir", event)
               }
+              aria-label="Réagir"
             >
-              <ThumbsUp size={18} />
-              <span className="reagir-span-btn">Réagir</span>
+              <ThumbsUp size={isMobile ? 18 : 22} />
+              {is1350px ? null : (
+                <span className="reagir-span-btn">Réagir</span>
+              )}
             </button>
             {showEmojiPicker && isAuthenticated && (
               <div className="emoji-picker-container">
@@ -199,41 +207,67 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
           </div>
 
           <button
-            onClick={() =>
+            onClick={(event) =>
               !isAuthenticated
-                ? triggerTooltip("Connecte-toi pour commenter")
+                ? triggerTooltip("Connecte-toi pour commenter", event)
                 : onCommentClick()
             }
+            aria-label="Commenter"
           >
-            <MessageCircle size={18} />
-            <span className="commenter-span-btn">Commenter</span>
+            <MessageCircle size={isMobile ? 18 : 22} />
+            {is1350px ? null : (
+              <span className="commenter-span-btn">Commenter</span>
+            )}
           </button>
         </div>
 
         {/* 🟢 CENTRE : BOUTON SIGNALER MODIFIÉ */}
-        <div className="actions-center">
-          <button className="signaler-btn-mobile" onClick={handleSignalerClick}>
-            <Hand size={18} />
-            <span className="signaler-span-btn">Signaler</span>
+        {/* <div className="actions-center">
+          <button
+            className="signaler-btn-mobile"
+            data-tooltip="Signaler"
+            aria-label="Signaler"
+            onClick={handleSignalerClick}
+          >
+            <img src={simpleLeftHand} alt="" />
+            <span className="signaler-span-btn">J'ai aussi ce problème</span>
           </button>
-        </div>
+        </div> */}
 
         <div className="actions-right">
           <button
+            className="signaler-btn-mobile"
+            data-tooltip="Signaler"
+            aria-label="Signaler"
+            onClick={handleSignalerClick}
+          >
+            <img src={simpleLeftHand} alt="" />
+            {is1200px ? (
+              <span className="signaler-span-btn">Signaler</span>
+            ) : (
+              <span className="signaler-span-btn">J'ai aussi ce problème</span>
+            )}
+          </button>
+          <button
             className={`solution-btn ${solutionsCount > 0 ? "solution-btn-active" : "solution-btn-empty"}`}
-            onClick={() =>
+            data-tooltip={solutionTooltipLabel}
+            aria-label={solutionTooltipLabel}
+            onClick={(event) =>
               !isAuthenticated
-                ? triggerTooltip("Connecte-toi")
+                ? triggerTooltip("Connecte-toi", event)
                 : onOpenSolutionModal?.()
             }
           >
             <img
               src={solutionsCount > 0 ? lightBulbLight : lightBulbNoLight}
-              width={26}
-              height={26}
+              width={22}
+              height={22}
               alt="bulb"
             />
-            <span className="solution-span-btn">({solutionsCount})</span>
+            <span className="solution-span-btn">
+              {is1200px ? null : solutionsCount > 1 ? "Solutions" : "Solution"}{" "}
+              ({solutionsCount})
+            </span>
           </button>
         </div>
       </div>
@@ -247,7 +281,11 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
         />
       )}
 
-      {showAuthTooltip && <div className="auth-tooltip">{tooltipText}</div>}
+      <AuthTooltip
+        show={showAuthTooltip}
+        text={tooltipText}
+        position={tooltipPosition}
+      />
     </div>
   );
 };

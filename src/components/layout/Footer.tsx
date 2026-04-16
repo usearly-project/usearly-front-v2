@@ -1,10 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Footer.scss";
+// import AppDownloadCTA from "@src/components/app-download/AppDownloadCTA";
 
 const Footer: React.FC = () => (
   <footer>
     <div className="footer-container">
+      {/* <AppDownloadCTA className="footer-app-download-cta" /> */}
       <ul>
         <li>
           <Link to="/home2">Landing 2</Link>

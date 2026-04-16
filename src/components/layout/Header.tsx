@@ -1,4 +1,10 @@
-import { useState, useRef, useEffect } from "react";
+import {
+  useCallback,
+  useState,
+  useRef,
+  useEffect,
+  type MouseEvent as ReactMouseEvent,
+} from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./Header.scss";
@@ -6,6 +12,12 @@ import Logo from "@src/assets/logo.svg";
 import { useAuth } from "@src/services/AuthContext";
 import { getNotifications } from "@src/services/notificationService";
 import Buttons from "@src/components/buttons/Buttons";
+import { useIsMobile } from "@src/hooks/use-mobile";
+import UsearlyText from "/assets/UsearlyText.svg";
+import AppDownloadModal from "@src/components/app-download/AppDownloadModal";
+// import { APP_DOWNLOAD_ROUTE } from "@src/components/app-download/appDownload.constants";
+
+const MOBILE_APP_REDIRECT_BREAKPOINT_PX = 1080;
 
 const HEADER_HIDE_SCROLL_Y = 30;
 const HEADER_SHOW_TOP_SCROLL_Y = 2;
@@ -32,7 +44,13 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
   const [shakeBell, setShakeBell] = useState(false);
   const prevUnreadCountRef = useRef(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showAppDownloadModal, setShowAppDownloadModal] = useState(false);
   const [isHeaderHidden, setIsHeaderHidden] = useState(false);
+  const isMobileHeader = useIsMobile(
+    `(max-width: ${MOBILE_APP_REDIRECT_BREAKPOINT_PX}px)`,
+  );
+  // const isHeaderNavigationBlocked = isMobileHeader;
+  const shouldRedirectNavigationToDownload = isMobileHeader;
   const hiddenRef = useRef(false);
   const lastScrollYRef = useRef(0);
   const activeScrollYRef = useRef(0);
@@ -87,7 +105,7 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth > 768) {
+      if (window.innerWidth > MOBILE_APP_REDIRECT_BREAKPOINT_PX) {
         setMobileMenuOpen(false);
       }
     };
@@ -95,6 +113,108 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  useEffect(() => {
+    if (!shouldRedirectNavigationToDownload) {
+      setMobileMenuOpen(false);
+      setUserMenuOpen(false);
+      setShowAppDownloadModal(false);
+    }
+  }, [shouldRedirectNavigationToDownload]);
+
+  const openAppDownloadModal = useCallback(() => {
+    setMobileMenuOpen(false);
+    setUserMenuOpen(false);
+    setShowAppDownloadModal(true);
+  }, []);
+
+  const handleMobileNavigationIntent = useCallback(
+    (event?: ReactMouseEvent<HTMLElement>) => {
+      if (!shouldRedirectNavigationToDownload) {
+        return false;
+      }
+
+      event?.preventDefault();
+      event?.stopPropagation();
+      openAppDownloadModal();
+
+      return true;
+    },
+    [openAppDownloadModal, shouldRedirectNavigationToDownload],
+  );
+
+  useEffect(() => {
+    if (!shouldRedirectNavigationToDownload) {
+      return;
+    }
+
+    const handleDocumentNavigationClick = (event: MouseEvent) => {
+      if (
+        event.defaultPrevented ||
+        event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey
+      ) {
+        return;
+      }
+
+      const target = event.target;
+
+      if (!(target instanceof Element)) {
+        return;
+      }
+
+      if (
+        target.closest("[data-mobile-navigation-allow='true']") ||
+        target.closest(".app-download-modal") ||
+        target.closest(".burger")
+      ) {
+        return;
+      }
+
+      const anchor = target.closest("a[href]");
+
+      if (!(anchor instanceof HTMLAnchorElement)) {
+        return;
+      }
+
+      const rawHref = anchor.getAttribute("href");
+
+      if (
+        !rawHref ||
+        rawHref.startsWith("#") ||
+        rawHref.startsWith("mailto:") ||
+        rawHref.startsWith("tel:") ||
+        anchor.hasAttribute("download") ||
+        (anchor.target && anchor.target !== "_self")
+      ) {
+        return;
+      }
+
+      const nextUrl = new URL(anchor.href, window.location.href);
+
+      if (nextUrl.origin !== window.location.origin) {
+        return;
+      }
+
+      event.preventDefault();
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+      openAppDownloadModal();
+    };
+
+    document.addEventListener("click", handleDocumentNavigationClick, true);
+
+    return () => {
+      document.removeEventListener(
+        "click",
+        handleDocumentNavigationClick,
+        true,
+      );
+    };
+  }, [openAppDownloadModal, shouldRedirectNavigationToDownload]);
 
   useEffect(() => {
     const isFeedbackRoute = location.pathname.startsWith("/");
@@ -214,6 +334,16 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
     navigate("/");
   };
 
+  const handleLogoClick = () => {
+    if (handleMobileNavigationIntent()) return;
+
+    navigate("/home");
+  };
+
+  const handleBurgerClick = () => {
+    setMobileMenuOpen((prev) => !prev);
+  };
+
   return (
     <header
       className={`header component-header-container ${heroMode ? "hero-mode" : ""} ${
@@ -222,15 +352,29 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
     >
       <div className="header-container">
         {/* ================= LOGO ================= */}
-        <div className="logo" onClick={() => navigate("/home")}>
+        <div className="logo" onClick={handleLogoClick}>
           <img src={Logo} alt="Usearly Logo" />
-          <span className="logo-text">Usearly</span>
+          <span className="logo-text">
+            <img src={UsearlyText} alt="logo usearly" />
+          </span>
         </div>
+
+        {/* <NavLink
+          to={APP_DOWNLOAD_ROUTE}
+          className="header-download-cta header-download-cta--mobile"
+          onClick={() => {
+            setMobileMenuOpen(false);
+            setUserMenuOpen(false);
+          }}
+          aria-label="Aller à la section de téléchargement de l'application Usearly"
+        >
+          Télécharger l'app
+        </NavLink> */}
 
         {/* ================= BURGER (Mobile only via CSS) ================= */}
         <div
           className={`burger ${mobileMenuOpen ? "open" : ""}`}
-          onClick={() => setMobileMenuOpen((prev) => !prev)}
+          onClick={handleBurgerClick}
         >
           <span></span>
           <span></span>
@@ -261,7 +405,10 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
           <NavLink
             to="/"
             className="link"
-            onClick={() => setMobileMenuOpen(false)}
+            onClick={(event) => {
+              if (handleMobileNavigationIntent(event)) return;
+              setMobileMenuOpen(false);
+            }}
           >
             Feel d'actu
           </NavLink>
@@ -269,7 +416,10 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
             <NavLink
               to="/profile"
               className="link"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={(event) => {
+                if (handleMobileNavigationIntent(event)) return;
+                setMobileMenuOpen(false);
+              }}
             >
               Mes contributions
             </NavLink>
@@ -277,7 +427,10 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
           <NavLink
             to="/about"
             className="link"
-            onClick={() => setMobileMenuOpen(false)}
+            onClick={(event) => {
+              if (handleMobileNavigationIntent(event)) return;
+              setMobileMenuOpen(false);
+            }}
           >
             Notre mission
           </NavLink>
@@ -291,6 +444,7 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
               <div
                 className="mobile-item"
                 onClick={() => {
+                  if (handleMobileNavigationIntent()) return;
                   navigate("/notifications");
                   setMobileMenuOpen(false);
                 }}
@@ -308,6 +462,7 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
               <div
                 className="mobile-item"
                 onClick={() => {
+                  if (handleMobileNavigationIntent()) return;
                   navigate("/account");
                   setMobileMenuOpen(false);
                 }}
@@ -325,6 +480,7 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
                   <div
                     className="mobile-item"
                     onClick={() => {
+                      if (handleMobileNavigationIntent()) return;
                       navigate("/admin/users");
                       setMobileMenuOpen(false);
                     }}
@@ -336,6 +492,7 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
                     <div
                       className="mobile-item"
                       onClick={() => {
+                        if (handleMobileNavigationIntent()) return;
                         navigate("/admin/admins");
                         setMobileMenuOpen(false);
                       }}
@@ -347,6 +504,7 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
                   <div
                     className="mobile-item"
                     onClick={() => {
+                      if (handleMobileNavigationIntent()) return;
                       navigate("/admin/brands");
                       setMobileMenuOpen(false);
                     }}
@@ -372,6 +530,7 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
               <div
                 className="mobile-item"
                 onClick={() => {
+                  if (handleMobileNavigationIntent()) return;
                   navigate("/lookup");
                   setMobileMenuOpen(false);
                 }}
@@ -382,6 +541,7 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
               <div
                 className="mobile-item"
                 onClick={() => {
+                  if (handleMobileNavigationIntent()) return;
                   navigate("/lookup");
                   setMobileMenuOpen(false);
                 }}
@@ -395,6 +555,7 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
           <div
             className="mobile-logo"
             onClick={() => {
+              if (handleMobileNavigationIntent()) return;
               navigate("/home");
               setMobileMenuOpen(false);
             }}
@@ -406,11 +567,21 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
 
         {/* ================= DESKTOP RIGHT SIDE ================= */}
         <div className="header-right" ref={dropdownRef}>
+          {/* <NavLink
+            to={APP_DOWNLOAD_ROUTE}
+            className="header-download-cta header-download-cta--desktop"
+            onClick={() => setUserMenuOpen(false)}
+            aria-label="Aller à la section de téléchargement de l'application Usearly"
+          >
+            Télécharger l'app
+          </NavLink> */}
+
           {isAuthenticated && (
             <div
               className="notif-button"
               onClick={(e) => {
                 e.stopPropagation();
+                if (handleMobileNavigationIntent()) return;
                 navigate("/notifications");
               }}
             >
@@ -444,12 +615,18 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
           ) : (
             <>
               <Buttons
-                onClick={() => navigate("/lookup")}
+                onClick={() => {
+                  if (handleMobileNavigationIntent()) return;
+                  navigate("/lookup");
+                }}
                 addClassName="header-nav-button login-button"
                 title="Connecter"
               />
               <Buttons
-                onClick={() => navigate("/lookup")}
+                onClick={() => {
+                  if (handleMobileNavigationIntent()) return;
+                  navigate("/lookup");
+                }}
                 addClassName="header-nav-button signup-button"
                 title="S'inscrire"
               />
@@ -461,7 +638,10 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
               <NavLink
                 to="/account"
                 className="menu-item"
-                onClick={() => setUserMenuOpen(false)}
+                onClick={(event) => {
+                  if (handleMobileNavigationIntent(event)) return;
+                  setUserMenuOpen(false);
+                }}
               >
                 Mon compte
               </NavLink>
@@ -476,7 +656,10 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
                     <NavLink
                       to="/admin/users"
                       className="submenu-item"
-                      onClick={() => setUserMenuOpen(false)}
+                      onClick={(event) => {
+                        if (handleMobileNavigationIntent(event)) return;
+                        setUserMenuOpen(false);
+                      }}
                     >
                       Gérer les utilisateurs
                     </NavLink>
@@ -485,7 +668,10 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
                       <NavLink
                         to="/admin/admins"
                         className="submenu-item"
-                        onClick={() => setUserMenuOpen(false)}
+                        onClick={(event) => {
+                          if (handleMobileNavigationIntent(event)) return;
+                          setUserMenuOpen(false);
+                        }}
                       >
                         Gérer les admins
                       </NavLink>
@@ -494,7 +680,10 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
                     <NavLink
                       to="/admin/brands"
                       className="submenu-item"
-                      onClick={() => setUserMenuOpen(false)}
+                      onClick={(event) => {
+                        if (handleMobileNavigationIntent(event)) return;
+                        setUserMenuOpen(false);
+                      }}
                     >
                       Gérer les marques
                     </NavLink>
@@ -518,6 +707,10 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
       )}
 
       {heroMode && <div className="header-hero-slot">{children}</div>}
+
+      {showAppDownloadModal && (
+        <AppDownloadModal onClose={() => setShowAppDownloadModal(false)} />
+      )}
     </header>
   );
 };

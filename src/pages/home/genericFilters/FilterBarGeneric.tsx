@@ -184,7 +184,7 @@ export const FilterBarGeneric: React.FC<Props> = ({
   const brandOptions = useMemo<SelectFilterOption[]>(() => {
     const placeholder: SelectFilterOption = {
       value: "",
-      label: "Choisir une marque",
+      label: "Marques",
     };
     const decorated = brandEntries.map((entry) => {
       return {
@@ -281,6 +281,7 @@ export const FilterBarGeneric: React.FC<Props> = ({
           align="left"
           minWidth={170}
           minWidthPart="2"
+          fitWidthToOptions
         />
       </div>
 

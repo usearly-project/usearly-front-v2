@@ -106,11 +106,11 @@ const PulseChart = () => {
           <span className="pulse-title-strong">Pulse</span> product
         </h2>
         <div className="pulse-actions">
-          <button className="pulse-action">
+          <button className="pulse-action" aria-label="Filtrer">
             <Filter className="h-4 w-4" strokeWidth={1.7} />
             Filtrer
           </button>
-          <button className="pulse-action search">
+          <button className="pulse-action search" aria-label="Rechercher">
             <Search className="h-4 w-4" strokeWidth={1.8} />
           </button>
         </div>
@@ -151,7 +151,10 @@ const PulseChart = () => {
               </div>
             ))}
           </div>
-          <button className="pulse-more">
+          <button
+            className="pulse-more"
+            aria-label="Afficher les options du graphique"
+          >
             <MoreVertical size={18} strokeWidth={1.8} />
           </button>
         </div>

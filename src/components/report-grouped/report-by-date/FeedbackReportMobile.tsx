@@ -60,6 +60,7 @@ const FeedbackReportMobile: React.FC<Props> = ({
         type="button"
         className="feedback-report-mobile__header"
         onClick={onToggle}
+        aria-label={"Ouvrir le signalement " + item.subCategory.subCategory}
       >
         <div className="feedback-report-mobile__left">
           <img
@@ -138,6 +139,7 @@ const FeedbackReportMobile: React.FC<Props> = ({
                   e.stopPropagation();
                   onToggleFullText();
                 }}
+                aria-label={showFullText ? "Voir moins" : "Voir plus"}
               >
                 {showFullText ? "Voir moins" : "Voir plus"}
               </button>
@@ -187,6 +189,7 @@ const FeedbackReportMobile: React.FC<Props> = ({
               type="button"
               className="feedback-report-mobile__close"
               onClick={onCloseCapture}
+              aria-label="Fermer la capture"
             >
               ✕
             </button>

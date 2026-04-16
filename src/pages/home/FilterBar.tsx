@@ -119,22 +119,22 @@ const filterOptions = [
   {
     value: "hot" as const,
     emoji: "🔥",
-    label: "Problèmes les plus signalés",
+    label: "Les plus signalés",
   },
   {
     value: "rage" as const,
     emoji: "😡",
-    label: "Problèmes les plus rageants",
+    label: "Les plus rageants",
   },
   {
     value: "popular" as const,
     emoji: "👍",
-    label: "Signalements les plus populaires",
+    label: "Les plus populaires",
   },
   {
     value: "chrono" as const,
     emoji: "📅",
-    label: "Signalements les plus récents",
+    label: "Les plus récents",
   },
 ];
 
@@ -255,7 +255,7 @@ const FilterBar: React.FC<Props> = ({
   const brandOptions = useMemo<SelectFilterOption[]>(() => {
     const placeholder: SelectFilterOption = {
       value: "",
-      label: "Choisir une marque",
+      label: "Marques",
     };
     const decorated = brandEntries.map((entry) => {
       return {
@@ -502,6 +502,7 @@ const FilterBar: React.FC<Props> = ({
             align="left"
             minWidthPart="2"
             minWidth={170}
+            fitWidthToOptions
           />
         </div>
         <div className="secondary-filters-container">
@@ -533,10 +534,26 @@ const FilterBar: React.FC<Props> = ({
   } else if (selectedBrand) {
     return (
       <div
-        className="filters"
+        className="filters filters--brand-selected"
         data-has-category-options={hasSignalementOptions}
       >
         <div className="filters__row">
+          {/* Pill 0 : Type de feedback, gardé visible même avec une marque */}
+          <div className="filters__pill filters__pill--theme">
+            <Champs
+              options={
+                themeOptions as unknown as SelectFilterOption<FeedbackType>[]
+              }
+              value={selectedTheme}
+              onChange={handleThemeSelect}
+              className="pill__control"
+              align="left"
+              minWidthPart="2"
+              minWidth={170}
+              fitWidthToOptions
+            />
+          </div>
+
           {/* Pill 1 : Marque (toujours visible) */}
           <div className="filters__pill filters__pill--brand">
             <Champs

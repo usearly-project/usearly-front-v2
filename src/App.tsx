@@ -252,6 +252,22 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/feedback/:brandSlug"
+              element={
+                <ProtectedRoute allowedTypes={["user"]}>
+                  <Home />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/feedback/:brandSlug/:feedbackKind"
+              element={
+                <ProtectedRoute allowedTypes={["user"]}>
+                  <Home />
+                </ProtectedRoute>
+              }
+            />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Layout>

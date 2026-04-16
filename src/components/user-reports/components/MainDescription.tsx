@@ -47,6 +47,7 @@ const MainDescription: React.FC<Props> = ({
                   [sub.subCategory]: !prev[sub.subCategory],
                 }));
               }}
+              aria-label={isExpanded ? "Voir moins" : "Voir plus"}
             >
               {isExpanded ? "Voir moins" : "Voir plus"}
             </button>

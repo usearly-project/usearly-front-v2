@@ -12,6 +12,9 @@ interface Props {
 }
 
 const RightSidebarIllustrationCard = ({ config, loading, stats }: Props) => {
+  console.log(stats);
+  const hasStats = stats.length > 0;
+
   return (
     <div
       className={`right-sidebar right-sidebar--illustration ${config.themeClass}`.trim()}
@@ -23,7 +26,12 @@ const RightSidebarIllustrationCard = ({ config, loading, stats }: Props) => {
       />
 
       {config.text ? (
-        <p className="right-sidebar-illustration-text">{config.text}</p>
+        <p
+          className="right-sidebar-illustration-text"
+          style={!loading && !hasStats ? { marginBottom: 0 } : undefined}
+        >
+          {config.text}
+        </p>
       ) : null}
 
       {loading ? <p>Chargement...</p> : <RightSidebarStats items={stats} />}

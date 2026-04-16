@@ -21,8 +21,8 @@ const RightSidebarStats = ({ items }: Props) => {
           <span className="arrow">
             <img src={arrowRight} alt="arrow right" />
           </span>
-          <span className="value">{item.value}</span>
           <span className="label">
+            <span className="value">{item.value}</span>
             {pluralize(item.value, item.singular, item.plural)}
             {item.suffix ? ` ${item.suffix}` : ""}
           </span>
