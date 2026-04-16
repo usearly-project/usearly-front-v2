@@ -220,7 +220,7 @@ export const getAllBrands = async (): Promise<BrandWithSubCategories[]> => {
 };
 
 export const toggleCommentLike = async (commentId: string) => {
-  return apiService.post(`/comments/${commentId}/like`);
+  return apiService.post(`/comment-likes/comments/${commentId}/like`);
 };
 
 export const getCommentLikesCount = async (commentId: string) => {

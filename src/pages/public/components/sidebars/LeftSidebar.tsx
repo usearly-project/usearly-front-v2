@@ -12,6 +12,8 @@ import { normalizeDomain } from "@src/utils/brandLogos";
 type FeedItem = { marque?: string; siteUrl?: string };
 type BrandStat = { brandName: string; siteUrl: string; count: number };
 
+const BRANDS_GRID_LIMIT = 4;
+
 interface Props {
   activeTab?: FeedbackType;
   feedbackData?: FeedItem[];
@@ -55,7 +57,7 @@ const getBrandCount = (item: unknown) => {
 function sortAndLimitBrandStats(counts: Map<string, BrandStat>) {
   return Array.from(counts.values())
     .sort((a, b) => b.count - a.count || a.brandName.localeCompare(b.brandName))
-    .slice(0, 5);
+    .slice(0, BRANDS_GRID_LIMIT);
 }
 
 function computeBrandStats(feedbackData: FeedItem[]) {

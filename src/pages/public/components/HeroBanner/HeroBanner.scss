@@ -5,7 +5,7 @@
   background-color: #10163a;
   background-image: url("/assets/svg/3logo-cascade.svg");
   background-repeat: no-repeat;
-  background-position: right 30px top -30px;
+  background-position: right 67px top -30px;
   background-size: 220px auto;
   padding: 40px 0;
   color: white;
@@ -17,7 +17,7 @@
     inset: 0;
     background-image: url("/assets/images/bulle-deco-banner.svg");
     background-repeat: no-repeat;
-    background-position: left -30px top -115px;
+    background-position: left 62px top -115px;
     background-size: 240px auto;
     opacity: 0.15;
     pointer-events: none;
@@ -39,10 +39,26 @@
         display: none;
       }
     }
+    .hero-right {
+      margin-right: 110px;
+    }
+  }
+  .hero-left {
+    margin-left: 40px;
+    .highlight-container {
+      margin-left: 12px;
+      .highlight-text {
+        position: relative;
+        top: -2px;
+      }
+    }
+    .span.highlight-text-desc {
+      margin-left: 26px;
+    }
   }
 
   .hero-left h1 {
-    font-size: 34px;
+    font-size: 32px;
     font-weight: 300;
   }
 
