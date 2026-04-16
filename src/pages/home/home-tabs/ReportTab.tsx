@@ -43,11 +43,12 @@ const ReportTab: React.FC<Props> = ({
   onSearchTermChange,
   // showRightPanel = true,
 }) => {
-  const [brandReportStats, setBrandReportStats] =
-    React.useState<BrandReportStats | null>(null);
-  if (!brandReportStats) {
-    setBrandReportStats(null);
-  }
+  const [, setBrandReportStats] = React.useState<BrandReportStats | null>(null);
+  // Ancien code desactive : appeler setBrandReportStats pendant le rendu
+  // declenche l'erreur React "Too many re-renders".
+  // if (!brandReportStats) {
+  //   setBrandReportStats(null);
+  // }
   React.useEffect(() => {
     if (!selectedBrand || selectedCategory) {
       setBrandReportStats(null);
