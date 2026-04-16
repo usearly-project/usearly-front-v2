@@ -3,9 +3,9 @@ import HomeFiltersCdc from "../HomeFiltersCdc";
 import FeedbackView from "@src/components/feedbacks/FeedbackView";
 import SqueletonAnime from "@src/components/loader/SqueletonAnime";
 import { capitalizeFirstLetter } from "@src/utils/stringUtils";
-import Avatar from "@src/components/shared/Avatar";
-import { useBrandLogos } from "@src/hooks/useBrandLogos";
-import { FALLBACK_BRAND_PLACEHOLDER } from "@src/utils/brandLogos";
+// import Avatar from "@src/components/shared/Avatar";
+// import { useBrandLogos } from "@src/hooks/useBrandLogos";
+// import { FALLBACK_BRAND_PLACEHOLDER } from "@src/utils/brandLogos";
 import "./CdcTab.scss";
 import TabLayout from "./TabLayout";
 import EndOfList from "./EndOfList";
@@ -69,36 +69,36 @@ const CdcTabEnhanced: React.FC<Props> = ({
   // -------------------------------
   // Logos dynamiques
   // -------------------------------
-  const brandEntries = useMemo(
-    () =>
-      selectedBrand ? [{ brand: selectedBrand, siteUrl: selectedSiteUrl }] : [],
-    [selectedBrand, selectedSiteUrl],
-  );
+  // const brandEntries = useMemo(
+  //   () =>
+  //     selectedBrand ? [{ brand: selectedBrand, siteUrl: selectedSiteUrl }] : [],
+  //   [selectedBrand, selectedSiteUrl],
+  // );
 
-  const brandLogos = useBrandLogos(brandEntries);
+  // const brandLogos = useBrandLogos(brandEntries);
 
-  const resolvedLogo = useMemo(() => {
-    if (!selectedBrand) return null;
-    const brandKey = selectedBrand.toLowerCase().trim();
-    const domain =
-      selectedSiteUrl
-        ?.replace(/^https?:\/\//, "")
-        ?.replace(/^www\./, "")
-        ?.split("/")[0]
-        ?.toLowerCase() || "";
+  // const resolvedLogo = useMemo(() => {
+  //   if (!selectedBrand) return null;
+  //   const brandKey = selectedBrand.toLowerCase().trim();
+  //   const domain =
+  //     selectedSiteUrl
+  //       ?.replace(/^https?:\/\//, "")
+  //       ?.replace(/^www\./, "")
+  //       ?.split("/")[0]
+  //       ?.toLowerCase() || "";
 
-    const possibleKeys = [
-      `${brandKey}|${domain}`,
-      `${brandKey}|${brandKey}.com`,
-      brandKey,
-    ];
+  //   const possibleKeys = [
+  //     `${brandKey}|${domain}`,
+  //     `${brandKey}|${brandKey}.com`,
+  //     brandKey,
+  //   ];
 
-    for (const k of possibleKeys) {
-      const l = brandLogos[k];
-      if (l && l !== FALLBACK_BRAND_PLACEHOLDER) return l;
-    }
-    return null;
-  }, [selectedBrand, selectedSiteUrl, brandLogos]);
+  //   for (const k of possibleKeys) {
+  //     const l = brandLogos[k];
+  //     if (l && l !== FALLBACK_BRAND_PLACEHOLDER) return l;
+  //   }
+  //   return null;
+  // }, [selectedBrand, selectedSiteUrl, brandLogos]);
 
   // -------------------------------
   // Infinite scroll (inchangé)
@@ -172,7 +172,7 @@ const CdcTabEnhanced: React.FC<Props> = ({
               <div className="selected-brand-heading">
                 <div className="selected-brand-summary">
                   <div className="selected-brand-summary__brand">
-                    <div className="selected-brand-summary__logo">
+                    {/* <div className="selected-brand-summary__logo">
                       <Avatar
                         avatar={resolvedLogo}
                         pseudo={selectedBrand}
@@ -180,7 +180,7 @@ const CdcTabEnhanced: React.FC<Props> = ({
                         preferBrandLogo={true}
                         siteUrl={selectedSiteUrl}
                       />
-                    </div>
+                    </div> */}
 
                     <div className="selected-brand-summary__info-container">
                       {selectedCategory ? (
