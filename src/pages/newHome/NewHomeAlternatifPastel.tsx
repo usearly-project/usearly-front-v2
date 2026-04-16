@@ -9,6 +9,7 @@ import ExtensionRedirect from "@src/components/extension-redirect/ExtensionRedir
 import { useIsAtBottom } from "@src/hooks/detect-bottom";
 import FavoriteCarouselSection from "./components/slide-stack/FavoriteCarouselSection";
 import SectionJoinUsearly from "@src/pages/newHome/components/sectionJoinUsearly/SectionJoinUsearly";
+import AppDownloadSection from "@src/components/app-download/AppDownloadSection";
 
 const BOTTOM_THRESHOLD_PX = 12;
 
@@ -25,6 +26,7 @@ const NewHomeAlternatifPastel: React.FC = () => {
     <div className="new-home-page">
       <SectionHookUsers popFeedVariant="pastel" />
       <SectionJoinUsearly />
+      <AppDownloadSection />
 
       <div className="new-home-main" ref={sectionRef}>
         <ExtensionExample />

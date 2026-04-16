@@ -5,19 +5,21 @@
   background: #ffffff;
   padding: 24px;
   padding-bottom: 36px;
+  margin-top: 10px;
   border-radius: 8px;
   border: 0.5px solid #d3d3d34d;
-  width: 100%;
-  max-width: 310px;
+  min-width: 240px;
+  width: 275px;
+  max-width: 275px;
   display: flex;
   flex-direction: column;
   //z-index: 21;
   h3 {
     color: #000;
     font-family: $font-family-3;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 800;
-    line-height: 1.4;
+    line-height: 1.2;
     margin-bottom: 32px;
     display: ruby;
     img {
@@ -97,7 +99,7 @@
 }
 .progress-bar-fill {
   height: 100%;
-  background: #7f5cfd;
+  background: #3b66ff;
   border-radius: 6px;
   transition: width 0.5s ease;
 }
@@ -118,7 +120,7 @@
 
   .progress-bar-fill {
     // background: #5c8cff;
-    background: #7f5cfd;
+    background: #3b66ff;
   }
 }
 
@@ -171,7 +173,7 @@
 /* 🔥 CDC GRID */
 .brands-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 12px 8px;
   margin-bottom: 20px;
 

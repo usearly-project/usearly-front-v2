@@ -23,23 +23,23 @@ import { useAuthTooltip } from "@src/hooks/useAuthTooltip";
 
 // Note : On pourrait aussi mettre ces labels dans un fichier constants
 const REPORT_FILTER_LABELS: Record<ReportFeedFilterValue, string> = {
-  hot: "Problèmes les plus signalés",
-  rage: "Problèmes les plus rageants",
-  popular: "Signalements les plus populaires",
-  chrono: "Signalements les plus récents",
+  hot: "Les plus signalés",
+  rage: "Les plus rageants",
+  popular: "Les plus populaires",
+  chrono: "Les plus récents",
   urgent: "À shaker vite",
 };
 
 const CDC_FILTER_LABELS: Record<CdcFeedFilterValue, string> = {
-  popular: "Coups de cœur populaires",
-  enflammes: "Coups de cœur les plus enflammés",
-  chrono: "Coups de cœur les plus récents",
+  popular: "Populaires",
+  enflammes: "Les plus enflammés",
+  chrono: "Les plus récents",
 };
 
 const SUGGESTION_FILTER_LABELS: Record<SuggestionFeedFilterValue, string> = {
-  allSuggest: "Suggestions populaires",
-  recentSuggestion: "Suggestions ouvertes aux votes",
-  likedSuggestion: "Suggestions adoptées",
+  allSuggest: "Populaires",
+  recentSuggestion: "Ouvertes aux votes",
+  likedSuggestion: "Adoptées",
 };
 
 const normalizeBrandName = (value: string) =>

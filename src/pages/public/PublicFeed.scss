@@ -8,6 +8,7 @@
   z-index: auto;
 }
 
+.public-feed-panels,
 .public-feed-left,
 .public-feed-center,
 .public-feed-right {
@@ -26,15 +27,39 @@
   overflow-x: hidden;
 }
 
+.public-feed-app-download-cta {
+  margin-top: 8px;
+  margin-bottom: 24px;
+}
+
 .public-feed-layout {
   display: grid;
-  grid-template-columns: minmax(280px, 280px) 1fr minmax(280px, 280px);
+  grid-template-columns: minmax(275px, 275px) 616px minmax(275px, 275px);
+  grid-template-areas: "left-panel feed-content right-panel";
   align-items: start;
+  gap: 16px;
   max-width: 1400px;
   width: 100%;
   margin: auto;
-  padding: 24px 45px;
+  padding: 24px 0px;
   justify-items: center;
+  justify-content: center;
+
+  > .public-feed-panels {
+    display: contents;
+  }
+
+  .public-feed-left {
+    grid-area: left-panel;
+  }
+
+  > .public-feed-center {
+    grid-area: feed-content;
+  }
+
+  .public-feed-right {
+    grid-area: right-panel;
+  }
 
   .public-feed-center {
     .mixed-feed {
@@ -59,7 +84,6 @@
   }
 
   @media screen and (max-width: 1350px) {
-    grid-template-columns: minmax(280px, 280px) 1fr minmax(280px, 280px);
     max-width: none;
     gap: 15px;
 
@@ -80,12 +104,36 @@
     }
   }
 
-  @media screen and (max-width: 1215px) {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 16px;
-    padding-left: 24px;
-    padding-right: 24px;
-    justify-items: stretch;
+  @media screen and (max-width: 1220px) {
+    grid-template-columns: minmax(175px, 275px) minmax(0, 616px);
+    grid-template-areas: "side-panels feed-content";
+    column-gap: 16px;
+    row-gap: 20px;
+    padding-left: 14px;
+    padding-right: 14px;
+    justify-items: center;
+
+    > .public-feed-panels {
+      grid-area: side-panels;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      justify-self: start;
+      width: 100%;
+      max-width: 275px;
+    }
+
+    .public-feed-left,
+    .public-feed-right {
+      width: 100%;
+      max-width: 275px;
+    }
+
+    > .public-feed-center {
+      justify-self: center;
+      width: 100%;
+      max-width: 616px;
+    }
 
     .public-feed-center {
       .mixed-feed {
@@ -101,8 +149,25 @@
     }
   }
 
+  @media screen and (max-width: 992px) {
+    grid-template-columns: minmax(0, 616px);
+    grid-template-areas: "feed-content";
+    justify-content: center;
+    justify-items: center;
+
+    > .public-feed-panels {
+      display: none;
+    }
+
+    > .public-feed-center {
+      width: 100%;
+      max-width: 616px;
+    }
+  }
+
   @media screen and (max-width: 768px) {
     grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "feed-content";
     gap: 0;
     padding-left: 0;
     padding-right: 0;

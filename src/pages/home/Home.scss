@@ -134,7 +134,6 @@ body.feedback-route .home-grouped-reports-list {
 .user-main-content {
   display: flex;
   justify-content: center;
-  gap: 10px;
   margin-top: 16px;
   @media screen and (max-width: 1150px) {
     padding-left: 3%;
@@ -148,6 +147,23 @@ body.feedback-route .home-grouped-reports-list {
   @media screen and (max-width: 992px) {
     display: flex;
     flex-direction: row-reverse;
+  }
+  @media screen and (max-width: 1220px) {
+    // Ancien comportement : les panels disparaissaient au breakpoint mobile.
+    // > .left-panel,
+    // > .right-panel {
+    //   display: none;
+    // }
+  }
+  .home-mobile-right-panel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 275px;
+    align-items: center;
+    box-sizing: border-box;
   }
 }
 
@@ -175,10 +191,9 @@ body.feedback-route .home-grouped-reports-list {
     //box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
     transition: box-shadow 0.2s ease;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.12);
-    border: 1px solid #0000000d;
 
     /*    &:hover {
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+      box-shadow: 0 2px 2px rgba(0, 0, 0, 0.12);
     } */
 
     .feedback-type {
@@ -229,11 +244,11 @@ body.feedback-route .home-grouped-reports-list {
 /* ==== Signalements ==== */
 .report-banner-container {
   display: flex;
-  width: 1000px;
+  width: auto;
+  max-width: 616px;
   border-radius: 24px;
-  padding: 0 0px 24px 13px;
-  margin-bottom: 32px;
-  margin-top: 61px;
+  padding: 0;
+  margin: 61px 16px 32px;
   box-sizing: border-box;
   max-height: 400px;
   height: 275px;
@@ -242,14 +257,10 @@ body.feedback-route .home-grouped-reports-list {
   position: relative;
   overflow: visible;
   background-color: var(--brand-banner-bg, transparent);
-  border: 1px solid transparent;
-  @media screen and (max-width: 1375px) {
-    padding: 0 12px 24px 12px;
-  }
 
   .report-main-column {
     flex: 1;
-    min-width: 655px;
+    min-width: 616px;
     display: flex;
     flex-direction: column;
   }
@@ -259,10 +270,11 @@ body.feedback-route .home-grouped-reports-list {
     position: relative;
     z-index: 2;
     margin-top: -60px; // ✅ cartes par-dessus
-    min-width: 655px;
+    min-width: 616px;
   }
 
   .right-panel {
+    width: 100%;
     margin-top: 10px;
     margin-left: 20px;
     position: relative;
@@ -378,18 +390,20 @@ body.feedback-route .home-grouped-reports-list {
 /* ==== Coups de cœur ==== */
 .cdc-banner-container {
   display: flex;
-  width: 100%;
-  max-width: 1000px;
+  width: auto;
+  max-width: 616px;
   border-radius: 24px;
-  padding: 16px 12px;
-  margin: 32px 0;
-  margin-top: 60px;
+  padding: 16px 0;
+  margin: 61px 16px 32px;
   justify-content: space-between;
   align-items: flex-start;
   position: relative;
   height: 275px;
   background-color: var(--brand-banner-bg, transparent);
-  border: 1px solid transparent;
+  @media screen and (max-width: 1220px) {
+    max-width: none;
+    width: 100%;
+  }
 
   .right-panel {
     align-self: center;
@@ -406,7 +420,7 @@ body.feedback-route .home-grouped-reports-list {
     z-index: 2;
     margin-top: -65px;
     gap: 0px;
-    min-width: 655px;
+    width: 616px;
 
     .selected-brand-heading {
       position: relative;
@@ -496,11 +510,9 @@ body.feedback-route .home-grouped-reports-list {
 /* ==== Suggestions ==== */
 .suggestion-banner-container {
   display: flex;
-  width: 1000px;
+  width: auto;
   border-radius: 24px;
-  padding: 16px 12px;
-  margin: 32px 0;
-  margin-top: 60px;
+  margin: 61px 16px 32px;
   justify-content: space-between;
   align-items: flex-start;
   position: relative;
@@ -511,6 +523,11 @@ body.feedback-route .home-grouped-reports-list {
     --brand-banner-bg,
     var(--suggestion-bg, transparent)
   ); // couleur dynamique
+
+  @media screen and (max-width: 1220px) {
+    max-width: none;
+    width: 100%;
+  }
 
   .right-panel {
     align-self: center;
@@ -525,9 +542,9 @@ body.feedback-route .home-grouped-reports-list {
     flex: 1;
     position: relative;
     z-index: 2;
-    margin-top: -65px; // ✅ cartes par-dessus
+    margin-top: -50px; // ✅ cartes par-dessus
     gap: 0px;
-    min-width: 655px;
+    min-width: 616px;
 
     .selected-brand-heading {
       position: relative;
@@ -594,6 +611,35 @@ body.feedback-route .home-grouped-reports-list {
     background-color: var(--suggestion-bg, transparent);
   }
 }
+
+// @media screen and (max-width: 1350px) and (min-width: 1276px) {
+//   .user-main-content:not(.is-mobile) {
+//     width: 100%;
+//     box-sizing: border-box;
+//     padding-left: 14px;
+//     padding-right: 14px;
+//   }
+
+//   .user-main-content:not(.is-mobile) > .report-banner-container,
+//   .user-main-content:not(.is-mobile) > .cdc-banner-container,
+//   .user-main-content:not(.is-mobile) > .suggestion-banner-container {
+//     flex: 1 1 0;
+//     width: auto;
+//     min-width: 0;
+//     max-width: 1000px;
+//   }
+
+//   .report-banner-container .report-main-column,
+//   .report-banner-container .feedback-list-wrapper,
+//   .cdc-banner-container .feedback-list-wrapper,
+//   .suggestion-banner-container .feedback-list-wrapper {
+//     width: 100%;
+//     min-width: 0;
+//     max-width: 100%;
+//     box-sizing: border-box;
+//   }
+// }
+
 .left-panel {
   @media screen and (max-width: 1150px) {
     margin-top: 0;
@@ -604,8 +650,16 @@ body.feedback-route .home-grouped-reports-list {
 }
 
 .user-main-content.is-mobile {
+  display: grid;
+  grid-template-columns: minmax(175px, 275px) minmax(0, 616px);
+  grid-template-areas:
+    "left-panel feedback-content"
+    "right-panel feedback-content";
+  column-gap: 16px;
+  row-gap: 20px;
+  align-items: start;
+  justify-content: center;
   width: 100%;
-  gap: 24px;
   padding-left: 14px;
   padding-right: 14px;
   box-sizing: border-box;
@@ -614,13 +668,39 @@ body.feedback-route .home-grouped-reports-list {
   .left-panel {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: auto;
     max-width: 310px;
     align-items: center;
     gap: 24px;
     @media screen and (max-width: 1090px) {
-      display: none;
+      // Ancien comportement : le panel gauche disparaissait sous 1090px.
+      // display: none;
     }
+  }
+
+  > .left-panel {
+    grid-area: left-panel;
+    justify-self: start;
+    width: 100%;
+  }
+
+  > .right-panel {
+    grid-area: right-panel;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 275px;
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  > .report-banner-container,
+  > .cdc-banner-container,
+  > .suggestion-banner-container {
+    grid-area: feedback-content;
+    justify-self: center;
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .home-mobile-right-panel {
@@ -640,6 +720,9 @@ body.feedback-route .home-grouped-reports-list {
       width: 100%;
       justify-content: flex-end;
       z-index: 3;
+      @media screen and (max-width: 1220px) {
+        display: none;
+      }
     }
 
     .right-sidebar {
@@ -659,6 +742,10 @@ body.feedback-route .home-grouped-reports-list {
           width: 90px;
           top: 0;
           right: 0;
+          @media screen and (max-width: 1220px) {
+            width: 85px;
+            top: -10px;
+          }
         }
       }
       .is-popular {
@@ -671,6 +758,11 @@ body.feedback-route .home-grouped-reports-list {
           width: 90px;
           top: 35%;
           right: 0px;
+          @media screen and (max-width: 1220px) {
+            width: 75px;
+            top: 40%;
+            right: -5px;
+          }
         }
       }
       .is-chrono {
@@ -683,6 +775,16 @@ body.feedback-route .home-grouped-reports-list {
           width: 90px;
           top: 47%;
           right: 0px;
+          @media screen and (max-width: 1220px) {
+            right: -10px;
+          }
+        }
+      }
+      .is-popular-cdc {
+        .filter-illustration-sidebar {
+          @media screen and (max-width: 1220px) {
+            width: 95px;
+          }
         }
       }
       .is-chrono-cdc {
@@ -690,6 +792,9 @@ body.feedback-route .home-grouped-reports-list {
           width: 100px;
           top: 10%;
           right: 20px;
+          @media screen and (max-width: 1220px) {
+            right: 0px;
+          }
         }
       }
       .is-enflammes {
@@ -700,6 +805,11 @@ body.feedback-route .home-grouped-reports-list {
         }
         .filter-illustration-sidebar {
           right: 20px;
+          @media screen and (max-width: 1220px) {
+            top: 0px;
+            right: 10px;
+            width: 60px;
+          }
         }
         @media screen and (max-width: 1145px) {
           .filter-illustration-sidebar {
@@ -749,7 +859,6 @@ body.feedback-route .home-grouped-reports-list {
   .cdc-banner-container,
   .suggestion-banner-container {
     width: 100%;
-    max-width: 1000px;
     box-sizing: border-box;
   }
 
@@ -757,9 +866,39 @@ body.feedback-route .home-grouped-reports-list {
   .feedback-view-container,
   .home-grouped-reports-list {
     width: 100%;
-    max-width: 100%;
+    max-width: 616px;
     min-width: 0;
     box-sizing: border-box;
+    @media screen and (max-width: 1220px) {
+      max-width: none;
+    }
+  }
+
+  @media screen and (max-width: 992px) {
+    // Ancien comportement : les panels étaient empilés au-dessus du feed.
+    // grid-template-columns: minmax(0, 1fr);
+    // grid-template-areas:
+    //   "left-panel"
+    //   "right-panel"
+    //   "feedback-content";
+    // justify-items: start;
+    grid-template-columns: minmax(0, 616px);
+    grid-template-areas: "feedback-content";
+    justify-content: center;
+    justify-items: center;
+
+    > .left-panel,
+    > .right-panel {
+      // max-width: 275px;
+      display: none;
+    }
+
+    > .report-banner-container,
+    > .cdc-banner-container,
+    > .suggestion-banner-container {
+      width: 100%;
+      max-width: 616px;
+    }
   }
 }
 
@@ -786,7 +925,6 @@ body.feedback-route .home-grouped-reports-list {
     width: 100%;
     max-width: 100%;
     margin-top: 35px;
-    padding: 0 8px 16px;
     height: auto;
     min-height: 0;
     box-sizing: border-box;
@@ -886,7 +1024,7 @@ body.feedback-route .home-grouped-reports-list {
     .flat-subcategory-mobile,
     .feedback-report-mobile,
     .subcategory-block.flat {
-      width: 100%;
+      width: 616px;
       max-width: 100%;
       min-width: 0;
       box-sizing: border-box;

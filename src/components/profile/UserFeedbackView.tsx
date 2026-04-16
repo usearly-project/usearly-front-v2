@@ -31,7 +31,7 @@ const UserFeedbackView: React.FC<Props> = ({ activeTab }) => {
   const brandOptions = useMemo<SelectFilterOption[]>(() => {
     const placeholder: SelectFilterOption = {
       value: "",
-      label: "Choisir une marque",
+      label: "Marques",
     };
 
     if (!data.length) return [placeholder];

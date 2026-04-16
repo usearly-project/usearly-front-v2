@@ -32,7 +32,7 @@ export const BrandSelect = ({
   selectedBrand = "",
   onSelect,
   onClear,
-  placeholder = "Choisir une marque",
+  placeholder = "Marques",
   searchPlaceholder = "Rechercher une marque…",
   className = "",
 }: BrandSelectProps) => {

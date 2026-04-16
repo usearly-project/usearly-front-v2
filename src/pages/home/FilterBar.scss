@@ -64,12 +64,17 @@
   }
 
   @media screen and (max-width: 980px) {
-    flex-wrap: wrap;
-    align-items: flex-start;
+    // Ancien comportement : les filtres passaient sur plusieurs lignes.
+    // flex-wrap: wrap;
+    // align-items: flex-start;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
 
     .primary-filters,
     .secondary-filters-container {
-      width: 100%;
+      // width: 100%;
+      width: auto;
     }
 
     .primary-filters {
@@ -79,7 +84,8 @@
 
     .secondary-filters-container {
       justify-content: flex-start;
-      flex-wrap: wrap;
+      // flex-wrap: wrap;
+      flex-wrap: nowrap;
       margin-left: 0;
     }
   }
@@ -87,8 +93,11 @@
   @media screen and (max-width: 680px) {
     .primary-filters,
     .secondary-filters-container {
-      flex-direction: column;
-      align-items: stretch;
+      // Ancien comportement : les filtres passaient en colonne sur mobile.
+      // flex-direction: column;
+      // align-items: stretch;
+      flex-direction: row;
+      align-items: center;
     }
 
     .primary-filters {
@@ -97,12 +106,49 @@
 
     .primary-filters > *,
     .secondary-filters-container > * {
-      width: 100%;
+      // width: 100%;
+      width: auto;
     }
 
     .primary-filters > * {
       width: fit-content;
       max-width: 100%;
+    }
+  }
+
+  @media screen and (max-width: 630px) {
+    flex-direction: column;
+    align-items: flex-start;
+
+    .primary-filters,
+    .secondary-filters-container {
+      flex-direction: column;
+      align-items: flex-start;
+      align-self: flex-start;
+      width: fit-content;
+      max-width: 100%;
+      gap: 10px;
+    }
+
+    .primary-filters > *,
+    .secondary-filters-container > * {
+      align-self: flex-start;
+      width: fit-content;
+      max-width: 100%;
+    }
+
+    .secondary-filters-container > .search-bar {
+      // Ancien comportement : la recherche pouvait rester poussée à droite.
+      // margin-left: auto;
+      margin-left: 0;
+    }
+
+    .secondary-filters-container > .brand-select-inline {
+      max-width: 125px;
+
+      > .select-filter-display {
+        max-width: 125px;
+      }
     }
   }
 
@@ -187,6 +233,61 @@
 
     .brand-select-inline {
       min-width: 220px;
+    }
+  }
+}
+
+@media screen and (min-width: 100px) {
+  .filter-container .secondary-filters-container > .brand-select-inline,
+  .filter-bar-generic-container
+    .filter-bar-generic-actions
+    > .brand-select-inline,
+  .filters--brand-selected .filters__pill--brand,
+  .filters--brand-selected .filters__pill--brand > .pill__control {
+    flex: 0 0 auto;
+    width: fit-content;
+    min-width: 0 !important;
+    max-width: 100%;
+  }
+
+  .filter-container .secondary-filters-container > .brand-select-inline,
+  .filter-bar-generic-container
+    .filter-bar-generic-actions
+    > .brand-select-inline,
+  .filters--brand-selected .filters__pill--brand > .pill__control {
+    .select-filter-display {
+      width: auto;
+    }
+  }
+}
+
+@media screen and (max-width: 980px) {
+  .filter-container .secondary-filters-container > .brand-select-inline,
+  .filters--brand-selected .filters__pill--brand > .pill__control {
+    max-width: 125px;
+
+    > .select-filter-display {
+      max-width: 125px;
+
+      // Ancien comportement : le filtre gardait le logo ou les initiales de marque.
+      .select-filter-leading {
+        display: none;
+      }
+
+      .select-filter-content {
+        min-width: 0;
+      }
+
+      .select-filter-label {
+        font-size: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        &::after {
+          content: "Marque";
+          font-size: 14px;
+        }
+      }
     }
   }
 }
@@ -429,7 +530,7 @@
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     grid-template-areas: "brand maincat subcat search";
-    gap: var(--gap);
+    gap: 30px;
     align-items: center;
     justify-items: stretch;
     width: 100%;
@@ -619,6 +720,49 @@
         margin-bottom: 0px;
         justify-content: flex-end;
       }
+    }
+  }
+}
+
+@media screen and (max-width: 630px) {
+  .filters,
+  .filters--brand-selected {
+    .filters__row {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      overflow: visible;
+      gap: var(--gap);
+      scroll-snap-type: none;
+    }
+
+    .filters__row > .filters__pill,
+    .filters__pill,
+    .filters__pill--theme,
+    .filters__pill--brand,
+    .filters__pill--maincat,
+    .filters__pill--subcat,
+    .filters__pill--search {
+      flex: 0 0 auto;
+      align-self: flex-start;
+      width: fit-content;
+      min-width: 0;
+      max-width: 100%;
+      scroll-snap-align: none;
+    }
+
+    .filters__pill--search {
+      justify-content: flex-start;
+
+      .search-bar {
+        // Ancien comportement : la recherche pouvait rester poussée à droite.
+        // margin-left: auto;
+        margin-left: 0;
+      }
+    }
+
+    .filters__pill--brand > .pill__control {
+      max-width: 125px;
     }
   }
 }

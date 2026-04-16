@@ -39,7 +39,7 @@ type Props<V extends string = string> = {
 };
 
 const normalize = (label?: string) => label?.toLowerCase().trim() ?? "";
-const PLACEHOLDER_LABEL = normalize("Choisir une marque");
+const PLACEHOLDER_LABEL = normalize("Marques");
 
 export default function SelectFilter<V extends string = string>(
   props: Props<V>,
@@ -302,8 +302,7 @@ export default function SelectFilter<V extends string = string>(
       <Trigger
         leading={selectedVisual}
         label={
-          Utils.getDisplayLabel(selected?.label, isBrandSelect) ||
-          "Choisir une marque"
+          Utils.getDisplayLabel(selected?.label, isBrandSelect) || "Marques"
         }
       />
       {shouldMeasureOptionsWidth && (

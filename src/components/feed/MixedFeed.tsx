@@ -19,6 +19,7 @@ interface Props {
   isPublic?: boolean;
   onPublicFiltersChange?: (filters: PublicFeedFilterState) => void;
   isMobile?: boolean;
+  showMobileHeaderText?: boolean;
 }
 
 const brandInitials = (label: string) => {
@@ -36,6 +37,7 @@ const MixedFeed: React.FC<Props> = ({
   isPublic = false,
   onPublicFiltersChange,
   isMobile = false,
+  showMobileHeaderText: showMobileHeaderTextProp,
 }) => {
   const {
     filteredFeed,
@@ -61,10 +63,12 @@ const MixedFeed: React.FC<Props> = ({
     activeSecondaryFilterLabel,
   } = useMixedFeed(isPublic, onPublicFiltersChange, isMobile);
 
+  const showMobileHeaderText = showMobileHeaderTextProp ?? isMobile;
+
   // --- LOGIQUE DE FILTRAGE MOBILE ---
-  // Sur mobile, on ne garde que "L'actu du moment" (valeur "all")
+  // Sur petit mobile, on ne garde que "L'actu du moment" (valeur "all")
   // Ancien rendu mobile : ce libellé passait par un Champs bloqué sur "all".
-  const displayedOptions = isMobile
+  const displayedOptions = showMobileHeaderText
     ? FILTER_OPTIONS.filter((opt) => opt.value === "all")
     : FILTER_OPTIONS;
 
@@ -93,7 +97,7 @@ const MixedFeed: React.FC<Props> = ({
       <div className="feed-header">
         <div className="feed-header__top">
           <div className="primary-filters">
-            {isMobile ? (
+            {showMobileHeaderText ? (
               <>
                 {/*
                   Ancien rendu mobile :

@@ -1,0 +1,123 @@
+.app-download-modal-overlay {
+  z-index: 999999;
+}
+
+.app-download-modal {
+  position: relative;
+  width: min(100%, 420px);
+  max-width: 420px;
+  border-radius: 8px;
+  padding: 28px;
+  color: #101010;
+  font-family: "Raleway", sans-serif;
+  text-align: left;
+}
+
+.app-download-modal__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #111111;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.app-download-modal__eyebrow {
+  display: inline-flex;
+  margin-bottom: 12px;
+  color: #365f8f;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.app-download-modal__title {
+  max-width: 330px;
+  margin: 0;
+  color: #050505;
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1.12;
+  letter-spacing: 0;
+}
+
+.app-download-modal__text {
+  margin: 14px 0 0;
+  color: #4b5563;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.app-download-modal__stores {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.app-download-modal__store-link {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 8px;
+
+  img {
+    display: block;
+    width: auto;
+    height: 44px;
+    max-width: 150px;
+    object-fit: contain;
+  }
+}
+
+.app-download-modal__primary-link {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 46px;
+  margin-top: 22px;
+  padding: 12px 16px;
+  border: 1px solid #111111;
+  border-radius: 8px;
+  background: #111111;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+}
+
+.app-download-modal__close:focus-visible,
+.app-download-modal__store-link:focus-visible,
+.app-download-modal__primary-link:focus-visible {
+  outline: 2px solid #111111;
+  outline-offset: 3px;
+}
+
+@media screen and (max-width: 600px) {
+  .app-download-modal {
+    padding: 24px 18px;
+  }
+
+  .app-download-modal__title {
+    max-width: 280px;
+    font-size: 25px;
+  }
+
+  .app-download-modal__stores {
+    display: none;
+  }
+
+  .app-download-modal__primary-link {
+    display: inline-flex;
+  }
+}

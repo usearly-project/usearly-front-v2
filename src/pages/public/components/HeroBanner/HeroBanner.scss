@@ -33,6 +33,12 @@
     align-items: center;
     position: relative;
     z-index: 1;
+    @media screen and (max-width: 768px) {
+      justify-content: center;
+      .hero-left {
+        display: none;
+      }
+    }
   }
 
   .hero-left h1 {
@@ -46,7 +52,7 @@
     margin-right: 17px;
     .highlight {
       position: relative;
-      background: #7f5cfd;
+      background: #3b66ff;
       border: 3px solid #ffffff;
       padding: 1px 18px;
       border-radius: 999px;
@@ -59,7 +65,7 @@
         right: 40px;
         width: 18px;
         height: 18px;
-        background: #7f5cfd;
+        background: #3b66ff;
         border-right: 3px solid #ffffff;
         border-bottom: 3px solid #ffffff;
         transform: rotate(45deg);
@@ -244,7 +250,7 @@
 
 @media (min-width: 520px) and (max-width: 992px) {
   .hero-banner-mobile {
-    min-height: 112px;
+    min-height: 150px;
     padding-top: 20px;
 
     &::before {
