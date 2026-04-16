@@ -316,35 +316,6 @@ const HomeGroupedReportsList: React.FC<Props> = ({
           .filter(Boolean)
           .join(" ")}
       >
-        {shouldShowSelectedBrandSummary && (
-          <div className="selected-brand-summary">
-            <div className="selected-brand-summary__brand">
-              <div className="selected-brand-summary__info-container">
-                {selectedCategory ? (
-                  <>
-                    <span className="count">{selectedBrandSummaryCount}</span>
-                    <span className="text">
-                      Signalement
-                      {selectedBrandSummaryCount > 1 ? "s" : ""} lié
-                      {selectedBrandSummaryCount > 1 ? "s" : ""} à «{" "}
-                      <b>{selectedCategory}</b> » sur{" "}
-                      {capitalizeFirstLetter(selectedBrand)}
-                    </span>
-                  </>
-                ) : (
-                  <>
-                    <span className="count">{selectedBrandSummaryCount}</span>
-                    <span className="text">
-                      Problème{selectedBrandSummaryCount > 1 ? "s" : ""} sur{" "}
-                      {capitalizeFirstLetter(selectedBrand)}
-                    </span>
-                  </>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
-
         <FilterBarAny
           filter={filter || ""}
           setFilter={setFilter}
@@ -373,6 +344,35 @@ const HomeGroupedReportsList: React.FC<Props> = ({
           }
           isFeedLoading={isFeedLoading}
         />
+
+        {shouldShowSelectedBrandSummary && (
+          <div className="selected-brand-summary">
+            <div className="selected-brand-summary__brand">
+              <div className="selected-brand-summary__info-container">
+                {selectedCategory ? (
+                  <>
+                    <span className="count">{selectedBrandSummaryCount}</span>
+                    <span className="text">
+                      Signalement
+                      {selectedBrandSummaryCount > 1 ? "s" : ""} lié
+                      {selectedBrandSummaryCount > 1 ? "s" : ""} à «{" "}
+                      <b>{selectedCategory}</b> » sur{" "}
+                      {capitalizeFirstLetter(selectedBrand)}
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <span className="count">{selectedBrandSummaryCount}</span>
+                    <span className="text">
+                      Problème{selectedBrandSummaryCount > 1 ? "s" : ""} sur{" "}
+                      {capitalizeFirstLetter(selectedBrand)}
+                    </span>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {selectedBrand || selectedCategory ? (

@@ -23,23 +23,32 @@ export default function PrivacyPolicy() {
 
         <section>
           <h2>2. Données collectées</h2>
+
           <p>
             Nous ne collectons pas de données permettant d’identifier
             directement une personne (telles que nom, prénom, adresse postale ou
-            numéro de téléphone).{" "}
-            <p>
-              Cependant, certaines données peuvent être collectées dans le cadre
-              de l’utilisation du service :
-              <ul>
-                <li>Un pseudonyme (fourni par l’utilisateur)</li>
-                <li>L’âge et le sexe (facultatif)</li>
-                <li>
-                  Les contributions publiées (signalements, suggestions, votes,
-                  commentaires)
-                </li>
-              </ul>
-            </p>
+            numéro de téléphone). Cependant, certaines données techniques, comme
+            l’adresse IP, peuvent être collectées dans le cadre du
+            fonctionnement du service.
           </p>
+
+          <p>
+            Certaines données peuvent être collectées dans le cadre de
+            l’utilisation du service :
+          </p>
+
+          <ul>
+            <li>Un pseudonyme (fourni par l’utilisateur)</li>
+            <li>
+              L’âge (requis afin de vérifier que l’utilisateur respecte l’âge
+              minimum d’utilisation du service)
+            </li>
+            <li>Le sexe (facultatif)</li>
+            <li>
+              Les contributions publiées (signalements, suggestions, votes,
+              commentaires)
+            </li>
+          </ul>
 
           <p>
             <strong>
@@ -85,6 +94,7 @@ export default function PrivacyPolicy() {
             <li>Fournir des solutions pertinentes aux problèmes rencontrés</li>
             <li>Assurer le bon fonctionnement du service</li>
           </ul>
+
           <p>
             Les analyses sont réalisées à partir de données agrégées lorsque
             cela est possible.
@@ -97,6 +107,7 @@ export default function PrivacyPolicy() {
             L’extension Usearly utilise uniquement les autorisations nécessaires
             à son fonctionnement :
           </p>
+
           <ul>
             <li>
               activeTab : pour interagir avec la page active lorsque
@@ -115,10 +126,13 @@ export default function PrivacyPolicy() {
               contextMenus : pour ajouter des options de signalement accessibles
               rapidement
             </li>
+          </ul>
+
+          <p>
             Ces autorisations sont utilisées uniquement lorsque l’utilisateur
             interagit avec l’extension et jamais en arrière-plan sans action de
             sa part.
-          </ul>
+          </p>
         </section>
 
         <section>
@@ -129,39 +143,29 @@ export default function PrivacyPolicy() {
             à leurs propres signalements, sous pseudonyme.
           </p>
         </section>
+
         <section>
           <h2>6. Données techniques</h2>
-          <p>
-            Usearly ne vend, ne loue et ne transfère aucune donnée personnelle à
-            des tiers.
-          </p>
-          <p>
-            Certaines données peuvent être accessibles aux marques concernées
-            uniquement dans le cadre des signalements publiés, et toujours sous
-            pseudonyme.
-          </p>
-          <p>
-            Les données sont utilisées exclusivement dans le cadre du service
-            Usearly.
-          </p>
-        </section>
-        <section>
-          <h2>6. Données techniques</h2>
+
           <p>
             Afin d’assurer la sécurité et le bon fonctionnement du service,
             certaines données techniques peuvent être collectées :
           </p>
+
           <ul>
             <li>Adresse IP</li>
             <li>Journaux de connexion</li>
             <li>Informations liées au navigateur ou à l’appareil</li>
           </ul>
+
           <p>Ces données sont utilisées uniquement pour :</p>
+
           <ul>
             <li>Sécuriser le service</li>
             <li>Prévenir les abus</li>
             <li>Assurer la stabilité technique</li>
           </ul>
+
           <p>
             Nous mettons en œuvre des mesures de sécurité appropriées pour
             protéger les données des utilisateurs contre tout accès non
@@ -170,7 +174,7 @@ export default function PrivacyPolicy() {
         </section>
 
         <section>
-          <h2>8. Conservation des données</h2>
+          <h2>7. Conservation des données</h2>
           <p>
             Les données sont conservées uniquement pendant la durée nécessaire
             au fonctionnement du service et supprimées lorsqu’elles ne sont plus
@@ -179,13 +183,13 @@ export default function PrivacyPolicy() {
         </section>
 
         <section>
-          <h2>9. Contact</h2>
+          <h2>8. Contact</h2>
           <p>Pour toute question relative à la confidentialité :</p>
           <p className="legal-contact">📩 support@usearly.com</p>
         </section>
 
         <section>
-          <h2>10. Transparence</h2>
+          <h2>9. Transparence</h2>
           <p>
             Usearly s’engage à une transparence totale concernant l’utilisation
             des données. Aucune donnée n’est collectée à l’insu de l’utilisateur

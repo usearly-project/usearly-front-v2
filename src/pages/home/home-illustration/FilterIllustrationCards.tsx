@@ -1,4 +1,5 @@
 import Avatar from "@src/components/shared/Avatar";
+import type { CSSProperties } from "react";
 import type { BrandReportStats } from "../home-grouped-reports-list/utils/brandReportStats";
 import arrowRight from "/assets/icons/arrow-right.svg";
 import lightBulbNoLight from "/assets/icons/solution-icon-light.svg";
@@ -91,6 +92,7 @@ export const BrandIllustrationCard = ({
   siteUrl,
   selectedBrand,
   containerClassName,
+  containerStyle,
   shouldShowSelectedBrandTitle,
   shouldShowBrandStats,
   brandReportStats,
@@ -100,11 +102,12 @@ export const BrandIllustrationCard = ({
   siteUrl?: string;
   selectedBrand?: string;
   containerClassName: string;
+  containerStyle?: CSSProperties;
   shouldShowSelectedBrandTitle: boolean;
   shouldShowBrandStats: boolean;
   brandReportStats: BrandReportStats;
 }) => (
-  <div className={containerClassName}>
+  <div className={containerClassName} style={containerStyle}>
     <div
       className={[
         "illustration-content",

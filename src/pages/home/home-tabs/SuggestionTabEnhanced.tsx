@@ -1,11 +1,12 @@
-import React, { useMemo, useEffect } from "react";
+// import React, { useMemo, useEffect } from "react";
+import React, { useEffect } from "react";
 import HomeFiltersSuggestion from "../HomeFiltersSuggestion";
 import FeedbackView from "@src/components/feedbacks/FeedbackView";
 import SqueletonAnime from "@src/components/loader/SqueletonAnime";
 import { capitalizeFirstLetter } from "@src/utils/stringUtils";
-import Avatar from "@src/components/shared/Avatar";
-import { useBrandLogos } from "@src/hooks/useBrandLogos";
-import { FALLBACK_BRAND_PLACEHOLDER } from "@src/utils/brandLogos";
+// import Avatar from "@src/components/shared/Avatar";
+// import { useBrandLogos } from "@src/hooks/useBrandLogos";
+// import { FALLBACK_BRAND_PLACEHOLDER } from "@src/utils/brandLogos";
 import TabLayout from "./TabLayout";
 import EndOfList from "./EndOfList";
 import type { FeedbackType } from "@src/types/Reports";
@@ -68,38 +69,38 @@ const SuggestionTabEnhanced: React.FC<Props> = ({
   // -----------------------------
   // Logos dynamiques
   // -----------------------------
-  const brandEntries = useMemo(() => {
-    return selectedBrand
-      ? [{ brand: selectedBrand, siteUrl: selectedSiteUrl }]
-      : [];
-  }, [selectedBrand, selectedSiteUrl]);
+  // const brandEntries = useMemo(() => {
+  //   return selectedBrand
+  //     ? [{ brand: selectedBrand, siteUrl: selectedSiteUrl }]
+  //     : [];
+  // }, [selectedBrand, selectedSiteUrl]);
 
-  const brandLogos = useBrandLogos(brandEntries);
+  // const brandLogos = useBrandLogos(brandEntries);
 
-  const resolvedLogo = useMemo(() => {
-    if (!selectedBrand) return null;
+  // const resolvedLogo = useMemo(() => {
+  //   if (!selectedBrand) return null;
 
-    const brandKey = selectedBrand.toLowerCase().trim();
-    const domain =
-      selectedSiteUrl
-        ?.replace(/^https?:\/\//, "")
-        ?.replace(/^www\./, "")
-        ?.split("/")[0]
-        ?.toLowerCase() || "";
+  //   const brandKey = selectedBrand.toLowerCase().trim();
+  //   const domain =
+  //     selectedSiteUrl
+  //       ?.replace(/^https?:\/\//, "")
+  //       ?.replace(/^www\./, "")
+  //       ?.split("/")[0]
+  //       ?.toLowerCase() || "";
 
-    const possibleKeys = [
-      `${brandKey}|${domain}`,
-      `${brandKey}|${brandKey}.com`,
-      brandKey,
-    ];
+  //   const possibleKeys = [
+  //     `${brandKey}|${domain}`,
+  //     `${brandKey}|${brandKey}.com`,
+  //     brandKey,
+  //   ];
 
-    for (const k of possibleKeys) {
-      const logo = brandLogos[k];
-      if (logo && logo !== FALLBACK_BRAND_PLACEHOLDER) return logo;
-    }
+  //   for (const k of possibleKeys) {
+  //     const logo = brandLogos[k];
+  //     if (logo && logo !== FALLBACK_BRAND_PLACEHOLDER) return logo;
+  //   }
 
-    return null;
-  }, [selectedBrand, selectedSiteUrl, brandLogos]);
+  //   return null;
+  // }, [selectedBrand, selectedSiteUrl, brandLogos]);
 
   // ==========================================================
   //          UTILISATION DU LAYOUT FACTORISÉ
@@ -145,7 +146,7 @@ const SuggestionTabEnhanced: React.FC<Props> = ({
               <div className="selected-brand-heading">
                 <div className="selected-brand-summary">
                   <div className="selected-brand-summary__brand">
-                    <div className="selected-brand-summary__logo">
+                    {/* <div className="selected-brand-summary__logo">
                       <Avatar
                         avatar={resolvedLogo}
                         pseudo={selectedBrand}
@@ -153,7 +154,7 @@ const SuggestionTabEnhanced: React.FC<Props> = ({
                         preferBrandLogo={true}
                         siteUrl={selectedSiteUrl}
                       />
-                    </div>
+                    </div> */}
 
                     <div className="selected-brand-summary__info-container">
                       {selectedCategory ? (

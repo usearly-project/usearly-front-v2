@@ -351,6 +351,9 @@ function Home() {
     feedbackData,
     currentSelectedBrand,
   );
+  const shouldColorRightPanel =
+    Boolean(currentSelectedBrand) &&
+    (activeTab === "coupdecoeur" || activeTab === "suggestion");
 
   const handleSuggestionBrandChange = useCallback(
     (brand: string, siteUrl?: string) => {
@@ -489,7 +492,10 @@ function Home() {
             showRightPanel={!isMobile}
           />
         )}
-        <aside className="right-panel">
+        <aside
+          className={`right-panel ${shouldColorRightPanel ? "right-panel--brand-colored" : ""}`}
+          style={shouldColorRightPanel ? brandBannerStyle : undefined}
+        >
           <div className="home-mobile-right-panel">
             {activeTab === "report" && (
               <SearchBar
@@ -504,6 +510,7 @@ function Home() {
               selectedBrand={currentSelectedBrand}
               selectedCategory={selectedCategory}
               selectedSiteUrl={currentSelectedSiteUrl}
+              brandBannerStyle={brandBannerStyle}
             />
           </div>
         </aside>

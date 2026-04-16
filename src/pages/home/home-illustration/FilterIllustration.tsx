@@ -1,4 +1,5 @@
 import { useEffect, useMemo } from "react";
+import type { CSSProperties } from "react";
 import { useBrandLogos } from "@src/hooks/useBrandLogos";
 import { getCategoryIconPathFromSubcategory } from "@src/utils/IconsBigUtils";
 import { capitalizeFirstLetter } from "@src/utils/stringUtils";
@@ -32,6 +33,7 @@ export type FilterIllustrationProps = {
   siteUrl?: string;
   onglet?: FilterIllustrationTabKey;
   withText?: boolean;
+  containerStyle?: CSSProperties;
   brandReportStats?: BrandReportStats | null;
 };
 
@@ -42,6 +44,7 @@ const FilterIllustration = ({
   siteUrl,
   onglet = "report",
   withText = false,
+  containerStyle,
   brandReportStats,
 }: FilterIllustrationProps) => {
   const isBrandFocused = Boolean(selectedBrand || selectedCategory);
@@ -134,6 +137,7 @@ const FilterIllustration = ({
         siteUrl={siteUrl}
         selectedBrand={selectedBrand}
         containerClassName={containerClassName}
+        containerStyle={containerStyle}
         shouldShowSelectedBrandTitle={shouldShowSelectedBrandTitle}
         shouldShowBrandStats={shouldShowBrandStats}
         brandReportStats={brandReportStats ?? EMPTY_BRAND_REPORT_STATS}
