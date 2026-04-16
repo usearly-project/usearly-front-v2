@@ -135,16 +135,17 @@ const HeroBanner = ({
         <div className="hero-left">
           <h1>
             <span className="highlight-container">
-              <span className="highlight">Ensemble</span>
+              <span className="highlight">
+                <span className="highlight-text">Ensemble</span>
+              </span>
             </span>
-            on fait <br /> bouger les marques !
+            on fait <br />{" "}
+            <span className="highlight-text-desc">bouger les marques !</span>
           </h1>
         </div>
 
         <div className="hero-right">
-          <p className="hero-impact">
-            L'impact de la communauté cette semaine :
-          </p>
+          <p className="hero-impact">L'impact de la communauté cette semaine</p>
           <div className="hero-stats">
             {statItems.map((item) => (
               <button

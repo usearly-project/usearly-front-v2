@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import HomeGroupedReportsList from "../home-grouped-reports-list/HomeGroupedReportsList";
 // import SearchBar from "../components/searchBar/SearchBar";
 import EndOfList from "./EndOfList";
@@ -49,7 +49,7 @@ const ReportTab: React.FC<Props> = ({
   // if (!brandReportStats) {
   //   setBrandReportStats(null);
   // }
-  React.useEffect(() => {
+  useEffect(() => {
     if (!selectedBrand || selectedCategory) {
       setBrandReportStats(null);
     }

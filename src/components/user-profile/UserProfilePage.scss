@@ -12,7 +12,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  gap: 10px;
+  gap: 65px;
   margin-top: 24px;
   width: 90%;
   max-width: 1100px;
@@ -258,6 +258,7 @@
 
 // Colonne droite
 .right-panel {
+  z-index: 1;
   width: 275px;
   min-width: 275px;
   margin: 75px 0;

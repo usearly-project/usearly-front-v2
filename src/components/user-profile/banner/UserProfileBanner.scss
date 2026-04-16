@@ -18,6 +18,7 @@
 /* LEFT — AVATAR + TEXTE */
 .user-info {
   position: relative;
+  left: 67px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -122,6 +123,7 @@
 /* RIGHT — POWER */
 .right-badge {
   position: relative;
+  top: 10px;
 }
 .power {
   display: flex;

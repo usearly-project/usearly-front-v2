@@ -581,6 +581,19 @@ body.feedback-route .home-grouped-reports-list {
         margin-top: 16px;
       }
     }
+    .feedback-view-container {
+      .feedback-card {
+        .feedback-main {
+          .feedback-right {
+            .feedback-shared-footer {
+              .shared-footer-cdc {
+                padding-bottom: 3px;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 
   .right-panel {
