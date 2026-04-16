@@ -67,6 +67,8 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
   const isAuthenticated = !!userProfile?.id;
   const detectedIsMobile = useIsMobile();
   const isMobile = isMobileProp ?? detectedIsMobile;
+  const is1350px = useIsMobile("(max-width: 1350px)");
+  const is1200px = useIsMobile("(max-width: 1200px)");
 
   // 🟢 ÉTAT POUR LA MODAL D'EXTENSION
   const [showExtensionModal, setShowExtensionModal] = useState(false);
@@ -188,7 +190,9 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
               aria-label="Réagir"
             >
               <ThumbsUp size={isMobile ? 18 : 22} />
-              <span className="reagir-span-btn">Réagir</span>
+              {is1350px ? null : (
+                <span className="reagir-span-btn">Réagir</span>
+              )}
             </button>
             {showEmojiPicker && isAuthenticated && (
               <div className="emoji-picker-container">
@@ -211,7 +215,9 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
             aria-label="Commenter"
           >
             <MessageCircle size={isMobile ? 18 : 22} />
-            <span className="commenter-span-btn">Commenter</span>
+            {is1350px ? null : (
+              <span className="commenter-span-btn">Commenter</span>
+            )}
           </button>
         </div>
 
@@ -236,7 +242,11 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
             onClick={handleSignalerClick}
           >
             <img src={simpleLeftHand} alt="" />
-            <span className="signaler-span-btn">Signaler</span>
+            {is1200px ? (
+              <span className="signaler-span-btn">Signaler</span>
+            ) : (
+              <span className="signaler-span-btn">J'ai aussi ce problème</span>
+            )}
           </button>
           <button
             className={`solution-btn ${solutionsCount > 0 ? "solution-btn-active" : "solution-btn-empty"}`}
@@ -255,7 +265,7 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
               alt="bulb"
             />
             <span className="solution-span-btn">
-              {isMobile ? null : solutionsCount > 1 ? "Solutions" : "Solution"}{" "}
+              {is1200px ? null : solutionsCount > 1 ? "Solutions" : "Solution"}{" "}
               ({solutionsCount})
             </span>
           </button>
