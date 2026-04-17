@@ -1,3 +1,5 @@
+@use "@src/styles/base/_variables" as *;
+
 .feed-header {
   display: flex;
   flex-direction: column;
@@ -97,25 +99,28 @@
     align-items: stretch;
     flex-wrap: nowrap;
     padding-left: 16px;
+    padding-right: 20px;
   }
 
   .feed-header__mobile-title {
     margin: 0;
-    color: #111827;
+    color: #000;
     font-size: 16px;
     font-weight: 500;
+    font-family: $font-family-3;
     line-height: 1.15;
+    padding: 10px;
   }
 
   .feed-header__brand-filter {
     // Ancienne largeur : 100%
-    width: 230px;
+    width: 110px;
     max-width: 100%;
 
     .select-filter-wrapper {
-      width: 165px;
+      width: 110px;
       max-width: 100%;
-      min-width: 165px !important;
+      min-width: 110px !important;
     }
 
     .popup-hot-filter {
@@ -140,6 +145,7 @@
 
     .select-filter-display {
       justify-content: space-between;
+      padding-right: 10px;
 
       .select-filter-icon--image {
         width: 25px;

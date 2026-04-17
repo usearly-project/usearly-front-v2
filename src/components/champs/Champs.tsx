@@ -61,7 +61,6 @@ export default function SelectFilter<V extends string = string>(
     minWidthPart = "both",
     placeholderResetLabel,
     loading = false,
-    fixedBrandIconUrl,
   } = props;
   const [open, setOpen] = useState(false);
   const [offset, setOffset] = useState<number | null>(null);
@@ -113,28 +112,9 @@ export default function SelectFilter<V extends string = string>(
 
   const selectedVisual = useMemo(() => {
     if (!iconVisible) return null;
-    if (isBrandSelect && fixedBrandIconUrl) {
-      return Utils.renderLeadingVisual({
-        iconUrl: fixedBrandIconUrl,
-        label: selected?.label ?? placeholderOption?.label,
-      });
-    }
-    if (!isBrandSelect) return Utils.renderLeadingVisual(selected);
-    const isP = !selected?.value;
-    return Utils.renderBrandAvatar(
-      selected,
-      Utils.BRAND_AVATAR_SIZE,
-      isP ? "brand-logo--placeholder" : "",
-      !isP,
-      isP ? "?" : undefined,
-    );
-  }, [
-    iconVisible,
-    isBrandSelect,
-    fixedBrandIconUrl,
-    selected,
-    placeholderOption,
-  ]);
+    if (isBrandSelect) return null;
+    return Utils.renderLeadingVisual(selected);
+  }, [iconVisible, isBrandSelect, selected]);
 
   const shouldMeasureOptionsWidth = isBrandSelect || fitWidthToOptions;
 
@@ -235,30 +215,16 @@ export default function SelectFilter<V extends string = string>(
               value={opt.value}
               label={Utils.getDisplayLabel(opt.label, isBrandSelect)}
               leading={
-                iconVisible
-                  ? fixedBrandIconUrl && isBrandSelect
-                    ? Utils.renderLeadingVisual({
-                        iconUrl: fixedBrandIconUrl,
-                        label: opt.label,
-                      })
-                    : brandSelect === true
-                      ? Utils.renderBrandAvatar(
-                          opt,
-                          Utils.BRAND_AVATAR_SIZE_OPTION,
-                          !opt.value ? "brand-logo--placeholder" : "",
-                          !!opt.value,
-                        )
-                      : brandSelect === false
-                        ? Utils.renderLeadingVisual(opt)
-                        : opt.emoji || !isBrandSelect // Cas automatique
-                          ? Utils.renderLeadingVisual(opt)
-                          : Utils.renderBrandAvatar(
-                              opt,
-                              Utils.BRAND_AVATAR_SIZE_OPTION,
-                              !opt.value ? "brand-logo--placeholder" : "",
-                              !!opt.value,
-                            )
-                  : null
+                !iconVisible
+                  ? null
+                  : isBrandSelect
+                    ? Utils.renderBrandAvatar(
+                        opt,
+                        Utils.BRAND_AVATAR_SIZE_OPTION,
+                        !opt.value ? "brand-logo--placeholder" : "",
+                        !!opt.value,
+                      )
+                    : Utils.renderLeadingVisual(opt)
               }
               selected={opt.value === value}
               onSelect={(v) => {
@@ -315,21 +281,8 @@ export default function SelectFilter<V extends string = string>(
             <Trigger
               key={i}
               leading={
-                fitWidthToOptions && iconVisible
-                  ? fixedBrandIconUrl && isBrandSelect
-                    ? Utils.renderLeadingVisual({
-                        iconUrl: fixedBrandIconUrl,
-                        label: opt.label,
-                      })
-                    : isBrandSelect
-                      ? Utils.renderBrandAvatar(
-                          opt,
-                          Utils.BRAND_AVATAR_SIZE,
-                          !opt.value ? "brand-logo--placeholder" : "",
-                          !!opt.value,
-                          !opt.value ? "?" : undefined,
-                        )
-                      : Utils.renderLeadingVisual(opt)
+                fitWidthToOptions && iconVisible && !isBrandSelect
+                  ? Utils.renderLeadingVisual(opt)
                   : null
               }
               label={Utils.getDisplayLabel(opt.label, isBrandSelect)}

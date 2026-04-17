@@ -1,6 +1,7 @@
 import React from "react";
 import { ThumbsUp } from "lucide-react";
 import EmojiUrlyReactionPicker from "@src/utils/EmojiUrlyReactionPicker";
+// import { useIsMobile } from "@src/hooks/use-mobile";
 
 type TypeKind = "coupdecoeur" | "suggestion";
 
@@ -23,6 +24,7 @@ export default function ReactionPickerTrigger({
 }: Props) {
   const [open, setOpen] = React.useState(false);
   const hoverTimeoutRef = React.useRef<number | null>(null);
+  // const isMobile = useIsMobile();
 
   const clearHoverTimeout = () => {
     if (hoverTimeoutRef.current) {
@@ -57,7 +59,7 @@ export default function ReactionPickerTrigger({
         aria-label={type === "coupdecoeur" ? "Réagir" : "Choisir une réaction"}
       >
         <ThumbsUp size={16} />
-        {type === "coupdecoeur" && <span>Réagir</span>}
+        {/* {!isMobile && <>{type === "coupdecoeur" && <span>Réagir</span>}</>} */}
       </button>
 
       {open && !disabled && (

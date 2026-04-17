@@ -34,6 +34,9 @@ img.inline-capture-img {
   word-wrap: break-word; /* ancienne syntaxe compatible */
   overflow-wrap: anywhere; /* nouvelle syntaxe — force la coupure si pas d'espace */
   line-height: 1.5; /* pour un rendu plus aéré */
+  .inline-capture {
+    margin-top: 22px;
+  }
 }
 
 .subcategory-header {

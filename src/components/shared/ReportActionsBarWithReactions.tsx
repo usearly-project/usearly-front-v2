@@ -67,7 +67,7 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
   const isAuthenticated = !!userProfile?.id;
   const detectedIsMobile = useIsMobile();
   const isMobile = isMobileProp ?? detectedIsMobile;
-  const is1350px = useIsMobile("(max-width: 1350px)");
+  // const is1350px = useIsMobile("(max-width: 1350px)");
   const is1200px = useIsMobile("(max-width: 1200px)");
 
   // 🟢 ÉTAT POUR LA MODAL D'EXTENSION
@@ -190,9 +190,9 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
               aria-label="Réagir"
             >
               <ThumbsUp size={isMobile ? 18 : 22} />
-              {is1350px ? null : (
+              {/* {is1350px ? null : (
                 <span className="reagir-span-btn">Réagir</span>
-              )}
+              )} */}
             </button>
             {showEmojiPicker && isAuthenticated && (
               <div className="emoji-picker-container">
@@ -215,9 +215,9 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
             aria-label="Commenter"
           >
             <MessageCircle size={isMobile ? 18 : 22} />
-            {is1350px ? null : (
+            {/* {is1350px ? null : (
               <span className="commenter-span-btn">Commenter</span>
-            )}
+            )} */}
           </button>
         </div>
 

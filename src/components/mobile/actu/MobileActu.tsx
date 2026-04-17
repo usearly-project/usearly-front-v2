@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import "./MobileActu.scss";
 
 import Avatar from "@src/components/shared/Avatar";
+import { truncate } from "@src/utils/stringUtils";
 import FeedbackRight from "@src/components/InteractiveFeedbackCard/FeedbackRight";
 import FeedbackLeft from "@src/components/InteractiveFeedbackCard/feedback-left/FeedbackLeft";
 import DescriptionCommentSection from "@src/components/report-desc-comment/DescriptionCommentSection";
@@ -121,7 +122,7 @@ const MobileActu: React.FC<MobileActuProps> = ({
                             avatar={r.author?.avatar}
                             pseudo={r.author?.pseudo}
                             type="user"
-                            sizeHW={30}
+                            sizeHW={24}
                           />
                         </div>
                       ))}
@@ -132,7 +133,8 @@ const MobileActu: React.FC<MobileActuProps> = ({
             </div>
             <div className="header-author">
               <span className="author-text">
-                {author?.pseudo} x <strong>{brandName}</strong>
+                {truncate(author?.pseudo, 8)} x{" "}
+                <strong>{truncate(brandName, 8)}</strong>
               </span>
               <div className="avatar-overlap-wrapper">
                 <Avatar

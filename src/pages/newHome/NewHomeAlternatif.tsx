@@ -12,7 +12,7 @@ import ExtensionRedirect from "@src/components/extension-redirect/ExtensionRedir
 import { useIsAtBottom } from "@src/hooks/detect-bottom";
 import FavoriteCarouselSection from "./components/slide-stack/FavoriteCarouselSection";
 import SectionJoinUsearly from "@src/pages/newHome/components/sectionJoinUsearly/SectionJoinUsearly";
-import AppDownloadSection from "@src/components/app-download/AppDownloadSection";
+// import AppDownloadSection from "@src/components/app-download/AppDownloadSection";
 
 // const PHRASES = ["des sondages", "des chatbots", "le silence"];
 // const SCROLL_STEP = 0.05;
@@ -34,7 +34,7 @@ const NewHome: React.FC = () => {
        */}
       <SectionHookUsers />
       <SectionJoinUsearly />
-      <AppDownloadSection />
+      {/* <AppDownloadSection /> */}
       {/* <TitleSection phrase={PHRASES[phraseIndex]} /> */}
 
       {/* --- SECTION NORMALE --- */}

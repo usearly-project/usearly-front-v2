@@ -5,7 +5,7 @@
   background-color: #10163a;
   background-image: url("/assets/svg/3logo-cascade.svg");
   background-repeat: no-repeat;
-  background-position: right 67px top -30px;
+  background-position: right 100px top -30px;
   background-size: 220px auto;
   padding: 40px 0;
   color: white;
@@ -52,8 +52,8 @@
         top: -2px;
       }
     }
-    .span.highlight-text-desc {
-      margin-left: 26px;
+    .highlight-text-desc {
+      margin-left: 30px;
     }
   }
 
@@ -179,10 +179,13 @@
 
 // --- DESIGN MOBILE (BANDEAU FIN) ---
 .hero-banner-mobile {
+  // Ancien rendu cliquable extension : appearance: none;
+  // Ancien rendu cliquable extension : border: 0;
+  // Ancien rendu cliquable extension : display: grid;
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  min-height: 150px;
+  min-height: 130px;
   background:
     radial-gradient(
       circle at 48% 32%,
@@ -192,10 +195,17 @@
     #0e0431;
   padding: 17px 20px 13px;
   color: white;
+  // Ancien rendu cliquable extension : font: inherit;
   width: 100%;
   text-align: center;
   place-content: center;
+  // Ancien rendu cliquable extension : cursor: pointer;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+  // &:focus-visible {
+  //   outline: 2px solid rgba(255, 255, 255, 0.85);
+  //   outline-offset: -4px;
+  // }
 
   &::before {
     content: "";
@@ -229,7 +239,7 @@
     gap: 27px;
 
     .mobile-stat {
-      appearance: none;
+      // Ancien rendu bouton : appearance: none;
       border: 0;
       background: transparent;
       color: inherit;
@@ -240,7 +250,9 @@
       min-width: 50px;
       padding: 0;
       border-radius: 8px;
-      cursor: pointer;
+      // Ancien rendu cliquable : cursor: pointer;
+      cursor: default;
+      // Ancien rendu cliquable extension : pointer-events: none;
 
       &:focus-visible {
         outline: 2px solid rgba(255, 255, 255, 0.85);
@@ -249,14 +261,14 @@
 
       .value {
         font-size: 42px;
-        font-weight: 900;
+        font-weight: 800;
         line-height: 0.95;
         letter-spacing: 0;
       }
 
       img {
-        width: 32px;
-        height: 32px;
+        width: 44px;
+        height: 44px;
         object-fit: contain;
         pointer-events: none;
       }
@@ -264,9 +276,30 @@
   }
 }
 
+// .extension-redirect-modal-overlay {
+//   align-items: center;
+// }
+
+// .extension-redirect-modal-content {
+//   width: min(1100px, 100%);
+//   max-width: 1100px;
+//   max-height: none;
+//   padding: 0;
+//   background: transparent;
+//   border-radius: 36px;
+//   box-shadow: none;
+//   overflow: visible;
+// }
+
+// @media screen and (max-width: 680px) {
+//   .extension-redirect-modal-content {
+//     border-radius: 28px;
+//   }
+// }
+
 @media (min-width: 520px) and (max-width: 992px) {
   .hero-banner-mobile {
-    min-height: 150px;
+    min-height: 130px;
     padding-top: 20px;
 
     &::before {

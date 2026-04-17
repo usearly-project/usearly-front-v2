@@ -22,7 +22,7 @@ function PublicFeed() {
 
   return (
     <div className="public-feed-page">
-      <HeroBanner isMobile={isMobileLayout} />
+      <HeroBanner isMobile={arePanelsHidden} />
 
       <div className={`public-feed-layout`}>
         {!arePanelsHidden && (
