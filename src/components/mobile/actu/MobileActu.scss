@@ -10,7 +10,7 @@ $green-progress: #48bb78;
   padding: 16px;
   padding-bottom: 8px;
   margin: 10px 12px;
-  border: 0.5px solid #ededed;
+  border: 0.5px solid #e9e9e9;
   box-shadow: 0 2px 2.2px 0 rgba(0, 0, 0, 0.13);
   display: flex;
   flex-direction: column;
@@ -27,7 +27,7 @@ $green-progress: #48bb78;
       .reporters-inline-stack {
         display: flex;
         align-items: center;
-        gap: 28px;
+        gap: 26px;
         .avatar-pile {
           display: flex;
           flex-direction: row-reverse;
@@ -88,7 +88,6 @@ $green-progress: #48bb78;
           background: #fff;
           border-radius: 50%;
           padding: 1.5px;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
       }
     }
@@ -129,6 +128,7 @@ $green-progress: #48bb78;
         }
       }
       .date-relative {
+        display: none;
         font-size: 12px;
         color: #a0aec0;
       }
@@ -210,7 +210,8 @@ $green-progress: #48bb78;
 
   // --- FOOTER ---
   .mobile-actu-footer {
-    padding-top: 12px;
+    padding-top: 0px;
+    margin-top: -10px;
 
     // --- 1. Style pour SIGNALEMENT (PopularReportActions) ---
     .popular-report-actions {
@@ -483,7 +484,7 @@ $green-progress: #48bb78;
   .is-mobile-version {
     .feedback-content {
       .feedback-mobile-visual-container {
-        margin-top: 0;
+        margin-top: 3px;
       }
     }
   }

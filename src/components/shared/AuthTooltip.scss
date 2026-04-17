@@ -8,7 +8,11 @@
   padding: 6px 12px;
   border-radius: 16px;
   font-size: 14px;
-  white-space: nowrap;
+  // Ancien rendu : white-space: nowrap;
+  line-height: 1.25;
+  max-width: calc(100vw - 16px);
+  white-space: normal;
+  overflow-wrap: anywhere;
   z-index: 10000;
   animation: authTooltipFadeInOut 2s ease forwards;
   pointer-events: none;
@@ -16,7 +20,8 @@
 
 .auth-tooltip.auth-tooltip-portal--at-pointer {
   bottom: auto;
-  transform: translate(10px, -50%);
+  // Ancien rendu : transform: translate(10px, -50%);
+  transform: none;
   animation: authTooltipFadeInOutAtPointer 2s ease forwards;
 }
 
@@ -41,18 +46,18 @@
 @keyframes authTooltipFadeInOutAtPointer {
   0% {
     opacity: 0;
-    transform: translate(4px, -50%);
+    // Ancien rendu : transform: translate(4px, -50%);
   }
   20% {
     opacity: 1;
-    transform: translate(10px, -50%);
+    // Ancien rendu : transform: translate(10px, -50%);
   }
   80% {
     opacity: 1;
-    transform: translate(10px, -50%);
+    // Ancien rendu : transform: translate(10px, -50%);
   }
   100% {
     opacity: 0;
-    transform: translate(16px, -50%);
+    // Ancien rendu : transform: translate(16px, -50%);
   }
 }

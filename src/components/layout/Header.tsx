@@ -1,5 +1,5 @@
 import {
-  useCallback,
+  // useCallback,
   useState,
   useRef,
   useEffect,
@@ -12,9 +12,9 @@ import Logo from "@src/assets/logo.svg";
 import { useAuth } from "@src/services/AuthContext";
 import { getNotifications } from "@src/services/notificationService";
 import Buttons from "@src/components/buttons/Buttons";
-import { useIsMobile } from "@src/hooks/use-mobile";
+// import { useIsMobile } from "@src/hooks/use-mobile";
 import UsearlyText from "/assets/UsearlyText.svg";
-import AppDownloadModal from "@src/components/app-download/AppDownloadModal";
+// import AppDownloadModal from "@src/components/app-download/AppDownloadModal";
 // import { APP_DOWNLOAD_ROUTE } from "@src/components/app-download/appDownload.constants";
 
 const MOBILE_APP_REDIRECT_BREAKPOINT_PX = 1080;
@@ -44,13 +44,13 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
   const [shakeBell, setShakeBell] = useState(false);
   const prevUnreadCountRef = useRef(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [showAppDownloadModal, setShowAppDownloadModal] = useState(false);
+  // const [showAppDownloadModal, setShowAppDownloadModal] = useState(false);
   const [isHeaderHidden, setIsHeaderHidden] = useState(false);
-  const isMobileHeader = useIsMobile(
-    `(max-width: ${MOBILE_APP_REDIRECT_BREAKPOINT_PX}px)`,
-  );
+  // const isMobileHeader = useIsMobile(
+  //   `(max-width: ${MOBILE_APP_REDIRECT_BREAKPOINT_PX}px)`,
+  // );
   // const isHeaderNavigationBlocked = isMobileHeader;
-  const shouldRedirectNavigationToDownload = isMobileHeader;
+  // const shouldRedirectNavigationToDownload = isMobileHeader;
   const hiddenRef = useRef(false);
   const lastScrollYRef = useRef(0);
   const activeScrollYRef = useRef(0);
@@ -114,107 +114,100 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  useEffect(() => {
-    if (!shouldRedirectNavigationToDownload) {
-      setMobileMenuOpen(false);
-      setUserMenuOpen(false);
-      setShowAppDownloadModal(false);
-    }
-  }, [shouldRedirectNavigationToDownload]);
+  // Popup telechargement desactivee a la demande.
+  // useEffect(() => {
+  //   if (!shouldRedirectNavigationToDownload) {
+  //     setMobileMenuOpen(false);
+  //     setUserMenuOpen(false);
+  //     setShowAppDownloadModal(false);
+  //   }
+  // }, [shouldRedirectNavigationToDownload]);
 
-  const openAppDownloadModal = useCallback(() => {
-    setMobileMenuOpen(false);
-    setUserMenuOpen(false);
-    setShowAppDownloadModal(true);
-  }, []);
+  // const openAppDownloadModal = useCallback(() => {
+  //   setMobileMenuOpen(false);
+  //   setUserMenuOpen(false);
+  //   setShowAppDownloadModal(true);
+  // }, []);
 
-  const handleMobileNavigationIntent = useCallback(
-    (event?: ReactMouseEvent<HTMLElement>) => {
-      if (!shouldRedirectNavigationToDownload) {
-        return false;
-      }
+  const handleMobileNavigationIntent = (
+    event?: ReactMouseEvent<HTMLElement>,
+  ) => {
+    void event;
+    return false;
+  };
 
-      event?.preventDefault();
-      event?.stopPropagation();
-      openAppDownloadModal();
+  // useEffect(() => {
+  //   if (!shouldRedirectNavigationToDownload) {
+  //     return;
+  //   }
 
-      return true;
-    },
-    [openAppDownloadModal, shouldRedirectNavigationToDownload],
-  );
+  //   const handleDocumentNavigationClick = (event: MouseEvent) => {
+  //     if (
+  //       event.defaultPrevented ||
+  //       event.button !== 0 ||
+  //       event.metaKey ||
+  //       event.ctrlKey ||
+  //       event.shiftKey ||
+  //       event.altKey
+  //     ) {
+  //       return;
+  //     }
 
-  useEffect(() => {
-    if (!shouldRedirectNavigationToDownload) {
-      return;
-    }
+  //     const target = event.target;
 
-    const handleDocumentNavigationClick = (event: MouseEvent) => {
-      if (
-        event.defaultPrevented ||
-        event.button !== 0 ||
-        event.metaKey ||
-        event.ctrlKey ||
-        event.shiftKey ||
-        event.altKey
-      ) {
-        return;
-      }
+  //     if (!(target instanceof Element)) {
+  //       return;
+  //     }
 
-      const target = event.target;
+  //     if (
+  //       target.closest("[data-mobile-navigation-allow='true']") ||
+  //       target.closest(".app-download-modal") ||
+  //       target.closest(".burger")
+  //     ) {
+  //       return;
+  //     }
 
-      if (!(target instanceof Element)) {
-        return;
-      }
+  //     const anchor = target.closest("a[href]");
 
-      if (
-        target.closest("[data-mobile-navigation-allow='true']") ||
-        target.closest(".app-download-modal") ||
-        target.closest(".burger")
-      ) {
-        return;
-      }
+  //     if (!(anchor instanceof HTMLAnchorElement)) {
+  //       return;
+  //     }
 
-      const anchor = target.closest("a[href]");
+  //     const rawHref = anchor.getAttribute("href");
 
-      if (!(anchor instanceof HTMLAnchorElement)) {
-        return;
-      }
+  //     if (
+  //       !rawHref ||
+  //       rawHref.startsWith("#") ||
+  //       rawHref.startsWith("mailto:") ||
+  //       rawHref.startsWith("tel:") ||
+  //       anchor.hasAttribute("download") ||
+  //       (anchor.target && anchor.target !== "_self")
+  //     ) {
+  //       return;
+  //     }
 
-      const rawHref = anchor.getAttribute("href");
+  //     const nextUrl = new URL(anchor.href, window.location.href);
 
-      if (
-        !rawHref ||
-        rawHref.startsWith("#") ||
-        rawHref.startsWith("mailto:") ||
-        rawHref.startsWith("tel:") ||
-        anchor.hasAttribute("download") ||
-        (anchor.target && anchor.target !== "_self")
-      ) {
-        return;
-      }
+  //     if (nextUrl.origin !== window.location.origin) {
+  //       return;
+  //     }
 
-      const nextUrl = new URL(anchor.href, window.location.href);
+  //     event.preventDefault();
+  //     event.stopPropagation();
+  //     event.stopImmediatePropagation();
+  //     openAppDownloadModal();
+  //   };
 
-      if (nextUrl.origin !== window.location.origin) {
-        return;
-      }
+  //   document.addEventListener("click", handleDocumentNavigationClick, true);
 
-      event.preventDefault();
-      event.stopPropagation();
-      event.stopImmediatePropagation();
-      openAppDownloadModal();
-    };
-
-    document.addEventListener("click", handleDocumentNavigationClick, true);
-
-    return () => {
-      document.removeEventListener(
-        "click",
-        handleDocumentNavigationClick,
-        true,
-      );
-    };
-  }, [openAppDownloadModal, shouldRedirectNavigationToDownload]);
+  //   return () => {
+  //     document.removeEventListener(
+  //       "click",
+  //       handleDocumentNavigationClick,
+  //       true,
+  //     );
+  //   };
+  // }, [openAppDownloadModal, shouldRedirectNavigationToDownload]);
 
   useEffect(() => {
     const isFeedbackRoute = location.pathname.startsWith("/");
@@ -708,9 +701,9 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
 
       {heroMode && <div className="header-hero-slot">{children}</div>}
 
-      {showAppDownloadModal && (
+      {/* {showAppDownloadModal && (
         <AppDownloadModal onClose={() => setShowAppDownloadModal(false)} />
-      )}
+      )} */}
     </header>
   );
 };
