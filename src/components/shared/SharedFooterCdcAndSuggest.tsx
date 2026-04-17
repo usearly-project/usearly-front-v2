@@ -9,7 +9,7 @@ import CommentCountLabel from "@src/components/publications/footerParts/CommentC
 import ReactionPickerTrigger from "@src/components/publications/footerParts/ReactionPickerTrigger/ReactionPickerTrigger";
 import ShareModalSwitch from "@src/components/publications/footerParts/ShareModalSwitch/ShareModalSwitch";
 import VoteButton from "@src/components/publications/footerParts/VoteButton/VoteButton";
-import { useIsMobile } from "@src/hooks/use-mobile";
+// import { useIsMobile } from "@src/hooks/use-mobile";
 
 interface Props {
   userId?: string;
@@ -39,7 +39,7 @@ const SharedFooterCdcAndSuggest: React.FC<Props> = ({
 }) => {
   const emojis = getEmojisForType(type);
   const [showShareModal, setShowShareModal] = useState(false);
-  const isMobile = useIsMobile();
+  // const isMobile = useIsMobile();
 
   const isGuestMode = isGuest || !userId;
 
@@ -108,14 +108,14 @@ const SharedFooterCdcAndSuggest: React.FC<Props> = ({
               aria-label="Commenter"
             >
               <MessageCircle size={16} />
-              {!isMobile && (
+              {/* {!isMobile && (
                 <>
                   {type === "coupdecoeur" && "Commenter"}
                   {type === "suggestion" && (
                     <span className="footer-icon-tooltip">Commenter</span>
                   )}
                 </>
-              )}
+              )} */}
             </button>
 
             {/* Partager */}
@@ -126,14 +126,14 @@ const SharedFooterCdcAndSuggest: React.FC<Props> = ({
               aria-label="Partager"
             >
               <Share2 size={16} />
-              {!isMobile && (
+              {/* {!isMobile && (
                 <>
                   {type === "coupdecoeur" && "Partager"}
                   {type === "suggestion" && (
                     <span className="footer-icon-tooltip">Partager</span>
                   )}
                 </>
-              )}
+              )} */}
             </button>
           </div>
 

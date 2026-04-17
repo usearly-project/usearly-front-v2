@@ -228,7 +228,7 @@
 .filter-bar-generic-container {
   .filter-bar-generic-actions {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 12px;
 
     .brand-select-inline {
