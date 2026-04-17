@@ -10,6 +10,8 @@ import suggestGreenIcon from "/assets/icons/suggest-header.svg";
 import "./HeroBanner.scss";
 import AuthTooltip from "@src/components/shared/AuthTooltip";
 import { useAuthTooltip } from "@src/hooks/useAuthTooltip";
+// import Modal from "@src/components/ui/Modal";
+// import ExtensionRedirect from "@src/components/extension-redirect/ExtensionRedirect";
 
 type HeroBannerProps = {
   activeTab?: FeedbackType;
@@ -36,6 +38,7 @@ const HeroBanner = ({
     suggestions: 0,
   });
   const [loading, setLoading] = useState(true);
+  // const [isExtensionModalOpen, setIsExtensionModalOpen] = useState(false);
   const { showAuthTooltip, tooltipText, tooltipPosition, triggerTooltip } =
     useAuthTooltip();
 
@@ -96,6 +99,19 @@ const HeroBanner = ({
     navigate(getFeedbackPath(tab));
   };
 
+  // const openExtensionModal = () => {
+  //   setIsExtensionModalOpen(true);
+  // };
+
+  // const handleMobileBannerKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+  //   if (event.key !== "Enter" && event.key !== " ") {
+  //     return;
+  //   }
+
+  //   event.preventDefault();
+  //   openExtensionModal();
+  // };
+
   // SI MOBILE : On affiche le bandeau fin
   if (isMobile) {
     return (
@@ -105,16 +121,17 @@ const HeroBanner = ({
         </p>
         <div className="mobile-stats-row">
           {statItems.map((item) => (
-            <button
-              type="button"
+            <div
               className="mobile-stat"
               key={item.key}
-              onClick={(event) => handleStatClick(item.key, event)}
-              aria-label={`Voir les ${item.alt.toLowerCase()}`}
+              // Ancien comportement : le bandeau mobile declenchait une navigation
+              // qui pouvait ouvrir la popup de telechargement de l'application.
+              // onClick={(event) => handleStatClick(item.key, event)}
+              aria-label={item.alt}
             >
               <span className="value">{loading ? "..." : item.value}</span>
               <img src={item.icon} alt={item.alt} />
-            </button>
+            </div>
           ))}
         </div>
         <AuthTooltip
@@ -122,6 +139,19 @@ const HeroBanner = ({
           text={tooltipText}
           position={tooltipPosition}
         />
+
+        {/* {isExtensionModalOpen ? (
+            <Modal
+              onClose={() => setIsExtensionModalOpen(false)}
+              overlayClassName="extension-redirect-modal-overlay"
+              contentClassName="extension-redirect-modal-content"
+            >
+              <ExtensionRedirect
+                isModal
+                onClose={() => setIsExtensionModalOpen(false)}
+              />
+            </Modal>
+          ) : null} */}
       </div>
     );
   }

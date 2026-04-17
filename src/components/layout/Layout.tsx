@@ -223,6 +223,7 @@ const Layout = ({ children }: LayoutProps) => {
         style={{
           minHeight: "100vh",
           paddingTop: heroMode ? 60 : HeaderHeight, // Hero = header collé
+          backgroundColor: "#f4f4f4",
         }}
       >
         {children}

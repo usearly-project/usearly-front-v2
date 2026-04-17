@@ -16,7 +16,7 @@ const getPositionFromEvent = (
 ): AuthTooltipPosition => {
   if (!event) return null;
 
-  if (event.clientX || event.clientY) {
+  if (typeof event.clientX === "number" && typeof event.clientY === "number") {
     return {
       x: event.clientX,
       y: event.clientY,

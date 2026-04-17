@@ -30,7 +30,7 @@
     }
 
     .emoji-icon {
-      font-size: 20px;
+      font-size: 22px;
     }
 
     .reaction-count {
@@ -63,8 +63,8 @@
     display: flex;
     flex-direction: column;
     background-color: #ffffff;
-    padding: 8px 0px;
-    padding-bottom: 0px;
+    padding: 10px 0;
+    padding-top: 14px;
     gap: 12px;
 
     .footer-buttons {
