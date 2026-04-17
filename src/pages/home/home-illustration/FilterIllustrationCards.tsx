@@ -121,8 +121,7 @@ export const BrandIllustrationCard = ({
       {shouldShowSelectedBrandTitle && (
         <div className="filter-illustration-sidebar__brand-copy">
           <h2 className="filter-illustration-sidebar__selected-brand-title">
-            Problèmes et{"\n"}bugs{"\u00A0"}
-            <span>{brandName}</span>
+            Problèmes et{"\n"}bugs <span>{brandName}</span>
           </h2>
           <p className="filter-illustration-sidebar__selected-brand-description">
             Découvrez tous les problèmes que la communauté a rencontrés sur{" "}
