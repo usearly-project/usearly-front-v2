@@ -1,17 +1,12 @@
 import { getBrandThemeColor } from "@src/utils/getBrandThemeColor";
 import { getOfficialPalette } from "@src/utils/brandColorUtils";
-import { decideIllustration } from "@src/utils/getIllustrationDecision";
 import { getBrightness } from "./colorUtils";
-import { getIllustrationFromText } from "@src/utils/getIllustrationFromText";
 
 export const getFeedbackThemeData = (item: any) => {
   const brandName = item.marque?.trim() ?? "";
-  const userVerbatim = item.description || "";
-  const isSuggestion = item.type === "suggestion";
 
+  // 🎨 1. Logique de couleurs (On garde tout, c'est parfait)
   const { base, light, isDark } = getBrandThemeColor(brandName);
-
-  // ✅ On cast en "any" pour éviter l'erreur sur .accent
   const palette = getOfficialPalette(brandName) as any;
   const brightness = getBrightness(base);
 
@@ -21,7 +16,6 @@ export const getFeedbackThemeData = (item: any) => {
 
   let svgColor: string;
 
-  // ✅ Utilisation de la palette avec sécurité
   if (palette && palette.accent) {
     svgColor = palette.accent;
   } else if (
@@ -33,12 +27,11 @@ export const getFeedbackThemeData = (item: any) => {
   } else {
     svgColor =
       brightness < 140
-        ? `color-mix(in srgb, ${adjustedBase} 30%, white)`
-        : `color-mix(in srgb, ${adjustedBase} 25%, black)`;
+        ? `color-mix(in srgb, ${adjustedBase} 30%, white)` // Sur fond sombre : Icône claire
+        : `color-mix(in srgb, ${adjustedBase} 70%, black)`; // <-- ICI : 70% de couleur au lieu de 25%
   }
 
-  const illustrationResult = decideIllustration("", userVerbatim, item.type);
-
+  // 🧱 2. Logique de Background (On garde aussi)
   const backgroundVariant =
     item.meta?.axe === "illustration"
       ? adjustedBase
@@ -48,6 +41,8 @@ export const getFeedbackThemeData = (item: any) => {
           ? `color-mix(in srgb, ${adjustedBase} 10%, white)`
           : adjustedBase;
 
+  // 🚀 3. Retour des datas
+  // On supprime les appels à decideIllustration et getIllustrationFromText !
   return {
     base: adjustedBase,
     light,
@@ -56,13 +51,8 @@ export const getFeedbackThemeData = (item: any) => {
     backgroundVariant,
     svgColor,
     palette,
-    illustration:
-      illustrationResult ??
-      getIllustrationFromText(
-        "",
-        userVerbatim,
-        undefined,
-        isSuggestion ? "bobAssetsSuggest" : "bobAssets",
-      ),
+    // On peut laisser la propriété "illustration" à null ou la supprimer,
+    // car on va utiliser item.illustration directement dans le composant.
+    illustration: null,
   };
 };

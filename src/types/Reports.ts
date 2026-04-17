@@ -102,6 +102,7 @@ export interface CoupDeCoeur {
   title?: string;
   punchline?: string;
   illustration?: string;
+  category: string;
   descriptionId: string;
   emplacement: string;
   emoji: string;
@@ -125,6 +126,7 @@ export interface Suggestion {
   title?: string;
   punchline?: string;
   illustration?: string;
+  category: string;
   descriptionId: string;
   emplacement: string;
   emoji: string | null;
