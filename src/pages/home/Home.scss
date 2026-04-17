@@ -297,7 +297,7 @@ body.feedback-route .home-grouped-reports-list {
     }
 
     &.right-panel--brand-colored {
-      background-color: var(--brand-banner-bg, transparent);
+      // background-color: var(--brand-banner-bg, transparent);
       // border: 1px solid var(--brand-banner-border, transparent);
       border-radius: 24px;
     }
@@ -509,10 +509,10 @@ body.feedback-route .home-grouped-reports-list {
 }
 
 .right-panel {
-  background-color: var(--brand-banner-bg, transparent);
+  // background-color: var(--brand-banner-bg, transparent);
 
   &.right-panel--brand-colored {
-    border: 1px solid var(--brand-banner-border, transparent);
+    // border: 1px solid var(--brand-banner-border, transparent);
     border-radius: 24px;
   }
 }
@@ -643,7 +643,8 @@ body.feedback-route .home-grouped-reports-list {
 
   .feedback-view-container.brand-selected {
     border-radius: 12px;
-    padding: 16px 0 24px;
+    padding: 0;
+    margin-top: 0;
   }
 }
 

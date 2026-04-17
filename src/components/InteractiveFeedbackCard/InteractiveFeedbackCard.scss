@@ -429,10 +429,13 @@
 
       .feedback-header-main {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         gap: 4px;
         flex: 1 1 auto;
         min-width: 0;
+        .feedback-meta {
+          margin-top: 9px;
+        }
       }
 
       .feedback-header-type-icon {
