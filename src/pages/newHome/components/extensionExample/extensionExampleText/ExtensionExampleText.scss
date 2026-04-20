@@ -77,8 +77,9 @@
     @media screen and (min-width: 1500px) {
       font-size: clamp(18px, 2.4vw, 28px);
     }
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 768px) {
       font-size: 18px;
+      width: 100%;
     }
   }
 }

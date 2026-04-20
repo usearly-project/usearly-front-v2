@@ -92,7 +92,7 @@ const SectionHookUsers = ({
         </div>
         <PlanetCanvas
           width={1500}
-          height="100vh"
+          height="92vh"
           popFeed
           popFeedVariant={popFeedVariant}
         />

@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useIsMobile } from "@src/hooks/use-mobile";
 import DesktopCarousel from "./DesktopCarousel";
-import MobileCarousel from "./MobileCarousel";
+import MobileCarousel, { type MobileCarouselHandle } from "./MobileCarousel";
 import "./FavoriteCarouselSection.scss";
 
 const TITLE_TEXT = [
@@ -18,9 +18,18 @@ const SECTION_THEME_CLASS = [
 
 export default function FavoriteCarouselSection() {
   const [slideIndex, setSlideIndex] = useState(0);
+  const mobileCarouselRef = useRef<MobileCarouselHandle>(null);
   const isMobile = useIsMobile("(max-width: 900px)");
   const currentThemeClass =
     SECTION_THEME_CLASS[slideIndex] ?? SECTION_THEME_CLASS[0];
+
+  const handleMobilePrev = () => {
+    mobileCarouselRef.current?.prev();
+  };
+
+  const handleMobileNext = () => {
+    mobileCarouselRef.current?.next();
+  };
 
   return (
     <section className={`favorite-section ${currentThemeClass}`}>
@@ -47,16 +56,39 @@ export default function FavoriteCarouselSection() {
 
         <div className="favorite-right">
           {isMobile ? (
-            <MobileCarousel onSlideChange={setSlideIndex} />
+            <MobileCarousel
+              ref={mobileCarouselRef}
+              onSlideChange={setSlideIndex}
+            />
           ) : (
             <DesktopCarousel onSlideChange={setSlideIndex} />
           )}
         </div>
 
         {isMobile && (
-          <button className="favorite-button" aria-label="Découvrir">
-            Découvrir
-          </button>
+          <div className="favorite-mobile-actions">
+            <button className="favorite-button" aria-label="Découvrir">
+              Découvrir
+            </button>
+            <div className="favorite-mobile-arrows">
+              <button
+                type="button"
+                className="favorite-carousel-arrow"
+                onClick={handleMobilePrev}
+                aria-label="Slide précédente"
+              >
+                ‹
+              </button>
+              <button
+                type="button"
+                className="favorite-carousel-arrow"
+                onClick={handleMobileNext}
+                aria-label="Slide suivante"
+              >
+                ›
+              </button>
+            </div>
+          </div>
         )}
       </div>
     </section>
