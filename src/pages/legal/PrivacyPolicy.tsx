@@ -25,20 +25,16 @@ export default function PrivacyPolicy() {
           <h2>2. Données collectées</h2>
 
           <p>
-            Nous ne collectons pas de données permettant d’identifier
-            directement une personne (telles que nom, prénom, adresse postale ou
-            numéro de téléphone). Cependant, certaines données techniques, comme
-            l’adresse email, pseudo, peuvent être collectées dans le cadre du
-            fonctionnement du service.
+            Usearly peut collecter certaines données personnelles ainsi que des
+            données liées à l’activité sur le site web dans le cadre de
+            l’utilisation du service et de l’extension Chrome.
           </p>
 
-          <p>
-            Certaines données peuvent être collectées dans le cadre de
-            l’utilisation du service :
-          </p>
+          <p>Ces données incluent notamment :</p>
 
           <ul>
             <li>Un pseudonyme (fourni par l’utilisateur)</li>
+            <li>Une adresse email (dans le cadre de la création de compte)</li>
             <li>
               L’âge (requis afin de vérifier que l’utilisateur respecte l’âge
               minimum d’utilisation du service)
@@ -75,8 +71,8 @@ export default function PrivacyPolicy() {
           </ul>
 
           <p>
-            Ces données ne sont jamais collectées automatiquement sans action
-            explicite de l’utilisateur.
+            Ces données ne sont collectées que lorsque l’utilisateur effectue
+            une action explicite dans l’extension ou sur la plateforme.
           </p>
         </section>
 
@@ -138,14 +134,38 @@ export default function PrivacyPolicy() {
         <section>
           <h2>5. Partage des données</h2>
           <p>
-            Usearly ne vend, ne loue et ne cède aucune information à des tiers.
-            Les marques partenaires ont uniquement accès aux contributions liées
-            à leurs propres signalements, sous pseudonyme.
+            Usearly ne vend ni ne loue les données des utilisateurs. Certaines
+            données peuvent être traitées par des prestataires techniques
+            (hébergement, infrastructure serveur, cloud) uniquement dans le
+            cadre du fonctionnement du service.
           </p>
         </section>
 
         <section>
-          <h2>6. Données techniques</h2>
+          <h2>6. Transmission et stockage des données</h2>
+
+          <p>
+            Les données collectées via l’extension et la plateforme Usearly sont
+            transmises de manière sécurisée aux serveurs de Usearly afin de
+            permettre le traitement, l’analyse et l’association des signalements
+            effectués par les utilisateurs.
+          </p>
+
+          <p>
+            Ces données sont stockées sur des serveurs sécurisés et ne sont
+            accessibles qu’aux systèmes nécessaires au fonctionnement de la
+            plateforme.
+          </p>
+
+          <p>
+            Certaines données peuvent être traitées par des prestataires
+            techniques (hébergement cloud, infrastructure serveur) uniquement
+            dans le cadre du fonctionnement du service.
+          </p>
+        </section>
+
+        <section>
+          <h2>7. Données techniques</h2>
 
           <p>
             Afin d’assurer la sécurité et le bon fonctionnement du service,
@@ -174,7 +194,7 @@ export default function PrivacyPolicy() {
         </section>
 
         <section>
-          <h2>7. Conservation des données</h2>
+          <h2>8. Conservation des données</h2>
           <p>
             Les données sont conservées uniquement pendant la durée nécessaire
             au fonctionnement du service et supprimées lorsqu’elles ne sont plus
@@ -183,13 +203,13 @@ export default function PrivacyPolicy() {
         </section>
 
         <section>
-          <h2>8. Contact</h2>
+          <h2>9. Contact</h2>
           <p>Pour toute question relative à la confidentialité :</p>
           <p className="legal-contact">📩 support@usearly.com</p>
         </section>
 
         <section>
-          <h2>9. Transparence</h2>
+          <h2>10. Transparence</h2>
           <p>
             Usearly s’engage à une transparence totale concernant l’utilisation
             des données. Aucune donnée n’est collectée à l’insu de l’utilisateur
