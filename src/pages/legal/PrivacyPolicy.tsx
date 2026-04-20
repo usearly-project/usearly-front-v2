@@ -147,8 +147,8 @@ export default function PrivacyPolicy() {
           <p>
             Les données collectées via l’extension et la plateforme Usearly sont
             transmises de manière sécurisée aux serveurs de Usearly afin de
-            permettre le traitement, l’analyse et l’association des signalements
-            effectués par les utilisateurs.
+            permettre leur traitement, leur analyse, leur stockage et leur
+            association aux signalements effectués par les utilisateurs.
           </p>
 
           <p>
