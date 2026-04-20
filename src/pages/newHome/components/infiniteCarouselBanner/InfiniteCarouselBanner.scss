@@ -84,7 +84,8 @@
 
   .marquee__label {
     font-size: 64px;
-    -webkit-text-stroke: 1.6px var(--stroke-color);
+    font-weight: 900;
+    -webkit-text-stroke: 1.5px var(--stroke-color);
     text-stroke: 1.6px var(--stroke-color);
   }
 }

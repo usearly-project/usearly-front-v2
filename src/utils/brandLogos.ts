@@ -51,7 +51,7 @@ export async function fetchValidBrandLogo(
 
   try {
     const res = await fetch(`${API_BASE_URL}/api/logo?domain=${domain}`, {
-      headers: { "Cache-Control": "no-cache" },
+      headers: { "Cache-Control": "no-store" },
     });
     if (!res.ok) throw new Error("Logo not found");
 

@@ -16,6 +16,7 @@ const usePlanetPopFeed = (enabled: boolean) => {
       setFeedItems([]);
       activeItemsRef.current = [];
       timeoutIdsRef.current.forEach(window.clearTimeout);
+      timeoutIdsRef.current = [];
       return;
     }
 
@@ -122,7 +123,10 @@ const usePlanetPopFeed = (enabled: boolean) => {
     };
 
     scheduleNext(true);
-    return () => timeoutIdsRef.current.forEach(window.clearTimeout);
+    return () => {
+      timeoutIdsRef.current.forEach(window.clearTimeout);
+      timeoutIdsRef.current = [];
+    };
   }, [enabled]);
 
   return feedItems;

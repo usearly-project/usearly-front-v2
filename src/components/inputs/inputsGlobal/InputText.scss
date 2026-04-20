@@ -62,6 +62,12 @@
   #born {
     padding-right: 10px;
   }
+
+  &.floating-group--date {
+    input {
+      width: -webkit-fill-available;
+    }
+  }
 }
 
 .error-message {
