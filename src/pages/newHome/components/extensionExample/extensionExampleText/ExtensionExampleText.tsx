@@ -95,8 +95,9 @@ const ExtensionExampleText = ({
     <div className="extension-example-text-container">
       <h2 className="extension-example-title">
         <span className="extension-example-text-pre-title">
-          Notre approche est unique : <br />
+          Notre approche est unique :
         </span>
+        <br />
         Exprimez-vous au moment où vous en avez besoin et{" "}
         <span className="text-highlight-usearly">{displayedText}</span>
       </h2>

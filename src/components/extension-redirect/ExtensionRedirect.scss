@@ -256,6 +256,7 @@
     }
   }
   @media screen and (max-width: 991px) {
+    display: none;
     --extension-redirect-slide-side-clearance: 78px;
 
     padding: 2.5rem 2rem 0;

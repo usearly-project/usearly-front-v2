@@ -10,6 +10,7 @@ import {
 import "./ExtensionRedirect.scss";
 import googleBadge from "/assets/badge-google.png";
 import AnimatedExtensionLandingSlide from "./AnimatedExtensionLandingSlide";
+import { useIsMobile } from "@src/hooks/use-mobile";
 
 const extensionSlides = [
   {
@@ -45,6 +46,7 @@ const ExtensionRedirect = ({
   isModal = false,
   onClose,
 }: ExtensionRedirectProps) => {
+  const isHiddenMobileLayout = useIsMobile("(max-width: 991px)");
   const [activeSlide, setActiveSlide] = useState(0);
   const [isCarouselVisible, setIsCarouselVisible] = useState(false);
   const [activeSlideAnimationToken, setActiveSlideAnimationToken] = useState(0);
@@ -188,6 +190,10 @@ const ExtensionRedirect = ({
   };
 
   const isLastSlide = activeSlide === extensionSlides.length - 1;
+
+  if (!isModal && isHiddenMobileLayout) {
+    return null;
+  }
 
   return (
     <div

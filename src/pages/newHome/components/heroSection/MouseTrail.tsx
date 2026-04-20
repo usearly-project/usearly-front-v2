@@ -27,6 +27,14 @@ const MouseTrail: React.FC<MouseTrailProps> = ({
     const container = containerRef.current;
     if (!container) return;
 
+    const canUseMouseTrail =
+      typeof window !== "undefined" &&
+      window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+    if (!canUseMouseTrail) {
+      return;
+    }
+
     let mouseX = 0;
     let mouseY = 0;
 

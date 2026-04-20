@@ -156,6 +156,7 @@ const Register = () => {
             id="born"
             type="date"
             label="Date de naissance*"
+            containerClassName="floating-group floating-group--date"
             required
           />
 
