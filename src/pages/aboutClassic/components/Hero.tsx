@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 
 const SCROLL_HINT_TEXT = "Faites défiler pour découvrir la suite";
+const ABOUT_VIDEO_ID = "QmFQRhUOns4";
+const ABOUT_VIDEO_SRC = `https://www.youtube.com/embed/${ABOUT_VIDEO_ID}?autoplay=1&mute=1&loop=1&playlist=${ABOUT_VIDEO_ID}&controls=0&modestbranding=1&playsinline=1`;
 
 type Props = {
   page: "landing" | "about";
@@ -11,6 +13,32 @@ const Hero = ({ page }: Props) => {
   const [typedText, setTypedText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   const [allowTyping, setAllowTyping] = useState(true);
+  const [isLandscapeVideoOpen, setIsLandscapeVideoOpen] = useState(false);
+
+  const openLandscapeVideo = () => setIsLandscapeVideoOpen(true);
+  const closeLandscapeVideo = () => setIsLandscapeVideoOpen(false);
+
+  useEffect(() => {
+    if (!isLandscapeVideoOpen) {
+      return;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsLandscapeVideoOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", closeOnEscape);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [isLandscapeVideoOpen]);
 
   useEffect(() => {
     const updateScrollHint = () => {
@@ -85,12 +113,47 @@ const Hero = ({ page }: Props) => {
       {page === "about" && (
         <iframe
           className="about-classic__hero-video"
-          src="https://www.youtube.com/embed/QmFQRhUOns4?autoplay=1&mute=1&loop=1&playlist=QmFQRhUOns4&controls=0&modestbranding=1&playsinline=1"
+          src={ABOUT_VIDEO_SRC}
           title="Usearly video"
           frameBorder="0"
           allow="autoplay; encrypted-media"
           allowFullScreen
         />
+      )}
+      {page === "about" && (
+        <button
+          type="button"
+          className="about-classic__hero-landscape-trigger"
+          aria-label="Afficher la vidéo en paysage"
+          onClick={openLandscapeVideo}
+        />
+      )}
+      {page === "about" && isLandscapeVideoOpen && (
+        <div
+          className="about-classic__landscape-video-modal"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Vidéo Usearly en paysage"
+        >
+          <button
+            type="button"
+            className="about-classic__landscape-video-close"
+            aria-label="Fermer la vidéo"
+            onClick={closeLandscapeVideo}
+          >
+            x
+          </button>
+          <div className="about-classic__landscape-video-frame">
+            {/* allowFullScreen intentionally omitted here to keep mobile in our landscape view. */}
+            <iframe
+              className="about-classic__landscape-video"
+              src={ABOUT_VIDEO_SRC}
+              title="Usearly video"
+              frameBorder="0"
+              allow="autoplay; encrypted-media"
+            />
+          </div>
+        </div>
       )}
       <div
         className={`about-classic__scroll-indicator${
