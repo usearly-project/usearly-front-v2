@@ -33,10 +33,10 @@ export type PlanetPopFeedThemeConfig = {
 export type PlanetPopFeedBrandMessage = string | readonly string[];
 
 export type PlanetPopFeedBrandCopy = {
-  report: PlanetPopFeedBrandMessage;
+  report?: PlanetPopFeedBrandMessage;
   reportLinked?: PlanetPopFeedBrandMessage;
-  suggestion: PlanetPopFeedBrandMessage;
-  coupDeCoeur: PlanetPopFeedBrandMessage;
+  suggestion?: PlanetPopFeedBrandMessage;
+  coupDeCoeur?: PlanetPopFeedBrandMessage;
 };
 
 export type PlanetPopFeedBrandConfig = {

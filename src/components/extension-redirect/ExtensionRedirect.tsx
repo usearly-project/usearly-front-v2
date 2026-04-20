@@ -212,7 +212,7 @@ const ExtensionRedirect = ({
       ) : null}
       <div className="extension-redirect-text-container">
         <div className="extension-redirect-text-title">
-          <h2>Installer l'extension c'est tout simple</h2>
+          <h2>Installer l'extension en 1 clique</h2>
         </div>
         <div className="extension-redirect-text-description">
           <p>

@@ -126,6 +126,10 @@
   align-items: center;
   h3 {
     color: $dark;
+    width: 100%;
+  }
+  .close-btn {
+    justify-content: flex-end;
   }
 }
 
@@ -292,6 +296,7 @@
     .social-share {
       .social-buttons {
         display: flex;
+        justify-content: space-evenly;
         overflow: auto;
         gap: 2rem;
         margin-top: 1rem;

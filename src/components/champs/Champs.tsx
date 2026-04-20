@@ -112,7 +112,12 @@ export default function SelectFilter<V extends string = string>(
 
   const selectedVisual = useMemo(() => {
     if (!iconVisible) return null;
-    if (isBrandSelect) return null;
+    if (isBrandSelect) {
+      // Ancien comportement : le filtre marque n'affichait jamais le logo sélectionné.
+      // if (isBrandSelect) return null;
+      if (!selected?.value) return null;
+      return Utils.renderBrandAvatar(selected, Utils.BRAND_AVATAR_SIZE);
+    }
     return Utils.renderLeadingVisual(selected);
   }, [iconVisible, isBrandSelect, selected]);
 
@@ -223,6 +228,7 @@ export default function SelectFilter<V extends string = string>(
                         Utils.BRAND_AVATAR_SIZE_OPTION,
                         !opt.value ? "brand-logo--placeholder" : "",
                         !!opt.value,
+                        opt.iconFallback,
                       )
                     : Utils.renderLeadingVisual(opt)
               }

@@ -73,7 +73,7 @@
   backdrop-filter: blur(10px);
   opacity: 0;
   transform: translateY(16px) scale(0.92);
-  animation: planet-pop-feed-bubble-life 4.5s ease both;
+  animation: planet-pop-feed-bubble-life 9.5s ease both;
   animation-delay: calc(
     var(--planet-pop-feed-item-delay) + var(--planet-pop-feed-delay)
   );
@@ -168,7 +168,7 @@
   box-shadow: 0 14px 34px var(--planet-pop-feed-photo-shadow);
   transform: rotate(var(--planet-pop-feed-rotation));
   opacity: 0;
-  animation: planet-pop-feed-photo-life 5s ease both;
+  animation: planet-pop-feed-photo-life 10s ease both;
   animation-delay: var(--planet-pop-feed-item-delay);
 }
 

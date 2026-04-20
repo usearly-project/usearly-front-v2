@@ -15,7 +15,7 @@ export const PLANET_CANVAS_TRAIL_IMAGES = Array.from(
   (_, index) => `/assets/images/about/imageAbout${index + 1}.png`,
 );
 
-export const POP_FEED_LIFETIME_MS = 5000;
+export const POP_FEED_LIFETIME_MS = 10000;
 export const POP_FEED_MAX_ATTEMPTS = 12;
 
 export { POP_FEED_BRANDS };
@@ -44,21 +44,95 @@ export const POP_FEED_THEME_CONFIG: Record<
   },
 };
 
-const FALLBACK_MESSAGE_BY_THEME: Record<PopFeedTheme, string> = {
-  report: "Il y a encore un point de friction ici.",
-  suggestion: "Ce serait bien qu'il y ait une petite amélioration ici.",
-  coupDeCoeur: "J'aime vraiment ce détail.",
+const POP_FEED_THEME_KEYS: readonly PopFeedTheme[] = [
+  "report",
+  "suggestion",
+  "coupDeCoeur",
+];
+
+// Ancien fallback désactivé : Pop Feed doit afficher uniquement les textes configurés.
+// const FALLBACK_MESSAGE_BY_THEME: Record<PopFeedTheme, string> = {
+//   report: "Il y a encore un point de friction ici.",
+//   suggestion: "Ce serait bien qu'il y ait une petite amélioration ici.",
+//   coupDeCoeur: "J'aime vraiment ce détail.",
+// };
+
+const hasBrandMessage = (message: PlanetPopFeedBrandMessage | undefined) => {
+  if (!message) {
+    return false;
+  }
+
+  return typeof message === "string"
+    ? message.trim().length > 0
+    : message.length > 0;
+};
+
+const getBrandMessageForTheme = (
+  brand: PlanetPopFeedBrandConfig,
+  theme: PopFeedTheme,
+  options?: {
+    linked?: boolean;
+  },
+) => {
+  if (options?.linked && theme !== "report") {
+    return undefined;
+  }
+
+  if (theme === "report" && options?.linked) {
+    return brand.copy.reportLinked ?? brand.copy.report;
+  }
+
+  return brand.copy[theme];
 };
 
 const resolveBrandMessage = (
   message: PlanetPopFeedBrandMessage | undefined,
-  fallback: string,
 ) => {
   if (!message) {
-    return fallback;
+    return undefined;
   }
 
-  return typeof message === "string" ? message : pickRandomValue(message);
+  if (typeof message === "string") {
+    return message.trim().length > 0 ? message : undefined;
+  }
+
+  if (!message.length) {
+    return undefined;
+  }
+
+  return pickRandomValue(message);
+};
+
+export const getAvailablePopFeedThemes = (
+  brand: PlanetPopFeedBrandConfig,
+  options?: {
+    linked?: boolean;
+  },
+) =>
+  POP_FEED_THEME_KEYS.filter((theme) =>
+    hasBrandMessage(getBrandMessageForTheme(brand, theme, options)),
+  );
+
+export const resolvePopFeedBrandTheme = (
+  brand: PlanetPopFeedBrandConfig,
+  preferredTheme: PopFeedTheme,
+  options?: {
+    linked?: boolean;
+  },
+) => {
+  if (
+    hasBrandMessage(getBrandMessageForTheme(brand, preferredTheme, options))
+  ) {
+    return preferredTheme;
+  }
+
+  const availableThemes = getAvailablePopFeedThemes(brand, options);
+
+  if (!availableThemes.length) {
+    return undefined;
+  }
+
+  return pickRandomValue(availableThemes);
 };
 
 export const buildPopFeedBrandMessage = (
@@ -68,15 +142,27 @@ export const buildPopFeedBrandMessage = (
     linked?: boolean;
   },
 ) => {
-  if (theme === "report" && options?.linked) {
-    return resolveBrandMessage(
-      brand.copy.reportLinked ?? brand.copy.report,
-      FALLBACK_MESSAGE_BY_THEME.report,
-    );
+  return resolveBrandMessage(getBrandMessageForTheme(brand, theme, options));
+};
+
+export const resolvePopFeedBrandContent = (
+  brand: PlanetPopFeedBrandConfig,
+  preferredTheme: PopFeedTheme,
+  options?: {
+    linked?: boolean;
+  },
+) => {
+  const theme = resolvePopFeedBrandTheme(brand, preferredTheme, options);
+
+  if (!theme) {
+    return undefined;
   }
 
-  return resolveBrandMessage(
-    brand.copy[theme],
-    FALLBACK_MESSAGE_BY_THEME[theme],
-  );
+  const message = buildPopFeedBrandMessage(brand, theme, options);
+
+  if (!message) {
+    return undefined;
+  }
+
+  return { theme, message };
 };
