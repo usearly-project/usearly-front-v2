@@ -33,7 +33,7 @@ canvas {
 /* ⚠️ N’applique pas de style global aux iframes */
 iframe:not(.youtube-player-raw) {
   max-width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
 }
 

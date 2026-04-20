@@ -28,14 +28,19 @@ const PopularReportActions: React.FC<Props> = ({
   solutionsCount,
   isPublic,
 }) => {
+  const reportsCount = item.count ?? item.descriptions?.length ?? 0;
+  const descriptions = item.descriptions ?? [];
+
   return (
     <ReportActionsBarWithReactions
       userId={userProfile?.id}
       descriptionId={descriptionId}
       // On retire ou on met à 0 les props liées au compteur de signalements
       // pour éviter l'affichage du doublon (avatars + chiffre)
-      reportsCount={0}
-      descriptions={[]}
+      // reportsCount={0}
+      // descriptions={[]}
+      reportsCount={reportsCount}
+      descriptions={descriptions}
       showBrandResponseInline={true}
       status={item.status}
       type="report"
