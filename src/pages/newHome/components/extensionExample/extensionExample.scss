@@ -4,7 +4,7 @@
   width: 100vw;
   // margin-left: calc(50% - 50vw);
   min-height: 100vh;
-  padding: 150px 162px 100px 100px;
+  padding: 120px 162px 100px 100px;
   display: flex;
   justify-content: space-between;
   background-color: #191637;
@@ -29,6 +29,7 @@
     mask-repeat: no-repeat;
     mask-position: center;
     mask-size: 100% 100%;
+    opacity: 0.3;
   }
 
   > :not(.img2) {
@@ -36,7 +37,7 @@
     z-index: 2;
   }
 
-  @media screen and (max-width: 1193px) {
+  @media screen and (max-width: 768px) {
     flex-direction: column;
     justify-content: flex-start;
     min-height: auto;
@@ -60,7 +61,7 @@ img.img2 {
   object-fit: cover;
   object-position: center;
   pointer-events: none;
-  opacity: 0.12; // 👈 plus subtil
+  opacity: 0; // 👈 plus subtil
 
   @media screen and (max-width: 900px) {
     width: 120%;

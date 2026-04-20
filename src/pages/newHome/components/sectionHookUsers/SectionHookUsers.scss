@@ -5,7 +5,7 @@
   background-color: white;
   display: flex;
   align-items: center;
-  height: 100vh;
+  height: 92vh;
   .hook-users-content {
     margin-top: -10px;
     .hook-users-content-text {
@@ -18,7 +18,7 @@
         font-size: 50px;
         font-style: normal;
         font-weight: 800;
-        line-height: 131%; /* 65.5px */
+        line-height: 1.2; /* 65.5px */
       }
       .hook-users-subtitle {
         width: 90%;
@@ -54,6 +54,16 @@
       }
       .button-rejoindre {
         font-weight: 900;
+      }
+      button {
+        height: 70px;
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease;
+        &:hover {
+          transform: scale(1.1);
+          box-shadow: #0000002c 0px 4px 17.9px 0px;
+        }
       }
     }
 
