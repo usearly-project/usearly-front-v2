@@ -775,15 +775,10 @@
 
 @media screen and (max-width: 768px) {
   .extensionImg {
-    position: relative !important;
     display: flex;
     flex-direction: row; // 👈 important
     justify-content: center;
     align-items: flex-start;
-    gap: 12px;
-    left: auto !important;
-    top: auto !important;
-    width: 100% !important;
   }
 
   .extension-icons {
@@ -792,32 +787,19 @@
     flex-direction: column !important; // 👈 on garde vertical
     height: auto !important;
   }
-
-  .extension-image,
-  .extension-click-targets {
-    transform: none !important;
-    margin: 0 !important;
-    max-height: none !important;
-    width: 100% !important;
-    height: auto !important;
-  }
 }
+
 @media screen and (max-width: 600px) {
   .extensionImg {
-    position: relative !important;
-    top: auto !important;
-    left: auto !important;
     transform: none !important;
   }
 
   .extension-icons {
-    position: relative !important;
     top: auto !important;
     right: auto !important;
     transform: scale(1) !important;
   }
-}
-@media screen and (max-width: 600px) {
+
   .extension-popup-frame {
     display: flex;
     justify-content: center;
@@ -829,20 +811,17 @@
     margin-right: 0 !important;
     transform: none !important;
   }
-}
 
-@media screen and (max-width: 600px) {
   .extension-example-image .extensionImg .extension-popup-frame.like-mode {
     margin-left: 0 !important;
   }
-}
 
-@media screen and (max-width: 600px) {
   .extension-popup-frame {
     margin-left: 0 !important;
+    top: -37.5px !important;
+    left: 25px;
   }
-}
-@media screen and (max-width: 600px) {
+
   .extension-icons > div {
     display: flex;
     justify-content: center;

@@ -50,15 +50,33 @@ export const pickRelatedReportPosition = (
   minDistance: number,
   offset: number,
   vRange: number,
+  occupiedPositions: PlanetCanvasPosition[] = [],
 ) => {
-  const direction = anchor.x > 56 ? -1 : 1;
-  const candidate = {
-    x: clamp(
-      anchor.x + direction * getRandomBetween(offset, offset + 8),
-      16,
-      84,
-    ),
-    y: clamp(anchor.y + getRandomBetween(-vRange, vRange), 34, 78),
+  const primaryDirection = anchor.x > 50 ? -1 : 1;
+  const directions = [primaryDirection, -primaryDirection];
+  const requiredAnchorDistance = Math.max(minDistance, offset * 0.9);
+
+  for (let attempt = 0; attempt < POP_FEED_MAX_ATTEMPTS; attempt++) {
+    const direction = directions[attempt % directions.length];
+    const candidate = {
+      x: clamp(
+        anchor.x + direction * getRandomBetween(offset, offset + 14),
+        12,
+        88,
+      ),
+      y: clamp(anchor.y + getRandomBetween(-vRange, vRange), 30, 82),
+    };
+
+    if (
+      getDistance(anchor, candidate) >= requiredAnchorDistance &&
+      occupiedPositions.every((p) => getDistance(p, candidate) >= minDistance)
+    ) {
+      return candidate;
+    }
+  }
+
+  return {
+    x: clamp(anchor.x + primaryDirection * offset, 12, 88),
+    y: clamp(anchor.y + (anchor.y > 56 ? -vRange : vRange), 30, 82),
   };
-  return candidate;
 };

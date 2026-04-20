@@ -68,9 +68,9 @@ export const pickPopFeedTheme = (): PopFeedTheme => {
 export const getPlanetPopFeedViewportSettings = (viewportWidth: number) => ({
   maxVisibleItems: viewportWidth < MOBILE_BREAKPOINT ? 1 : 3,
   allowReportPairs: viewportWidth >= MOBILE_BREAKPOINT,
-  minDistance: viewportWidth < MOBILE_BREAKPOINT ? 28 : 18,
-  reportPairMinOffset: viewportWidth < MOBILE_BREAKPOINT ? 28 : 22,
-  reportVerticalRange: viewportWidth < MOBILE_BREAKPOINT ? 7 : 5,
+  minDistance: viewportWidth < MOBILE_BREAKPOINT ? 34 : 24,
+  reportPairMinOffset: viewportWidth < MOBILE_BREAKPOINT ? 38 : 34,
+  reportVerticalRange: viewportWidth < MOBILE_BREAKPOINT ? 10 : 8,
   firstSpawnDelayMin: viewportWidth < MOBILE_BREAKPOINT ? 900 : 550,
   firstSpawnDelayMax: viewportWidth < MOBILE_BREAKPOINT ? 1500 : 1100,
   nextSpawnDelayMin: viewportWidth < MOBILE_BREAKPOINT ? 2000 : 1400,

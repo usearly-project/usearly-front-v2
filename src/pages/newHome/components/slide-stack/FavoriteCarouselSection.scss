@@ -31,8 +31,8 @@
 .favorite-wrapper {
   position: relative;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  // align-items: center;
+  // justify-content: space-between;
   gap: 20px;
 }
 
@@ -120,18 +120,20 @@
 @media (max-width: 900px) {
   .favorite-section {
     margin-top: 50px;
-    padding: 50px 12px;
+    padding: 30px 12px 24px;
   }
 
   .favorite-wrapper {
     flex-direction: column;
-    gap: 40px;
+    gap: 20px;
   }
 
   .favorite-left {
     max-width: 100%;
     text-align: center;
     width: 100%;
+    height: auto;
+    justify-content: flex-start;
   }
 
   .favorite-right {
