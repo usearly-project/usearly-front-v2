@@ -11,6 +11,12 @@ import PopularReportActions from "@src/components/report-grouped/reports-popular
 import PopularReportComments from "@src/components/report-grouped/reports-popular/popular-report-header/PopularReportComments";
 import SolutionModal from "@src/components/ui/SolutionModal";
 import SolutionsModal from "@src/components/ui/SolutionsModal";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@src/components/ui/tooltip";
 import ConfirmReportPopup from "./ConfirmReportPopup";
 
 import { useAuth } from "@src/services/AuthContext";
@@ -44,6 +50,7 @@ const MobileActu: React.FC<MobileActuProps> = ({
   const author = isReport ? firstDesc?.author : item.author;
   const brandName = isReport ? item.marque : item.brand || item.marque;
   const userCapture = firstDesc?.capture || item.capture;
+  const reportersTooltipLabel = "re signalement";
 
   useEffect(() => {
     if (!isReport) return;
@@ -74,6 +81,25 @@ const MobileActu: React.FC<MobileActuProps> = ({
       resizeObserver?.disconnect();
     };
   }, [isReport, item.subCategory]);
+
+  const getShortRelativeDate = (date?: string) => {
+    if (!date) return "";
+
+    const diff = Date.now() - new Date(date).getTime();
+
+    const minutes = Math.floor(diff / 60000);
+    const hours = Math.floor(diff / 3600000);
+    const days = Math.floor(diff / 86400000);
+    const months = Math.floor(days / 30);
+    const years = Math.floor(days / 365);
+
+    if (minutes < 1) return "now";
+    if (minutes < 60) return `${minutes}m`;
+    if (hours < 24) return `${hours}h`;
+    if (days < 30) return `${days}d`;
+    if (months < 12) return `${months}mo`;
+    return `${years}y`;
+  };
 
   return (
     <div className={`mobile-actu-card type-${type}`}>
@@ -108,27 +134,40 @@ const MobileActu: React.FC<MobileActuProps> = ({
           <div className="mobile-actu-header">
             <div className="header-reporters">
               {state.localCount > 0 && (
-                <div className="reporters-inline-stack">
-                  <div className="avatar-pile">
-                    {state.localDescriptions
-                      .slice(0, 3)
-                      .map((r: any, i: number) => (
-                        <div
-                          key={r.id || i}
-                          className="pile-item"
-                          style={{ zIndex: 3 - i }}
-                        >
-                          <Avatar
-                            avatar={r.author?.avatar}
-                            pseudo={r.author?.pseudo}
-                            type="user"
-                            sizeHW={24}
-                          />
+                <TooltipProvider delayDuration={150}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <button
+                        type="button"
+                        className="reporters-inline-stack"
+                        aria-label={reportersTooltipLabel}
+                      >
+                        <div className="avatar-pile">
+                          {state.localDescriptions
+                            .slice(0, 3)
+                            .map((r: any, i: number) => (
+                              <div
+                                key={r.id || i}
+                                className="pile-item"
+                                style={{ zIndex: 3 - i }}
+                              >
+                                <Avatar
+                                  avatar={r.author?.avatar}
+                                  pseudo={r.author?.pseudo}
+                                  type="user"
+                                  sizeHW={24}
+                                />
+                              </div>
+                            ))}
                         </div>
-                      ))}
-                  </div>
-                  <span className="count">{state.localCount}</span>
-                </div>
+                        <span className="count">{state.localCount}</span>
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent side="bottom" className="reporters-tooltip">
+                      {reportersTooltipLabel}
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               )}
             </div>
             <div className="header-author">
@@ -176,9 +215,13 @@ const MobileActu: React.FC<MobileActuProps> = ({
                   alt=""
                   className="subcategory-icon"
                 />
-                <h3 className="title">{item.subCategory}</h3>
+                <h3 className="title">
+                  {item.subCategory}
+                  <span className="date">
+                    • {getShortRelativeDate(firstDesc?.createdAt)}
+                  </span>
+                </h3>
               </div>
-              <span className="date-relative">• {item.createdAtRelative}</span>
             </div>
             <div className="description-container">
               <p
@@ -230,6 +273,7 @@ const MobileActu: React.FC<MobileActuProps> = ({
                   ? actions.setShowSolutionsList(true)
                   : actions.setShowSolutionModal(true)
               }
+              hideReporters={true}
             />
           </div>
         </>

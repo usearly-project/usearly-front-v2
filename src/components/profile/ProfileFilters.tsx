@@ -1,10 +1,10 @@
 import React from "react";
 
 import Champs, { type SelectFilterOption } from "@src/components/champs/Champs";
-import { getCategoryIconPathFromSubcategory } from "@src/utils/IconsUtils";
+// import { getCategoryIconPathFromSubcategory } from "@src/utils/IconsUtils";
 import "./ProfileFilters.scss";
 
-const DEFAULT_CATEGORY_ICON = getCategoryIconPathFromSubcategory(undefined);
+// const DEFAULT_CATEGORY_ICON = getCategoryIconPathFromSubcategory(undefined);
 
 interface Props {
   availableBrands: string[];
@@ -19,8 +19,8 @@ const ProfileFilters: React.FC<Props> = ({
   availableBrands,
   selectedBrand,
   setSelectedBrand,
-  availableCategories,
-  selectedCategory,
+  // availableCategories,
+  // selectedCategory,
   setSelectedCategory,
 }) => {
   const isTous = (s?: string) =>
@@ -66,34 +66,34 @@ const ProfileFilters: React.FC<Props> = ({
     [setSelectedBrand, setSelectedCategory],
   );
 
-  const handleCategoryChange = React.useCallback(
-    (value: string) => {
-      const next = !value || isTous(value) ? "Tous" : value;
-      setSelectedCategory(next);
-    },
-    [setSelectedCategory],
-  );
+  // const handleCategoryChange = React.useCallback(
+  //   (value: string) => {
+  //     const next = !value || isTous(value) ? "Tous" : value;
+  //     setSelectedCategory(next);
+  //   },
+  //   [setSelectedCategory],
+  // );
 
-  const categoryOptions = React.useMemo<SelectFilterOption[]>(() => {
-    const placeholder: SelectFilterOption = {
-      value: "",
-      label: "Select Category",
-      iconUrl: DEFAULT_CATEGORY_ICON,
-      iconAlt: "Select Category",
-      iconFallback: "SC",
-    };
-    if (!availableCategories.length) return [placeholder];
-    return [
-      placeholder,
-      ...availableCategories.map((cat) => ({
-        value: cat,
-        label: cat,
-        iconUrl: getCategoryIconPathFromSubcategory(cat),
-        iconAlt: cat,
-        iconFallback: cat,
-      })),
-    ];
-  }, [availableCategories]);
+  // const categoryOptions = React.useMemo<SelectFilterOption[]>(() => {
+  //   const placeholder: SelectFilterOption = {
+  //     value: "",
+  //     label: "Select Category",
+  //     iconUrl: DEFAULT_CATEGORY_ICON,
+  //     iconAlt: "Select Category",
+  //     iconFallback: "SC",
+  //   };
+  //   if (!availableCategories.length) return [placeholder];
+  //   return [
+  //     placeholder,
+  //     ...availableCategories.map((cat) => ({
+  //       value: cat,
+  //       label: cat,
+  //       iconUrl: getCategoryIconPathFromSubcategory(cat),
+  //       iconAlt: cat,
+  //       iconFallback: cat,
+  //     })),
+  //   ];
+  // }, [availableCategories]);
 
   return (
     <div className="profile-filters">
@@ -108,7 +108,7 @@ const ProfileFilters: React.FC<Props> = ({
           minWidthPart="2"
           align="left"
         />
-        <Champs
+        {/* <Champs
           options={categoryOptions}
           value={selectedCategory}
           onChange={handleCategoryChange}
@@ -116,7 +116,7 @@ const ProfileFilters: React.FC<Props> = ({
           disabled={!availableCategories.length}
           placeholderResetLabel="Réinitialiser"
           variant="grid"
-        />
+        /> */}
       </div>
     </div>
   );

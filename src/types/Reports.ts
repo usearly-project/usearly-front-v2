@@ -94,6 +94,7 @@ export interface MetaIA {
   highlightedWords?: string[];
   layoutType?: "single-line" | "two-bubble";
   axe?: "emoji" | "typography" | "illustration";
+  aiCategory?: string;
 }
 
 export interface CoupDeCoeur {
@@ -102,6 +103,7 @@ export interface CoupDeCoeur {
   title?: string;
   punchline?: string;
   illustration?: string;
+  category: string;
   descriptionId: string;
   emplacement: string;
   emoji: string;
@@ -125,6 +127,7 @@ export interface Suggestion {
   title?: string;
   punchline?: string;
   illustration?: string;
+  category: string;
   descriptionId: string;
   emplacement: string;
   emoji: string | null;

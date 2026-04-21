@@ -11,14 +11,18 @@ type BrandStat = {
 
 interface Props {
   brands: BrandStat[];
+  title?: string;
 }
 
-export default function UserLoveBrandsPanel({ brands }: Props) {
+export default function UserLoveBrandsPanel({
+  brands,
+  title = "Mes love brands",
+}: Props) {
   if (!brands || brands.length === 0) return null;
 
   return (
     <div className="love-brands-card">
-      <h4 className="love-brands-title">Mes love brands</h4>
+      <h4 className="love-brands-title">{title}</h4>
 
       <div className="love-brands-list">
         {brands.map((brand) => (

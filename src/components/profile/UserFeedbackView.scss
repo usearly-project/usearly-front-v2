@@ -8,11 +8,22 @@
     align-items: center;
     gap: 12px;
     flex-wrap: wrap;
+    .select-filter-wrapper {
+      .select-filter-display {
+        background-color: #fff;
+        border-radius: 6px;
+      }
+    }
   }
 
   .brand-select--feedback {
     width: 100%;
     max-width: 260px;
+  }
+
+  .feedback-sort-select {
+    width: 100%;
+    max-width: 180px;
   }
 
   .user-feedback-empty {

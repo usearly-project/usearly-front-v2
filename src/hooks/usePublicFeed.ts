@@ -18,11 +18,21 @@ export const usePublicFeed = () => {
   const [cursor, setCursor] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(false); // 🔥 fix
-
+  const hasLoadedOnce = useRef(false);
+  const seenCursors = useRef(new Set<string>());
   const loadingRef = useRef(false);
 
   const loadFeed = async () => {
-    if (loadingRef.current || (!hasMore && cursor !== null)) return;
+    if (loadingRef.current) return;
+    if (!hasMore && cursor !== null) return;
+
+    if (cursor && seenCursors.current.has(cursor)) {
+      console.warn("⚠️ Cursor loop detected → stopping pagination");
+      setHasMore(false); // ✅ IMPORTANT
+      return;
+    }
+
+    if (cursor) seenCursors.current.add(cursor);
 
     loadingRef.current = true;
     setLoading(true);
@@ -41,19 +51,13 @@ export const usePublicFeed = () => {
         if (item.type === "cdc") {
           return {
             type: "cdc",
-            data: {
-              ...item,
-              type: "coupdecoeur",
-            },
+            data: { ...item, type: "coupdecoeur" },
           };
         }
 
         return {
           type: "suggestion",
-          data: {
-            ...item,
-            type: "suggestion",
-          },
+          data: { ...item, type: "suggestion" },
         };
       });
 
@@ -72,7 +76,6 @@ export const usePublicFeed = () => {
         return [...prev, ...filtered];
       });
 
-      // 🔥 gestion cursor clean
       setCursor(res.nextCursor || null);
       setHasMore(!!res.nextCursor);
     } catch (err) {
@@ -85,6 +88,9 @@ export const usePublicFeed = () => {
   };
 
   useEffect(() => {
+    if (hasLoadedOnce.current) return;
+    hasLoadedOnce.current = true;
+
     loadFeed();
   }, []);
 

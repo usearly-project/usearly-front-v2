@@ -189,7 +189,12 @@ const Avatar: React.FC<AvatarProps> = ({
   return (
     <div
       className={`avatar-wrapper-custom ${wrapperClassName}`}
-      style={{ minWidth: sizeHW, minHeight: sizeHW }}
+      style={{
+        minWidth: sizeHW,
+        minHeight: sizeHW,
+        maxWidth: sizeHW,
+        maxHeight: sizeHW,
+      }}
     >
       {shouldShowImage ? (
         <img

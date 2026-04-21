@@ -17,6 +17,20 @@ const FeedbackLeft: React.FC<Props> = ({ item, isExpanded = false }) => {
   const theme = useMemo(() => getFeedbackThemeData(item), [item]);
   const textColor = getTextColorForBackground(theme.base);
 
+  // ✅ NOUVEAU : Construction du chemin dynamique vers l'icône du Back-end
+  const illustrationPath = useMemo(() => {
+    const category = item.category || item.meta?.aiCategory;
+
+    if (!category || !item.illustration) return null;
+
+    const root = item.type === "coupdecoeur" ? "bobAssets" : "bobAssetsSuggest";
+
+    return `/assets/${root}/${category}/${item.illustration}`;
+  }, [item]);
+
+  // 🔥 fallback vers ancien système
+  const finalIllustration = illustrationPath || theme.illustration;
+
   const lines = useMemo(() => {
     if (!item.punchline) return [];
     return item.punchline
@@ -54,11 +68,11 @@ const FeedbackLeft: React.FC<Props> = ({ item, isExpanded = false }) => {
               getTextColorForBackground={getTextColorForBackground}
             />
 
-            {/* ✅ On affiche l'icône SEULEMENT si elle existe */}
-            {theme.illustration && (
+            {/* ✅ MODIFIÉ : Utilise illustrationPath au lieu de theme.illustration */}
+            {illustrationPath && (
               <div className="typography-icon-wrapper">
                 <BrandSvg
-                  src={theme.illustration}
+                  src={illustrationPath}
                   brandColor={`color-mix(in srgb, ${theme.base} 100%, white)`}
                   className="typography-icon"
                   alt="Decorative icon"
@@ -118,12 +132,14 @@ const FeedbackLeft: React.FC<Props> = ({ item, isExpanded = false }) => {
                 className="illu-wrapper"
                 style={{ backgroundColor: "transparent", color: "#000" }}
               >
-                <BrandSvg
-                  src={theme.illustration || ""} // Sécurité pour le src
-                  // ✅ SÉCURITÉ POUR LA COULEUR : Si svgColor est undefined, on prend theme.base
-                  brandColor={theme.svgColor ?? theme.base}
-                  className="illu-image"
-                />
+                {/* ✅ MODIFIÉ : Utilise illustrationPath au lieu de theme.illustration */}
+                {finalIllustration && (
+                  <BrandSvg
+                    src={finalIllustration}
+                    brandColor={theme.svgColor ?? theme.base}
+                    className="illu-image"
+                  />
+                )}
               </div>
             )}
           </>

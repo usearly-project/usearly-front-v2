@@ -43,7 +43,7 @@ export default function TypographyBlock({
               color: highlightTextColor,
             }}
           >
-            {word}{" "}
+            <span>{word} </span>
           </span>
         ) : (
           <span key={index}>{word} </span>

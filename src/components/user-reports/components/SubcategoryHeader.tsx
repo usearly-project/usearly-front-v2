@@ -5,6 +5,7 @@ import { getCategoryIconPathFromSubcategory } from "@src/utils/IconsUtils";
 import type { UserGroupedReport } from "@src/types/Reports";
 import Avatar from "@src/components/shared/Avatar";
 import UserBrandLine from "@src/components/shared/UserBrandLine";
+import signalIconThin from "/assets/icons/signal-icon-thin.svg";
 
 interface Props {
   sub: UserGroupedReport;
@@ -51,13 +52,20 @@ const SubcategoryHeader: React.FC<Props> = ({
       <div className="subcategory-right">
         {!isOpen && (
           <>
-            <div className="badge-count">{sub.count}</div>
             <span className="date-subcategory">
               {formatDistanceToNow(new Date(sub.descriptions[0].createdAt), {
                 locale: fr,
                 addSuffix: true,
               }).replace("environ ", "")}
             </span>
+            <div className="badge-count">
+              {sub.count}
+              <img
+                src={signalIconThin}
+                className="badge-count-icon"
+                alt="icon signalement"
+              />
+            </div>
           </>
         )}
 

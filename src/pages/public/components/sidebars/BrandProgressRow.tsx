@@ -16,13 +16,16 @@ type Props = {
 const BrandProgressRow = ({
   name,
   siteUrl,
-  progress,
   count,
   label,
   isTop,
   onHover,
   onLeave,
 }: Props) => {
+  const MAX = 30;
+
+  const safeCount = Math.min(count, MAX);
+  const computedProgress = (safeCount / MAX) * 100;
   return (
     <div className={`brand-row ${isTop ? "top" : ""}`}>
       <div className="brand-row-top">
@@ -38,8 +41,8 @@ const BrandProgressRow = ({
           <div className="brand-progress">
             <div className="progress-bar">
               <div
-                className="progress-bar-fill"
-                style={{ width: `${Math.min(progress, 100)}%` }}
+                className={`progress-bar-fill ${count > MAX ? "over-limit" : ""}`}
+                style={{ width: `${computedProgress}%` }}
               />
             </div>
           </div>
@@ -50,7 +53,7 @@ const BrandProgressRow = ({
           onMouseEnter={(e) => onHover(e, `${name} — ${count} signalements`)}
           onMouseLeave={onLeave}
         >
-          <span className="progress-score-count">{count}</span>/100
+          <span className="progress-score-count">{count}</span>/{MAX}
         </span>
       </div>
     </div>
