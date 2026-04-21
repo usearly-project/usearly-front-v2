@@ -4,7 +4,8 @@ import type { PublicFeedFilterState } from "@src/components/feed/types/feedFilte
 import RightSidebarDefaultCard from "./right-sidebar/RightSidebarDefaultCard";
 import RightSidebarIllustrationCard from "./right-sidebar/RightSidebarIllustrationCard";
 import { resolveRightSidebarIllustrationConfig } from "./right-sidebar/rightSidebarConfig";
-import { useRightSidebarStats } from "./right-sidebar/useRightSidebarStats";
+import { useRightSidebarStats } from "./hooks/useRightSidebarStats";
+//import { useRightSidebarStats } from "./right-sidebar/useRightSidebarStats";
 
 interface Props {
   filters?: PublicFeedFilterState;
@@ -14,7 +15,7 @@ const RightSidebar = ({ filters }: Props) => {
   const illustrationConfig = useMemo(() => {
     return resolveRightSidebarIllustrationConfig(filters);
   }, [filters]);
-  const statsMode = illustrationConfig?.statsMode ?? "default";
+  const statsMode = illustrationConfig?.statsMode || "default";
   const { loading, stats } = useRightSidebarStats(statsMode);
 
   if (illustrationConfig) {

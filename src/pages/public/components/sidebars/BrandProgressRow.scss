@@ -82,3 +82,20 @@
   opacity: 1;
   transform: translateY(0);
 }
+
+.progress-bar-fill.over-limit {
+  position: relative;
+  animation: pulseBar 1.6s ease-in-out infinite;
+}
+
+@keyframes pulseBar {
+  0% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.25);
+  }
+  100% {
+    filter: brightness(1);
+  }
+}

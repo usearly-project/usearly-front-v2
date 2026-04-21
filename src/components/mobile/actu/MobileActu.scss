@@ -523,3 +523,14 @@ $green-progress: #48bb78;
     transform: scale(1);
   }
 }
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.title span {
+  opacity: 0.6;
+  font-size: 12px;
+}
