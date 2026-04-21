@@ -6,16 +6,36 @@
     align-items: stretch;
     gap: 12px;
     min-height: 44px;
+    .select-filter-wrapper {
+      .select-filter-display {
+        background-color: transparent;
+      }
+    }
   }
 
   .brand-select--profile,
   .profile-filters__category {
     height: 37px;
+    background-color: #fff;
+    border-radius: 6px;
 
     .brand-select__trigger {
       height: 100%;
       min-height: 44px;
       box-sizing: border-box;
+    }
+  }
+}
+
+.user-grouped-reports-list {
+  .controls {
+    .view-mode-select {
+      .select-filter-wrapper {
+        .select-filter-display {
+          background-color: #fff;
+          border-radius: 6px;
+        }
+      }
     }
   }
 }

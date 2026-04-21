@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import PlanetCanvas from "@src/components/canvas/PlanetCanvas";
 import type { PopFeedVariant } from "@src/components/canvas/planetCanvas/types";
 import { useIsMobile } from "@src/hooks/use-mobile";
@@ -34,8 +35,10 @@ type SectionHookUsersProps = {
 const SectionHookUsers = ({
   popFeedVariant = "default",
 }: SectionHookUsersProps) => {
+  const navigate = useNavigate();
   const isMobile = useIsMobile("(max-width: 1250px)");
   const [isExtensionModalOpen, setIsExtensionModalOpen] = useState(false);
+  const handleJoinCommunity = () => navigate("/lookup");
 
   if (isMobile) {
     return (
@@ -46,13 +49,14 @@ const SectionHookUsers = ({
         communityLabel={COMMUNITY_BUTTON_LABEL}
         extensionIconSrc={chromeLogo}
         extensionIconAlt="Chrome"
+        onCommunityClick={handleJoinCommunity}
         popFeedVariant={popFeedVariant}
       />
     );
   }
   const handleInstallExtension = () => {
     window.open(
-      "https://chromewebstore.google.com/detail/usearly-%E2%80%93-extension-assis/geclfkocbehpdojggpaeeofgdiiajcii",
+      "https://chromewebstore.google.com/search/Usearly%20%E2%80%93%20Extension%20Assistant?hl=fr&utm_source=ext_sidebar",
       "_blank",
     );
   };
@@ -78,6 +82,7 @@ const SectionHookUsers = ({
             <SquareRoundButton
               text={COMMUNITY_BUTTON_LABEL}
               classNames={"button-rejoindre"}
+              onClick={handleJoinCommunity}
             />
           </div>
           <div className="hook-users-content-explication">

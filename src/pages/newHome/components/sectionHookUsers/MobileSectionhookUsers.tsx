@@ -11,6 +11,7 @@ type MobileSectionHookUsersProps = {
   communityLabel: string;
   extensionIconSrc: string;
   extensionIconAlt: string;
+  onCommunityClick: () => void;
   popFeedVariant?: PopFeedVariant;
 };
 
@@ -21,6 +22,7 @@ const MobileSectionHookUsers = ({
   communityLabel,
   extensionIconSrc,
   extensionIconAlt,
+  onCommunityClick,
   popFeedVariant = "default",
 }: MobileSectionHookUsersProps) => {
   return (
@@ -58,6 +60,7 @@ const MobileSectionHookUsers = ({
           <SquareRoundButton
             text={communityLabel}
             classNames={"mobile-sectionhook-users__community-button"}
+            onClick={onCommunityClick}
           />
         </div>
       </div>

@@ -2,6 +2,7 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { getCategoryIconPathFromSubcategory } from "@src/utils/IconsUtils";
 import type { UserGroupedReport } from "@src/types/Reports";
 import ReportActionsBarWithReactions from "@src/components/shared/ReportActionsBarWithReactions";
+import signalIconThin from "/assets/icons/signal-icon-thin.svg";
 
 interface Props {
   sub: UserGroupedReport;
@@ -82,7 +83,14 @@ const SubcategoryItem: React.FC<Props> = ({
         </div>
 
         <div className="subcategory-right">
-          <div className="badge-count">{sub.count}</div>
+          <div className="badge-count">
+            {sub.count}
+            <img
+              src={signalIconThin}
+              className="badge-count-icon"
+              alt="icon signalement"
+            />
+          </div>
 
           {expandedSub === sub.subCategory ? (
             <ChevronUp size={16} />

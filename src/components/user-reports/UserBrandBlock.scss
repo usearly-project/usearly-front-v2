@@ -440,18 +440,29 @@ img.inline-capture-img {
   }
 
   .badge-count {
-    background-color: #000;
-    color: white;
-    font-size: 0.8rem;
-    font-weight: 600;
-    padding: 2px 14px;
+    background-color: transparent;
+    color: #000;
+    font-size: 24px;
+    font-weight: 800;
+    padding: 2px 0px;
+    margin-right: 14px;
     border-radius: 12px;
     font-family: "inter";
-    width: 24px; // ou une taille adaptée à ton design
-    height: 24px;
+    min-width: 24px; // garde un badge compact sans couper le contenu
+    height: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 4px;
     flex-shrink: 0; // pour que le badge ne rétrécisse jamais
+
+    .badge-count-icon {
+      width: 20px;
+      height: 20px;
+      display: block;
+      flex-shrink: 0;
+      filter: invert(0%) sepia(63%) saturate(739%) hue-rotate(64deg)
+        brightness(103%) contrast(106%);
+    }
   }
 }

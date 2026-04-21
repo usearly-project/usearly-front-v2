@@ -4,7 +4,7 @@ import ChronologicalReportList from "@src/components/report-grouped/Chronologica
 import ChronoReportCard from "@src/components/report-grouped/report-by-date/ChronoReportCard";
 import { useUserProfileFilters } from "@src/hooks/useUserProfileFilters";
 import { usePaginatedUserReportsGroupedByDate } from "@src/hooks/usePaginatedUserReportsGroupedByDate";
-import ProfileFilters from "./ProfileFilters";
+// import ProfileFilters from "./ProfileFilters";
 import type {
   UserGroupedReport,
   ExplodedGroupedReport,
@@ -37,12 +37,12 @@ const UserGroupedReportsList: React.FC = () => {
 
   /* Filtres (par marque / catégorie) */
   const {
-    selectedBrand,
-    setSelectedBrand,
-    selectedCategory,
-    setSelectedCategory,
-    availableBrands,
-    availableCategories,
+    // selectedBrand,
+    // setSelectedBrand,
+    // selectedCategory,
+    // setSelectedCategory,
+    // availableBrands,
+    // availableCategories,
     filteredData,
   } = useUserProfileFilters(reports);
 
@@ -139,7 +139,7 @@ const UserGroupedReportsList: React.FC = () => {
     <div className="user-grouped-reports-list">
       <div className="controls">
         {/* === VUE PAR MARQUE : filtres === */}
-        {viewMode === "brand" && (
+        {/* {viewMode === "brand" && (
           <div className="profile-filters-container">
             <ProfileFilters
               availableBrands={availableBrands}
@@ -150,7 +150,7 @@ const UserGroupedReportsList: React.FC = () => {
               setSelectedCategory={setSelectedCategory}
             />
           </div>
-        )}
+        )} */}
 
         {/* === DROPDOWN CUSTOM "TRIER PAR" === */}
         <div className="view-mode-select">

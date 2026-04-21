@@ -378,14 +378,19 @@
   }
 }
 
-.feedback-type.is-expanded {
-  .feedback-left {
-    width: 250px;
-    min-width: 250px;
-    max-width: 250px;
-    height: 299px;
-    min-height: 299px;
-    max-height: 299px;
+@media screen and (min-width: 769px) {
+  .feedback-type.is-expanded {
+    align-self: stretch;
+
+    .feedback-left {
+      width: 250px;
+      min-width: 250px;
+      max-width: 250px;
+      height: auto;
+      min-height: 299px;
+      max-height: none;
+      flex: 1 1 auto;
+    }
   }
 }
 
