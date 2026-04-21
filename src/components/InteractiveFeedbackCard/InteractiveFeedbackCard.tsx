@@ -13,7 +13,6 @@ import CloseButton from "@src/components/buttons/CloseButtons";
 interface Props {
   item: (CoupDeCoeur | Suggestion) & { type: "suggestion" | "coupdecoeur" };
   isOpen: boolean;
-  //onToggle: (id: string) => void;
   addClassName?: string;
   showHeaderTypeIcon?: boolean;
 }
@@ -21,7 +20,6 @@ interface Props {
 const InteractiveFeedbackCard: React.FC<Props> = ({
   item,
   isOpen,
-  //onToggle,
   addClassName,
   showHeaderTypeIcon = false,
 }) => {

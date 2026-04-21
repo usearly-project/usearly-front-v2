@@ -99,16 +99,6 @@ const MixedFeed: React.FC<Props> = ({
           <div className="primary-filters">
             {showMobileHeaderText ? (
               <>
-                {/*
-                  Ancien rendu mobile :
-                  <Champs
-                    options={displayedOptions}
-                    value="all"
-                    onChange={() => {}}
-                    align="left"
-                    fitWidthToOptions
-                  />
-                */}
                 <h2 className="feed-header__mobile-title">
                   {FILTER_LABELS.all}
                 </h2>
@@ -202,14 +192,20 @@ const MixedFeed: React.FC<Props> = ({
         ))}
 
         {loading && <p className="feed-loading">Chargement...</p>}
-        {!loading && hasMore && (
+
+        {hasMore && (
           <button
             onClick={loadMore}
             className="load-more-btn"
+            disabled={loading}
             aria-label="Voir plus"
           >
-            Voir plus
+            {loading ? "Chargement..." : "Voir plus"}
           </button>
+        )}
+
+        {!hasMore && filteredFeed.length > 0 && (
+          <p className="feed-end">Tu as tout vu 👍</p>
         )}
       </div>
 

@@ -75,6 +75,25 @@ const MobileActu: React.FC<MobileActuProps> = ({
     };
   }, [isReport, item.subCategory]);
 
+  const getShortRelativeDate = (date?: string) => {
+    if (!date) return "";
+
+    const diff = Date.now() - new Date(date).getTime();
+
+    const minutes = Math.floor(diff / 60000);
+    const hours = Math.floor(diff / 3600000);
+    const days = Math.floor(diff / 86400000);
+    const months = Math.floor(days / 30);
+    const years = Math.floor(days / 365);
+
+    if (minutes < 1) return "now";
+    if (minutes < 60) return `${minutes}m`;
+    if (hours < 24) return `${hours}h`;
+    if (days < 30) return `${days}d`;
+    if (months < 12) return `${months}mo`;
+    return `${years}y`;
+  };
+
   return (
     <div className={`mobile-actu-card type-${type}`}>
       {!isReport ? (
@@ -176,9 +195,13 @@ const MobileActu: React.FC<MobileActuProps> = ({
                   alt=""
                   className="subcategory-icon"
                 />
-                <h3 className="title">{item.subCategory}</h3>
+                <h3 className="title">
+                  {item.subCategory}
+                  <span className="date">
+                    • {getShortRelativeDate(firstDesc?.createdAt)}
+                  </span>
+                </h3>
               </div>
-              <span className="date-relative">• {item.createdAtRelative}</span>
             </div>
             <div className="description-container">
               <p
@@ -230,6 +253,7 @@ const MobileActu: React.FC<MobileActuProps> = ({
                   ? actions.setShowSolutionsList(true)
                   : actions.setShowSolutionModal(true)
               }
+              hideReporters={true}
             />
           </div>
         </>

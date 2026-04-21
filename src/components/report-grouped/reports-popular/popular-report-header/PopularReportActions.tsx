@@ -13,6 +13,7 @@ interface Props {
   isPublic: boolean;
   onOpenSolutionModal: () => void;
   solutionsCount?: number;
+  hideReporters?: boolean;
 }
 
 const PopularReportActions: React.FC<Props> = ({
@@ -27,6 +28,7 @@ const PopularReportActions: React.FC<Props> = ({
   onOpenSolutionModal,
   solutionsCount,
   isPublic,
+  hideReporters = false,
 }) => {
   const reportsCount = item.count ?? item.descriptions?.length ?? 0;
   const descriptions = item.descriptions ?? [];
@@ -35,12 +37,8 @@ const PopularReportActions: React.FC<Props> = ({
     <ReportActionsBarWithReactions
       userId={userProfile?.id}
       descriptionId={descriptionId}
-      // On retire ou on met à 0 les props liées au compteur de signalements
-      // pour éviter l'affichage du doublon (avatars + chiffre)
-      // reportsCount={0}
-      // descriptions={[]}
-      reportsCount={reportsCount}
-      descriptions={descriptions}
+      reportsCount={hideReporters ? 0 : reportsCount}
+      descriptions={hideReporters ? [] : descriptions}
       showBrandResponseInline={true}
       status={item.status}
       type="report"
