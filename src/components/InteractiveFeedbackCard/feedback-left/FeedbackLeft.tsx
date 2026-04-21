@@ -19,14 +19,17 @@ const FeedbackLeft: React.FC<Props> = ({ item, isExpanded = false }) => {
 
   // ✅ NOUVEAU : Construction du chemin dynamique vers l'icône du Back-end
   const illustrationPath = useMemo(() => {
-    if (!item.category || !item.illustration) return null;
+    const category = item.category || item.meta?.aiCategory;
 
-    // On sélectionne le dossier racine selon le type (bobAssets ou bobAssetsSuggest)
+    if (!category || !item.illustration) return null;
+
     const root = item.type === "coupdecoeur" ? "bobAssets" : "bobAssetsSuggest";
 
-    // Résultat : /assets/bobAssets/bancaire/tirelire.svg
-    return `/assets/${root}/${item.category}/${item.illustration}`;
-  }, [item.category, item.illustration, item.type]);
+    return `/assets/${root}/${category}/${item.illustration}`;
+  }, [item]);
+
+  // 🔥 fallback vers ancien système
+  const finalIllustration = illustrationPath || theme.illustration;
 
   const lines = useMemo(() => {
     if (!item.punchline) return [];
@@ -130,11 +133,13 @@ const FeedbackLeft: React.FC<Props> = ({ item, isExpanded = false }) => {
                 style={{ backgroundColor: "transparent", color: "#000" }}
               >
                 {/* ✅ MODIFIÉ : Utilise illustrationPath au lieu de theme.illustration */}
-                <BrandSvg
-                  src={illustrationPath || ""}
-                  brandColor={theme.svgColor ?? theme.base}
-                  className="illu-image"
-                />
+                {finalIllustration && (
+                  <BrandSvg
+                    src={finalIllustration}
+                    brandColor={theme.svgColor ?? theme.base}
+                    className="illu-image"
+                  />
+                )}
               </div>
             )}
           </>

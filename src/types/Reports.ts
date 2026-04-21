@@ -94,6 +94,7 @@ export interface MetaIA {
   highlightedWords?: string[];
   layoutType?: "single-line" | "two-bubble";
   axe?: "emoji" | "typography" | "illustration";
+  aiCategory?: string;
 }
 
 export interface CoupDeCoeur {
