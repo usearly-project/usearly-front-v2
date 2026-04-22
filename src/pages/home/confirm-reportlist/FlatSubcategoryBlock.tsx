@@ -189,7 +189,8 @@ const FlatSubcategoryBlock: React.FC<Props> = ({
       data-description-id={initialDescription.id}
     >
       {/* === HEADER === */}
-      <div className="subcategory-header" onClick={toggleExpanded}>
+      {/* onClick={toggleExpanded} désactivé : un signalement ne doit plus se refermer au clic. */}
+      <div className="subcategory-header">
         <div className="subcategory-left">
           <img
             src={getCategoryIconPathFromSubcategory(subcategory)}
@@ -204,6 +205,7 @@ const FlatSubcategoryBlock: React.FC<Props> = ({
                   : initialDescription?.title || "Autre problème"}
               </h4>
               <span className="date-badge">
+                ⸱{" "}
                 {formatDistanceToNow(new Date(initialDescription.createdAt), {
                   locale: fr,
                   addSuffix: true,

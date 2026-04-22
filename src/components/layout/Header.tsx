@@ -390,24 +390,16 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
         {/* ================= NAVIGATION / DRAWER ================= */}
         <nav className={`nav-links ${mobileMenuOpen ? "mobile-open" : ""}`}>
           {/* ======= NAV LINKS ======= */}
-          {/* <NavLink
-            to="/homeAlternate"
+          <NavLink
+            to="/home"
             className="link"
-            onClick={() => setMobileMenuOpen(false)}
+            onClick={(event) => {
+              if (handleMobileNavigationIntent(event)) return;
+              setMobileMenuOpen(false);
+            }}
           >
             Accueil
-          </NavLink> */}
-
-          {/* {isAuthenticated && (
-            <NavLink
-              to="/public-feed"
-              className="link"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Feel d'actu
-            </NavLink>
-          )} */}
-
+          </NavLink>
           <NavLink
             to="/"
             className="link"
@@ -457,7 +449,7 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
                   setMobileMenuOpen(false);
                 }}
               >
-                <i className="fa fa-bell" />
+                <i className="fa-regular fa-bell"></i>
                 Notifications
                 {notifications.some((n) => !n.read) && (
                   <span className="mobile-badge">
@@ -548,13 +540,14 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
                   setMobileMenuOpen(false);
                 }}
               >
+                <i className="fa fa-sign-out" aria-hidden="true"></i>
                 Se déconnecter
               </div>
             </>
           ) : (
             <>
               <div
-                className="mobile-item"
+                className="mobile-item login"
                 onClick={() => {
                   if (handleMobileNavigationIntent()) return;
                   navigate("/lookup");
@@ -565,7 +558,7 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
               </div>
 
               <div
-                className="mobile-item"
+                className="mobile-item signin"
                 onClick={() => {
                   if (handleMobileNavigationIntent()) return;
                   navigate("/lookup");

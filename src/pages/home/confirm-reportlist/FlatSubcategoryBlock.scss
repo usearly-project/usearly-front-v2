@@ -5,7 +5,7 @@
   border-radius: 20px;
   margin-bottom: 14px;
   transition: all 0.2s ease-in-out;
-  cursor: pointer;
+  cursor: default;
 
   &.flat {
     background-color: #fff;
@@ -102,7 +102,7 @@
         margin-top: 4px;
         margin-bottom: 4px;
         position: relative;
-        padding-right: 20px;
+        padding-right: 0px;
 
         .avatar-logo-group {
           display: flex;
@@ -150,7 +150,7 @@
 
           .user-brand-line {
             display: block;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 400;
 
             .cross {
@@ -349,7 +349,7 @@
     align-items: flex-start;
 
     .user-brand-line {
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 400;
 
       .cross {
