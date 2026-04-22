@@ -118,15 +118,23 @@ export const resolvePopFeedBrandTheme = (
   preferredTheme: PopFeedTheme,
   options?: {
     linked?: boolean;
+    excludeThemes?: Set<PopFeedTheme>;
   },
 ) => {
+  const excluded = options?.excludeThemes;
+
   if (
+    (!excluded || !excluded.has(preferredTheme)) &&
     hasBrandMessage(getBrandMessageForTheme(brand, preferredTheme, options))
   ) {
     return preferredTheme;
   }
 
-  const availableThemes = getAvailablePopFeedThemes(brand, options);
+  let availableThemes = getAvailablePopFeedThemes(brand, options);
+
+  if (excluded) {
+    availableThemes = availableThemes.filter((t) => !excluded.has(t));
+  }
 
   if (!availableThemes.length) {
     return undefined;
@@ -150,6 +158,7 @@ export const resolvePopFeedBrandContent = (
   preferredTheme: PopFeedTheme,
   options?: {
     linked?: boolean;
+    excludeThemes?: Set<PopFeedTheme>;
   },
 ) => {
   const theme = resolvePopFeedBrandTheme(brand, preferredTheme, options);

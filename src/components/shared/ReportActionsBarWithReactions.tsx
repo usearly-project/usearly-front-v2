@@ -154,7 +154,9 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
                 onClick={onToggleSimilarReports}
               >
                 <span className="resignalements-count">{reportsCount}</span>
-                <span className="resignalements-label"> signalements</span>
+                <span className="resignalements-label">
+                  {(reportsCount ?? 0) > 1 ? "Signalements" : "Signalement"}
+                </span>
               </span>
             )}
           </div>
