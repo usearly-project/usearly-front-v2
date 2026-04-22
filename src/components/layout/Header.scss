@@ -764,7 +764,7 @@
 .mobile-subtitle,
 .mobile-logo {
   display: none;
-  color: #1a202c;
+  color: #222;
 }
 
 /* Visible uniquement en mobile */
@@ -830,7 +830,7 @@
     background: #fff;
     flex-direction: column;
     padding: 70px 24px 24px;
-    gap: 20px;
+    gap: 5px;
     box-shadow: -6px 0 25px rgba(0, 0, 0, 0.08);
     z-index: 1100;
     overflow-y: auto;
@@ -893,7 +893,7 @@
     background: #fff;
     flex-direction: column;
     padding: 70px 24px 24px;
-    gap: 20px;
+    gap: 5px;
     box-shadow: -6px 0 25px rgba(0, 0, 0, 0.08);
     z-index: 1100;
     overflow-y: auto;
@@ -984,7 +984,8 @@
 
   /* Link actif propre */
   .header .nav-links.mobile-open .link.active {
-    font-weight: 600;
+    font-size: 20px;
+    font-weight: 800;
     color: #000;
   }
 
@@ -1001,9 +1002,14 @@
     align-items: center;
     gap: 12px;
     padding: 10px 0;
-    font-size: 16px;
+    font-size: 17px;
+    font-weight: 500;
+    color: #222;
     cursor: pointer;
     transition: 0.2s;
+    i {
+      color: black;
+    }
   }
 
   .mobile-item:hover {
@@ -1035,8 +1041,77 @@
 
   /* Logout */
   .mobile-item.danger {
-    color: #c0392b;
+    width: fit-content;
+    padding: 8px 14px;
+    background-color: #c0392b;
+    color: #fff;
+    border-radius: 999px;
     margin-top: 8px;
+    i {
+      color: #fff;
+    }
+  }
+
+  .mobile-item.login {
+    width: fit-content;
+    padding: 8px 14px;
+    background-color: #fff;
+    color: #222;
+    border: 1px solid #222;
+    border-radius: 999px;
+    margin-top: 8px;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease,
+      box-shadow 0.2s ease,
+      transform 0.2s ease,
+      opacity 0.2s ease;
+    i {
+      color: #222;
+    }
+
+    &:hover {
+      background-color: #222;
+      color: #fff;
+      opacity: 1;
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(34, 34, 34, 0.16);
+      i {
+        color: #fff;
+      }
+    }
+  }
+  .mobile-item.signin {
+    width: fit-content;
+    padding: 8px 14px;
+    background-color: #222;
+    color: #fff;
+    border: 1px solid #222;
+    border-radius: 999px;
+    margin-top: 8px;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease,
+      box-shadow 0.2s ease,
+      transform 0.2s ease,
+      opacity 0.2s ease;
+    i {
+      color: #fff;
+    }
+
+    &:hover {
+      background-color: #111;
+      border-color: #111;
+      color: #fff;
+      opacity: 1;
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(17, 17, 17, 0.22);
+      i {
+        color: #fff;
+      }
+    }
   }
 
   /* Logo bas */

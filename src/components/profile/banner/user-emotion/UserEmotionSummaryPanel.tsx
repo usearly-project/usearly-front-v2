@@ -11,6 +11,7 @@ export default function UserEmotionSummaryPanel({ data, loading }: Props) {
   if (loading || !data || data.emotions.length === 0) return null;
 
   const { reactionsCount, brandsCount, emotions } = data;
+  const hasSingleEmoji = emotions.length === 1;
   const [main, ...others] = emotions;
   const diagonalAngles = ["-45deg", "135deg", "-135deg", "45deg"];
   const useDiagonalOrbit = others.length <= diagonalAngles.length;
@@ -18,9 +19,15 @@ export default function UserEmotionSummaryPanel({ data, loading }: Props) {
   return (
     <div className="emotion-summary-card">
       {/* LEFT */}
-      <div className="emoji-area">
+      <div
+        className={`emoji-area${hasSingleEmoji ? " emoji-area--single" : ""}`}
+      >
         {/* EMOJI CENTRAL (le plus utilisé) */}
-        <div className="emoji-item emoji-center">
+        <div
+          className={`emoji-item emoji-center${
+            hasSingleEmoji ? " emoji-center--single" : ""
+          }`}
+        >
           <span className="emoji-static">{main.emoji}</span>
 
           {EMOJI_META[main.emoji] && (
@@ -31,7 +38,13 @@ export default function UserEmotionSummaryPanel({ data, loading }: Props) {
             />
           )}
 
-          <div className="emoji-tooltip">
+          <div
+            className={`emoji-tooltip${
+              hasSingleEmoji
+                ? " emoji-tooltip--always-visible emoji-tooltip--single"
+                : ""
+            }`}
+          >
             {EMOJI_META[main.emoji]?.label} ({main.count})
           </div>
         </div>

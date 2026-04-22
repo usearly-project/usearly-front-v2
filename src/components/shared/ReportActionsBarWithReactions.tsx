@@ -191,7 +191,7 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
               }
               aria-label="Réagir"
             >
-              <ThumbsUp size={isMobile ? 18 : 22} />
+              <ThumbsUp size={16} />
               {/* {is1350px ? null : (
                 <span className="reagir-span-btn">Réagir</span>
               )} */}
@@ -216,7 +216,7 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
             }
             aria-label="Commenter"
           >
-            <MessageCircle size={isMobile ? 18 : 22} />
+            <MessageCircle size={16} />
             {/* {is1350px ? null : (
               <span className="commenter-span-btn">Commenter</span>
             )} */}

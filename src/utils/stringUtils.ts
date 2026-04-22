@@ -8,7 +8,7 @@ type TruncateOptions = {
   suffix?: string;
 };
 
-const DEFAULT_TRUNCATE_SUFFIX = "…";
+const DEFAULT_TRUNCATE_SUFFIX = ".";
 
 export const truncate = (
   s?: string,

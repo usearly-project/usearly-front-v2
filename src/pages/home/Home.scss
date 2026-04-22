@@ -135,10 +135,8 @@ body.feedback-route .home-grouped-reports-list {
   display: flex;
   justify-content: center;
   margin-top: 16px;
-  @media screen and (max-width: 1150px) {
-    padding-left: 3%;
-    padding-right: 3%;
-  }
+  padding-left: 3%;
+  padding-right: 3%;
   @media screen and (max-width: 1080px) {
     gap: 15px;
     padding-left: 14px;

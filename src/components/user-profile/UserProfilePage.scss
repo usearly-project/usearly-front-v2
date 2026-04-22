@@ -12,10 +12,10 @@
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  gap: clamp(24px, 4vw, 65px);
+  // gap: clamp(24px, 4vw, 65px);
   margin-top: 24px;
-  width: 90%;
-  max-width: 1180px;
+  width: 80%;
+  max-width: 975px;
   //width: fit-content; // ⬅️ LA LIGNE MANQUANTE
   margin-left: auto;
   margin-right: auto;
@@ -27,7 +27,7 @@
     margin-left: 0;
     margin-right: 0;
 
-    @media screen and (max-width: 992px) {
+    @media screen and (max-width: 1120px) {
       justify-content: flex-end;
       max-width: unset;
 
@@ -48,10 +48,10 @@
       margin-top: 10px;
     }
 
-    @media screen and (max-width: 1240px) {
-      flex-basis: 260px;
-      min-width: 220px;
-    }
+    // @media screen and (max-width: 1240px) {
+    //   flex-basis: 260px;
+    //   min-width: 220px;
+    // }
 
     // Ancien comportement : masqué dès 1350px.
     @media screen and (max-width: 1120px) {
@@ -60,11 +60,11 @@
   }
 }
 
-@media screen and (max-width: 1240px) {
-  .profile-main-wrapper {
-    width: min(94%, 1080px);
-  }
-}
+// @media screen and (max-width: 1240px) {
+//   .profile-main-wrapper {
+//     width: min(94%, 1080px);
+//   }
+// }
 
 @media screen and (max-width: 1120px) {
   .profile-main-wrapper {
@@ -282,10 +282,7 @@
   z-index: 1;
   width: min(100%, 320px);
   min-width: 0;
-  margin: 75px 0;
-  @media screen and (max-width: 1240px) {
-    margin: 48px 0 0;
-  }
+  margin: 25px 0;
 
   @media screen and (max-width: 1120px) {
     margin: 0;
@@ -296,6 +293,10 @@
     background: #f0f0f0;
     width: 80%;
     margin: 1.4rem auto; // 'auto' centre horizontalement
+  }
+
+  .suggestion-img-side-container {
+    margin-bottom: 100px;
   }
 }
 
@@ -359,7 +360,6 @@
 
 .profile-section-header {
   margin-bottom: 10px;
-  margin-left: 30px;
 
   h2 {
     font-size: 40px;
