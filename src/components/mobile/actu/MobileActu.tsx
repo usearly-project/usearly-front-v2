@@ -172,8 +172,8 @@ const MobileActu: React.FC<MobileActuProps> = ({
             </div>
             <div className="header-author">
               <span className="author-text">
-                {truncate(author?.pseudo, 8)} x{" "}
-                <strong>{truncate(brandName, 8)}</strong>
+                {truncate(author?.pseudo, 8, ".")} x{" "}
+                <strong>{truncate(brandName, 8, ".")}</strong>
               </span>
               <div className="avatar-overlap-wrapper">
                 <Avatar

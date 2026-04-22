@@ -15,6 +15,7 @@ export type PlanetPopFeedBubble = {
 
 export type PlanetPopFeedItemData = {
   id: string;
+  brandId: string;
   theme: PopFeedTheme;
   image: string;
   appearanceDelayMs: number;
