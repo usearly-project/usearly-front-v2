@@ -42,7 +42,7 @@ export const POP_FEED_BRANDS = [
   {
     id: "CanalPlus",
     label: "Canal+",
-    image: "/assets/brandLogo/canalplus.png",
+    image: "/assets/brandLogo/canal.png",
     copy: {
       report: "Impossible de finaliser mon abonnement Canal+.",
       reportLinked: "J'ai un problème dans le formulaire.",

@@ -154,7 +154,9 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
                 onClick={onToggleSimilarReports}
               >
                 <span className="resignalements-count">{reportsCount}</span>
-                <span className="resignalements-label"> signalements</span>
+                <span className="resignalements-label">
+                  {(reportsCount ?? 0) > 1 ? "Signalements" : "Signalement"}
+                </span>
               </span>
             )}
           </div>
@@ -189,7 +191,7 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
               }
               aria-label="Réagir"
             >
-              <ThumbsUp size={isMobile ? 18 : 22} />
+              <ThumbsUp size={16} />
               {/* {is1350px ? null : (
                 <span className="reagir-span-btn">Réagir</span>
               )} */}
@@ -214,7 +216,7 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
             }
             aria-label="Commenter"
           >
-            <MessageCircle size={isMobile ? 18 : 22} />
+            <MessageCircle size={16} />
             {/* {is1350px ? null : (
               <span className="commenter-span-btn">Commenter</span>
             )} */}

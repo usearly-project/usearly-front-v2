@@ -53,7 +53,9 @@ export default function PurpleBanner({
                 className={`stat-icon ${activeTab === "report" ? "pulse" : ""}`}
               />
             </div>
-            <span className="label">Signalements</span>
+            <span className="label">
+              {(stats?.totalReports ?? 0) > 1 ? "Signalements" : "Signalement"}
+            </span>
           </button>
 
           <button

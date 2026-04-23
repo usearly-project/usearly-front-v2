@@ -1,7 +1,7 @@
 import React, { useMemo, type JSX } from "react";
 import type { GroupedReport } from "@src/types/Reports";
-import { parseISO, formatDistanceToNow } from "date-fns";
-import { fr } from "date-fns/locale";
+import { parseISO } from "date-fns";
+import { formatRelative } from "@src/utils/dateUtils";
 import "./FlatReportList.scss";
 import { ChevronDown } from "lucide-react";
 import { Virtuoso } from "react-virtuoso";
@@ -31,7 +31,7 @@ const getLatestDateLabel = (reports: GroupedReport[]) => {
 
   if (allDates.length === 0) return null;
   const latest = allDates.reduce((a, b) => (a > b ? a : b));
-  return formatDistanceToNow(latest, { locale: fr, addSuffix: true });
+  return formatRelative(latest).replace(/^il y a /, "");
 };
 
 const FlatReportList = ({
@@ -90,7 +90,7 @@ const FlatReportList = ({
                   signalement{total > 1 ? "s" : ""} sur <strong>{brand}</strong>
                 </span>
                 {latestDate && (
-                  <span className="report-date">• {latestDate}</span>
+                  <span className="report-date">⸱ {latestDate}</span>
                 )}
               </div>
               {isOpen ? (

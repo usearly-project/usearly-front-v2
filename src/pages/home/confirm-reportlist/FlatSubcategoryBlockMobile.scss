@@ -20,7 +20,7 @@
   justify-content: space-between;
   align-items: center;
   text-align: left;
-  cursor: pointer;
+  cursor: default;
 }
 
 .flat-subcategory-mobile__left {
@@ -94,7 +94,7 @@
     display: flex;
   }
   .user-brand-line {
-    font-size: 13px;
+    font-size: 10px;
   }
 }
 

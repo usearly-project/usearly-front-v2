@@ -172,7 +172,8 @@ const ChronoReportCard: React.FC<Props> = ({ item, isOpen, onToggle }) => {
 
   return (
     <div
-      className={`subcategory-block flat ${isOpen ? "open" : ""}`}
+      className={`subcategory-block flat open`}
+      // className={`subcategory-block flat ${isOpen ? "open" : ""}`}
       data-description-id={descriptionId}
     >
       <div className="subcategory-header" onClick={onToggle}>

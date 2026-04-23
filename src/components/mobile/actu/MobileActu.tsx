@@ -4,6 +4,7 @@ import "./MobileActu.scss";
 
 import Avatar from "@src/components/shared/Avatar";
 import { truncate } from "@src/utils/stringUtils";
+import { formatRelative } from "@src/utils/dateUtils";
 import FeedbackRight from "@src/components/InteractiveFeedbackCard/FeedbackRight";
 import FeedbackLeft from "@src/components/InteractiveFeedbackCard/feedback-left/FeedbackLeft";
 import DescriptionCommentSection from "@src/components/report-desc-comment/DescriptionCommentSection";
@@ -51,6 +52,9 @@ const MobileActu: React.FC<MobileActuProps> = ({
   const brandName = isReport ? item.marque : item.brand || item.marque;
   const userCapture = firstDesc?.capture || item.capture;
   const reportersTooltipLabel = "re signalement";
+  const relativeCreatedAt = firstDesc?.createdAt
+    ? formatRelative(firstDesc.createdAt).replace(/^il y a /, "")
+    : "";
 
   useEffect(() => {
     if (!isReport) return;
@@ -81,25 +85,6 @@ const MobileActu: React.FC<MobileActuProps> = ({
       resizeObserver?.disconnect();
     };
   }, [isReport, item.subCategory]);
-
-  const getShortRelativeDate = (date?: string) => {
-    if (!date) return "";
-
-    const diff = Date.now() - new Date(date).getTime();
-
-    const minutes = Math.floor(diff / 60000);
-    const hours = Math.floor(diff / 3600000);
-    const days = Math.floor(diff / 86400000);
-    const months = Math.floor(days / 30);
-    const years = Math.floor(days / 365);
-
-    if (minutes < 1) return "now";
-    if (minutes < 60) return `${minutes}m`;
-    if (hours < 24) return `${hours}h`;
-    if (days < 30) return `${days}d`;
-    if (months < 12) return `${months}mo`;
-    return `${years}y`;
-  };
 
   return (
     <div className={`mobile-actu-card type-${type}`}>
@@ -172,8 +157,8 @@ const MobileActu: React.FC<MobileActuProps> = ({
             </div>
             <div className="header-author">
               <span className="author-text">
-                {truncate(author?.pseudo, 8)} x{" "}
-                <strong>{truncate(brandName, 8)}</strong>
+                {truncate(author?.pseudo, 8, ".")} x{" "}
+                <strong>{truncate(brandName, 8, ".")}</strong>
               </span>
               <div className="avatar-overlap-wrapper">
                 <Avatar
@@ -217,9 +202,9 @@ const MobileActu: React.FC<MobileActuProps> = ({
                 />
                 <h3 className="title">
                   {item.subCategory}
-                  <span className="date">
-                    • {getShortRelativeDate(firstDesc?.createdAt)}
-                  </span>
+                  {relativeCreatedAt && (
+                    <span className="date">⸱ {relativeCreatedAt}</span>
+                  )}
                 </h3>
               </div>
             </div>

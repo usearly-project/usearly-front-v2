@@ -112,9 +112,6 @@ $green-progress: #48bb78;
           left: 0;
           top: 0;
           z-index: 1;
-          .avatar-img-custom {
-            // border: 2.5px solid #fff !important;
-          }
         }
         .brand-badge {
           position: absolute;
@@ -620,7 +617,8 @@ $green-progress: #48bb78;
 
 .title {
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
+  align-items: baseline;
   gap: 6px;
 }
 
@@ -630,4 +628,5 @@ $green-progress: #48bb78;
   font-size: 12px;
   color: #9b9b9b;
   opacity: 0.6;
+  white-space: nowrap;
 }

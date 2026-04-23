@@ -287,6 +287,22 @@
   }
 }
 
+.profile-main-wrapper {
+  .user-main-content {
+    .feedback-list-wrapper {
+      .user-feedback-view {
+        .feedback-filters {
+          .select-filter-icon {
+            width: 17px;
+            height: 17px;
+            border-radius: 0px;
+          }
+        }
+      }
+    }
+  }
+}
+
 .feed-header__top {
   .select-filter-icon {
     border-radius: 0px;
@@ -346,7 +362,7 @@
 
       .select-filter-search {
         position: sticky;
-        top: 0;
+        top: -16px;
         display: flex;
         align-items: center;
         width: auto;

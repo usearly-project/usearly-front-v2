@@ -85,23 +85,15 @@ const FlatSubcategoryBlockMobile: React.FC<Props> = ({
       }`.trim();
 
   const hasMoreText = initialDescription.description.length > PREVIEW_LENGTH;
+  void onToggleExpanded;
 
   return (
     <div
       className={`flat-subcategory-mobile ${expanded ? "open" : ""}`}
       data-description-id={initialDescription.id}
     >
-      <button
-        type="button"
-        className="flat-subcategory-mobile__header"
-        onClick={onToggleExpanded}
-        aria-label={
-          "Ouvrir le signalement " +
-          (subcategory?.trim().length
-            ? subcategory
-            : initialDescription?.title || "Autre problème")
-        }
-      >
+      {/* onClick={onToggleExpanded} désactivé : la carte mobile reste ouverte. */}
+      <div className="flat-subcategory-mobile__header">
         <div className="flat-subcategory-mobile__left">
           <img
             src={getCategoryIconPathFromSubcategory(subcategory)}
@@ -129,9 +121,10 @@ const FlatSubcategoryBlockMobile: React.FC<Props> = ({
               {descriptions.length}
             </span>
           )}
+          {/* Chevron conservé pour garder le repère visuel d'une carte ouverte. */}
           {expanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
         </div>
-      </button>
+      </div>
 
       {expanded && (
         <div className="flat-subcategory-mobile__content">

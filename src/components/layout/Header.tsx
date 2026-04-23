@@ -1,5 +1,5 @@
 import {
-  // useCallback,
+  useCallback,
   useState,
   useRef,
   useEffect,
@@ -12,12 +12,12 @@ import Logo from "@src/assets/logo.svg";
 import { useAuth } from "@src/services/AuthContext";
 import { getNotifications } from "@src/services/notificationService";
 import Buttons from "@src/components/buttons/Buttons";
-// import { useIsMobile } from "@src/hooks/use-mobile";
+import { useIsMobile } from "@src/hooks/use-mobile";
 import UsearlyText from "/assets/UsearlyText.svg";
-// import AppDownloadModal from "@src/components/app-download/AppDownloadModal";
+import AppDownloadModal from "@src/components/app-download/AppDownloadModal";
 // import { APP_DOWNLOAD_ROUTE } from "@src/components/app-download/appDownload.constants";
 
-const MOBILE_APP_REDIRECT_BREAKPOINT_PX = 1080;
+const MOBILE_APP_REDIRECT_BREAKPOINT_PX = 768;
 
 const HEADER_HIDE_SCROLL_Y = 30;
 const HEADER_SHOW_TOP_SCROLL_Y = 2;
@@ -44,11 +44,11 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
   const [shakeBell, setShakeBell] = useState(false);
   const prevUnreadCountRef = useRef(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  // const [showAppDownloadModal, setShowAppDownloadModal] = useState(false);
+  const [showAppDownloadModal, setShowAppDownloadModal] = useState(false);
   const [isHeaderHidden, setIsHeaderHidden] = useState(false);
-  // const isMobileHeader = useIsMobile(
-  //   `(max-width: ${MOBILE_APP_REDIRECT_BREAKPOINT_PX}px)`,
-  // );
+  const isMobileHeader = useIsMobile(
+    `(max-width: ${MOBILE_APP_REDIRECT_BREAKPOINT_PX}px)`,
+  );
   // const isHeaderNavigationBlocked = isMobileHeader;
   // const shouldRedirectNavigationToDownload = isMobileHeader;
   const hiddenRef = useRef(false);
@@ -129,11 +129,24 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
   //   setShowAppDownloadModal(true);
   // }, []);
 
+  const openAppDownloadModal = useCallback(() => {
+    setMobileMenuOpen(false);
+    setUserMenuOpen(false);
+    setShowAppDownloadModal(true);
+  }, []);
+
   const handleMobileNavigationIntent = (
     event?: ReactMouseEvent<HTMLElement>,
+    mode: "allow" | "download-modal" = "allow",
   ) => {
-    void event;
-    return false;
+    if (mode !== "download-modal" || !isMobileHeader || !mobileMenuOpen) {
+      return false;
+    }
+
+    event?.preventDefault();
+    event?.stopPropagation();
+    openAppDownloadModal();
+    return true;
   };
 
   // useEffect(() => {
@@ -377,24 +390,16 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
         {/* ================= NAVIGATION / DRAWER ================= */}
         <nav className={`nav-links ${mobileMenuOpen ? "mobile-open" : ""}`}>
           {/* ======= NAV LINKS ======= */}
-          {/* <NavLink
-            to="/homeAlternate"
+          <NavLink
+            to="/home"
             className="link"
-            onClick={() => setMobileMenuOpen(false)}
+            onClick={(event) => {
+              if (handleMobileNavigationIntent(event)) return;
+              setMobileMenuOpen(false);
+            }}
           >
             Accueil
-          </NavLink> */}
-
-          {/* {isAuthenticated && (
-            <NavLink
-              to="/public-feed"
-              className="link"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Feel d'actu
-            </NavLink>
-          )} */}
-
+          </NavLink>
           <NavLink
             to="/"
             className="link"
@@ -410,7 +415,8 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
               to="/profile"
               className="link"
               onClick={(event) => {
-                if (handleMobileNavigationIntent(event)) return;
+                if (handleMobileNavigationIntent(event, "download-modal"))
+                  return;
                 setMobileMenuOpen(false);
               }}
             >
@@ -437,12 +443,13 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
               <div
                 className="mobile-item"
                 onClick={() => {
-                  if (handleMobileNavigationIntent()) return;
+                  if (handleMobileNavigationIntent(undefined, "download-modal"))
+                    return;
                   navigate("/notifications");
                   setMobileMenuOpen(false);
                 }}
               >
-                <i className="fa fa-bell" />
+                <i className="fa-regular fa-bell"></i>
                 Notifications
                 {notifications.some((n) => !n.read) && (
                   <span className="mobile-badge">
@@ -473,7 +480,13 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
                   <div
                     className="mobile-item"
                     onClick={() => {
-                      if (handleMobileNavigationIntent()) return;
+                      if (
+                        handleMobileNavigationIntent(
+                          undefined,
+                          "download-modal",
+                        )
+                      )
+                        return;
                       navigate("/admin/users");
                       setMobileMenuOpen(false);
                     }}
@@ -485,7 +498,13 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
                     <div
                       className="mobile-item"
                       onClick={() => {
-                        if (handleMobileNavigationIntent()) return;
+                        if (
+                          handleMobileNavigationIntent(
+                            undefined,
+                            "download-modal",
+                          )
+                        )
+                          return;
                         navigate("/admin/admins");
                         setMobileMenuOpen(false);
                       }}
@@ -497,7 +516,13 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
                   <div
                     className="mobile-item"
                     onClick={() => {
-                      if (handleMobileNavigationIntent()) return;
+                      if (
+                        handleMobileNavigationIntent(
+                          undefined,
+                          "download-modal",
+                        )
+                      )
+                        return;
                       navigate("/admin/brands");
                       setMobileMenuOpen(false);
                     }}
@@ -515,13 +540,14 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
                   setMobileMenuOpen(false);
                 }}
               >
+                <i className="fa fa-sign-out" aria-hidden="true"></i>
                 Se déconnecter
               </div>
             </>
           ) : (
             <>
               <div
-                className="mobile-item"
+                className="mobile-item login"
                 onClick={() => {
                   if (handleMobileNavigationIntent()) return;
                   navigate("/lookup");
@@ -532,7 +558,7 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
               </div>
 
               <div
-                className="mobile-item"
+                className="mobile-item signin"
                 onClick={() => {
                   if (handleMobileNavigationIntent()) return;
                   navigate("/lookup");
@@ -548,7 +574,8 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
           <div
             className="mobile-logo"
             onClick={() => {
-              if (handleMobileNavigationIntent()) return;
+              if (handleMobileNavigationIntent(undefined, "download-modal"))
+                return;
               navigate("/home");
               setMobileMenuOpen(false);
             }}
@@ -701,9 +728,9 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
 
       {heroMode && <div className="header-hero-slot">{children}</div>}
 
-      {/* {showAppDownloadModal && (
+      {showAppDownloadModal && (
         <AppDownloadModal onClose={() => setShowAppDownloadModal(false)} />
-      )} */}
+      )}
     </header>
   );
 };

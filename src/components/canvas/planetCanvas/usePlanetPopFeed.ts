@@ -24,10 +24,17 @@ const usePlanetPopFeed = (enabled: boolean) => {
       Utils.getPlanetPopFeedViewportSettings(window.innerWidth);
 
     const pickImage = () => {
+      const activeImages = new Set(activeItemsRef.current.map((i) => i.image));
+      // Filter out images already visible
+      imagePoolRef.current = imagePoolRef.current.filter(
+        (idx) => !activeImages.has(Config.PLANET_CANVAS_TRAIL_IMAGES[idx]),
+      );
       if (!imagePoolRef.current.length) {
         imagePoolRef.current = Utils.refillImagePool(
           Config.PLANET_CANVAS_TRAIL_IMAGES.length,
           lastImageIndexRef.current,
+        ).filter(
+          (idx) => !activeImages.has(Config.PLANET_CANVAS_TRAIL_IMAGES[idx]),
         );
       }
       const idx = imagePoolRef.current.shift() ?? 0;
@@ -39,11 +46,25 @@ const usePlanetPopFeed = (enabled: boolean) => {
       const settings = getSettings();
       if (activeItemsRef.current.length >= settings.maxVisibleItems) return;
 
+      const activeThemes = new Set(activeItemsRef.current.map((i) => i.theme));
       const preferredTheme = Utils.pickPopFeedTheme();
-      const brand = Utils.pickRandomValue(Config.POP_FEED_BRANDS);
+      // Build a set of themes to exclude: non-report themes already on screen
+      const excludeThemes = new Set(
+        [...activeThemes].filter((t) => t !== "report"),
+      );
+
+      const activeBrandIds = new Set(
+        activeItemsRef.current.map((i) => i.brandId),
+      );
+      const availableBrands = Config.POP_FEED_BRANDS.filter(
+        (b) => !activeBrandIds.has(b.id),
+      );
+      if (availableBrands.length === 0) return;
+      const brand = Utils.pickRandomValue(availableBrands);
       const popFeedContent = Config.resolvePopFeedBrandContent(
         brand,
         preferredTheme,
+        { excludeThemes },
       );
 
       if (!popFeedContent) return;

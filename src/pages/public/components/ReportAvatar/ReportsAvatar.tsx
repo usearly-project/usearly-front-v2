@@ -23,7 +23,7 @@ const ReportAvatars = ({ users }: Props) => {
             className="mini-avatar-wrapper"
             title={user.pseudo}
           >
-            <Avatar avatar={user.avatar} pseudo={user.pseudo} sizeHW={28} />
+            <Avatar avatar={user.avatar} pseudo={user.pseudo} sizeHW={24} />
           </div>
         ))}
       </div>

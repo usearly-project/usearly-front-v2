@@ -1,10 +1,11 @@
 .emotion-summary-card {
+  min-width: 300px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   background: #ffffff; // ✅ BLANC COMME MAQUETTE
   border-radius: 16px;
-  padding: 1rem 1.2rem;
+  padding: 0.1rem 1.2rem;
   gap: 1.5rem;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.04); // très soft
 }
@@ -13,7 +14,7 @@
 .stats-area {
   display: flex;
   flex-direction: column;
-  gap: 0.9rem;
+  gap: 12px;
 }
 
 .stat-card {
@@ -85,6 +86,10 @@
   justify-content: center;
 }
 
+.emoji-area--single {
+  overflow: visible;
+}
+
 /* =========================
    EMOJI ITEM (BASE)
 ========================= */
@@ -105,6 +110,12 @@
   .emoji-gif {
     transform: scale(1.6);
   }
+}
+
+.emoji-center--single {
+  left: 50%;
+  bottom: 25px;
+  transform: translateX(-50%);
 }
 
 /* =========================
@@ -189,6 +200,17 @@
     transform 0.25s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
+.emoji-tooltip--always-visible {
+  opacity: 1;
+  transform: translate(calc(-100% - 18px), -50%) scale(1);
+}
+
+.emoji-tooltip--single {
+  top: -30px;
+  left: 50%;
+  transform: translate(-50%, -100%) scale(1);
+}
+
 .emoji-tooltip::before,
 .emoji-tooltip::after {
   content: "";
@@ -215,6 +237,27 @@
   z-index: 1;
 }
 
+.emoji-tooltip--single::before,
+.emoji-tooltip--single::after {
+  top: auto;
+  right: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  clip-path: polygon(50% 100%, 0 0, 100% 0);
+}
+
+.emoji-tooltip--single::before {
+  bottom: -22px;
+  width: 28px;
+  height: 22px;
+}
+
+.emoji-tooltip--single::after {
+  bottom: -15px;
+  width: 22px;
+  height: 18px;
+}
+
 /* =========================
    HOVER
 ========================= */
@@ -233,4 +276,8 @@
     opacity: 1;
     transform: translate(calc(-100% - 18px), -50%) scale(1);
   }
+}
+
+.emoji-item:hover .emoji-tooltip--single {
+  transform: translate(-50%, -100%) scale(1);
 }
