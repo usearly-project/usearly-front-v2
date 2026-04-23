@@ -56,6 +56,7 @@ type PublicFeedResponse = {
 };
 
 const PAGE_SIZE = 100;
+const MAX_PAGES = 5;
 // const REPORT_REACTION_BATCH_SIZE = 10;
 const LAST_24_HOURS_IN_MS = 24 * 60 * 60 * 1000;
 const LAST_48_HOURS_IN_MS = 48 * 60 * 60 * 1000;
@@ -92,7 +93,7 @@ const loadPaginatedItems = async <T, TResponse>({
   getKey: (item: T) => string;
 }) => {
   const firstPage = await fetchPage(1, PAGE_SIZE);
-  const totalPages = Math.max(getTotalPages(firstPage), 1);
+  const totalPages = Math.min(Math.max(getTotalPages(firstPage), 1), MAX_PAGES);
   const items = [...getItems(firstPage)];
 
   if (totalPages > 1) {
@@ -114,40 +115,49 @@ const loadPaginatedItems = async <T, TResponse>({
 
 const loadAllPublicFeedSuggestions = async (): Promise<Suggestion[]> => {
   let cursor: string | undefined;
-  const suggestions: Suggestion[] = [];
+  const seenCursors = new Set<string>();
+  const suggestions = new Map<string, Suggestion>();
+  let page = 0;
 
   while (true) {
+    if (page >= MAX_PAGES) break;
+    if (cursor && seenCursors.has(cursor)) break;
+    if (cursor) seenCursors.add(cursor);
+
     const response = (await getPublicFeed(
       PAGE_SIZE,
       cursor,
     )) as PublicFeedResponse;
 
-    suggestions.push(
-      ...response.data
-        .filter((item) => item.type === "suggestion")
-        .map((item) => ({
+    response.data
+      .filter((item) => item.type === "suggestion")
+      .forEach((item) => {
+        suggestions.set(item.id, {
           ...item,
           type: "suggestion" as const,
-        })),
-    );
+        } as Suggestion);
+      });
 
-    if (!response.nextCursor) {
-      break;
-    }
+    if (!response.nextCursor) break;
 
     cursor = response.nextCursor;
+    page++;
   }
 
-  return Array.from(
-    new Map(suggestions.map((item) => [item.id, item])).values(),
-  );
+  return Array.from(suggestions.values());
 };
 
 const loadAllPublicFeedReports = async (): Promise<PublicReport[]> => {
   let cursor: string | undefined;
+  const seenCursors = new Set<string>();
   const reports = new Map<string, PublicReport>();
+  let page = 0;
 
   while (true) {
+    if (page >= MAX_PAGES) break;
+    if (cursor && seenCursors.has(cursor)) break;
+    if (cursor) seenCursors.add(cursor);
+
     const response = (await getPublicFeed(
       PAGE_SIZE,
       cursor,
@@ -159,11 +169,10 @@ const loadAllPublicFeedReports = async (): Promise<PublicReport[]> => {
       }
     });
 
-    if (!response.nextCursor) {
-      break;
-    }
+    if (!response.nextCursor) break;
 
     cursor = response.nextCursor;
+    page++;
   }
 
   return Array.from(reports.values());

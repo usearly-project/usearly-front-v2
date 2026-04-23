@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import "./SolutionsModal.scss";
 import SolutionItem from "./SolutionItem";
 import { getSolutionsByReport } from "@src/services/feedbackService";
-import { Lightbulb, X, ChevronDown, ChevronUp } from "lucide-react";
+import { X, ChevronDown, ChevronUp } from "lucide-react";
+import lightBulbLight from "/assets/icons/lightBulbLight.svg";
+import lightBulbNoLight from "/assets/icons/lightBulbNoLight.svg";
 
 type Props = {
   reportId: string;
@@ -44,7 +46,9 @@ export default function SolutionsModal({
         {/* HEADER */}
         <div className="header-solution">
           <div className="header-left">
-            <Lightbulb size={20} />
+            <span className="header-left-icon">
+              <img width="45" height="45" src={lightBulbLight} alt="light" />
+            </span>
             <h2>Solutions de la communauté</h2>
           </div>
 
@@ -59,7 +63,9 @@ export default function SolutionsModal({
 
         <p className="subtitle">
           Voici des solutions ou astuces proposées par les utilisateurs pour
-          contourner ce problème. Indiquez si elles vous ont été utiles.
+          contourner ce problème.
+          <br />
+          Indiquez si elles vous ont été utiles.
         </p>
 
         {/* CONTENT */}
@@ -71,7 +77,10 @@ export default function SolutionsModal({
           solutions.map((solution, index) => (
             <div key={solution.id} className="solution-wrapper">
               {/* HEADER ACCORDION */}
-              <div className="solution-header" onClick={() => toggle(index)}>
+              <div
+                className={`solution-header ${openIndex === index ? "solution-open" : ""}`}
+                onClick={() => toggle(index)}
+              >
                 <span>Solution {index + 1}</span>
 
                 {openIndex === index ? (
@@ -97,7 +106,8 @@ export default function SolutionsModal({
           onClick={onAddSolution}
           aria-label="Proposer une autre solution"
         >
-          💡 Proposer une autre solution
+          <img src={lightBulbNoLight} width="20" height="20" alt="light" />
+          Proposer une autre solution
         </button>
 
         <button className="close-btn" onClick={onClose} aria-label="Fermer">

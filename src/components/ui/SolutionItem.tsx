@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./SolutionItem.scss";
 import { voteSolution } from "@src/services/feedbackService";
 import Avatar from "../shared/Avatar";
+import { ThumbsUp, ThumbsDown } from "lucide-react";
 
 type Props = {
   solution: any;
@@ -87,7 +88,7 @@ export default function SolutionItem({ solution }: Props) {
               type="user"
               className="avatar"
               wrapperClassName="avatar-wrapper-override"
-              sizeHW={30}
+              sizeHW={34}
             />
             <span>{solution.author.pseudo}</span>
           </div>
@@ -98,7 +99,7 @@ export default function SolutionItem({ solution }: Props) {
               onClick={() => handleVote(1)}
               aria-label="Voter pour cette solution"
             >
-              👍 {upvotes}
+              <ThumbsUp size={16} /> {upvotes}
             </button>
 
             <button
@@ -106,7 +107,7 @@ export default function SolutionItem({ solution }: Props) {
               onClick={() => handleVote(-1)}
               aria-label="Voter contre cette solution"
             >
-              👎 {downvotes}
+              <ThumbsDown size={16} /> {downvotes}
             </button>
           </div>
         </div>

@@ -10,8 +10,8 @@
 
 .planet-pop-feed__item {
   --planet-pop-feed-item-delay: 0ms;
-  --planet-pop-feed-bubble-duration: 9.5s;
-  --planet-pop-feed-photo-duration: 10s;
+  --planet-pop-feed-bubble-duration: 4.1s;
+  --planet-pop-feed-photo-duration: 4.4s;
   --planet-pop-feed-surface: rgba(255, 255, 255, 1);
   --planet-pop-feed-border: rgba(0, 0, 0, 0.08);
   --planet-pop-feed-shadow: rgba(0, 0, 0, 0.05);
@@ -235,8 +235,8 @@
 /* Responsive */
 @media (max-width: 900px) {
   .planet-pop-feed__item {
-    --planet-pop-feed-bubble-duration: 8.4s;
-    --planet-pop-feed-photo-duration: 8.8s;
+    --planet-pop-feed-bubble-duration: 4.4s;
+    --planet-pop-feed-photo-duration: 4.7s;
   }
 
   .planet-pop-feed__item--align-start .planet-pop-feed__bubbles {

@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import {
   loadDefaultStats,
   loadSuggestionStats,
@@ -11,16 +11,19 @@ import type {
 
 export const useRightSidebarStats = (mode: RightSidebarStatsMode) => {
   const [stats, setStats] = useState<RightSidebarStatItem[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  const lastMode = useRef<RightSidebarStatsMode | null>(null); // ✅ AJOUT
+  const [loading, setLoading] = useState(mode !== "none");
 
   useEffect(() => {
     let cancelled = false;
 
-    // ✅ évite les appels inutiles
-    if (lastMode.current === mode) return;
-    lastMode.current = mode;
+    if (mode === "none") {
+      setStats([]);
+      setLoading(false);
+
+      return () => {
+        cancelled = true;
+      };
+    }
 
     const load = async () => {
       setLoading(true);
