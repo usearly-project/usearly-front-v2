@@ -1,3 +1,5 @@
+@use "@src/styles/base/variables" as *;
+
 .solution-modal-content {
   overflow: visible;
 }
@@ -12,7 +14,7 @@
     z-index: 2;
     position: absolute;
     top: -50px;
-    left: -24px;
+    left: -28px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -31,18 +33,27 @@
     display: flex;
     align-items: center;
     justify-content: center; // ✅ centré
+    margin-top: 20px;
+    margin-bottom: 10px;
     gap: 10px;
+    color: #000;
 
     h2 {
       font-size: 20px;
       font-weight: 700;
+      font-family: $font-family-3;
     }
   }
 
   p {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     font-size: 14px;
-    color: #555;
+    font-weight: 300;
+    color: #000;
     line-height: 1.5;
+    margin-bottom: 10px;
   }
   p strong {
     color: #222;

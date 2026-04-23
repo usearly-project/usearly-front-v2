@@ -3,6 +3,7 @@ import Modal from "@src/components/ui/Modal";
 import "./SolutionModal.scss";
 import { createSolution } from "@src/services/feedbackService";
 import toast from "react-hot-toast";
+import lightBulbLight from "/assets/icons/lightBulbLight.svg";
 
 interface Props {
   reportId: string;
@@ -55,19 +56,28 @@ const SolutionModal: React.FC<Props> = ({ reportId, onClose, onSuccess }) => {
   return (
     <Modal onClose={onClose} contentClassName="solution-modal-content">
       <div className="solution-modal">
-        <span className="icon">💡</span>
+        <span className="icon">
+          <img width="45" height="45" src={lightBulbLight} alt="light" />
+        </span>
         <div className="header-modal">
           <h2>Partager une solution</h2>
         </div>
 
         <p>
-          Vous avez trouvé une <strong>solution de contournement</strong> ou une
-          <strong> astuce</strong> pour ce problème ?
-          <br />
-          Partagez-la avec la communauté pour aider les autres utilisateurs.
-          <br />
-          Si votre solution est jugée utile par la communauté, elle sera mise en
-          avant.
+          <span>
+            Vous avez trouvé une <strong>solution de contournement </strong>
+            ou une
+            <strong> astuce</strong> pour ce problème ?
+            <br />
+          </span>
+          <span>
+            Partagez-la avec la communauté pour aider les autres utilisateurs.
+            <br />
+          </span>
+          <span>
+            Si votre solution est jugée utile par la communauté, elle sera mise
+            en avant.
+          </span>
         </p>
 
         <textarea

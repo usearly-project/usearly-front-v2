@@ -300,6 +300,15 @@
   }
 }
 
+.user-main-content {
+  .right-panel {
+    margin-top: 73px;
+    @media screen and (max-width: 1220px) {
+      margin-top: 0;
+    }
+  }
+}
+
 .cdc-banner-container {
   .feedback-list-wrapper {
     .feedback-view-container {

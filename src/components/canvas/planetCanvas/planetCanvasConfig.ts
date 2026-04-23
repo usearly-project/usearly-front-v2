@@ -15,7 +15,7 @@ export const PLANET_CANVAS_TRAIL_IMAGES = Array.from(
   (_, index) => `/assets/images/about/imageAbout${index + 1}.png`,
 );
 
-export const POP_FEED_LIFETIME_MS = 10000;
+export const POP_FEED_LIFETIME_MS = 5400;
 export const POP_FEED_MAX_ATTEMPTS = 12;
 
 export { POP_FEED_BRANDS };

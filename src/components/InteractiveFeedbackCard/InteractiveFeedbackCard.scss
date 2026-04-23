@@ -630,6 +630,22 @@
   }
 }
 
+.mixed-feed {
+  .feed-content {
+    .feedback-card {
+      .feedback-main {
+        .feedback-right {
+          .shared-footer-cdc {
+            .footer-bottom {
+              padding-bottom: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 .feedback-right.is-resizing {
   overflow: hidden;
 }
