@@ -244,7 +244,7 @@ $highlight-yellow: #fffb00;
             }
           }
           .help-text {
-            color: $lavender-bg;
+            color: #2361d4;
             font-size: 12px;
             margin-top: 15px;
             font-weight: 600;
@@ -369,13 +369,15 @@ $highlight-yellow: #fffb00;
           .widget-inner {
             text-align: center;
             h3 {
-              padding: 0 20px;
+              padding: 0 18px;
               .widget-inner-text-bubble {
                 position: relative;
                 background-color: #a1a7ff;
                 padding: 5px 10px;
                 border-radius: 999px;
                 border: 2px solid #000;
+                font-weight: 500;
+                font-family: "Otomanopee One";
               }
               .widget-inner-text-bubble::after {
                 content: "";

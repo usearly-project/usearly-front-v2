@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { getCategoryIconPathFromSubcategory } from "@src/utils/IconsUtils";
 import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
@@ -65,6 +65,32 @@ const FlatSubcategoryBlock: React.FC<Props> = ({
   const [solutionsCount, setSolutionsCount] = useState<number>(
     solutionsCountProp ?? 0,
   );
+
+  const iconRef = useRef<HTMLImageElement>(null);
+  const leftRef = useRef<HTMLDivElement>(null);
+  const [descriptionMarginLeft, setDescriptionMarginLeft] =
+    useState<number>(65);
+
+  const recomputeDescriptionMargin = () => {
+    const icon = iconRef.current;
+    const left = leftRef.current;
+    if (!icon || !left) return;
+    const iconWidth = icon.getBoundingClientRect().width;
+    const gapRaw = getComputedStyle(left).columnGap;
+    const gap = parseFloat(gapRaw) || 0;
+    setDescriptionMarginLeft(iconWidth + gap);
+  };
+
+  useLayoutEffect(() => {
+    recomputeDescriptionMargin();
+    const icon = iconRef.current;
+    const left = leftRef.current;
+    if (!icon || !left) return;
+    const ro = new ResizeObserver(recomputeDescriptionMargin);
+    ro.observe(icon);
+    ro.observe(left);
+    return () => ro.disconnect();
+  }, [expanded, subcategory]);
 
   useEffect(() => {
     setSolutionsCount(solutionsCountProp ?? 0);
@@ -191,11 +217,13 @@ const FlatSubcategoryBlock: React.FC<Props> = ({
       {/* === HEADER === */}
       {/* onClick={toggleExpanded} désactivé : un signalement ne doit plus se refermer au clic. */}
       <div className="subcategory-header">
-        <div className="subcategory-left">
+        <div className="subcategory-left" ref={leftRef}>
           <img
+            ref={iconRef}
             src={getCategoryIconPathFromSubcategory(subcategory)}
             alt={subcategory}
             className="subcategory-icon"
+            onLoad={recomputeDescriptionMargin}
           />
           <div className="subcategory-text">
             <div className="subcategory-title-row">
@@ -274,7 +302,10 @@ const FlatSubcategoryBlock: React.FC<Props> = ({
       {expanded && (
         <div className="subcategory-content">
           <div className="main-description">
-            <p className="description-text">
+            <p
+              className="description-text"
+              style={{ marginLeft: `${descriptionMarginLeft}px` }}
+            >
               {showFullText
                 ? `${initialDescription.description} ${
                     initialDescription.emoji || ""

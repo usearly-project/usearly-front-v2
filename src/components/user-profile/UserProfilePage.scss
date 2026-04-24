@@ -5,25 +5,42 @@
   width: 100%;
   min-height: 100vh;
   background-color: #f8f8f8;
+  .user-profile-banner {
+    .banner-container {
+      .banner-main {
+        .stats-block {
+          .stats-inline {
+            .stat {
+              justify-items: center;
+              .stat-value {
+                width: fit-content;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 .profile-main-wrapper {
   position: relative;
+  isolation: isolate;
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  // gap: clamp(24px, 4vw, 65px);
+  margin: auto;
   margin-top: 24px;
-  width: 80%;
-  max-width: 975px;
-  //width: fit-content; // ⬅️ LA LIGNE MANQUANTE
-  margin-left: auto;
-  margin-right: auto;
+  padding: 0 10px;
+  // width: 70%;
+  width: min(100%, 1180px);
+  max-width: 1180px;
+  gap: 24px;
 
   .user-main-content {
-    flex: 1 1 620px;
-    min-width: 0;
-    max-width: 616px;
+    flex: 1 1 632px;
+    min-width: 632px;
+    max-width: 632px;
     margin-left: 0;
     margin-right: 0;
 
@@ -39,7 +56,7 @@
   }
 
   > .right-panel {
-    flex: 0 1 clamp(240px, 24vw, 320px);
+    flex: 0 1 clamp(240px, 27.5vw, 1000px);
     width: min(100%, 320px);
     min-width: 240px;
     align-items: flex-start;
@@ -78,19 +95,27 @@
   position: absolute;
   height: 300px;
   top: 0;
-  left: -32px;
-  right: -32px;
+  left: 30px;
+  right: 30px;
   border-radius: 18px;
 
-  z-index: 0;
+  z-index: -1;
   pointer-events: none;
   transition: background-color 0.3s ease;
-}
 
-@media (min-width: 1600px) {
-  .profile-main-wrapper::before {
-    left: -24px;
-    right: -24px;
+  @media screen and (max-width: 1120px) {
+    left: -30px;
+    right: -30px;
+  }
+
+  @media screen and (min-width: 1515px) {
+    left: 0px;
+    right: 0px;
+  }
+
+  @media screen and (min-width: 1770px) {
+    left: -30px;
+    right: -30px;
   }
 }
 
@@ -247,7 +272,7 @@
 
   .feedback-list-wrapper {
     width: 100%;
-    max-width: 616px;
+    max-width: 632px;
   }
 
   .profile-filters-container {
@@ -325,7 +350,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 616px;
+  max-width: 632px;
   margin: 0px 0;
 }
 

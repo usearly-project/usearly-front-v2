@@ -9,6 +9,7 @@ import chromeLogo from "/assets/logo/chrome.svg";
 import ExtensionRedirect from "../extension-redirect/ExtensionRedirect";
 import Modal from "../ui/Modal";
 import { Button } from "../ui/button";
+import { Search } from "lucide-react";
 
 interface RedirectionExtensionModalProps {
   onClose: () => void;
@@ -163,8 +164,11 @@ const RedirectionExtensionModal: React.FC<RedirectionExtensionModalProps> = ({
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     placeholder="Chercher un problème"
+                    readOnly
                   />
-                  <span className="search-icon-sim">🔍</span>
+                  <span className="search-icon-sim">
+                    <Search width={16} height={16} />
+                  </span>
                 </div>
               </div>
 

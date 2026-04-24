@@ -135,12 +135,12 @@ body.feedback-route .home-grouped-reports-list {
   display: flex;
   justify-content: center;
   margin-top: 16px;
-  padding-left: 3%;
-  padding-right: 3%;
+  // padding-left: 3%;
+  // padding-right: 3%;
   @media screen and (max-width: 1080px) {
     gap: 15px;
-    padding-left: 14px;
-    padding-right: 14px;
+    // padding-left: 14px;
+    // padding-right: 14px;
   }
   @media screen and (max-width: 992px) {
     display: flex;
@@ -243,7 +243,7 @@ body.feedback-route .home-grouped-reports-list {
 .report-banner-container {
   display: flex;
   width: auto;
-  max-width: 616px;
+  max-width: 620px;
   border-radius: 24px;
   padding: 0;
   margin: 61px 16px 32px;
@@ -258,7 +258,7 @@ body.feedback-route .home-grouped-reports-list {
 
   .report-main-column {
     flex: 1;
-    min-width: 616px;
+    min-width: 620px;
     display: flex;
     flex-direction: column;
   }
@@ -268,7 +268,7 @@ body.feedback-route .home-grouped-reports-list {
     position: relative;
     z-index: 2;
     margin-top: -60px; // ✅ cartes par-dessus
-    min-width: 616px;
+    min-width: 620px;
   }
 
   .right-panel {
@@ -390,7 +390,7 @@ body.feedback-route .home-grouped-reports-list {
 .cdc-banner-container {
   display: flex;
   width: auto;
-  max-width: 616px;
+  max-width: 620px;
   border-radius: 24px;
   padding: 16px 0;
   margin: 61px 16px 32px;
@@ -419,7 +419,7 @@ body.feedback-route .home-grouped-reports-list {
     z-index: 2;
     margin-top: -65px;
     gap: 0px;
-    width: 616px;
+    width: 620px;
 
     .selected-brand-heading {
       position: relative;
@@ -554,7 +554,7 @@ body.feedback-route .home-grouped-reports-list {
     z-index: 2;
     margin-top: -50px; // ✅ cartes par-dessus
     gap: 0px;
-    min-width: 616px;
+    min-width: 620px;
 
     .selected-brand-heading {
       position: relative;
@@ -686,7 +686,7 @@ body.feedback-route .home-grouped-reports-list {
 
 .user-main-content.is-mobile {
   display: grid;
-  grid-template-columns: minmax(175px, 275px) minmax(0, 616px);
+  grid-template-columns: minmax(175px, 275px) minmax(0, 620px);
   grid-template-areas:
     "left-panel feedback-content"
     "right-panel feedback-content";
@@ -901,7 +901,7 @@ body.feedback-route .home-grouped-reports-list {
   .feedback-view-container,
   .home-grouped-reports-list {
     width: 100%;
-    max-width: 616px;
+    max-width: 620px;
     min-width: 0;
     box-sizing: border-box;
     @media screen and (max-width: 1220px) {
@@ -917,7 +917,7 @@ body.feedback-route .home-grouped-reports-list {
     //   "right-panel"
     //   "feedback-content";
     // justify-items: start;
-    grid-template-columns: minmax(0, 616px);
+    grid-template-columns: minmax(0, 620px);
     grid-template-areas: "feedback-content";
     justify-content: center;
     justify-items: center;
@@ -932,7 +932,7 @@ body.feedback-route .home-grouped-reports-list {
     > .cdc-banner-container,
     > .suggestion-banner-container {
       width: 100%;
-      max-width: 616px;
+      max-width: 620px;
     }
   }
 }
@@ -1059,7 +1059,7 @@ body.feedback-route .home-grouped-reports-list {
     .flat-subcategory-mobile,
     .feedback-report-mobile,
     .subcategory-block.flat {
-      width: 616px;
+      width: 620px;
       max-width: 100%;
       min-width: 0;
       box-sizing: border-box;

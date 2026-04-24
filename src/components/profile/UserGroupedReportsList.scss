@@ -218,6 +218,8 @@
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
+  align-self: flex-start;
+  width: 100.5%;
 
   &.open {
     .brand-header {
@@ -331,6 +333,9 @@
       border: 1px solid #f0f0f0;
       padding: 8px;
       margin: 4px 8px;
+      width: 620px;
+      min-width: 620px;
+      max-width: 620px;
       overflow: hidden;
       background-color: #f7f7f7;
 
