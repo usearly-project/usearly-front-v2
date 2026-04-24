@@ -1,3 +1,4 @@
+import { useLayoutEffect, useRef } from "react";
 import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
 import Avatar from "@src/components/shared/Avatar";
@@ -11,6 +12,7 @@ interface Props {
   brandLogo: string;
   formattedShortDate: string;
   firstDescription: any;
+  onDescriptionMarginChange?: (marginLeft: number) => void;
 }
 
 const PopularReportHeader: React.FC<Props> = ({
@@ -20,14 +22,40 @@ const PopularReportHeader: React.FC<Props> = ({
   brandLogo,
   formattedShortDate,
   firstDescription,
+  onDescriptionMarginChange,
 }) => {
+  const iconRef = useRef<HTMLImageElement>(null);
+  const leftRef = useRef<HTMLDivElement>(null);
+
+  const recomputeMargin = () => {
+    const icon = iconRef.current;
+    const left = leftRef.current;
+    if (!icon || !left || !onDescriptionMarginChange) return;
+    const iconWidth = icon.getBoundingClientRect().width;
+    const gap = parseFloat(getComputedStyle(left).columnGap) || 0;
+    onDescriptionMarginChange(iconWidth + gap);
+  };
+
+  useLayoutEffect(() => {
+    recomputeMargin();
+    const icon = iconRef.current;
+    const left = leftRef.current;
+    if (!icon || !left) return;
+    const ro = new ResizeObserver(recomputeMargin);
+    ro.observe(icon);
+    ro.observe(left);
+    return () => ro.disconnect();
+  }, [item.subCategory, isOpen]);
+
   return (
     <div className="subcategory-header">
-      <div className="subcategory-left">
+      <div className="subcategory-left" ref={leftRef}>
         <img
+          ref={iconRef}
           src={getCategoryIconPathFromSubcategory(item.subCategory)}
           alt={item.subCategory}
           className="subcategory-icon"
+          onLoad={recomputeMargin}
         />
         <div className="subcategory-text">
           <div className="subcategory-title-row">

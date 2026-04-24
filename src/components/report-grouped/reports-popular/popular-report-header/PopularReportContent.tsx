@@ -8,6 +8,7 @@ interface Props {
   descriptionLength: number;
   previewLength: number;
   setShowCapturePreview: (v: boolean) => void;
+  descriptionMarginLeft?: number;
 }
 
 const PopularReportContent: React.FC<Props> = ({
@@ -18,12 +19,20 @@ const PopularReportContent: React.FC<Props> = ({
   descriptionLength,
   previewLength,
   setShowCapturePreview,
+  descriptionMarginLeft,
 }) => {
   const shouldShowToggle = descriptionLength > previewLength || !!captureUrl;
 
   return (
     <div className="main-description">
-      <div className="description-text">
+      <div
+        className="description-text"
+        style={
+          descriptionMarginLeft !== undefined
+            ? { marginLeft: `${descriptionMarginLeft}px` }
+            : undefined
+        }
+      >
         <span className="description-content">{descriptionText}</span>
 
         {showFullText && captureUrl && (

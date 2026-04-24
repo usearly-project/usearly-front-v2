@@ -34,7 +34,7 @@
 
 .public-feed-layout {
   display: grid;
-  grid-template-columns: minmax(275px, 275px) 616px minmax(275px, 275px);
+  grid-template-columns: minmax(275px, 275px) 620px minmax(275px, 275px);
   grid-template-areas: "left-panel feed-content right-panel";
   align-items: start;
   gap: 16px;
@@ -106,7 +106,7 @@
   }
 
   @media screen and (max-width: 1220px) {
-    grid-template-columns: minmax(175px, 275px) minmax(0, 616px);
+    grid-template-columns: minmax(175px, 275px) minmax(0, 620px);
     grid-template-areas: "side-panels feed-content";
     column-gap: 16px;
     row-gap: 20px;
@@ -133,7 +133,7 @@
     > .public-feed-center {
       justify-self: center;
       width: 100%;
-      max-width: 616px;
+      max-width: 620px;
     }
 
     .public-feed-center {
@@ -151,7 +151,7 @@
   }
 
   @media screen and (max-width: 992px) {
-    grid-template-columns: minmax(0, 616px);
+    grid-template-columns: minmax(0, 620px);
     grid-template-areas: "feed-content";
     justify-content: center;
     justify-items: center;
@@ -162,7 +162,7 @@
 
     > .public-feed-center {
       width: 100%;
-      max-width: 616px;
+      max-width: 620px;
     }
   }
 

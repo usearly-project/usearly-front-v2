@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useLayoutEffect, useRef } from "react";
 import { getCategoryIconPathFromSubcategory } from "@src/utils/IconsUtils";
 import { useAuth } from "@src/services/AuthContext";
 import DescriptionCommentSection from "@src/components/report-desc-comment/DescriptionCommentSection";
@@ -66,6 +66,31 @@ const ChronoReportCard: React.FC<Props> = ({ item, isOpen, onToggle }) => {
   const [localCommentsCounts, setLocalCommentsCounts] = useState<
     Record<string, number>
   >({});
+
+  const iconRef = useRef<HTMLImageElement>(null);
+  const leftRef = useRef<HTMLDivElement>(null);
+  const [descriptionMarginLeft, setDescriptionMarginLeft] =
+    useState<number>(65);
+
+  const recomputeDescriptionMargin = () => {
+    const icon = iconRef.current;
+    const left = leftRef.current;
+    if (!icon || !left) return;
+    const iconWidth = icon.getBoundingClientRect().width;
+    const gap = parseFloat(getComputedStyle(left).columnGap) || 0;
+    setDescriptionMarginLeft(iconWidth + gap);
+  };
+
+  useLayoutEffect(() => {
+    recomputeDescriptionMargin();
+    const icon = iconRef.current;
+    const left = leftRef.current;
+    if (!icon || !left) return;
+    const ro = new ResizeObserver(recomputeDescriptionMargin);
+    ro.observe(icon);
+    ro.observe(left);
+    return () => ro.disconnect();
+  }, [isOpen, item.subCategory.subCategory]);
   const { comments, loading } = useCommentsForDescription(
     descriptionId,
     "report",
@@ -177,13 +202,15 @@ const ChronoReportCard: React.FC<Props> = ({ item, isOpen, onToggle }) => {
       data-description-id={descriptionId}
     >
       <div className="subcategory-header" onClick={onToggle}>
-        <div className="subcategory-left">
+        <div className="subcategory-left" ref={leftRef}>
           <img
+            ref={iconRef}
             src={getCategoryIconPathFromSubcategory(
               item.subCategory.subCategory,
             )}
             className="subcategory-icon"
             alt="icon catégorie"
+            onLoad={recomputeDescriptionMargin}
           />
 
           <div className="subcategory-text">
@@ -250,7 +277,10 @@ const ChronoReportCard: React.FC<Props> = ({ item, isOpen, onToggle }) => {
               className="description-wrapper"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="description-text">
+              <div
+                className="description-text"
+                style={{ marginLeft: `${descriptionMarginLeft}px` }}
+              >
                 <span className="description-content">{descriptionText}</span>
 
                 {showFullText && item.capture && (

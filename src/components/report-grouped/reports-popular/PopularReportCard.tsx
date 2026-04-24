@@ -46,6 +46,8 @@ const PopularReportCard: React.FC<Props> = ({
     Record<string, number>
   >({});
   const [showCapturePreview, setShowCapturePreview] = useState(false);
+  const [descriptionMarginLeft, setDescriptionMarginLeft] =
+    useState<number>(65);
   const { showAuthTooltip, tooltipText, tooltipPosition, triggerTooltip } =
     useAuthTooltip();
   const firstDescription = item.descriptions?.[0];
@@ -190,6 +192,7 @@ const PopularReportCard: React.FC<Props> = ({
         brandLogo={brandLogo}
         formattedShortDate={formattedShortDate}
         firstDescription={firstDescription}
+        onDescriptionMarginChange={setDescriptionMarginLeft}
       />
 
       {isOpen && (
@@ -202,6 +205,7 @@ const PopularReportCard: React.FC<Props> = ({
             descriptionLength={firstDescription.description.length}
             previewLength={DESCRIPTION_PREVIEW_LENGTH}
             setShowCapturePreview={setShowCapturePreview}
+            descriptionMarginLeft={descriptionMarginLeft}
           />
           {brandResponse && (
             <BrandResponseBanner

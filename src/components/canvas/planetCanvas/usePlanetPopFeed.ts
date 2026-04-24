@@ -122,11 +122,16 @@ const usePlanetPopFeed = (enabled: boolean) => {
       });
 
       const tid = window.setTimeout(() => {
-        setFeedItems((prev) => {
-          const next = prev.filter((i) => !newItemIds.includes(i.id));
-          activeItemsRef.current = next;
-          return next;
-        });
+        const remaining = activeItemsRef.current.filter(
+          (i) => !newItemIds.includes(i.id),
+        );
+        activeItemsRef.current = remaining;
+        setFeedItems(remaining);
+
+        if (remaining.length === 0) {
+          const refillTid = window.setTimeout(spawnFeedItem, 120);
+          timeoutIdsRef.current.push(refillTid);
+        }
       }, Config.POP_FEED_LIFETIME_MS);
       timeoutIdsRef.current.push(tid);
     };

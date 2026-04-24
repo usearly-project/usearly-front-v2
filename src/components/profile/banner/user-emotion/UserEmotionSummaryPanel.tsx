@@ -15,88 +15,101 @@ export default function UserEmotionSummaryPanel({ data, loading }: Props) {
   const [main, ...others] = emotions;
   const diagonalAngles = ["-45deg", "135deg", "-135deg", "45deg"];
   const useDiagonalOrbit = others.length <= diagonalAngles.length;
+  const mainSentiment = EMOJI_META[main.emoji]?.label;
 
   return (
     <div className="emotion-summary-card">
-      {/* LEFT */}
-      <div
-        className={`emoji-area${hasSingleEmoji ? " emoji-area--single" : ""}`}
-      >
-        {/* EMOJI CENTRAL (le plus utilisé) */}
+      <div className="emotion-summary-card__content">
+        {/* LEFT */}
         <div
-          className={`emoji-item emoji-center${
-            hasSingleEmoji ? " emoji-center--single" : ""
-          }`}
+          className={`emoji-area${hasSingleEmoji ? " emoji-area--single" : ""}`}
         >
-          <span className="emoji-static">{main.emoji}</span>
-
-          {EMOJI_META[main.emoji] && (
-            <img
-              className="emoji-gif"
-              src={EMOJI_META[main.emoji].gif}
-              alt={EMOJI_META[main.emoji].label}
-            />
-          )}
-
+          {/* EMOJI CENTRAL (le plus utilisé) */}
           <div
-            className={`emoji-tooltip${
-              hasSingleEmoji
-                ? " emoji-tooltip--always-visible emoji-tooltip--single"
-                : ""
+            className={`emoji-item emoji-center${
+              hasSingleEmoji ? " emoji-center--single" : ""
             }`}
           >
-            {EMOJI_META[main.emoji]?.label} ({main.count})
+            <span className="emoji-static">{main.emoji}</span>
+
+            {EMOJI_META[main.emoji] && (
+              <img
+                className="emoji-gif"
+                src={EMOJI_META[main.emoji].gif}
+                alt={EMOJI_META[main.emoji].label}
+              />
+            )}
+
+            <div
+              className={`emoji-tooltip${
+                hasSingleEmoji
+                  ? " emoji-tooltip--always-visible emoji-tooltip--single"
+                  : ""
+              }`}
+            >
+              {EMOJI_META[main.emoji]?.label} ({main.count})
+            </div>
+          </div>
+
+          {/* EMOJIS SECONDAIRES EN CERCLE */}
+          <div className="emoji-orbit">
+            {others.map((e, index) => {
+              const meta = EMOJI_META[e.emoji];
+              const orbitStyle = useDiagonalOrbit
+                ? ({
+                    "--angle": diagonalAngles[index],
+                  } as React.CSSProperties)
+                : ({
+                    "--i": index,
+                    "--total": others.length,
+                  } as React.CSSProperties);
+
+              return (
+                <div
+                  key={e.emoji}
+                  className={`emoji-item emoji-orbit-item${
+                    useDiagonalOrbit ? " emoji-orbit-item--diagonal" : ""
+                  }`}
+                  style={orbitStyle}
+                >
+                  <span className="emoji-static">{e.emoji}</span>
+
+                  {meta && (
+                    <img
+                      className="emoji-gif"
+                      src={meta.gif}
+                      alt={meta.label}
+                    />
+                  )}
+
+                  <div className="emoji-tooltip">
+                    {meta?.label} ({e.count})
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
 
-        {/* EMOJIS SECONDAIRES EN CERCLE */}
-        <div className="emoji-orbit">
-          {others.map((e, index) => {
-            const meta = EMOJI_META[e.emoji];
-            const orbitStyle = useDiagonalOrbit
-              ? ({
-                  "--angle": diagonalAngles[index],
-                } as React.CSSProperties)
-              : ({
-                  "--i": index,
-                  "--total": others.length,
-                } as React.CSSProperties);
+        {/* RIGHT */}
+        <div className="stats-area">
+          <div className="stat-card">
+            <span className="stat-value">{reactionsCount}</span>
+            <span className="stat-label">Emotions</span>
+          </div>
 
-            return (
-              <div
-                key={e.emoji}
-                className={`emoji-item emoji-orbit-item${
-                  useDiagonalOrbit ? " emoji-orbit-item--diagonal" : ""
-                }`}
-                style={orbitStyle}
-              >
-                <span className="emoji-static">{e.emoji}</span>
-
-                {meta && (
-                  <img className="emoji-gif" src={meta.gif} alt={meta.label} />
-                )}
-
-                <div className="emoji-tooltip">
-                  {meta?.label} ({e.count})
-                </div>
-              </div>
-            );
-          })}
+          <div className="stat-card">
+            <span className="stat-value">{brandsCount}</span>
+            <span className="stat-label">Marques</span>
+          </div>
         </div>
       </div>
 
-      {/* RIGHT */}
-      <div className="stats-area">
-        <div className="stat-card">
-          <span className="stat-value">{reactionsCount}</span>
-          <span className="stat-label">Emotions</span>
-        </div>
-
-        <div className="stat-card">
-          <span className="stat-value">{brandsCount}</span>
-          <span className="stat-label">Marques</span>
-        </div>
-      </div>
+      {mainSentiment && (
+        <p className="emotion-summary-card__sentiment">
+          <strong>{mainSentiment}</strong> domine tes signalements récents.
+        </p>
+      )}
     </div>
   );
 }

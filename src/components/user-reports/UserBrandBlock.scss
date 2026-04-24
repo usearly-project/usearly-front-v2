@@ -83,7 +83,6 @@ img.inline-capture-img {
       border-radius: 50%;
       object-fit: cover;
       z-index: 1; // passe derrière le logo
-      border: 2px solid #fff;
     }
 
     .brand-logo {
@@ -93,7 +92,6 @@ img.inline-capture-img {
       object-fit: contain;
       //background-color: #fff;
       // padding: 2px;
-      border: 1px solid #ececec;
       margin-left: -10px; // superposition
       z-index: 2; // passe devant
     }
