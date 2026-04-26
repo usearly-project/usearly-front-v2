@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import BrandProgressRow from "./BrandProgressRow";
 import { getTrendingBrands } from "@src/services/feedbackService";
+import BrandMobilizationSidebar from "./brand-mobilization-sidebar/BrandMobilizationSidebar";
 
 type TrendingBrand = {
   brandName: string;
@@ -12,6 +13,15 @@ type TrendingBrand = {
 
 type TooltipState = { visible: boolean; x: number; y: number; text: string };
 
+// Props que ReportSidebar doit recevoir pour savoir s'il doit switcher
+interface Props {
+  selectedBrand?: string;
+  selectedSiteUrl?: string;
+  currentBrandStats?: {
+    problemsCount: number;
+  } | null;
+}
+
 function clampX(centerX: number, tooltipWidth: number, padding: number) {
   let x = centerX;
   if (x + tooltipWidth / 2 > window.innerWidth)
@@ -20,7 +30,11 @@ function clampX(centerX: number, tooltipWidth: number, padding: number) {
   return x;
 }
 
-function ReportSidebar() {
+function ReportSidebar({
+  selectedBrand,
+  selectedSiteUrl,
+  currentBrandStats,
+}: Props) {
   const [reportBrands, setReportBrands] = useState<TrendingBrand[]>([]);
   const [reportLoading, setReportLoading] = useState(true);
   const [showAll, setShowAll] = useState(false);
@@ -30,9 +44,6 @@ function ReportSidebar() {
     y: 0,
     text: "",
   });
-  const displayedBrands = showAll
-    ? reportBrands.slice(0, 10)
-    : reportBrands.slice(0, 3);
 
   useEffect(() => {
     const fetchBrands = async () => {
@@ -47,6 +58,25 @@ function ReportSidebar() {
     };
     fetchBrands();
   }, []);
+
+  // --- LE SEUL AJOUT NÉCESSAIRE ---
+  // Si on a une marque sélectionnée, on affiche TON composant et on s'arrête là.
+  if (selectedBrand) {
+    const count = currentBrandStats?.problemsCount || 0;
+    return (
+      <BrandMobilizationSidebar
+        brandName={selectedBrand}
+        siteUrl={selectedSiteUrl || ""}
+        count={count}
+        progress={(count / 30) * 100}
+      />
+    );
+  }
+
+  // --- TOUT TON CODE ORIGINAL INCHANGÉ ---
+  const displayedBrands = showAll
+    ? reportBrands.slice(0, 10)
+    : reportBrands.slice(0, 3);
 
   const handleSeeAll = (e: React.MouseEvent) => {
     if (reportBrands.length <= 3) {
@@ -79,7 +109,7 @@ function ReportSidebar() {
 
   return (
     <div className="left-sidebar">
-      <h3>Les marques à faire réagir en ce moment{`\u00a0`}!</h3>
+      <h3>Les marques à faire réagir en ce moment!</h3>
       <div className="brands-list">
         {reportLoading ? (
           <p>Chargement...</p>
@@ -113,7 +143,7 @@ function ReportSidebar() {
       </div>
 
       <p className="sidebar-text">
-        Ces marques crispent beaucoup d&apos;utilisateurs en ce moment.
+        Ces marques crispent beaucoup d'utilisateurs en ce moment.
       </p>
       <h1 className="sidebar-title">
         Signalez les bugs en ligne et faites bouger les marques !

@@ -14,22 +14,24 @@ type BrandStat = { brandName: string; siteUrl: string; count: number };
 
 const BRANDS_GRID_LIMIT = 4;
 
+// --- 1. AJOUT DES PROPS DE FILTRAGE ---
 interface Props {
   activeTab?: FeedbackType;
   feedbackData?: FeedItem[];
+  selectedBrand?: string; // Ajouté
+  selectedSiteUrl?: string; // Ajouté
+  brandReportStats?: any; // Ajouté
 }
 
 const getBrandName = (item: unknown) => {
   if (typeof item === "string") return item;
   if (!item || typeof item !== "object") return "";
-
   const entry = item as Record<string, unknown>;
   return String(entry.marque || entry.brand || entry.name || "").trim();
 };
 
 const getBrandSiteUrl = (item: unknown, brandName: string) => {
   if (!item || typeof item !== "object") return "";
-
   const entry = item as Record<string, unknown>;
   const rawUrl = String(entry.siteUrl || entry.domain || entry.url || "");
   return normalizeDomain(rawUrl) || (brandName ? `${brandName}.com` : "");
@@ -37,19 +39,9 @@ const getBrandSiteUrl = (item: unknown, brandName: string) => {
 
 const getBrandCount = (item: unknown) => {
   if (!item || typeof item !== "object") return 1;
-
   const entry = item as Record<string, unknown>;
   const rawCount =
-    entry.count ??
-    entry.total ??
-    entry.totalCount ??
-    entry.feedbackCount ??
-    entry.coupDeCoeurCount ??
-    entry.coupdecoeurCount ??
-    entry.coupsDeCoeurCount ??
-    entry.suggestionCount ??
-    entry.suggestionsCount;
-
+    entry.count ?? entry.total ?? entry.totalCount ?? entry.feedbackCount ?? 1;
   const count = Number(rawCount);
   return Number.isFinite(count) && count > 0 ? count : 1;
 };
@@ -62,7 +54,6 @@ function sortAndLimitBrandStats(counts: Map<string, BrandStat>) {
 
 function computeBrandStats(feedbackData: FeedItem[]) {
   const counts = new Map<string, BrandStat>();
-
   for (const item of feedbackData) {
     const key = (item.marque || "").toLowerCase().trim();
     if (!key) continue;
@@ -77,24 +68,20 @@ function computeBrandStats(feedbackData: FeedItem[]) {
       });
     }
   }
-
   return sortAndLimitBrandStats(counts);
 }
 
 function computeBrandStatsFromApi(items: unknown[]) {
   const counts = new Map<string, BrandStat>();
-
   for (const item of items) {
     const brandName = getBrandName(item);
     const key = brandName.toLowerCase().trim();
     if (!key) continue;
-
     const existing = counts.get(key);
     if (existing) {
       existing.count += getBrandCount(item);
-      if (!existing.siteUrl) {
+      if (!existing.siteUrl)
         existing.siteUrl = getBrandSiteUrl(item, brandName);
-      }
     } else {
       counts.set(key, {
         brandName,
@@ -103,57 +90,57 @@ function computeBrandStatsFromApi(items: unknown[]) {
       });
     }
   }
-
   return sortAndLimitBrandStats(counts);
 }
 
 function useLeftSidebarBrandStats(activeTab?: FeedbackType) {
   const [brandStats, setBrandStats] = useState<BrandStat[]>([]);
-
   useEffect(() => {
     if (activeTab !== "coupdecoeur" && activeTab !== "suggestion") {
       setBrandStats([]);
       return;
     }
-
     let cancelled = false;
-
     const fetchBrandStats = async () => {
       try {
         const data =
           activeTab === "coupdecoeur"
             ? await getAllBrandsCdc()
             : await getAllBrandsSuggestion();
-
-        if (!cancelled) {
+        if (!cancelled)
           setBrandStats(
             computeBrandStatsFromApi(Array.isArray(data) ? data : []),
           );
-        }
       } catch (error) {
-        console.error("Erreur chargement stats marques nav gauche:", error);
+        console.error("Erreur chargement stats:", error);
         if (!cancelled) setBrandStats([]);
       }
     };
-
     fetchBrandStats();
-
     return () => {
       cancelled = true;
     };
   }, [activeTab]);
-
   return brandStats;
 }
 
-const LeftSidebar = ({ activeTab, feedbackData = [] }: Props) => {
+// --- COMPOSANT NETTOYÉ ---
+const LeftSidebar = ({
+  activeTab,
+  feedbackData = [],
+  selectedBrand,
+  selectedSiteUrl,
+  brandReportStats,
+}: Props) => {
   const apiBrandStats = useLeftSidebarBrandStats(activeTab);
+
   const brandStats = useMemo(() => {
     if (activeTab !== "coupdecoeur" && activeTab !== "suggestion") return [];
     if (apiBrandStats.length > 0) return apiBrandStats;
     return computeBrandStats(feedbackData);
   }, [activeTab, apiBrandStats, feedbackData]);
 
+  // État Suggestion
   if (activeTab === "suggestion") {
     return (
       <div className="left-sidebar">
@@ -165,33 +152,37 @@ const LeftSidebar = ({ activeTab, feedbackData = [] }: Props) => {
         <p className="sidebar-text">
           Ces marques génèrent le plus de{" "}
           <strong>soutien de la communauté</strong> en ce moment.
-          <br />
-          Toi aussi exprime ta créativité et améliore tes sites et apps préférés
-          !
         </p>
       </div>
     );
   }
 
+  // État Coup de Coeur
   if (activeTab === "coupdecoeur") {
     return (
       <div className="left-sidebar">
         <h3>
-          Les marques qui font battre votre
+          Les marques qui font battre votre{" "}
           <img src={cdcIcon} alt="icon coeur" /> en ce moment !
         </h3>
         <BrandsGrid brands={brandStats} />
         <p className="sidebar-text">
           <strong>Ces marques génèrent beaucoup d'amour</strong> auprès des
-          utilisateurs en ce moment.
-          <br />
-          Toi aussi exprime ton amour aux marques qui te facilitent la vie !
+          utilisateurs.
         </p>
       </div>
     );
   }
 
-  return <ReportSidebar />;
+  // --- ÉTAT SIGNALEMENT (Report) ---
+  // On transmet les informations de filtrage au ReportSidebar
+  return (
+    <ReportSidebar
+      selectedBrand={selectedBrand}
+      selectedSiteUrl={selectedSiteUrl}
+      currentBrandStats={brandReportStats}
+    />
+  );
 };
 
 export default LeftSidebar;

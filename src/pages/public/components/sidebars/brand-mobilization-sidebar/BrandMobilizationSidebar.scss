@@ -1,0 +1,279 @@
+.mobilization-card {
+  width: 280px;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 18px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+  font-family: sans-serif;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    h2 {
+      font-size: 18px;
+      font-weight: 800;
+      margin: 0;
+    }
+  }
+
+  &__icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #eef1f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__frame {
+    border: 2px solid #111;
+    padding: 16px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* TOP SECTION RESTRUCTURÉE */
+  &__top-section {
+    display: flex;
+    flex-direction: column;
+    gap: 6px; // Espace entre le texte et la barre
+    margin-bottom: 16px;
+  }
+
+  &__text-row {
+    display: flex;
+    justify-content: flex-end; // Pousse tout vers la droite
+    align-items: baseline;
+    gap: 12px; // Espace entre le texte et le ratio
+
+    // Le texte "La mobilisation grandit"
+    span {
+      font-size: 13px;
+      font-weight: 700; // Plus gras selon ton image
+      color: #555;
+    }
+  }
+
+  &__progress-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__logo {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 100%; /* Le logo prend toute la place du container */
+      height: 100%;
+      object-fit: contain;
+      border-radius: 4px; /* Un léger arrondi si c'est un carré */
+    }
+  }
+
+  &__bar {
+    flex-grow: 1;
+    height: 6px;
+    background: #e5e5e5;
+    border-radius: 999px;
+    overflow: hidden;
+
+    .mobilization-card__fill {
+      height: 100%;
+      background: #4c6fff;
+      border-radius: 999px;
+    }
+  }
+
+  &__ratio {
+    font-size: 14px;
+    font-weight: 800;
+    color: #111;
+
+    strong {
+      color: #ccc; // Le /30 est très clair sur ta capture
+      font-weight: 400;
+    }
+  }
+
+  /* --- BULLE (CORRIGÉE) --- */
+  &__bubble {
+    position: relative;
+    display: inline-flex;
+    align-self: flex-start;
+    align-items: center;
+    gap: 8px;
+    border: 2px solid #111;
+    border-radius: 999px;
+    padding: 4px 12px;
+    margin-bottom: 24px;
+    background: #fff;
+
+    strong {
+      font-size: 20px;
+      font-weight: 900;
+    }
+    span {
+      font-size: 13px;
+      font-weight: 600;
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      left: 18px;
+      bottom: -6px;
+      width: 10px;
+      height: 10px;
+      background: #fff;
+      border-right: 2px solid #111;
+      border-bottom: 2px solid #111;
+      transform: rotate(45deg);
+    }
+  }
+
+  /* --- TIMELINE (STYLE FINAL : CONTOUR VS PLEIN) --- */
+  .timeline-step {
+    display: flex;
+    gap: 8px;
+    min-height: 75px;
+
+    &__left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 24px;
+    }
+
+    &__node {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid #e0e0e0;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      flex-shrink: 0;
+      color: transparent; // Check caché par défaut
+
+      svg {
+        width: 12px;
+        height: 12px;
+      }
+    }
+
+    &__line {
+      width: 2px;
+      flex-grow: 1;
+      background: #e0e0e0;
+      margin: 4px 0;
+    }
+
+    &__content {
+      padding-bottom: 25px;
+    }
+
+    &__title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #b0b0b0;
+      line-height: 1.2;
+      margin-bottom: 2px;
+
+      .timeline-step__title-container {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .certified-badge {
+        flex-shrink: 0;
+        display: inline-flex;
+        // PAR DÉFAUT : GRIS (Étape non atteinte)
+        fill: #e0e0e0;
+        color: white;
+
+        // PAR DÉFAUT : On cache le check (facultatif, ou on le laisse en blanc sur gris)
+        polyline {
+          stroke: white;
+        }
+
+        // QUAND LE SEUIL EST ATTEINT
+        &.is-certified {
+          fill: #4c6fff !important;
+          color: white !important;
+
+          polyline {
+            stroke: white !important;
+            stroke-width: 3;
+          }
+        }
+      }
+    }
+
+    &__desc {
+      font-size: 12px;
+      color: #8a8a8a;
+    }
+
+    /* ÉTAT 1 : ÉTAPE DÉJÀ PASSÉE -> STYLE CONTOUR BLEU */
+    &.done:not(.active) {
+      .timeline-step__node {
+        border-color: #4c6fff; // Bordure bleue
+        background: white; // Fond blanc
+        color: #4c6fff; // Check bleu
+      }
+      .timeline-step__line {
+        background: #4c6fff;
+      }
+      .timeline-step__title {
+        color: #000;
+        .certified-badge {
+          color: #4c6fff;
+          fill: #4c6fff;
+        }
+      }
+    }
+
+    /* ÉTAT 2 : ÉTAPE ACTUELLE -> STYLE PLEIN BLEU */
+    &.active {
+      .timeline-step__node {
+        background: #4c6fff; // Fond plein bleu
+        border-color: #4c6fff;
+        color: white; // Check blanc
+      }
+      .timeline-step__line {
+        background: #4c6fff;
+      }
+      .timeline-step__title {
+        color: #000;
+        .certified-badge {
+          color: #4c6fff;
+          fill: #4c6fff;
+          // Force le check blanc à l'intérieur du badge
+          polyline {
+            stroke: white !important;
+          }
+        }
+      }
+      .timeline-step__desc {
+        color: #555;
+      }
+    }
+  }
+
+  /* Fix pour l'intérieur du badge BadgeCheck de Lucide */
+  .certified-badge polyline {
+    stroke: white !important;
+  }
+}

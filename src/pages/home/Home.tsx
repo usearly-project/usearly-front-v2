@@ -28,6 +28,7 @@ import {
   getFeedbackTabFromPathSegment,
   uniqueBrandsBySlug,
 } from "@src/utils/brandSlug";
+import type { BrandReportStats } from "./home-grouped-reports-list/utils/brandReportStats";
 
 const FEEDBACK_LIST_WRAPPER_SELECTOR = ".feedback-list-wrapper";
 const BOTTOM_THRESHOLD_PX = 12;
@@ -129,7 +130,8 @@ function Home() {
     if (safeTab === "suggestion") return suggestionBrandLookup;
     return reportBrandLookup;
   }, [safeTab, cdcBrandLookup, reportBrandLookup, suggestionBrandLookup]);
-
+  const [brandReportStats, setBrandReportStats] =
+    useState<BrandReportStats | null>(null);
   const allBrandLookup = useMemo(
     () =>
       uniqueBrandsBySlug([
@@ -422,12 +424,20 @@ function Home() {
 
       <main className={`user-main-content ${isMobile ? "is-mobile" : ""}`}>
         <aside className="left-panel">
-          <LeftSidebar activeTab={activeTab} feedbackData={feedbackData} />
+          {/* <LeftSidebar activeTab={activeTab} feedbackData={feedbackData} /> */}
+          <LeftSidebar
+            activeTab={activeTab}
+            feedbackData={feedbackData}
+            brandReportStats={brandReportStats}
+            selectedBrand={currentSelectedBrand} // <--- INDISPENSABLE
+            selectedSiteUrl={currentSelectedSiteUrl} // <--- INDISPENSABLE
+          />
         </aside>
 
         {activeTab === "report" && (
           <ReportTab
             activeFilter={activeFilter}
+            onBrandReportStatsChange={setBrandReportStats}
             setActiveFilter={setActiveFilter}
             onThemeChange={handleTabChange}
             selectedBrand={currentSelectedBrand}

@@ -1,8 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react"; // On retire useState d'ici
 import HomeGroupedReportsList from "../home-grouped-reports-list/HomeGroupedReportsList";
-// import SearchBar from "../components/searchBar/SearchBar";
 import EndOfList from "./EndOfList";
-// import FeedbackRightSidebar from "./FeedbackRightSidebar";
 import type { FeedbackType } from "@src/types/Reports";
 import type { BrandReportStats } from "../home-grouped-reports-list/utils/brandReportStats";
 
@@ -23,6 +21,8 @@ interface Props {
   searchTerm: string;
   onSearchTermChange: (value: string) => void;
   showRightPanel?: boolean;
+  // --- INDISPENSABLE : On ajoute la prop pour remonter les stats au parent ---
+  onBrandReportStatsChange?: (stats: BrandReportStats | null) => void;
 }
 
 const ReportTab: React.FC<Props> = ({
@@ -37,23 +37,12 @@ const ReportTab: React.FC<Props> = ({
   setSelectedMainCategory,
   setSelectedSiteUrl,
   selectedSiteUrl,
-  // brandBannerStyle,
   displayedCount,
   searchTerm,
   onSearchTermChange,
-  // showRightPanel = true,
+  onBrandReportStatsChange, // Récupéré depuis les props
 }) => {
-  const [, setBrandReportStats] = React.useState<BrandReportStats | null>(null);
-  // Ancien code desactive : appeler setBrandReportStats pendant le rendu
-  // declenche l'erreur React "Too many re-renders".
-  // if (!brandReportStats) {
-  //   setBrandReportStats(null);
-  // }
-  useEffect(() => {
-    if (!selectedBrand || selectedCategory) {
-      setBrandReportStats(null);
-    }
-  }, [selectedBrand, selectedCategory]);
+  // On supprime le useState local car c'est Home.tsx qui gère l'état maintenant
 
   const bannerClassName = [
     "report-banner-container",
@@ -65,12 +54,6 @@ const ReportTab: React.FC<Props> = ({
   ]
     .filter(Boolean)
     .join(" ");
-  // const rightPanelClassName = [
-  //   "right-panel",
-  //   selectedBrand || selectedCategory ? "right-panel--brand-colored" : "",
-  // ]
-  //   .filter(Boolean)
-  //   .join(" ");
 
   return (
     <div className={bannerClassName}>
@@ -99,7 +82,8 @@ const ReportTab: React.FC<Props> = ({
           totalityCount={displayedCount}
           searchTerm={searchTerm}
           onSearchTermChange={onSearchTermChange}
-          onBrandReportStatsChange={setBrandReportStats}
+          // ON TRANSMET LES STATS AU PARENT (HOME)
+          onBrandReportStatsChange={onBrandReportStatsChange}
         />
         {displayedCount > 0 && <EndOfList />}
       </div>
