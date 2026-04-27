@@ -125,6 +125,8 @@
   top: 10px;
 }
 .power {
+  position: relative;
+  right: 75px;
   display: flex;
   flex-direction: column; /* éléments l’un sous l’autre */
   align-items: center; /* centrage horizontal */

@@ -232,6 +232,7 @@ const FeedbackView = ({
             key={item.id || `feedback-${index}`}
             item={safeItem}
             isOpen={openId === item.id}
+            showHeaderTypeIcon
             //onToggle={(id) => setOpenId((prev) => (prev === id ? null : id))}
           />
         );

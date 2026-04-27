@@ -157,8 +157,25 @@ export default function SelectFilter<V extends string = string>(
   }, [open]);
 
   useEffect(() => {
-    if (open && isBrandSelect)
-      requestAnimationFrame(() => searchInputRef.current?.focus());
+    if (!open || !isBrandSelect) return;
+    const resetScrollToTop = () => {
+      if (!optionsContainerRef.current) return;
+      optionsContainerRef.current.scrollTop = 0;
+    };
+
+    let secondFrame = 0;
+    const firstFrame = requestAnimationFrame(() => {
+      resetScrollToTop();
+      searchInputRef.current?.focus();
+      secondFrame = requestAnimationFrame(resetScrollToTop);
+    });
+    const timeoutId = window.setTimeout(resetScrollToTop, 220);
+
+    return () => {
+      cancelAnimationFrame(firstFrame);
+      cancelAnimationFrame(secondFrame);
+      window.clearTimeout(timeoutId);
+    };
   }, [open, isBrandSelect]);
 
   const toggleOpen = () => {

@@ -9,6 +9,7 @@ import CommentCountLabel from "@src/components/publications/footerParts/CommentC
 import ReactionPickerTrigger from "@src/components/publications/footerParts/ReactionPickerTrigger/ReactionPickerTrigger";
 import ShareModalSwitch from "@src/components/publications/footerParts/ShareModalSwitch/ShareModalSwitch";
 import VoteButton from "@src/components/publications/footerParts/VoteButton/VoteButton";
+import { useAuthTooltip } from "@src/hooks/useAuthTooltip";
 // import { useIsMobile } from "@src/hooks/use-mobile";
 
 interface Props {
@@ -40,6 +41,7 @@ const SharedFooterCdcAndSuggest: React.FC<Props> = ({
   const emojis = getEmojisForType(type);
   const [showShareModal, setShowShareModal] = useState(false);
   // const isMobile = useIsMobile();
+  const { triggerTooltip } = useAuthTooltip();
 
   const isGuestMode = isGuest || !userId;
 
@@ -67,7 +69,16 @@ const SharedFooterCdcAndSuggest: React.FC<Props> = ({
     await handleReact(emoji);
   };
 
-  const toggleComments = () => onToggleComments();
+  const toggleComments = (
+    event?: React.MouseEvent<HTMLButtonElement | HTMLSpanElement>,
+  ) => {
+    if (isGuestMode) {
+      triggerTooltip("Connecte-toi pour commenter", event);
+      return;
+    }
+
+    onToggleComments();
+  };
 
   return (
     <div className={`shared-footer-cdc ${isExpired ? "expired" : ""}`}>

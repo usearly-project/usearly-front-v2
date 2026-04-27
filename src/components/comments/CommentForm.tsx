@@ -24,7 +24,7 @@ const CommentForm: React.FC<Props> = ({ avatarUrl, value, onSubmit }) => {
   const [suggestions, setSuggestions] = useState<Mention[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [, setQuery] = useState("");
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
   const { userProfile } = useAuth();
 
   // 🧠 Recherche d’utilisateurs (debounce pour les performances)
@@ -42,7 +42,7 @@ const CommentForm: React.FC<Props> = ({ avatarUrl, value, onSubmit }) => {
     }
   }, 300);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const val = e.target.value;
     setText(val);
 
@@ -114,9 +114,8 @@ const CommentForm: React.FC<Props> = ({ avatarUrl, value, onSubmit }) => {
           <div className="comment-input-wrapper">
             <div className="comment-highlight">{highlightMentions(text)}</div>
 
-            <input
+            <textarea
               ref={inputRef}
-              type="text"
               placeholder="Commenter…"
               value={text}
               onChange={handleChange}

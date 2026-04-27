@@ -6,7 +6,7 @@
 
 .comment-form {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   gap: 10px;
   width: 100%;
   position: relative;
@@ -14,13 +14,15 @@
 
   .comment-avatar-wrapper {
     flex-shrink: 0;
+    align-self: flex-start;
   }
 
   .comment-input-container {
     position: relative;
     flex: 1;
 
-    input.comment-input {
+    input.comment-input,
+    textarea.comment-input {
       width: 100%;
       border: 1px solid var(--border-color, #ddd);
       border-radius: 22px;
@@ -93,6 +95,8 @@
     font-weight: 600;
     cursor: pointer;
     transition: background 0.2s ease;
+    align-self: flex-end;
+    margin-bottom: 10px;
 
     &:hover {
       background: #3b6dd4;

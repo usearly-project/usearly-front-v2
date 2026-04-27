@@ -279,7 +279,7 @@ const MobileActu: React.FC<MobileActuProps> = ({
             <DescriptionCommentSection
               userId={userProfile?.id || ""}
               descriptionId={item.id}
-              type={item.type === "cdc" ? "coupdecoeur" : "suggestion"}
+              type={type === "cdc" ? "coupdecoeur" : "suggestion"}
               forceOpen
               hideFooter
               onCommentCountChange={actions.setCommentCount}

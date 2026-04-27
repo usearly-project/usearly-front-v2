@@ -464,7 +464,7 @@
         position: relative;
         display: inline-block;
         margin-top: -8px;
-        margin-right: 8px;
+        margin-right: -6px;
 
         .user-avatar-wrapper {
           position: relative;
@@ -954,7 +954,7 @@
   }
 
   .typography-icon-wrapper {
-    width: clamp(80px, 24cqw, 90px);
+    width: clamp(80px, 24cqw, 130px);
     max-height: 135px;
     aspect-ratio: 1 / 1;
     flex: 0 0 auto;

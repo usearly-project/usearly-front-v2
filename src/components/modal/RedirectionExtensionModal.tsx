@@ -74,7 +74,9 @@ const RedirectionExtensionModal: React.FC<RedirectionExtensionModalProps> = ({
           <div className="warning-icon-wrapper">
             <img src={signalIcon} alt="Alert" />
           </div>
-          <h2>Vérifie et signale le problème en direct</h2>
+          <h2 className="reveal-wall">
+            Vérifie et signale le problème en direct
+          </h2>
           <p className="modal-desc">
             Tu vas être redirigé vers{" "}
             <strong>{brandName || "la marque"}</strong> pour reproduire le
@@ -171,23 +173,43 @@ const RedirectionExtensionModal: React.FC<RedirectionExtensionModalProps> = ({
                   </span>
                 </div>
               </div>
+            </div>
 
-              <div className="usearly-sidebar-exact">
-                <div className="side-item side-logo-u">
-                  <img src={logoExtension} alt="Logo Usearly" />
-                </div>
-                <div className="side-item side-warning">
-                  <img src={signalIcon} alt="Signal" />
-                </div>
-                <div className="side-item">
-                  <img src={cdcIcon} alt="Coup de coeur" />
-                </div>
-                <div className="side-item">
-                  <img src={suggestIcon} alt="Suggestion" />
-                </div>
-                <div className="side-dots-container">
-                  <span className="side-dots">...</span>
-                </div>
+            {/* Sidebar conservée ici en commentaire car enfant du panel blanc,
+            elle ne peut pas apparaître avant lui si le parent est delayé.
+            <div className="usearly-sidebar-exact">
+              <div className="side-item side-logo-u">
+                <img src={logoExtension} alt="Logo Usearly" />
+              </div>
+              <div className="side-item side-warning">
+                <img src={signalIcon} alt="Signal" />
+              </div>
+              <div className="side-item">
+                <img src={cdcIcon} alt="Coup de coeur" />
+              </div>
+              <div className="side-item">
+                <img src={suggestIcon} alt="Suggestion" />
+              </div>
+              <div className="side-dots-container">
+                <span className="side-dots">...</span>
+              </div>
+            </div> */}
+
+            <div className="usearly-sidebar-exact">
+              <div className="side-item side-logo-u">
+                <img src={logoExtension} alt="Logo Usearly" />
+              </div>
+              <div className="side-item side-warning">
+                <img src={signalIcon} alt="Signal" />
+              </div>
+              <div className="side-item">
+                <img src={cdcIcon} alt="Coup de coeur" />
+              </div>
+              <div className="side-item">
+                <img src={suggestIcon} alt="Suggestion" />
+              </div>
+              <div className="side-dots-container">
+                <span className="side-dots">...</span>
               </div>
             </div>
           </div>
