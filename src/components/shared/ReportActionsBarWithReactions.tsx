@@ -142,7 +142,14 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
         </div>
         <div className="count-right">
           {commentsCount > 0 && (
-            <span className="comments-link" onClick={onCommentClick}>
+            <span
+              className="comments-link"
+              onClick={(event) =>
+                !isAuthenticated
+                  ? triggerTooltip("Connecte-toi pour commenter", event)
+                  : onCommentClick()
+              }
+            >
               {commentsCount} commentaires
             </span>
           )}

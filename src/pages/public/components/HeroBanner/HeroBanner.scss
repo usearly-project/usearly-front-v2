@@ -5,7 +5,7 @@
   background-color: #10163a;
   background-image: url("/assets/svg/3logo-cascade.svg");
   background-repeat: no-repeat;
-  background-position: right 100px top -30px;
+  background-position: right 52px top -30px;
   background-size: 220px auto;
   padding: 40px 0;
   color: white;
@@ -17,7 +17,7 @@
     inset: 0;
     background-image: url("/assets/images/bulle-deco-banner.svg");
     background-repeat: no-repeat;
-    background-position: left 62px top -115px;
+    background-position: left 24px top -110px;
     background-size: 240px auto;
     opacity: 0.15;
     pointer-events: none;
@@ -41,6 +41,9 @@
     }
     .hero-right {
       margin-right: 110px;
+      .hero-impact {
+        text-align: center;
+      }
     }
   }
   .hero-left {

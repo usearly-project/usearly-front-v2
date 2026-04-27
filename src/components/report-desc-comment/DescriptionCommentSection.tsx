@@ -4,6 +4,7 @@ import { MessageCircleMore, Share2 } from "lucide-react";
 import CommentSection from "@src/components/comments/CommentSection";
 import DescriptionReactionSelector from "@src/utils/DescriptionReactionSelector";
 import { useCommentsForDescription } from "@src/hooks/useCommentsForDescription";
+import { useLoginModal } from "@src/components/context/LoginModalContext";
 
 interface Props {
   descriptionId: string;
@@ -47,6 +48,7 @@ const DescriptionCommentSection: React.FC<Props> = ({
   isPublic = false,
 }) => {
   const [localRefreshKey, setLocalRefreshKey] = useState(0);
+  const { openLoginModal } = useLoginModal();
   // Choix entre prop et état local
   const effectiveRefreshKey = refreshKey ?? localRefreshKey;
 
@@ -67,7 +69,7 @@ const DescriptionCommentSection: React.FC<Props> = ({
 
   const toggleComments = () => {
     if (isPublic) {
-      window.dispatchEvent(new Event("USEARLY_OPEN_LOGIN"));
+      openLoginModal();
       return;
     }
 
@@ -86,7 +88,7 @@ const DescriptionCommentSection: React.FC<Props> = ({
       onOpen?.();
       onOpenSimilarReports?.();
     }
-  }, [forceOpen]);
+  }, [forceOpen, onOpen, onOpenSimilarReports]);
 
   useEffect(() => {
     const handleExternalToggle = () => {

@@ -200,8 +200,75 @@ $highlight-yellow: #fffb00;
         height: 280px;
         display: flex;
         position: relative;
-        overflow: visible;
+        overflow: hidden;
         padding-right: 30px;
+
+        .usearly-sidebar-exact {
+          position: absolute;
+          right: 20px;
+          top: 45%;
+          z-index: 2;
+          opacity: 0;
+          transform: translateY(-50%) scale(0.8);
+          width: 50px; // Un peu plus large pour laisser respirer les icônes
+          background: #ffffff;
+          border-radius: 30px;
+
+          display: flex;
+          flex-direction: column;
+          align-items: center; // 🟢 CENTRE HORIZONTALEMENT
+          padding: 10px 0;
+          gap: 15px; // Espace régulier entre les icônes
+          animation: sidebarArrive 0.35s ease-out 2s both;
+
+          .side-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+
+            img {
+              width: 28px; // Taille des icônes coeurs/étoiles
+              height: auto;
+              object-fit: contain;
+            }
+          }
+
+          .side-logo-u {
+            padding-bottom: 12px;
+            border-bottom: 1px solid #eee;
+            width: 80%; // Pour que la bordure ne touche pas les bords de la sidebar
+
+            img {
+              width: 38px; // 🟢 BEAUCOUP PLUS GROS comme sur la maquette
+              height: auto;
+            }
+          }
+
+          /* .side-warning {
+            img {
+              width: 34px; // Un peu plus gros que les autres icônes
+            }
+          } */
+
+          .side-dots-container {
+            margin-top: auto; // Pousse vers le bas
+            background: #f5f5f5; // Petit cercle gris comme sur ta 2ème image
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .side-dots {
+              color: #999;
+              font-weight: bold;
+              margin-top: -8px; // Ajustement optique pour centrer les points
+              font-size: 18px;
+            }
+          }
+        }
 
         .content-left-dark {
           flex: 1;
@@ -222,7 +289,8 @@ $highlight-yellow: #fffb00;
             font-size: 13px;
             font-weight: 700;
             cursor: pointer;
-            transition: transform 0.1s;
+            transition: transform 0.3s;
+            animation: chromeInstallSlideUp 0.45s ease-out 0.2s both;
 
             // 🟢 CORRECTION DE LA TAILLE DU LOGO CHROME
             img {
@@ -240,7 +308,7 @@ $highlight-yellow: #fffb00;
             }
 
             &:hover {
-              transform: translate(-2px, -2px);
+              transform: translate(0px, -2px);
             }
           }
           .help-text {
@@ -249,6 +317,7 @@ $highlight-yellow: #fffb00;
             margin-top: 15px;
             font-weight: 600;
             cursor: pointer;
+            animation: chromeInstallReveal 0.45s ease-out 1.05s both;
           }
         }
 
@@ -266,6 +335,7 @@ $highlight-yellow: #fffb00;
           justify-content: center;
           align-items: flex-start;
           text-align: left;
+          animation: contentRightWhiteSlideUp 0.45s ease-out 2.5s both;
 
           .widget-close-small {
             position: absolute;
@@ -299,73 +369,8 @@ $highlight-yellow: #fffb00;
             }
           }
 
-          // SIDEBAR
-          .usearly-sidebar-exact {
-            position: absolute;
-            right: -60px; // Ajuste selon ton besoin pour que ça dépasse
-            top: 35%;
-            transform: translateY(-50%) scale(0.8);
-            width: 50px; // Un peu plus large pour laisser respirer les icônes
-            background: #ffffff;
-            border-radius: 30px;
-
-            display: flex;
-            flex-direction: column;
-            align-items: center; // 🟢 CENTRE HORIZONTALEMENT
-            padding: 10px 0;
-            gap: 15px; // Espace régulier entre les icônes
-
-            .side-item {
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              width: 100%;
-
-              img {
-                width: 28px; // Taille des icônes coeurs/étoiles
-                height: auto;
-                object-fit: contain;
-              }
-            }
-
-            // 🟢 LOGO U (Plus grand et centré)
-            .side-logo-u {
-              padding-bottom: 12px;
-              border-bottom: 1px solid #eee;
-              width: 80%; // Pour que la bordure ne touche pas les bords de la sidebar
-
-              img {
-                width: 38px; // 🟢 BEAUCOUP PLUS GROS comme sur la maquette
-                height: auto;
-              }
-            }
-
-            // 🟢 ICÔNE SIGNALEMENT (L'icône jaune)
-            /* .side-warning {
-              img {
-                width: 34px; // Un peu plus gros que les autres icônes
-              }
-            } */
-
-            // 🟢 LES POINTS DU BAS
-            .side-dots-container {
-              margin-top: auto; // Pousse vers le bas
-              background: #f5f5f5; // Petit cercle gris comme sur ta 2ème image
-              width: 34px;
-              height: 34px;
-              border-radius: 50%;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-
-              .side-dots {
-                color: #999;
-                font-weight: bold;
-                margin-top: -8px; // Ajustement optique pour centrer les points
-                font-size: 18px;
-              }
-            }
-          }
+          // SIDEBAR déplacée au niveau de .browser-content pour pouvoir
+          // apparaître avant le panel blanc sans être masquée par son parent.
           .widget-inner {
             text-align: center;
             h3 {
@@ -408,5 +413,41 @@ $highlight-yellow: #fffb00;
   to {
     opacity: 1;
     transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes chromeInstallSlideUp {
+  from {
+    transform: translateY(300px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes chromeInstallReveal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes contentRightWhiteSlideUp {
+  from {
+    transform: translateY(300px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes sidebarArrive {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

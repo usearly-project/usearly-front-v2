@@ -291,24 +291,6 @@ const ExtensionRedirect = ({
             </div>
           </div>
         </div>
-      </div>
-
-      <div className="extension-redirect-carousel-controls">
-        <button
-          type="button"
-          className="extension-redirect-carousel-arrow"
-          onClick={showPreviousSlide}
-          aria-label="Voir le slide précédent"
-        >
-          <span aria-hidden="true">
-            <img
-              src={chevronLeft}
-              style={{ width: "13px", height: "13px" }}
-              alt="Carousel tuto installation extension chrome suivant"
-            />
-          </span>
-        </button>
-
         <div
           className="extension-redirect-carousel-dots"
           role="tablist"
@@ -329,6 +311,23 @@ const ExtensionRedirect = ({
             />
           ))}
         </div>
+      </div>
+
+      <div className="extension-redirect-carousel-controls">
+        <button
+          type="button"
+          className="extension-redirect-carousel-arrow"
+          onClick={showPreviousSlide}
+          aria-label="Voir le slide précédent"
+        >
+          <span aria-hidden="true">
+            <img
+              src={chevronLeft}
+              style={{ width: "13px", height: "13px" }}
+              alt="Carousel tuto installation extension chrome suivant"
+            />
+          </span>
+        </button>
 
         <button
           type="button"

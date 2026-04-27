@@ -14,6 +14,7 @@ const FeedbackCardMobile: React.FC<Props> = ({ item, isOpen }) => {
       <InteractiveFeedbackCard
         item={item}
         isOpen={isOpen}
+        showHeaderTypeIcon
         //onToggle={onToggle}
         addClassName="feedback-card-mobile-shell"
       />

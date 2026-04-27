@@ -237,8 +237,7 @@ $green-progress: #48bb78;
 
   // Zone de commentaires mobile
   .mobile-comments-section {
-    background: #f8fafc;
-    margin: 10px -16px -16px -16px; // On colle aux bords du bas de la carte
+    margin: 10px -16px 0px -16px; // On colle aux bords du bas de la carte
     padding: 16px;
     border-top: 1px solid #edf2f7;
     border-bottom-left-radius: 24px;

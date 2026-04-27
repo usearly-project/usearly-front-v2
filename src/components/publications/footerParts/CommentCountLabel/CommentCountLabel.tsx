@@ -2,7 +2,7 @@ import React from "react";
 
 interface Props {
   count: number;
-  onClick?: () => void;
+  onClick?: React.MouseEventHandler<HTMLSpanElement>;
 }
 
 export default function CommentCountLabel({ count, onClick }: Props) {

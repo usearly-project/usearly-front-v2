@@ -18,6 +18,27 @@
 
 .favorite-section--reports {
   background: #cae1ff;
+  @media screen and (max-width: 900px) {
+    .favorite-wrapper {
+      gap: 0px;
+      .favorite-right {
+        .mobile-carousel {
+          .mobile-carousel__viewport {
+            .mobile-carousel__track {
+              .mobile-carousel__slide:first-child {
+                padding: 0;
+                height: fit-content;
+              }
+            }
+          }
+          .mobile-carousel__controls {
+            margin-top: -3px;
+            margin-bottom: 20px;
+          }
+        }
+      }
+    }
+  }
 }
 
 .favorite-section--favorites {
