@@ -51,6 +51,7 @@ const PopularReportCard: React.FC<Props> = ({
   const { showAuthTooltip, tooltipText, tooltipPosition, triggerTooltip } =
     useAuthTooltip();
   const firstDescription = item.descriptions?.[0];
+  const captureUrl = firstDescription?.capture ?? null;
   const descriptionId = firstDescription?.id ?? "";
   const brandResponse =
     item.hasBrandResponse as unknown as BrandResponseData | null;
@@ -110,11 +111,18 @@ const PopularReportCard: React.FC<Props> = ({
 
     const suffix =
       firstDescription.description.length > DESCRIPTION_PREVIEW_LENGTH
-        ? "..."
+        ? captureUrl
+          ? ""
+          : "..."
         : "";
 
     return `${truncated}${suffix} ${firstDescription.emoji || ""}`.trim();
-  }, [firstDescription?.description, firstDescription?.emoji, showFullText]);
+  }, [
+    captureUrl,
+    firstDescription?.description,
+    firstDescription?.emoji,
+    showFullText,
+  ]);
 
   //const hasBrandResponse = item.hasBrandResponse || null;
   const hasBrandResponse = !!item.hasBrandResponse;
@@ -133,7 +141,6 @@ const PopularReportCard: React.FC<Props> = ({
 
   const currentCount = localCommentsCounts[descriptionId] ?? 0;
   const brandLogo = getBrandLogo(item.marque, item.siteUrl ?? undefined);
-  const captureUrl = firstDescription.capture ?? null;
   const additionalDescriptions = item.descriptions.slice(1);
 
   const handleCommentClick = (event?: MouseEvent<HTMLElement>) => {

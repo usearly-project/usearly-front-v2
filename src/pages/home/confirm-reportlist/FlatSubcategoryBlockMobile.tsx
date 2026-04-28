@@ -81,10 +81,17 @@ const FlatSubcategoryBlockMobile: React.FC<Props> = ({
   const descriptionText = showFullText
     ? `${initialDescription.description} ${initialDescription.emoji || ""}`.trim()
     : `${initialDescription.description.slice(0, PREVIEW_LENGTH)}${
-        initialDescription.description.length > PREVIEW_LENGTH ? "…" : ""
+        initialDescription.description.length > PREVIEW_LENGTH && !captureUrl
+          ? "…"
+          : ""
       }`.trim();
 
   const hasMoreText = initialDescription.description.length > PREVIEW_LENGTH;
+  const toggleLabel = showFullText
+    ? "Voir moins"
+    : captureUrl
+      ? "... Voir plus"
+      : "Voir plus";
   void onToggleExpanded;
 
   return (
@@ -169,7 +176,7 @@ const FlatSubcategoryBlockMobile: React.FC<Props> = ({
                 }}
                 aria-label={showFullText ? "Voir moins" : "Voir plus"}
               >
-                {showFullText ? "Voir moins" : "Voir plus"}
+                {toggleLabel}
               </button>
             )}
 

@@ -133,7 +133,7 @@ body.dark,
 .comment-highlight {
   position: absolute;
   inset: 0;
-  padding: 8px 12px;
+  padding: 6px 12px;
   pointer-events: none;
   white-space: pre-wrap;
   color: transparent;
@@ -148,6 +148,13 @@ body.dark,
   position: relative;
   background: transparent;
   width: 100%;
-  padding: 8px 12px;
+  height: 30px;
+  min-height: 30px;
+  max-height: 100px;
+  padding: 6px 12px;
+  line-height: 18px;
+  box-sizing: border-box;
+  resize: none;
+  overflow-y: hidden;
   z-index: 2;
 }

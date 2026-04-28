@@ -57,6 +57,7 @@ const ChronoReportCard: React.FC<Props> = ({ item, isOpen, onToggle }) => {
   const isMobile = useIsMobile();
   const previewLength = isMobile ? 90 : DESCRIPTION_PREVIEW_LENGTH;
   const firstDescription = item.subCategory.descriptions?.[0];
+  const hasCapture = Boolean(item.capture);
   const descriptionId = firstDescription?.id ?? "";
   const [showSolutionModal, setShowSolutionModal] = useState(false);
   const [showSolutionsList, setShowSolutionsList] = useState(false);
@@ -106,9 +107,11 @@ const ChronoReportCard: React.FC<Props> = ({ item, isOpen, onToggle }) => {
 
     return (
       truncated +
-      (firstDescription.description.length > previewLength ? "..." : "")
+      (firstDescription.description.length > previewLength && !hasCapture
+        ? "..."
+        : "")
     );
-  }, [firstDescription?.description, previewLength, showFullText]);
+  }, [firstDescription?.description, hasCapture, previewLength, showFullText]);
 
   useEffect(() => {
     setSolutionsCount(item.solutionsCount ?? 0);
@@ -161,8 +164,12 @@ const ChronoReportCard: React.FC<Props> = ({ item, isOpen, onToggle }) => {
     },
   );
   const canToggleFullText =
-    firstDescription.description.length > previewLength ||
-    Boolean(item.capture);
+    firstDescription.description.length > previewLength || hasCapture;
+  const toggleLabel = showFullText
+    ? "Voir moins"
+    : hasCapture
+      ? "... Voir plus"
+      : "Voir plus";
 
   if (isMobile) {
     return (
@@ -283,6 +290,23 @@ const ChronoReportCard: React.FC<Props> = ({ item, isOpen, onToggle }) => {
               >
                 <span className="description-content">{descriptionText}</span>
 
+                {canToggleFullText && (
+                  <div
+                    className={`see-more-section ${showFullText ? "expanded" : ""}`}
+                  >
+                    <button
+                      className="see-more-button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleToggleFullText();
+                      }}
+                      aria-label={showFullText ? "Voir moins" : "Voir plus"}
+                    >
+                      {toggleLabel}
+                    </button>
+                  </div>
+                )}
+
                 {showFullText && item.capture && (
                   <div className="inline-capture">
                     <img
@@ -295,19 +319,6 @@ const ChronoReportCard: React.FC<Props> = ({ item, isOpen, onToggle }) => {
                       }}
                     />
                   </div>
-                )}
-
-                {canToggleFullText && (
-                  <button
-                    className="see-more-button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleToggleFullText();
-                    }}
-                    aria-label={showFullText ? "Voir moins" : "Voir plus"}
-                  >
-                    {showFullText ? "Voir moins" : "Voir plus"}
-                  </button>
                 )}
               </div>
             </div>

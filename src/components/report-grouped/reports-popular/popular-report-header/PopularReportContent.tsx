@@ -22,6 +22,11 @@ const PopularReportContent: React.FC<Props> = ({
   descriptionMarginLeft,
 }) => {
   const shouldShowToggle = descriptionLength > previewLength || !!captureUrl;
+  const toggleLabel = showFullText
+    ? "Voir moins"
+    : captureUrl
+      ? "... Voir plus"
+      : "Voir plus";
 
   return (
     <div className="main-description">
@@ -35,6 +40,21 @@ const PopularReportContent: React.FC<Props> = ({
       >
         <span className="description-content">{descriptionText}</span>
 
+        {shouldShowToggle && (
+          <div className={`see-more-section ${showFullText ? "expanded" : ""}`}>
+            <button
+              className={`see-more-button ${showFullText ? "expanded" : ""}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowFullText((prev) => !prev);
+              }}
+              aria-label={showFullText ? "Voir moins" : "Voir plus"}
+            >
+              {toggleLabel}
+            </button>
+          </div>
+        )}
+
         {showFullText && captureUrl && (
           <div className="inline-capture">
             <img
@@ -45,23 +65,6 @@ const PopularReportContent: React.FC<Props> = ({
                 setShowCapturePreview(true);
               }}
             />
-          </div>
-        )}
-
-        {shouldShowToggle && (
-          <div className={`see-more-section ${showFullText ? "expanded" : ""}`}>
-            {showFullText && <br />}
-
-            <button
-              className={`see-more-button ${showFullText ? "expanded" : ""}`}
-              onClick={(e) => {
-                e.stopPropagation();
-                setShowFullText((prev) => !prev);
-              }}
-              aria-label={showFullText ? "Voir moins" : "Voir plus"}
-            >
-              {showFullText ? "Voir moins" : "Voir plus"}
-            </button>
           </div>
         )}
       </div>

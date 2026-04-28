@@ -1,6 +1,9 @@
 import React from "react";
-import { Check, AlertCircle, BadgeCheck } from "lucide-react";
+import { Check, BadgeCheck } from "lucide-react";
 import "./BrandMobilizationSidebar.scss";
+import signalIconWhite from "/assets/icons/signal-icon-thin.svg";
+// import commentaireIconColor from "/assets/icons/commentaire-icon-color.svg";
+import commentaireIconColor from "/assets/icons/commentaire-icon.png";
 
 interface Props {
   brandName: string;
@@ -22,7 +25,13 @@ const BrandMobilizationSidebar: React.FC<Props> = ({
     <div className="mobilization-card">
       {/* HEADER DANS LA CARTE */}
       <div className="mobilization-card__header">
-        <div className="mobilization-card__icon">💬</div>
+        <div className="mobilization-card__icon">
+          <img
+            src={commentaireIconColor}
+            className="mobilization-card__icon-image"
+            alt="commentaire icon"
+          />
+        </div>
         <h2>On en est où ?</h2>
       </div>
 
@@ -34,10 +43,6 @@ const BrandMobilizationSidebar: React.FC<Props> = ({
           {/* Ligne du haut : Texte et Ratio */}
           <div className="mobilization-card__text-row">
             <span>La mobilisation grandit</span>
-            <span className="mobilization-card__ratio">
-              {count}
-              <strong>/30</strong>
-            </span>
           </div>
 
           {/* Ligne du bas : Logo + Progress Bar alignés */}
@@ -54,6 +59,10 @@ const BrandMobilizationSidebar: React.FC<Props> = ({
                 style={{ width: `${Math.min(progress, 100)}%` }}
               />
             </div>
+            <span className="mobilization-card__ratio">
+              {count}
+              <strong>/30</strong>
+            </span>
           </div>
         </div>
 
@@ -61,22 +70,30 @@ const BrandMobilizationSidebar: React.FC<Props> = ({
         <div className="mobilization-card__bubble">
           <strong>{count}</strong>
           <span>Signalements</span>
-          <AlertCircle size={16} />
+          <img
+            src={signalIconWhite}
+            width={22}
+            height={22}
+            alt="icon signalement"
+          />
         </div>
 
         {/* TIMELINE */}
         <div className="mobilization-card__timeline">
           <TimelineStep
+            isFirst
             active={count < STEP1_THRESHOLD}
             done={true}
+            lineActive={count >= STEP1_THRESHOLD}
             title="Mobilisation en cours 🔥"
             desc="Encore quelques signalements pour alerter la marque"
           />
           <TimelineStep
             active={count >= STEP1_THRESHOLD && count < STEP2_THRESHOLD}
             done={count >= STEP1_THRESHOLD}
+            lineActive={count >= STEP2_THRESHOLD}
             title="Marque alertée"
-            desc="La communauté déclenche une alerte auprès de la marque"
+            desc="La communauté alerte la marque une fois le seuil atteint"
           />
           <TimelineStep
             active={count >= STEP2_THRESHOLD}
@@ -99,17 +116,36 @@ const BrandMobilizationSidebar: React.FC<Props> = ({
   );
 };
 
-const TimelineStep = ({ active, done, title, desc, isLast }: any) => (
-  // Ajout de la classe ${done ? "done" : ""} ici
+interface TimelineStepProps {
+  active: boolean;
+  done: boolean;
+  lineActive?: boolean;
+  title: React.ReactNode;
+  desc: string;
+  isFirst?: boolean;
+  isLast?: boolean;
+}
+
+const TimelineStep = ({
+  active,
+  done,
+  lineActive,
+  title,
+  desc,
+  isLast,
+}: TimelineStepProps) => (
   <div
     className={`timeline-step ${active ? "active" : ""} ${done ? "done" : ""}`}
   >
     <div className="timeline-step__left">
       <div className="timeline-step__node">
-        {/* On affiche le check si c'est fait OU actif */}
         {(done || active) && <Check size={12} strokeWidth={3} />}
       </div>
-      {!isLast && <div className="timeline-step__line" />}
+      {!isLast && (
+        <div
+          className={`timeline-step__line ${lineActive ? "timeline-step__line--active" : ""}`}
+        />
+      )}
     </div>
 
     <div className="timeline-step__content">

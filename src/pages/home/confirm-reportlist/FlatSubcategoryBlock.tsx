@@ -173,6 +173,19 @@ const FlatSubcategoryBlock: React.FC<Props> = ({
   const resolvedLogo =
     possibleKeys.map((k) => brandLogos[k]).find(Boolean) ||
     FALLBACK_BRAND_PLACEHOLDER;
+  const shouldShowToggle =
+    initialDescription.description.length > 100 || Boolean(captureUrl);
+  const collapsedDescription = `${initialDescription.description.slice(0, 100)}${
+    initialDescription.description.length > 100 && !captureUrl ? "…" : ""
+  }`;
+  const expandedDescription = `${initialDescription.description} ${
+    initialDescription.emoji || ""
+  }`;
+  const toggleLabel = showFullText
+    ? "Voir moins"
+    : captureUrl
+      ? "... Voir plus"
+      : "Voir plus";
 
   if (isMobile) {
     return (
@@ -306,22 +319,14 @@ const FlatSubcategoryBlock: React.FC<Props> = ({
               className="description-text"
               style={{ marginLeft: `${descriptionMarginLeft}px` }}
             >
-              {showFullText
-                ? `${initialDescription.description} ${
-                    initialDescription.emoji || ""
-                  }`
-                : `${initialDescription.description.slice(0, 100)}${
-                    initialDescription.description.length > 100 ? "…" : ""
-                  }`}{" "}
-              {(initialDescription.description.length > 100 || captureUrl) && (
+              {showFullText ? expandedDescription : collapsedDescription}
+              {shouldShowToggle && (
                 <span
                   className={`see-more-section ${showFullText ? "expanded-section" : ""}`}
                   style={{ display: "inline" }}
                 >
                   {showFullText && <br />}
-                  {!showFullText &&
-                    initialDescription.description.length > 100 &&
-                    " "}
+                  {!showFullText && !captureUrl && " "}
                   <button
                     className="see-more-button"
                     style={showFullText ? { marginTop: "5px" } : {}}
@@ -331,7 +336,7 @@ const FlatSubcategoryBlock: React.FC<Props> = ({
                     }}
                     aria-label={showFullText ? "Voir moins" : "Voir plus"}
                   >
-                    {showFullText ? "Voir moins" : "Voir plus"}
+                    {toggleLabel}
                   </button>
                 </span>
               )}
