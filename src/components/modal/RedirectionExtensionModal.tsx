@@ -123,7 +123,7 @@ const RedirectionExtensionModal: React.FC<RedirectionExtensionModalProps> = ({
               <span></span>
             </div>
             <div className="url-bar">
-              <span className="lock">🔒</span> {url ? `${url}` : "site-web.com"}
+              {/* <span className="lock">🔒</span> {url ? `${url}` : "site-web.com"} */}
             </div>
             <div className="extension-icons-chrome">
               <img src={logoExtension} alt="U" className="logo-ext-small" />

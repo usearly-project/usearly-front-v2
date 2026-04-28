@@ -23,34 +23,47 @@ const MainDescription: React.FC<Props> = ({
   setModalImage,
 }) => {
   const isExpanded = showFullText[sub.subCategory];
+  const shouldShowToggle =
+    initialDescription.description.length > 100 ||
+    Boolean(initialDescription.capture);
+  const collapsedDescription = `${initialDescription.description.slice(0, 100)}${
+    initialDescription.description.length > 100 && !initialDescription.capture
+      ? "…"
+      : ""
+  }`;
+  const expandedDescription = `${initialDescription.description} ${
+    initialDescription.emoji || ""
+  }`;
+  const toggleLabel = isExpanded
+    ? "Voir moins"
+    : initialDescription.capture
+      ? "... Voir plus"
+      : "Voir plus";
 
   return (
     <>
       <div className="main-description">
         <p className="description-text">
-          {isExpanded
-            ? `${initialDescription.description} ${
-                initialDescription.emoji || ""
-              }`
-            : `${initialDescription.description.slice(0, 100)}${
-                initialDescription.description.length > 100 ? "…" : ""
-              }`}
+          {isExpanded ? expandedDescription : collapsedDescription}
 
-          {(initialDescription.description.length > 100 ||
-            initialDescription.capture) && (
-            <button
-              className="see-more-button"
-              onClick={(e) => {
-                e.stopPropagation();
-                setShowFullText((prev) => ({
-                  ...prev,
-                  [sub.subCategory]: !prev[sub.subCategory],
-                }));
-              }}
-              aria-label={isExpanded ? "Voir moins" : "Voir plus"}
-            >
-              {isExpanded ? "Voir moins" : "Voir plus"}
-            </button>
+          {shouldShowToggle && (
+            <span className="see-more-section">
+              {isExpanded && <br />}
+              {!isExpanded && !initialDescription.capture && " "}
+              <button
+                className="see-more-button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowFullText((prev) => ({
+                    ...prev,
+                    [sub.subCategory]: !prev[sub.subCategory],
+                  }));
+                }}
+                aria-label={isExpanded ? "Voir moins" : "Voir plus"}
+              >
+                {toggleLabel}
+              </button>
+            </span>
           )}
         </p>
 

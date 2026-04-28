@@ -53,6 +53,13 @@ const FeedbackReportMobile: React.FC<Props> = ({
   onCommentCountChange,
   onCommentAddedOrDeleted,
 }) => {
+  const hasCapture = Boolean(item.capture);
+  const toggleLabel = showFullText
+    ? "Voir moins"
+    : hasCapture
+      ? "... Voir plus"
+      : "Voir plus";
+
   return (
     <div className={`feedback-report-mobile ${isOpen ? "open" : ""}`}>
       <h1>aodhzoiadiazdizadoiazoidbz</h1>
@@ -119,18 +126,6 @@ const FeedbackReportMobile: React.FC<Props> = ({
               {descriptionText}
             </p>
 
-            {showFullText && item.capture && (
-              <img
-                src={item.capture ?? undefined}
-                alt="Aperçu"
-                className="feedback-report-mobile__capture"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onOpenCapture();
-                }}
-              />
-            )}
-
             {canToggleFullText && (
               <button
                 type="button"
@@ -141,8 +136,20 @@ const FeedbackReportMobile: React.FC<Props> = ({
                 }}
                 aria-label={showFullText ? "Voir moins" : "Voir plus"}
               >
-                {showFullText ? "Voir moins" : "Voir plus"}
+                {toggleLabel}
               </button>
+            )}
+
+            {showFullText && item.capture && (
+              <img
+                src={item.capture ?? undefined}
+                alt="Aperçu"
+                className="feedback-report-mobile__capture"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onOpenCapture();
+                }}
+              />
             )}
           </div>
 

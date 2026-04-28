@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Avatar from "../shared/Avatar";
 import { useAuth } from "@src/services/AuthContext";
 import "./CommentForm.scss";
@@ -26,6 +26,20 @@ const CommentForm: React.FC<Props> = ({ avatarUrl, value, onSubmit }) => {
   const [, setQuery] = useState("");
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const { userProfile } = useAuth();
+
+  const resizeTextarea = () => {
+    if (!inputRef.current) return;
+
+    inputRef.current.style.height = "30px";
+    const nextHeight = Math.min(inputRef.current.scrollHeight, 100);
+    inputRef.current.style.height = `${nextHeight}px`;
+    inputRef.current.style.overflowY =
+      inputRef.current.scrollHeight > 100 ? "auto" : "hidden";
+  };
+
+  useEffect(() => {
+    resizeTextarea();
+  }, [text]);
 
   // 🧠 Recherche d’utilisateurs (debounce pour les performances)
   const fetchUsers = debounce(async (term: string) => {
@@ -121,6 +135,7 @@ const CommentForm: React.FC<Props> = ({ avatarUrl, value, onSubmit }) => {
               onChange={handleChange}
               className="comment-input"
               autoComplete="off"
+              rows={1}
             />
           </div>
 

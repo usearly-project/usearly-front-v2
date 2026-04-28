@@ -1,9 +1,14 @@
+@use "@src/styles/base/_variables" as *;
+
 .mobilization-card {
+  position: relative;
   width: 280px;
   background: #ffffff;
   border-radius: 24px;
   padding: 18px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+  padding-top: 40px;
+  margin-top: 70px;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.12);
   font-family: sans-serif;
 
   &__header {
@@ -12,26 +17,42 @@
     gap: 10px;
     margin-bottom: 16px;
     h2 {
-      font-size: 18px;
+      width: 100%;
+      text-align: center;
+      font-size: 22px;
       font-weight: 800;
       margin: 0;
     }
   }
 
   &__icon {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: #eef1f5;
+    position: absolute;
+    top: -34px;
+    left: 0px;
+    width: 85px;
+    padding: 18px;
+    border-radius: 999px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    background: rgba(255, 255, 255, 1);
+    // transform: scale(1.2);
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 1;
+  }
+
+  &__icon-image {
+    width: 100%;
+    height: 100%;
+    display: block;
   }
 
   &__frame {
     border: 2px solid #111;
     padding: 16px;
-    border-radius: 20px;
+    padding-top: 24px;
+    border-radius: 16px;
     display: flex;
     flex-direction: column;
   }
@@ -40,20 +61,19 @@
   &__top-section {
     display: flex;
     flex-direction: column;
-    gap: 6px; // Espace entre le texte et la barre
-    margin-bottom: 16px;
+    margin-bottom: 32px;
   }
 
   &__text-row {
     display: flex;
-    justify-content: flex-end; // Pousse tout vers la droite
+    justify-content: center; // Pousse tout vers la droite
     align-items: baseline;
-    gap: 12px; // Espace entre le texte et le ratio
-
+    margin-bottom: -8px;
     // Le texte "La mobilisation grandit"
     span {
-      font-size: 13px;
-      font-weight: 700; // Plus gras selon ton image
+      font-family: $font-family;
+      font-size: 11px;
+      font-weight: 300; // Plus gras selon ton image
       color: #555;
     }
   }
@@ -75,8 +95,8 @@
     img {
       width: 100%; /* Le logo prend toute la place du container */
       height: 100%;
+      border-radius: 999px;
       object-fit: contain;
-      border-radius: 4px; /* Un léger arrondi si c'est un carré */
     }
   }
 
@@ -100,8 +120,8 @@
     color: #111;
 
     strong {
-      color: #ccc; // Le /30 est très clair sur ta capture
-      font-weight: 400;
+      color: #000000; // Le /30 est très clair sur ta capture
+      font-weight: 100;
     }
   }
 
@@ -111,36 +131,132 @@
     display: inline-flex;
     align-self: flex-start;
     align-items: center;
-    gap: 8px;
-    border: 2px solid #111;
+    gap: 5px;
+    border: 3px solid #111;
     border-radius: 999px;
-    padding: 4px 12px;
+    padding: 0px 12px;
     margin-bottom: 24px;
     background: #fff;
 
     strong {
-      font-size: 20px;
+      font-size: 28px;
       font-weight: 900;
     }
     span {
       font-size: 13px;
-      font-weight: 600;
+      font-weight: 400;
     }
+    img {
+      margin-left: 5px;
+    }
+
+    // Ancienne pointe simple :
+    // &::after {
+    //   content: "";
+    //   position: absolute;
+    //   left: 18px;
+    //   bottom: -7px;
+    //   width: 10px;
+    //   height: 10px;
+    //   background: #fff;
+    //   border-right: 3px solid #111;
+    //   border-bottom: 3px solid #111;
+    //   transform: rotate(45deg);
+    // }
+
+    &::before,
     &::after {
       content: "";
       position: absolute;
-      left: 18px;
-      bottom: -6px;
-      width: 10px;
-      height: 10px;
+      top: 100%;
+      transform: translateY(-50%) rotate(45deg);
+      pointer-events: none;
+    }
+
+    &::before {
+      width: 17px;
+      height: 17px;
+      left: 17.5px;
+      top: 103%;
+      background: #111;
+      clip-path: polygon(100% 0%, 175% 50%, 100% 110%, 35% 49%);
+    }
+
+    &::after {
+      width: 14px;
+      height: 14px;
+      left: 18.5px;
       background: #fff;
-      border-right: 2px solid #111;
-      border-bottom: 2px solid #111;
-      transform: rotate(45deg);
+      clip-path: polygon(30% 0%, 100% 0%, 130% 132%);
     }
   }
 
   /* --- TIMELINE (STYLE FINAL : CONTOUR VS PLEIN) --- */
+  &__timeline {
+    animation: mobilization-timeline-appear 0.6s ease-out both;
+
+    .timeline-step {
+      opacity: 0;
+      animation: mobilization-timeline-step-appear 0.5s ease-out forwards;
+
+      &:nth-child(1) {
+        animation-delay: 0.2s;
+      }
+      &:nth-child(2) {
+        animation-delay: 0.4s;
+      }
+      &:nth-child(3) {
+        animation-delay: 0.6s;
+      }
+    }
+  }
+
+  @keyframes mobilization-timeline-appear {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes mobilization-timeline-step-appear {
+    from {
+      opacity: 0;
+      transform: translateX(-12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes mobilization-timeline-node-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 rgba(76, 111, 255, 0.5);
+      transform: scale(1);
+    }
+    50% {
+      box-shadow: 0 0 0 8px rgba(76, 111, 255, 0);
+      transform: scale(1.12);
+    }
+  }
+
+  @keyframes mobilization-timeline-active-bounce {
+    0% {
+      transform: scale(1);
+    }
+    40% {
+      transform: scale(1.06);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
   .timeline-step {
     display: flex;
     gap: 8px;
@@ -177,6 +293,10 @@
       flex-grow: 1;
       background: #e0e0e0;
       margin: 4px 0;
+
+      &--active {
+        background: #4c6fff;
+      }
     }
 
     &__content {
@@ -223,7 +343,7 @@
 
     &__desc {
       font-size: 12px;
-      color: #8a8a8a;
+      color: #888;
     }
 
     /* ÉTAT 1 : ÉTAPE DÉJÀ PASSÉE -> STYLE CONTOUR BLEU */
@@ -232,9 +352,6 @@
         border-color: #4c6fff; // Bordure bleue
         background: white; // Fond blanc
         color: #4c6fff; // Check bleu
-      }
-      .timeline-step__line {
-        background: #4c6fff;
       }
       .timeline-step__title {
         color: #000;
@@ -251,12 +368,12 @@
         background: #4c6fff; // Fond plein bleu
         border-color: #4c6fff;
         color: white; // Check blanc
-      }
-      .timeline-step__line {
-        background: #4c6fff;
+        animation: mobilization-timeline-node-pulse 1.8s ease-in-out 1.2s
+          infinite;
       }
       .timeline-step__title {
         color: #000;
+        animation: mobilization-timeline-active-bounce 0.6s ease-out 1.2s both;
         .certified-badge {
           color: #4c6fff;
           fill: #4c6fff;
@@ -266,9 +383,9 @@
           }
         }
       }
-      .timeline-step__desc {
-        color: #555;
-      }
+      // .timeline-step__desc {
+      //   color: #555;
+      // }
     }
   }
 

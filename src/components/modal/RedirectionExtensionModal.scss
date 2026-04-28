@@ -219,7 +219,7 @@ $highlight-yellow: #fffb00;
           align-items: center; // 🟢 CENTRE HORIZONTALEMENT
           padding: 10px 0;
           gap: 15px; // Espace régulier entre les icônes
-          animation: sidebarArrive 0.35s ease-out 2s both;
+          animation: sidebarArrive 0.35s ease-out 1s both;
 
           .side-item {
             display: flex;
@@ -290,7 +290,7 @@ $highlight-yellow: #fffb00;
             font-weight: 700;
             cursor: pointer;
             transition: transform 0.3s;
-            animation: chromeInstallSlideUp 0.45s ease-out 0.2s both;
+            animation: chromeInstallSlideUp 0.35s ease-out 0s both;
 
             // 🟢 CORRECTION DE LA TAILLE DU LOGO CHROME
             img {
@@ -317,7 +317,7 @@ $highlight-yellow: #fffb00;
             margin-top: 15px;
             font-weight: 600;
             cursor: pointer;
-            animation: chromeInstallReveal 0.45s ease-out 1.05s both;
+            animation: chromeInstallReveal 0.45s ease-out 0.45s both;
           }
         }
 
@@ -335,7 +335,7 @@ $highlight-yellow: #fffb00;
           justify-content: center;
           align-items: flex-start;
           text-align: left;
-          animation: contentRightWhiteSlideUp 0.45s ease-out 2.5s both;
+          animation: contentRightWhiteSlideUp 0.45s ease-out 1.3s both;
 
           .widget-close-small {
             position: absolute;

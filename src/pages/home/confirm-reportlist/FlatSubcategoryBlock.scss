@@ -415,6 +415,34 @@
   }
 }
 
+.banner-report {
+  .user-main-content {
+    .feedback-list-wrapper {
+      .user-grouped-reports-list {
+        .brand-block {
+          .subcategories-list {
+            .subcategory-block {
+              .subcategory-content {
+                .main-description {
+                  margin-left: 65px;
+                }
+              }
+              .subcategory-header {
+                .subcategory-left {
+                  gap: 10px;
+                  .subcategory-icon {
+                    margin: 0;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 /* .capture-overlay {
   position: fixed;
   inset: 0;
