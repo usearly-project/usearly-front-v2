@@ -3,6 +3,7 @@ import { MoveDiagonal } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
 import CommentItem from "./CommentItem";
+import { compactRelativeDateLabel } from "@src/utils/dateUtils";
 
 interface User {
   id: string;
@@ -83,10 +84,12 @@ const CommentList: React.FC<Props> = ({
                 avatarUrl={getFullAvatarUrl(
                   comment.user?.avatar ?? comment.User?.avatar ?? null,
                 )}
-                dateLabel={formatDistanceToNow(new Date(comment.createdAt), {
-                  locale: fr,
-                  addSuffix: true,
-                })}
+                dateLabel={compactRelativeDateLabel(
+                  formatDistanceToNow(new Date(comment.createdAt), {
+                    locale: fr,
+                    addSuffix: true,
+                  }),
+                )}
               />
             ))}
           </ul>

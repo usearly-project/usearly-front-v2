@@ -15,7 +15,7 @@ function SideBarNav() {
               Mes informations
             </NavLink>
           </li>
-          <li>
+          {/* <li>
             <NavLink
               to="/profile"
               className={({ isActive }) => (isActive ? "active" : "")}
@@ -38,16 +38,18 @@ function SideBarNav() {
             >
               Mes marques
             </NavLink>
-          </li>
-        </ul>
-        <ul>
-          <li>
-            <NavLink to="/help">FAQ</NavLink>
-          </li>
+          </li> */}
           <li>
             <NavLink to="/contact">Nous contacter</NavLink>
           </li>
         </ul>
+        {/* 
+        <ul>
+          <li>
+            <NavLink to="/help">FAQ</NavLink>
+          </li> 
+        </ul>
+        */}
       </div>
     </nav>
   );

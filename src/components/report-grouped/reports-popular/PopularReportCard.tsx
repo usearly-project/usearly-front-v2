@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState, type MouseEvent } from "react";
 import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
+import { compactRelativeDateLabel } from "@src/utils/dateUtils";
 import { useAuth } from "@src/services/AuthContext";
 import { useCommentsForDescription } from "@src/hooks/useCommentsForDescription";
 import type { PopularGroupedReport } from "@src/types/Reports";
@@ -179,12 +180,12 @@ const PopularReportCard: React.FC<Props> = ({
   };
 
   const formattedShortDate = latestDate
-    ? formatDistanceToNow(new Date(latestDate), {
-        locale: fr,
-        addSuffix: false,
-      })
-        .replace("environ ", "")
-        .replace("il y a ", "")
+    ? compactRelativeDateLabel(
+        formatDistanceToNow(new Date(latestDate), {
+          locale: fr,
+          addSuffix: false,
+        }),
+      )
     : "";
 
   return (

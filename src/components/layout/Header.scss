@@ -105,6 +105,7 @@
       position: relative;
       text-decoration: none;
       color: #6f6f6f;
+      font-size: 15px;
       font-weight: 500;
       transition: color 0.3s ease;
 
@@ -113,7 +114,7 @@
         content: "";
         position: absolute;
         left: 0;
-        bottom: -17px;
+        bottom: -18px;
         width: 100%;
         height: 1px;
         background: #000;
@@ -609,6 +610,10 @@
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
   padding: 6px;
   z-index: 1000;
+  .menu-item {
+    font-family: $font-family !important;
+    font-weight: 300;
+  }
 }
 
 .menu-item {

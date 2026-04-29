@@ -3,6 +3,7 @@ import type { UserGroupedReport } from "@src/types/Reports";
 import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
 import Avatar from "@src/components/shared/Avatar";
+import { compactRelativeDateLabel } from "@src/utils/dateUtils";
 
 interface Props {
   sub: UserGroupedReport;
@@ -94,10 +95,12 @@ const OtherDescriptions: React.FC<Props> = ({
                 <span className="time">
                   {" "}
                   ·{" "}
-                  {formatDistanceToNow(new Date(desc.createdAt), {
-                    locale: fr,
-                    addSuffix: true,
-                  })}
+                  {compactRelativeDateLabel(
+                    formatDistanceToNow(new Date(desc.createdAt), {
+                      locale: fr,
+                      addSuffix: true,
+                    }),
+                  )}
                 </span>
               </div>
 

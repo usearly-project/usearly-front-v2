@@ -1,10 +1,9 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { formatDistanceToNowStrict } from "date-fns";
-import { fr } from "date-fns/locale";
 import Avatar from "../shared/Avatar";
 import FeedbackProgressBar from "./FeedbackProgressBar";
 import SharedFooterCdcAndSuggest from "../shared/SharedFooterCdcAndSuggest";
 import UserBrandLine from "../shared/UserBrandLine";
+import { formatRelativeStrict } from "@src/utils/dateUtils";
 import cdcIcon from "/assets/icons/cdc-icon.svg";
 import suggestIcon from "/assets/icons/suggest-icon.svg";
 
@@ -167,9 +166,7 @@ const FeedbackRight: React.FC<Props> = ({
               ⸱
               {isValidDate(item.createdAt) && (
                 <span className="feedback-date">
-                  {formatDistanceToNowStrict(new Date(item.createdAt), {
-                    locale: fr,
-                  })}
+                  {formatRelativeStrict(item.createdAt)}
                 </span>
               )}
             </div>

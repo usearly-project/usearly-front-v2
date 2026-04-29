@@ -2,6 +2,7 @@ import Avatar from "@src/components/shared/Avatar";
 import DescriptionCommentSection from "@src/components/report-desc-comment/DescriptionCommentSection";
 import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
+import { compactRelativeDateLabel } from "@src/utils/dateUtils";
 
 interface Props {
   additionalDescriptions: any[];
@@ -59,10 +60,12 @@ const PopularReportSimilar: React.FC<Props> = ({
                 <span className="time">
                   ·{" "}
                   {desc.createdAt && !isNaN(new Date(desc.createdAt).getTime())
-                    ? formatDistanceToNow(new Date(desc.createdAt), {
-                        locale: fr,
-                        addSuffix: true,
-                      })
+                    ? compactRelativeDateLabel(
+                        formatDistanceToNow(new Date(desc.createdAt), {
+                          locale: fr,
+                          addSuffix: true,
+                        }),
+                      )
                     : ""}
                 </span>
               </div>

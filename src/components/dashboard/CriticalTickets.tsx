@@ -17,7 +17,7 @@ const tickets = [
     icon: "🎧",
     title: "Support lent",
     description:
-      "Réponse reçue après 5 jours, trop long quand on est bloqué sur un bug",
+      "Réponse reçue après 5j, trop long quand on est bloqué sur un bug",
     category: "Service client",
     count: 234,
     reactionFirst: "😠",
