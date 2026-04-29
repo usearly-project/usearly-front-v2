@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
+import { compactRelativeDateLabel } from "@src/utils/dateUtils";
 import Avatar from "../Avatar";
 //import { brandColors } from "@src/utils/brandColors";
 import { useBrandLogos } from "@src/hooks/useBrandLogos";
@@ -114,10 +115,12 @@ const PublicSuggestionCard: React.FC<Props> = ({ item }) => {
             </span>
             {item.createdAt && isValidDate(item.createdAt) && (
               <span className="feedback-date">
-                {formatDistanceToNow(new Date(item.createdAt as string), {
-                  locale: fr,
-                  addSuffix: true,
-                })}
+                {compactRelativeDateLabel(
+                  formatDistanceToNow(new Date(item.createdAt as string), {
+                    locale: fr,
+                    addSuffix: true,
+                  }),
+                )}
               </span>
             )}
           </div>

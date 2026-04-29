@@ -1,6 +1,7 @@
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
+import { compactRelativeDateLabel } from "@src/utils/dateUtils";
 import { getCategoryIconPathFromSubcategory } from "@src/utils/IconsUtils";
 import Avatar from "@src/components/shared/Avatar";
 import UserBrandLine from "@src/components/shared/UserBrandLine";
@@ -114,10 +115,12 @@ const FlatSubcategoryBlockMobile: React.FC<Props> = ({
                 : initialDescription?.title || "Autre problème"}
             </h4>
             <span className="flat-subcategory-mobile__date">
-              {formatDistanceToNow(new Date(initialDescription.createdAt), {
-                locale: fr,
-                addSuffix: true,
-              }).replace("environ ", "")}
+              {compactRelativeDateLabel(
+                formatDistanceToNow(new Date(initialDescription.createdAt), {
+                  locale: fr,
+                  addSuffix: true,
+                }),
+              )}
             </span>
           </div>
         </div>
@@ -263,10 +266,12 @@ const FlatSubcategoryBlockMobile: React.FC<Props> = ({
                           {similarAuthor.pseudo}
                         </span>
                         <span className="flat-subcategory-mobile__item-time">
-                          {formatDistanceToNow(new Date(desc.createdAt), {
-                            locale: fr,
-                            addSuffix: true,
-                          })}
+                          {compactRelativeDateLabel(
+                            formatDistanceToNow(new Date(desc.createdAt), {
+                              locale: fr,
+                              addSuffix: true,
+                            }),
+                          )}
                         </span>
                       </div>
 

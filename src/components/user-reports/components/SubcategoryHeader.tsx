@@ -2,6 +2,7 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
 import { getCategoryIconPathFromSubcategory } from "@src/utils/IconsUtils";
+import { compactRelativeDateLabel } from "@src/utils/dateUtils";
 import type { UserGroupedReport } from "@src/types/Reports";
 import Avatar from "@src/components/shared/Avatar";
 import UserBrandLine from "@src/components/shared/UserBrandLine";
@@ -53,10 +54,12 @@ const SubcategoryHeader: React.FC<Props> = ({
         {!isOpen && (
           <>
             <span className="date-subcategory">
-              {formatDistanceToNow(new Date(sub.descriptions[0].createdAt), {
-                locale: fr,
-                addSuffix: true,
-              }).replace("environ ", "")}
+              {compactRelativeDateLabel(
+                formatDistanceToNow(new Date(sub.descriptions[0].createdAt), {
+                  locale: fr,
+                  addSuffix: true,
+                }),
+              )}
             </span>
             <div className="badge-count">
               {sub.count}

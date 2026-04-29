@@ -4,6 +4,7 @@ import { fr } from "date-fns/locale";
 import Avatar from "@src/components/shared/Avatar";
 import UserBrandLine from "@src/components/shared/UserBrandLine";
 import { getCategoryIconPathFromSubcategory } from "@src/utils/IconsUtils";
+import { compactRelativeDateLabel } from "@src/utils/dateUtils";
 
 interface Props {
   item: any;
@@ -89,10 +90,12 @@ const PopularReportHeader: React.FC<Props> = ({
         ) : (
           <div className="collapsed-header">
             <span className="date-subcategory">
-              {formatDistanceToNow(new Date(firstDescription.createdAt), {
-                locale: fr,
-                addSuffix: true,
-              }).replace("environ ", "")}
+              {compactRelativeDateLabel(
+                formatDistanceToNow(new Date(firstDescription.createdAt), {
+                  locale: fr,
+                  addSuffix: true,
+                }),
+              )}
             </span>
             <Avatar avatar={brandLogo} pseudo={item.marque} type="brand" />
           </div>

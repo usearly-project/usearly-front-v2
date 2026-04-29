@@ -47,7 +47,7 @@ const DashboardUserHeader = () => {
                 >
                   {usersDelta > 0 ? `+${usersDelta}` : usersDelta}
                 </span>
-                <span className="delta-label">7 derniers jours</span>
+                <span className="delta-label">7 j</span>
               </>
             )}
           </h2>

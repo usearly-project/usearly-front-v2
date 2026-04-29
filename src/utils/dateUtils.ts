@@ -1,4 +1,4 @@
-import { formatDistanceToNow } from "date-fns";
+import { formatDistanceToNow, formatDistanceToNowStrict } from "date-fns";
 import { fr } from "date-fns/locale";
 
 export function formatFullDate(dateInput: string | Date): string {
@@ -17,20 +17,46 @@ export function formatFullDate(dateInput: string | Date): string {
   });
 }
 
+export function compactRelativeDateLabel(label: string): string {
+  return label
+    .replace("environ ", "")
+    .replace(/(\d+)\s+minutes?\b/gi, "$1 min")
+    .replace(/(\d+)\s+heures?\b/gi, "$1 h")
+    .replace(/(\d+)\s+jours?\b/gi, "$1j");
+}
+
+export function stripRelativePrefix(label: string): string {
+  return label.replace(/^il y a\s+/i, "");
+}
+
 /**
  * Format relatif ultra propre
  * - enlève "environ"
- * - garde "il y a 4 jours"
+ * - affiche "il y a 4j"
  */
 export function formatRelative(dateInput: string | Date): string {
   const date = new Date(dateInput);
 
   if (Number.isNaN(date.getTime())) return "Date inconnue";
 
-  return formatDistanceToNow(date, {
-    locale: fr,
-    addSuffix: true,
-  }).replace("environ ", "");
+  return compactRelativeDateLabel(
+    formatDistanceToNow(date, {
+      locale: fr,
+      addSuffix: true,
+    }),
+  );
+}
+
+export function formatRelativeStrict(dateInput: string | Date): string {
+  const date = new Date(dateInput);
+
+  if (Number.isNaN(date.getTime())) return "Date inconnue";
+
+  return compactRelativeDateLabel(
+    formatDistanceToNowStrict(date, {
+      locale: fr,
+    }),
+  );
 }
 
 export const toDMY = (d: Date, sep = "/", useUTC = false) => {

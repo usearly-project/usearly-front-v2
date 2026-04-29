@@ -2,6 +2,7 @@ import { ChevronDown } from "lucide-react";
 import { formatDistance } from "date-fns";
 import { fr } from "date-fns/locale";
 import Avatar from "@src/components/shared/Avatar";
+import { compactRelativeDateLabel } from "@src/utils/dateUtils";
 
 interface Props {
   reportsLength: number;
@@ -27,10 +28,12 @@ const BrandHeader: React.FC<Props> = ({
 
       <p className="date-card">
         {mostRecentDate
-          ? `Il y a ${formatDistance(mostRecentDate, new Date(), {
-              locale: fr,
-              includeSeconds: true,
-            }).replace("environ ", "")}`
+          ? `Il y a ${compactRelativeDateLabel(
+              formatDistance(mostRecentDate, new Date(), {
+                locale: fr,
+                includeSeconds: true,
+              }),
+            )}`
           : "Date inconnue"}
       </p>
 

@@ -1,7 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import "./NotificationsPage.scss";
-import { formatDistanceToNowStrict } from "date-fns";
-import { fr } from "date-fns/locale";
 import {
   getAllNotifications,
   markNotificationAsRead,
@@ -14,6 +12,7 @@ import UserStatsCard from "../user-profile/UserStatsCard";
 import Champs, { type SelectFilterOption } from "@src/components/champs/Champs";
 import type { HasBrandResponse } from "@src/types/brandResponse";
 import { normalizeBrandResponse } from "@src/utils/brandResponse";
+import { formatRelativeStrict } from "@src/utils/dateUtils";
 
 interface Notification {
   id: string;
@@ -285,13 +284,7 @@ const NotificationsPage: React.FC = () => {
                         <div className="notif-info">
                           <p className="notif-message">{notif.message}</p>
                           <span className="notif-time">
-                            {formatDistanceToNowStrict(
-                              new Date(notif.createdAt),
-                              {
-                                locale: fr,
-                              },
-                            )}{" "}
-                            ago
+                            {formatRelativeStrict(notif.createdAt)} ago
                           </span>
                         </div>
 

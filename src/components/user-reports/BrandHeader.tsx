@@ -1,6 +1,7 @@
 import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
 import { ChevronDown } from "lucide-react";
+import { compactRelativeDateLabel } from "@src/utils/dateUtils";
 
 interface Props {
   brand: string;
@@ -27,7 +28,9 @@ const BrandHeader: React.FC<Props> = ({
       </p>
       <p className="date-card">
         {mostRecentDate
-          ? `Il y a ${formatDistanceToNow(mostRecentDate, { locale: fr })}`
+          ? `Il y a ${compactRelativeDateLabel(
+              formatDistanceToNow(mostRecentDate, { locale: fr }),
+            )}`
           : "Date inconnue"}
       </p>
       <img src={logoUrl} alt={brand} className="brand-logo" />

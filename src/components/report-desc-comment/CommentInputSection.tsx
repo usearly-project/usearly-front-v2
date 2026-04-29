@@ -3,6 +3,7 @@ import { apiService } from "@src/services/apiService";
 import { useAuth } from "@src/services/AuthContext";
 import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
+import { compactRelativeDateLabel } from "@src/utils/dateUtils";
 import "./CommentInputSection.scss";
 import { MoveDiagonal } from "lucide-react";
 import Swal from "sweetalert2";
@@ -178,10 +179,12 @@ const CommentInputSection: React.FC<Props> = ({
                     </span>
                     <span className="comment-time">
                       ⸱{" "}
-                      {formatDistanceToNow(new Date(comment.createdAt), {
-                        locale: fr,
-                        addSuffix: true,
-                      })}
+                      {compactRelativeDateLabel(
+                        formatDistanceToNow(new Date(comment.createdAt), {
+                          locale: fr,
+                          addSuffix: true,
+                        }),
+                      )}
                     </span>
                     {comment?.user.id === userProfile?.id && (
                       <CommentActionsMenu

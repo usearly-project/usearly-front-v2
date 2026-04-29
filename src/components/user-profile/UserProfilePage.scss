@@ -128,6 +128,46 @@
   background: #d8f4c3;
 }
 
+@media screen and (min-width: 1121px) {
+  .profile-main-wrapper.banner-suggestion {
+    --suggestion-main-width: 736px;
+    --suggestion-side-width: 320px;
+    display: grid;
+    grid-template-columns:
+      minmax(0, var(--suggestion-main-width))
+      minmax(0, var(--suggestion-side-width));
+    width: fit-content;
+    max-width: calc(
+      var(--suggestion-main-width) + var(--suggestion-side-width) + 24px
+    );
+    padding-inline: 0;
+    padding-right: 3%;
+    gap: 24px;
+    justify-content: center;
+    align-items: start;
+  }
+
+  .profile-main-wrapper.banner-suggestion::before {
+    left: 0;
+    right: 0;
+    width: auto;
+    transform: none;
+  }
+
+  .profile-main-wrapper.banner-suggestion .user-main-content {
+    grid-column: 1;
+    width: 100%;
+    min-width: var(--suggestion-main-width);
+    max-width: var(--suggestion-main-width);
+  }
+
+  .profile-main-wrapper.banner-suggestion > .right-panel {
+    grid-column: 2;
+    width: var(--suggestion-side-width);
+    min-width: var(--suggestion-side-width);
+  }
+}
+
 .profile-main-wrapper.banner-coupdecoeur::before {
   background: #e7d4ff;
 }

@@ -2,6 +2,10 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { getCategoryIconPathFromSubcategory } from "@src/utils/IconsUtils";
 import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
+import {
+  compactRelativeDateLabel,
+  stripRelativePrefix,
+} from "@src/utils/dateUtils";
 import "./FlatSubcategoryBlock.scss";
 import CommentSection from "@src/components/comments/CommentSection";
 import DescriptionCommentSection from "@src/components/report-desc-comment/DescriptionCommentSection";
@@ -247,12 +251,17 @@ const FlatSubcategoryBlock: React.FC<Props> = ({
               </h4>
               <span className="date-badge">
                 ⸱{" "}
-                {formatDistanceToNow(new Date(initialDescription.createdAt), {
-                  locale: fr,
-                  addSuffix: true,
-                })
-                  .replace("environ ", "")
-                  .replace("il y a ", "")}
+                {stripRelativePrefix(
+                  compactRelativeDateLabel(
+                    formatDistanceToNow(
+                      new Date(initialDescription.createdAt),
+                      {
+                        locale: fr,
+                        addSuffix: true,
+                      },
+                    ),
+                  ),
+                )}
               </span>
             </div>
           </div>
@@ -292,10 +301,12 @@ const FlatSubcategoryBlock: React.FC<Props> = ({
           ) : (
             <div className="collapsed-header">
               <span className="date-subcategory">
-                {formatDistanceToNow(new Date(initialDescription.createdAt), {
-                  locale: fr,
-                  addSuffix: true,
-                }).replace("environ ", "")}
+                {compactRelativeDateLabel(
+                  formatDistanceToNow(new Date(initialDescription.createdAt), {
+                    locale: fr,
+                    addSuffix: true,
+                  }),
+                )}
               </span>
               <Avatar
                 avatar={resolvedLogo}
@@ -459,10 +470,12 @@ const FlatSubcategoryBlock: React.FC<Props> = ({
                           <span className="pseudo">{safeAuthor.pseudo}</span>
                           <span className="time">
                             ·{" "}
-                            {formatDistanceToNow(new Date(desc.createdAt), {
-                              locale: fr,
-                              addSuffix: true,
-                            })}
+                            {compactRelativeDateLabel(
+                              formatDistanceToNow(new Date(desc.createdAt), {
+                                locale: fr,
+                                addSuffix: true,
+                              }),
+                            )}
                           </span>
                         </div>
 
