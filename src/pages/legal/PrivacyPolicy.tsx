@@ -134,10 +134,10 @@ export default function PrivacyPolicy() {
         <section>
           <h2>5. Partage des données</h2>
           <p>
-            Usearly ne vend ni ne loue les données des utilisateurs. Certaines
-            données peuvent être traitées par des prestataires techniques
-            (hébergement, infrastructure serveur, cloud) uniquement dans le
-            cadre du fonctionnement du service.
+            Usearly ne vend, ne partage, ne transfère ni ne loue les données des
+            utilisateurs. Certaines données peuvent être traitées par des
+            prestataires techniques (hébergement, infrastructure serveur, cloud)
+            uniquement dans le cadre du fonctionnement du service.
           </p>
         </section>
 
@@ -168,23 +168,36 @@ export default function PrivacyPolicy() {
           <h2>7. Données techniques</h2>
 
           <p>
-            Afin d’assurer la sécurité et le bon fonctionnement du service,
-            certaines données techniques peuvent être collectées :
+            Afin d’assurer le bon fonctionnement du service et d’améliorer la
+            qualité des signalements, certaines données techniques peuvent être
+            utilisées :
           </p>
 
           <ul>
-            <li>Adresse IP</li>
-            <li>Journaux de connexion</li>
-            <li>Informations liées au navigateur ou à l’appareil</li>
+            <li>
+              Informations liées au navigateur utilisé (ex : Chrome, Firefox)
+            </li>
+            <li>Informations techniques liées à l’appareil</li>
+            <li>
+              Journaux techniques nécessaires au fonctionnement du service
+            </li>
           </ul>
 
           <p>Ces données sont utilisées uniquement pour :</p>
 
           <ul>
-            <li>Sécuriser le service</li>
-            <li>Prévenir les abus</li>
-            <li>Assurer la stabilité technique</li>
+            <li>Assurer la stabilité technique du service</li>
+            <li>
+              Améliorer la qualité des signalements (ex : identifier un problème
+              spécifique à un navigateur)
+            </li>
+            <li>Prévenir les dysfonctionnements techniques</li>
           </ul>
+
+          <p>
+            Ces données ne sont pas utilisées à des fins de suivi, de profilage
+            ou de publicité.
+          </p>
 
           <p>
             Nous mettons en œuvre des mesures de sécurité appropriées pour
@@ -215,6 +228,94 @@ export default function PrivacyPolicy() {
             des données. Aucune donnée n’est collectée à l’insu de l’utilisateur
             et toutes les actions impliquant des données nécessitent une
             interaction explicite.
+          </p>
+        </section>
+        <section>
+          <h2>11. Accès au contenu des pages web</h2>
+
+          <p>
+            Dans le cadre du fonctionnement de l’extension Usearly, certaines
+            données issues de la page web active peuvent être temporairement
+            utilisées, uniquement lorsque l’utilisateur déclenche une action.
+          </p>
+
+          <ul>
+            <li>
+              Le contenu visible de la page (texte, structure) peut être utilisé
+              uniquement pour contextualiser un signalement
+            </li>
+            <li>
+              Les captures d’écran peuvent contenir des éléments visuels de la
+              page (images, texte) uniquement lorsque l’utilisateur choisit de
+              capturer une zone
+            </li>
+          </ul>
+
+          <p>
+            Ces données ne sont jamais collectées en continu, ni analysées en
+            arrière-plan. Elles sont utilisées uniquement dans le cadre de
+            l’action initiée par l’utilisateur.
+          </p>
+
+          <p>
+            Aucune analyse automatique, aucun tracking, ni surveillance du
+            contenu de navigation n’est effectué par l’extension.
+          </p>
+        </section>
+        <section>
+          <h2>12. Extension Usearly – Traitement des données</h2>
+
+          <p>
+            L’extension Chrome Usearly collecte et traite des données uniquement
+            afin de fournir ses fonctionnalités principales.
+          </p>
+
+          <h3>Collecte des données</h3>
+          <p>
+            Les données sont collectées uniquement lorsque l’utilisateur
+            interagit avec l’extension (ex : ouverture du menu, envoi d’un
+            signalement, capture d’écran).
+          </p>
+
+          <h3>Captures d’écran</h3>
+          <p>
+            Les captures d’écran sont entièrement optionnelles et réalisées
+            uniquement à la demande explicite de l’utilisateur, s’il souhaite
+            illustrer ou préciser un signalement.
+          </p>
+
+          <p>
+            Ces captures peuvent contenir des éléments du contenu de la page web
+            (texte, images) uniquement dans le cadre de l’action déclenchée par
+            l’utilisateur.
+          </p>
+
+          <p>
+            Aucune capture en arrière-plan, aucun enregistrement automatique ni
+            aucune surveillance continue n’est effectué par l’extension.
+          </p>
+          <h3>Utilisation des données</h3>
+          <p>Les données collectées sont utilisées exclusivement pour :</p>
+          <ul>
+            <li>Permettre les signalements et interactions</li>
+            <li>Améliorer l’expérience utilisateur</li>
+            <li>Assurer le bon fonctionnement du service</li>
+          </ul>
+
+          <h3>Partage des données</h3>
+          <p>
+            Usearly ne vend pas, ne partage pas, ne transfère pas et ne loue pas
+            les données des utilisateurs à des tiers à des fins commerciales ou
+            publicitaires.
+          </p>
+
+          <h3>Données techniques</h3>
+          <p>
+            Les données techniques (comme les journaux techniques ou les
+            informations liées au navigateur) sont utilisées uniquement pour des
+            raisons de sécurité, de prévention des abus et de stabilité du
+            service. Elles ne sont pas utilisées à des fins de suivi, de
+            profilage ou de publicité.
           </p>
         </section>
       </div>
