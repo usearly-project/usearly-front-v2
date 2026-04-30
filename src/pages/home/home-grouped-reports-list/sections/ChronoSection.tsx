@@ -17,6 +17,37 @@ interface ChronoSectionProps {
   onClearSearchTerm?: () => void;
 }
 
+const resolveDateGroupKey = (report: ExplodedGroupedReport) => {
+  const candidates = [
+    report.date,
+    report.subCategory?.descriptions?.[0]?.createdAt,
+    report.subCategories?.[0]?.descriptions?.[0]?.createdAt,
+  ];
+
+  for (const candidate of candidates) {
+    if (typeof candidate !== "string") continue;
+
+    const trimmedCandidate = candidate.trim();
+    if (!trimmedCandidate) continue;
+
+    if (/^\d{4}-\d{2}-\d{2}$/.test(trimmedCandidate)) {
+      return trimmedCandidate;
+    }
+
+    const isoDatePart = trimmedCandidate.match(/^(\d{4}-\d{2}-\d{2})T/);
+    if (isoDatePart?.[1]) {
+      return isoDatePart[1];
+    }
+
+    const parsedDate = new Date(trimmedCandidate);
+    if (!Number.isNaN(parsedDate.getTime())) {
+      return parsedDate.toISOString().slice(0, 10);
+    }
+  }
+
+  return "unknown";
+};
+
 /**
  * 🗓️ Section Chrono
  * Affiche les signalements récents (filtre "chrono")
@@ -50,7 +81,7 @@ const ChronoSection: React.FC<ChronoSectionProps> = ({
     const groups = new Map<string, any[]>();
 
     filteredReports.forEach((report: ExplodedGroupedReport) => {
-      const key = report.date ?? "unknown";
+      const key = resolveDateGroupKey(report);
       const existing = groups.get(key);
 
       if (existing) {

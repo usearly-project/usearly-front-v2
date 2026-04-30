@@ -656,12 +656,13 @@
 .user-dropdown-menu > .menu-item,
 .user-dropdown-menu > a.menu-item {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
 
   padding: 10px 12px;
   border-radius: 6px;
   font-size: 14px;
+  gap: 8px;
   cursor: pointer;
   white-space: nowrap;
 

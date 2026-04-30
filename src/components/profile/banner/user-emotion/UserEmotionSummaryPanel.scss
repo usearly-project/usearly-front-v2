@@ -1,5 +1,6 @@
 .emotion-summary-card {
   min-width: 300px;
+  min-height: var(--profile-side-feature-height, 258px);
   display: flex;
   flex-direction: column;
   background: #ffffff; // ✅ BLANC COMME MAQUETTE

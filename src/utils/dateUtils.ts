@@ -20,8 +20,8 @@ export function formatFullDate(dateInput: string | Date): string {
 export function compactRelativeDateLabel(label: string): string {
   return label
     .replace("environ ", "")
-    .replace(/(\d+)\s+minutes?\b/gi, "$1 min")
-    .replace(/(\d+)\s+heures?\b/gi, "$1 h")
+    .replace(/(\d+)\s+minutes?\b/gi, "$1min")
+    .replace(/(\d+)\s+heures?\b/gi, "$1h")
     .replace(/(\d+)\s+jours?\b/gi, "$1j");
 }
 
