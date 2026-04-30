@@ -56,6 +56,7 @@
   }
 
   > .right-panel {
+    --profile-side-feature-height: 258px;
     flex: 0 1 clamp(240px, 27.5vw, 1000px);
     width: min(100%, 320px);
     min-width: 240px;
@@ -63,6 +64,19 @@
 
     .suggestion-img-side-container {
       margin-top: 10px;
+      min-height: var(--profile-side-feature-height);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .suggestion-img-side-img {
+      display: block;
+      width: 100%;
+      max-width: 317px;
+      max-height: var(--profile-side-feature-height);
+      height: auto;
+      object-fit: contain;
     }
 
     // @media screen and (max-width: 1240px) {
@@ -130,41 +144,44 @@
 
 @media screen and (min-width: 1121px) {
   .profile-main-wrapper.banner-suggestion {
-    --suggestion-main-width: 736px;
-    --suggestion-side-width: 320px;
-    display: grid;
-    grid-template-columns:
-      minmax(0, var(--suggestion-main-width))
-      minmax(0, var(--suggestion-side-width));
-    width: fit-content;
-    max-width: calc(
-      var(--suggestion-main-width) + var(--suggestion-side-width) + 24px
-    );
-    padding-inline: 0;
-    padding-right: 3%;
-    gap: 24px;
-    justify-content: center;
-    align-items: start;
+    // Surcharges désactivées pour reprendre exactement le layout
+    // par défaut de `.profile-main-wrapper`, identique à `banner-coupdecoeur`.
+    // --suggestion-main-width: 620px;
+    // --suggestion-side-width: 410px;
+    // display: flex;
+    // width: min(100%, 1120px);
+    // max-width: 1120px;
+    // padding-right: 0px;
+    // padding-left: 24px;
+    // gap: 24px;
+    // justify-content: space-between;
+    // align-items: start;
   }
 
   .profile-main-wrapper.banner-suggestion::before {
-    left: 0;
-    right: 0;
-    width: auto;
-    transform: none;
+    // left: 0;
+    // right: 0;
+    // width: auto;
+    // transform: none;
   }
 
   .profile-main-wrapper.banner-suggestion .user-main-content {
-    grid-column: 1;
-    width: 100%;
-    min-width: var(--suggestion-main-width);
-    max-width: var(--suggestion-main-width);
+    // grid-column: 1;
+    // width: 100%;
+    // min-width: var(--suggestion-main-width);
+    // max-width: var(--suggestion-main-width);
+    // justify-content: flex-start;
   }
 
   .profile-main-wrapper.banner-suggestion > .right-panel {
-    grid-column: 2;
-    width: var(--suggestion-side-width);
-    min-width: var(--suggestion-side-width);
+    // grid-column: 2;
+    // width: var(--suggestion-side-width);
+    // min-width: var(--suggestion-side-width);
+    // margin-left: 15px;
+    .love-brands-section {
+      margin-top: 26%;
+      // margin-left: 10px;
+    }
   }
 }
 

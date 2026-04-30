@@ -1,0 +1,117 @@
+@use "@src/styles/base/variables" as *;
+
+.app-download-row {
+  scroll-margin-top: calc(var(--header-height, 80px) + 24px);
+  width: 100vw;
+  padding: 52px 28px;
+  border-radius: 6px;
+  background: #9898980f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 36px;
+  color: #111111;
+  font-family: $font-main-text;
+}
+
+.app-download-row__store-links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  @media screen and (max-width: 1015px) {
+    flex-direction: column;
+  }
+}
+
+.app-download-row__store-link {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 8px;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+
+  img {
+    display: block;
+    width: auto;
+    height: 78px;
+    max-width: 170px;
+    object-fit: contain;
+  }
+
+  &:hover {
+    opacity: 0.88;
+    transform: translateY(-1px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #111111;
+    outline-offset: 3px;
+  }
+}
+
+.app-download-row__copy {
+  min-width: 0;
+}
+
+.app-download-row__headline,
+.app-download-row__subtext {
+  margin: 0;
+}
+
+.app-download-row__headline {
+  color: #111111;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.app-download-row__subtext {
+  margin-top: 4px;
+  color: #111111;
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+@media screen and (max-width: 900px) {
+  .app-download-row {
+    gap: 24px;
+    padding: 20px 22px;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .app-download-row__copy {
+    text-align: center;
+  }
+
+  .app-download-row__store-links {
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .app-download-row {
+    flex-direction: column-reverse;
+    padding: 40px 0;
+    gap: 18px;
+  }
+
+  .app-download-row__store-links {
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .app-download-row__store-link img {
+    height: 44px;
+    max-width: 152px;
+  }
+
+  .app-download-row__headline {
+    font-size: 17px;
+  }
+
+  .app-download-row__subtext {
+    font-size: 15px;
+  }
+}

@@ -10,6 +10,7 @@ import ScrollInlineImages from "./components/scroll-text/ScrollInlineImages";
 // import FavoriteSection from "./components/slide-stack/FavoriteSection";
 import InfiniteCarouselBanner from "./components/infiniteCarouselBanner/InfiniteCarouselBanner";
 import { useIsAtBottom } from "@src/hooks/detect-bottom";
+import AppDownloadRow from "@src/components/app-download/AppDownloadRow";
 // import AppDownloadSection from "@src/components/app-download/AppDownloadSection";
 
 const BOTTOM_THRESHOLD_PX = 12;
@@ -62,6 +63,7 @@ const NewHome: React.FC = () => {
 
       <div className="new-home-main">
         <BrandCard />
+        <AppDownloadRow />
         <div className="usearly-drawing-container">
           <UsearlyDrawing animationDuration="25" />
         </div>

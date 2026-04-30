@@ -88,10 +88,12 @@ const usePlanetPopFeed = (enabled: boolean) => {
         message,
       });
 
-      const linkedMessage =
-        theme === "report"
-          ? Config.buildPopFeedBrandMessage(brand, "report", { linked: true })
-          : undefined;
+      // Désactivé : on ne veut plus afficher de report "linked" en doublon.
+      // const linkedMessage =
+      //   theme === "report"
+      //     ? Config.buildPopFeedBrandMessage(brand, "report", { linked: true })
+      //     : undefined;
+      const linkedMessage: string | undefined = undefined;
       const linkedItemId = linkedMessage ? Helpers.createFeedItemId() : null;
       const linkedItem =
         linkedMessage && linkedItemId

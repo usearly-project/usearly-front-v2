@@ -15,6 +15,7 @@ import Buttons from "@src/components/buttons/Buttons";
 import { useIsMobile } from "@src/hooks/use-mobile";
 import UsearlyText from "/assets/UsearlyText.svg";
 import AppDownloadModal from "@src/components/app-download/AppDownloadModal";
+import { LogOut } from "lucide-react";
 // import { APP_DOWNLOAD_ROUTE } from "@src/components/app-download/appDownload.constants";
 
 const MOBILE_APP_REDIRECT_BREAKPOINT_PX = 768;
@@ -663,6 +664,8 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
                   setUserMenuOpen(false);
                 }}
               >
+                {/* <User /> */}
+                <i className="far fa-user" aria-hidden="true" />
                 Mon compte
               </NavLink>
 
@@ -712,6 +715,7 @@ const Header: React.FC<HeaderProps> = ({ heroMode = false, children }) => {
               )}
 
               <span className="menu-item danger" onClick={handleLogout}>
+                <LogOut width={16} />
                 Se déconnecter
               </span>
             </div>

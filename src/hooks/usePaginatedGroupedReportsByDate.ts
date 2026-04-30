@@ -7,6 +7,60 @@ import type {
 } from "@src/types/Reports";
 import { normalizeBrandResponse } from "@src/utils/brandResponse";
 
+type NormalizedPublicGroupedReportFromAPI = Omit<
+  PublicGroupedReportFromAPI,
+  "date"
+> & {
+  date?: string;
+};
+
+const normalizeDateKey = (value?: string | null) => {
+  if (typeof value !== "string") return undefined;
+
+  const trimmedValue = value.trim();
+  if (!trimmedValue) return undefined;
+
+  if (/^\d{4}-\d{2}-\d{2}$/.test(trimmedValue)) {
+    return trimmedValue;
+  }
+
+  const isoDatePart = trimmedValue.match(/^(\d{4}-\d{2}-\d{2})T/);
+  if (isoDatePart?.[1]) {
+    return isoDatePart[1];
+  }
+
+  const parsedDate = new Date(trimmedValue);
+  if (Number.isNaN(parsedDate.getTime())) {
+    return undefined;
+  }
+
+  return parsedDate.toISOString().slice(0, 10);
+};
+
+const flattenReportsByDate = (
+  rawData:
+    | GetGroupedReportsByDateResponse["data"]
+    | PublicGroupedReportFromAPI[],
+): NormalizedPublicGroupedReportFromAPI[] => {
+  if (Array.isArray(rawData)) {
+    return rawData.map((report) => ({
+      ...report,
+      date: normalizeDateKey(
+        report.date ?? report.descriptions?.[0]?.createdAt,
+      ),
+    }));
+  }
+
+  return Object.entries(rawData).flatMap(([dateKey, reports]) =>
+    reports.map((report) => ({
+      ...report,
+      date: normalizeDateKey(
+        report.date ?? dateKey ?? report.descriptions?.[0]?.createdAt,
+      ),
+    })),
+  );
+};
+
 export const usePaginatedGroupedReportsByDate = (
   enabled: boolean,
   pageSize = 10,
@@ -37,7 +91,7 @@ export const usePaginatedGroupedReportsByDate = (
         const response: GetGroupedReportsByDateResponse =
           await getGroupedReportsByDate(page, pageSize);
 
-        if (!response?.data || !Array.isArray(response.data)) {
+        if (!response?.data || typeof response.data !== "object") {
           console.warn(
             "⚠️ Format inattendu pour getGroupedReportsByDate:",
             response,
@@ -46,8 +100,10 @@ export const usePaginatedGroupedReportsByDate = (
           return;
         }
 
-        const newData: ExplodedGroupedReport[] = response.data.map(
-          (report: PublicGroupedReportFromAPI) => ({
+        const normalizedReports = flattenReportsByDate(response.data);
+
+        const newData: ExplodedGroupedReport[] = normalizedReports.map(
+          (report) => ({
             id: report.reportingId,
             reportingId: report.reportingId,
             marque: report.marque,
@@ -84,7 +140,12 @@ export const usePaginatedGroupedReportsByDate = (
         //setData((prev) => [...prev, ...newData]);
         setData((prev) => {
           const merged = page === 1 ? newData : [...prev, ...newData];
-          const unique = new Map(merged.map((r) => [r.reportingId, r]));
+          const unique = new Map(
+            merged.map((r) => [
+              `${r.reportingId}-${r.subCategory.subCategory}`,
+              r,
+            ]),
+          );
           return Array.from(unique.values());
         });
 

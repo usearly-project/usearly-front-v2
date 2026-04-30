@@ -9,6 +9,8 @@ import Modal from "@src/components/ui/Modal";
 import ExtensionRedirect from "@src/components/extension-redirect/ExtensionRedirect";
 import MobileSectionHookUsers from "./MobileSectionhookUsers";
 import chromeLogo from "/assets/logo/chrome.svg";
+import appStore from "/assets/logo/apple-appstore.svg";
+import googlePlay from "/assets/logo/google-googleplay.svg";
 
 const SECTION_HOOK_USERS_TITLE = (
   <>
@@ -32,6 +34,87 @@ type SectionHookUsersProps = {
   popFeedVariant?: PopFeedVariant;
 };
 
+type DesktopSectionHookUsersProps = {
+  popFeedVariant: PopFeedVariant;
+  onCommunityClick: () => void;
+  onInstallExtension: () => void;
+  onOpenExtensionModal: () => void;
+};
+
+const DesktopSectionHookUsers = ({
+  popFeedVariant,
+  onCommunityClick,
+  onInstallExtension,
+  onOpenExtensionModal,
+}: DesktopSectionHookUsersProps) => {
+  return (
+    <section className="section-hook-users">
+      <div className="hook-users-content">
+        <div className="hook-users-content-text">
+          <h2 className="hook-users-title">{SECTION_HOOK_USERS_TITLE}</h2>
+          <p className="hook-users-subtitle">{SECTION_HOOK_USERS_SUBTITLE}</p>
+        </div>
+        <div className="hook-users-content-buttons">
+          <div className="hook-users-content-buttons-community">
+            <SquareRoundButton
+              text={COMMUNITY_BUTTON_LABEL}
+              classNames={"button-rejoindre"}
+              onClick={onCommunityClick}
+            />
+          </div>
+          <div className="hook-users-content-buttons-install">
+            <div className="hook-users-content-buttons-install-buttons extension">
+              <button
+                type="button"
+                className="hook-users-extension-button"
+                onClick={onInstallExtension}
+                aria-label={EXTENSION_BUTTON_LABEL}
+              >
+                <img src={chromeLogo} width={38} height={38} alt="Chrome" />
+                {EXTENSION_BUTTON_LABEL}
+              </button>
+              <button
+                type="button"
+                onClick={onOpenExtensionModal}
+                aria-label="Comment installer l’extension en 2 minutes ?"
+                className="hook-users-extension-button-description"
+              >
+                Comment installer l’extension ?
+              </button>
+            </div>
+            <div className="hook-users-content-buttons-install-buttons apple">
+              {/* Remplacer par URL APPSTORE */}
+              <a
+                href=""
+                aria-label="Télécharger sur l'App Store"
+                target="_blank"
+              >
+                <img src={appStore} alt="" />
+              </a>
+            </div>
+            <div className="hook-users-content-buttons-install-buttons google">
+              {/* Remplacer par URL GOOGLEPLAY */}
+              <a
+                href=""
+                aria-label="Télécharger sur Google Play"
+                target="_blank"
+              >
+                <img src={googlePlay} alt="" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <PlanetCanvas
+        width={1500}
+        height="92vh"
+        popFeed
+        popFeedVariant={popFeedVariant}
+      />
+    </section>
+  );
+};
+
 const SectionHookUsers = ({
   popFeedVariant = "default",
 }: SectionHookUsersProps) => {
@@ -39,69 +122,38 @@ const SectionHookUsers = ({
   const isMobile = useIsMobile("(max-width: 1250px)");
   const [isExtensionModalOpen, setIsExtensionModalOpen] = useState(false);
   const handleJoinCommunity = () => navigate("/lookup");
-
-  if (isMobile) {
-    return (
-      <MobileSectionHookUsers
-        title={SECTION_HOOK_USERS_TITLE}
-        subtitle={SECTION_HOOK_USERS_SUBTITLE}
-        extensionLabel={EXTENSION_BUTTON_LABEL}
-        communityLabel={COMMUNITY_BUTTON_LABEL}
-        extensionIconSrc={chromeLogo}
-        extensionIconAlt="Chrome"
-        onCommunityClick={handleJoinCommunity}
-        popFeedVariant={popFeedVariant}
-      />
-    );
-  }
   const handleInstallExtension = () => {
     window.open(
       "https://chromewebstore.google.com/search/Usearly%20%E2%80%93%20Extension%20Assistant?hl=fr&utm_source=ext_sidebar",
       "_blank",
     );
   };
+  const handleOpenExtensionModal = () => setIsExtensionModalOpen(true);
+  const sectionContent = isMobile ? (
+    <MobileSectionHookUsers
+      title={SECTION_HOOK_USERS_TITLE}
+      subtitle={SECTION_HOOK_USERS_SUBTITLE}
+      extensionLabel={EXTENSION_BUTTON_LABEL}
+      communityLabel={COMMUNITY_BUTTON_LABEL}
+      extensionIconSrc={chromeLogo}
+      extensionIconAlt="Chrome"
+      onCommunityClick={handleJoinCommunity}
+      onExtensionClick={handleInstallExtension}
+      onExtensionHelpClick={handleOpenExtensionModal}
+      popFeedVariant={popFeedVariant}
+    />
+  ) : (
+    <DesktopSectionHookUsers
+      popFeedVariant={popFeedVariant}
+      onCommunityClick={handleJoinCommunity}
+      onInstallExtension={handleInstallExtension}
+      onOpenExtensionModal={handleOpenExtensionModal}
+    />
+  );
 
   return (
     <>
-      <section className="section-hook-users">
-        <div className="hook-users-content">
-          <div className="hook-users-content-text">
-            <h2 className="hook-users-title">{SECTION_HOOK_USERS_TITLE}</h2>
-            <p className="hook-users-subtitle">{SECTION_HOOK_USERS_SUBTITLE}</p>
-          </div>
-          <div className="hook-users-content-buttons">
-            <button
-              type="button"
-              className="hook-users-extension-button"
-              onClick={handleInstallExtension}
-              aria-label={EXTENSION_BUTTON_LABEL}
-            >
-              <img src={chromeLogo} width={46} height={46} alt="Chrome" />
-              {EXTENSION_BUTTON_LABEL}
-            </button>
-            <SquareRoundButton
-              text={COMMUNITY_BUTTON_LABEL}
-              classNames={"button-rejoindre"}
-              onClick={handleJoinCommunity}
-            />
-          </div>
-          <div className="hook-users-content-explication">
-            <button
-              type="button"
-              onClick={() => setIsExtensionModalOpen(true)}
-              aria-label="Comment installer l’extension en 2 minutes ?"
-            >
-              Comment installer l’extension en 2 minutes ?
-            </button>
-          </div>
-        </div>
-        <PlanetCanvas
-          width={1500}
-          height="92vh"
-          popFeed
-          popFeedVariant={popFeedVariant}
-        />
-      </section>
+      {sectionContent}
 
       {isExtensionModalOpen ? (
         <Modal

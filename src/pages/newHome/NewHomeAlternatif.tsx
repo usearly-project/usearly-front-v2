@@ -12,6 +12,7 @@ import ExtensionRedirect from "@src/components/extension-redirect/ExtensionRedir
 import { useIsAtBottom } from "@src/hooks/detect-bottom";
 import FavoriteCarouselSection from "./components/slide-stack/FavoriteCarouselSection";
 import SectionJoinUsearly from "@src/pages/newHome/components/sectionJoinUsearly/SectionJoinUsearly";
+import AppDownloadRow from "@src/components/app-download/AppDownloadRow";
 // import AppDownloadSection from "@src/components/app-download/AppDownloadSection";
 
 // const PHRASES = ["des sondages", "des chatbots", "le silence"];
@@ -70,6 +71,7 @@ const NewHome: React.FC = () => {
       {/* --- SUITE DU CONTENU (NON AFFECTÉ) --- */}
       <div className="new-home-main">
         <FavoriteCarouselSection />
+        <AppDownloadRow />
         {/* <BrandCard /> */}
         <UsearlyFooter />
       </div>
