@@ -60,14 +60,28 @@ const usePlanetPopFeed = (enabled: boolean) => {
         (b) => !activeBrandIds.has(b.id),
       );
       if (availableBrands.length === 0) return;
-      const brand = Utils.pickRandomValue(availableBrands);
-      const popFeedContent = Config.resolvePopFeedBrandContent(
-        brand,
-        preferredTheme,
-        { excludeThemes },
-      );
+      const compatibleBrands = availableBrands
+        .map((brand) => ({
+          brand,
+          content: Config.resolvePopFeedBrandContent(brand, preferredTheme, {
+            excludeThemes,
+          }),
+        }))
+        .filter(
+          (
+            entry,
+          ): entry is {
+            brand: (typeof availableBrands)[number];
+            content: NonNullable<
+              ReturnType<typeof Config.resolvePopFeedBrandContent>
+            >;
+          } => entry.content !== undefined,
+        );
 
-      if (!popFeedContent) return;
+      if (!compatibleBrands.length) return;
+
+      const { brand, content: popFeedContent } =
+        Utils.pickRandomValue(compatibleBrands);
 
       const { theme, message } = popFeedContent;
       const itemId = Helpers.createFeedItemId();

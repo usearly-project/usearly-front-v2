@@ -22,6 +22,14 @@ export default function SolutionsModal({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    document.body.classList.add("solutions-modal-open");
+
+    return () => {
+      document.body.classList.remove("solutions-modal-open");
+    };
+  }, []);
+
+  useEffect(() => {
     const fetchSolutions = async () => {
       try {
         const data = await getSolutionsByReport(reportId);

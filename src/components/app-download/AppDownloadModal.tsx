@@ -4,6 +4,7 @@ import {
   MOBILE_APP_DOWNLOAD_URL,
 } from "./appDownload.constants";
 import "./AppDownloadModal.scss";
+import { X } from "lucide-react";
 
 type AppDownloadModalProps = {
   onClose: () => void;
@@ -33,7 +34,7 @@ const AppDownloadModal = ({ onClose }: AppDownloadModalProps) => {
         onClick={onClose}
         aria-label="Fermer"
       >
-        x
+        <X />
       </button>
 
       <span className="app-download-modal__eyebrow">Application mobile</span>

@@ -252,6 +252,70 @@ img.inline-capture-img {
   margin-bottom: 4px;
   padding-bottom: 8px;
 
+  .signalement-filter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 0 24px 8px;
+
+    .filter-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #374151;
+      font-family: "inter";
+    }
+
+    .signalement-filter-select {
+      flex-shrink: 0;
+    }
+
+    .signalement-filter-select .select-filter-display {
+      min-height: 32px;
+      padding: 6px 12px;
+      border: 1px solid #111827;
+      border-radius: 999px;
+      background: #fafafa;
+      box-shadow: none;
+      gap: 10px;
+    }
+
+    .signalement-filter-select .select-filter-label {
+      font-size: 12px;
+      font-family: "inter";
+      white-space: nowrap;
+    }
+
+    .signalement-filter-select .select-filter-chevron {
+      width: 14px;
+      height: 14px;
+      color: #111827;
+    }
+
+    .signalement-filter-select .popup-hot-filter {
+      border-radius: 16px;
+    }
+
+    .signalement-filter-select .popup-hot-filter-container {
+      padding: 10px;
+      gap: 4px;
+    }
+
+    .signalement-filter-select .select-filter-option {
+      padding: 8px 10px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-family: "inter";
+    }
+
+    .signalement-filter-select .select-filter-option.is-selected {
+      background: rgba(78, 69, 255, 0.1);
+      color: #231c9b;
+      font-weight: 600;
+    }
+  }
+
   .section-title {
     font-size: 0.85rem;
     font-weight: 600;

@@ -3,6 +3,7 @@ import { MoveDiagonal } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
 import CommentItem from "./CommentItem";
+import Champs, { type SelectFilterOption } from "@src/components/champs/Champs";
 import { compactRelativeDateLabel } from "@src/utils/dateUtils";
 
 interface User {
@@ -33,6 +34,14 @@ interface Props {
   onRefresh?: () => Promise<void>; // 🆕 pour rafraîchir après un like
 }
 
+type CommentFilter = Props["filter"];
+
+const COMMENT_FILTER_OPTIONS: SelectFilterOption<CommentFilter>[] = [
+  { value: "pertinent", label: "les plus pertinents" },
+  { value: "recents", label: "les plus récents" },
+  { value: "anciens", label: "les plus anciens" },
+];
+
 const CommentList: React.FC<Props> = ({
   comments,
   userId,
@@ -58,16 +67,16 @@ const CommentList: React.FC<Props> = ({
         <div className="comments-container">
           {/* 🔽 Header du bloc commentaires */}
           <div className="comments-header">
-            <label htmlFor="filter-select">Commentaires</label>
-            <select
-              id="filter-select"
+            <span className="comments-title">Commentaires</span>
+            <Champs
+              options={COMMENT_FILTER_OPTIONS}
               value={filter}
-              onChange={(e) => setFilter(e.target.value as any)}
-            >
-              <option value="pertinent">Les plus pertinents</option>
-              <option value="recents">Les plus récents</option>
-              <option value="anciens">Les plus anciens</option>
-            </select>
+              onChange={setFilter}
+              className="comments-filter-select"
+              iconVisible={false}
+              fitWidthToOptions
+              align="left"
+            />
           </div>
 
           {/* 🧩 Liste des commentaires */}
@@ -102,7 +111,7 @@ const CommentList: React.FC<Props> = ({
               aria-label="Afficher plus de commentaires"
             >
               <span className="load-more-icon">
-                <MoveDiagonal size={18} />
+                <MoveDiagonal size={22} />
               </span>
               Afficher plus de commentaires
             </button>
