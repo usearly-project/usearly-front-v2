@@ -9,11 +9,21 @@ import UserLoveBrandsPanel from "../profile/banner/user-emotion/UserLoveBrandsPa
 import { useIsMobile } from "@src/hooks/use-mobile";
 import Abracadabra from "/assets/images/profil/Abracadabra.svg";
 import { useFetchUserFeedback } from "@src/hooks/useFetchUserFeedback";
-import type { FeedbackType, Suggestion } from "@src/types/Reports";
+import { getUserProfileGroupedReports } from "@src/services/feedbackService";
+import type {
+  FeedbackType,
+  Suggestion,
+  UserGroupedReport,
+} from "@src/types/Reports";
 
 type LoveBrand = React.ComponentProps<
   typeof UserLoveBrandsPanel
 >["brands"][number];
+type ReportSolution = NonNullable<
+  React.ComponentProps<typeof UserLoveBrandsPanel>["solutions"]
+>[number];
+
+const REPORT_SOLUTIONS_PAGE_SIZE = 50;
 
 const normalizeBrandKey = (value?: string) =>
   (value ?? "")
@@ -58,6 +68,41 @@ const buildSuggestionBrands = (items: Suggestion[]): LoveBrand[] => {
   );
 };
 
+const buildReportSolutions = (items: UserGroupedReport[]): ReportSolution[] => {
+  const solutions = new Map<string, ReportSolution>();
+
+  items.forEach((item) => {
+    const solutionsCount = item.solutionsCount ?? 0;
+    if (solutionsCount <= 0) return;
+
+    const id = `${item.reportingId}-${item.subCategory}`;
+    const existing = solutions.get(id);
+
+    if (existing) {
+      existing.solutionsCount = Math.max(
+        existing.solutionsCount,
+        solutionsCount,
+      );
+      return;
+    }
+
+    solutions.set(id, {
+      id,
+      title: item.subCategory,
+      brand: item.marque,
+      siteUrl: item.siteUrl,
+      logo: null,
+      solutionsCount,
+    });
+  });
+
+  return Array.from(solutions.values()).sort(
+    (a, b) =>
+      b.solutionsCount - a.solutionsCount ||
+      a.title.localeCompare(b.title, "fr", { sensitivity: "base" }),
+  );
+};
+
 const getEmotionSummaryType = (
   activeTab: FeedbackType,
 ): "report" | "coupdecoeur" | null =>
@@ -83,6 +128,7 @@ const PROFILE_TITLES: Record<
 
 const UserProfilePage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<FeedbackType>("report");
+  const [reportSolutions, setReportSolutions] = useState<ReportSolution[]>([]);
   const isMobile = useIsMobile("(max-width: 1350px)");
   const isSuggestionTab = activeTab === "suggestion";
   const { title, subtitle } = PROFILE_TITLES[activeTab];
@@ -106,6 +152,46 @@ const UserProfilePage: React.FC = () => {
     mountCount.current += 1;
     console.log("UserProfilePage mounted:", mountCount.current);
   }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const fetchReportSolutions = async () => {
+      if (activeTab !== "report") {
+        setReportSolutions([]);
+        return;
+      }
+
+      try {
+        const firstPage = await getUserProfileGroupedReports(
+          1,
+          REPORT_SOLUTIONS_PAGE_SIZE,
+        );
+        const reports = [...(firstPage.results ?? [])];
+
+        for (let page = 2; page <= firstPage.totalPages; page += 1) {
+          const nextPage = await getUserProfileGroupedReports(
+            page,
+            REPORT_SOLUTIONS_PAGE_SIZE,
+          );
+          reports.push(...(nextPage.results ?? []));
+        }
+
+        if (!cancelled) {
+          setReportSolutions(buildReportSolutions(reports));
+        }
+      } catch (error) {
+        console.error("Erreur fetch user report solutions:", error);
+        if (!cancelled) setReportSolutions([]);
+      }
+    };
+
+    void fetchReportSolutions();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [activeTab]);
   console.log("emotionSummary:", emotionSummary);
   console.log("loading:", loadingEmotionSummary);
 
@@ -150,7 +236,11 @@ const UserProfilePage: React.FC = () => {
 
           {/* 🔽 SECTION SÉPARÉE */}
           <div className="love-brands-section">
-            <UserLoveBrandsPanel brands={loveBrands} title={loveBrandsTitle} />
+            <UserLoveBrandsPanel
+              brands={loveBrands}
+              title={loveBrandsTitle}
+              solutions={activeTab === "report" ? reportSolutions : []}
+            />
           </div>
         </aside>
       </div>

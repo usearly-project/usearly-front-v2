@@ -33,6 +33,13 @@
   .dot-separator {
     margin: 0 2px;
   }
+
+  .comments-link {
+    cursor: pointer;
+    &:hover {
+      color: #000;
+    }
+  }
 }
 
 .count-left {

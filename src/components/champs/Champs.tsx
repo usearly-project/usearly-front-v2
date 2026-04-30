@@ -142,8 +142,19 @@ export default function SelectFilter<V extends string = string>(
       if (maxWidth) setAutoMinWidth(Math.ceil(maxWidth));
     };
     measure();
+
+    const fontSet = document.fonts;
+    void fontSet?.ready.then(measure);
+
     window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
+    fontSet?.addEventListener("loadingdone", measure);
+    fontSet?.addEventListener("loadingerror", measure);
+
+    return () => {
+      window.removeEventListener("resize", measure);
+      fontSet?.removeEventListener("loadingdone", measure);
+      fontSet?.removeEventListener("loadingerror", measure);
+    };
   }, [shouldMeasureOptionsWidth, shouldHideForLoading, options, iconVisible]);
 
   useEffect(() => {

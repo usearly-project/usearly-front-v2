@@ -113,6 +113,19 @@
   &.active {
     color: #000;
     font-weight: 600;
+
+    &.yes {
+      svg {
+        stroke: transparent;
+        fill: #2e89ff;
+      }
+    }
+    &.no {
+      svg {
+        stroke: transparent;
+        fill: #e54545;
+      }
+    }
   }
 
   .lucide-thumbs-down {

@@ -95,7 +95,7 @@ export default function SolutionItem({ solution }: Props) {
 
           <div className="votes">
             <button
-              className={`vote-btn ${userVote === 1 ? "active" : ""}`}
+              className={`vote-btn yes ${userVote === 1 ? "active" : ""}`}
               onClick={() => handleVote(1)}
               aria-label="Voter pour cette solution"
             >
@@ -103,7 +103,7 @@ export default function SolutionItem({ solution }: Props) {
             </button>
 
             <button
-              className={`vote-btn ${userVote === -1 ? "active" : ""}`}
+              className={`vote-btn no ${userVote === -1 ? "active" : ""}`}
               onClick={() => handleVote(-1)}
               aria-label="Voter contre cette solution"
             >

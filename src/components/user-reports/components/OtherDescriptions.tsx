@@ -1,4 +1,5 @@
 import { ChevronDown } from "lucide-react";
+import Champs, { type SelectFilterOption } from "@src/components/champs/Champs";
 import type { UserGroupedReport } from "@src/types/Reports";
 import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
@@ -22,6 +23,14 @@ interface Props {
   userProfile: any;
 }
 
+type SignalementFilter = Props["signalementFilters"][string];
+
+const SIGNALEMENT_FILTER_OPTIONS: SelectFilterOption<SignalementFilter>[] = [
+  { value: "pertinent", label: "Les plus pertinents" },
+  { value: "recents", label: "Les plus récents" },
+  { value: "anciens", label: "Les plus anciens" },
+];
+
 const OtherDescriptions: React.FC<Props> = ({
   sub,
   displayedDescriptions,
@@ -38,24 +47,19 @@ const OtherDescriptions: React.FC<Props> = ({
       <div className="other-descriptions">
         <div className="signalement-filter">
           <label className="filter-label">Tous les signalements :</label>
-
-          <select
+          <Champs
+            options={SIGNALEMENT_FILTER_OPTIONS}
             value={signalementFilters[sub.subCategory] || "pertinent"}
-            onChange={(e) =>
+            onChange={(value) =>
               setSignalementFilters((prev) => ({
                 ...prev,
-                [sub.subCategory]: e.target.value as
-                  | "pertinent"
-                  | "recents"
-                  | "anciens",
+                [sub.subCategory]: value,
               }))
             }
-            className="filter-select"
-          >
-            <option value="pertinent">Les plus pertinents</option>
-            <option value="recents">Les plus récents</option>
-            <option value="anciens">Les plus anciens</option>
-          </select>
+            className="signalement-filter-select"
+            fitWidthToOptions
+            align="left"
+          />
         </div>
 
         {displayedDescriptions.map((desc) => (
