@@ -79,7 +79,7 @@
   "devDependencies": {
     "@eslint/js": "^9.36.0",
     "@types/gsap": "^1.20.2",
-    "@types/node": "^24.0.0",
+    "@types/node": "^24.12.2",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@types/react-window": "^1.8.8",
@@ -92,6 +92,7 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
+    "fix": "^0.0.6",
     "globals": "^16.4.0",
     "husky": "^9.1.7",
     "jiti": "^2.6.0",

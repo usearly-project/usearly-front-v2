@@ -11,7 +11,7 @@ interface Props {
 
 const ReactionSelector: React.FC<Props> = ({ userId, targetId }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const popupTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const popupTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const { getCount, hasReactedWith, handleReact } = useReactions(
     userId,

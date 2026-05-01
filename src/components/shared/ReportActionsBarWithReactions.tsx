@@ -80,7 +80,7 @@ const ReportActionsBarWithReactions: React.FC<Props> = ({
 
   const emojis = getEmojisForType("report");
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  const hoverTimeout = useRef<NodeJS.Timeout | null>(null);
+  const hoverTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const statusConfig = TICKET_STATUSES.find((s) => s.key === status);
   const { showAuthTooltip, tooltipText, tooltipPosition, triggerTooltip } =
     useAuthTooltip();

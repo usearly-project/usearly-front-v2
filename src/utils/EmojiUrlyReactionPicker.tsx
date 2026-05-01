@@ -19,7 +19,7 @@ const EmojiUrlyReactionPicker: React.FC<Props> = ({
 }) => {
   const emojis = getEmojisForType(type);
 
-  if (process.env.NODE_ENV !== "production") {
+  if (import.meta.env.MODE !== "production") {
     console.debug("Emoji picker type:", type, "emojis count:", emojis.length);
   }
 

@@ -18,7 +18,7 @@ const DescriptionReactionSelector = forwardRef(
     ref,
   ) {
     const [isOpen, setIsOpen] = useState(false);
-    const popupTimerRef = useRef<NodeJS.Timeout | null>(null);
+    const popupTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     const emojiOptions = getEmojisForType(type);
 
